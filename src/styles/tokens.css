@@ -1,0 +1,57 @@
+﻿        :root {
+            --bg-900: #080810;
+            --bg-800: #0d0d1a;
+            --bg-700: #12121f;
+            --bg-600: #181828;
+            --bg-500: #1e1e32;
+            --bg-400: #252540;
+
+            --surface-1: rgba(255, 255, 255, 0.03);
+            --surface-2: rgba(255, 255, 255, 0.06);
+            --surface-3: rgba(255, 255, 255, 0.09);
+
+            --border-subtle: rgba(255, 255, 255, 0.07);
+            --border-default: rgba(255, 255, 255, 0.12);
+            --border-strong: rgba(255, 255, 255, 0.2);
+
+            --accent-lime: #c8ff00;
+            --accent-lime-dim: rgba(200, 255, 0, 0.15);
+            --accent-lime-glow: rgba(200, 255, 0, 0.35);
+            --accent-violet: #8b5cf6;
+            --accent-violet-dim: rgba(139, 92, 246, 0.15);
+            --accent-violet-glow: rgba(139, 92, 246, 0.4);
+            --accent-cyan: #22d3ee;
+            --accent-cyan-dim: rgba(34, 211, 238, 0.12);
+            --accent-orange: #fb923c;
+            --accent-orange-dim: rgba(251, 146, 60, 0.12);
+            --accent-red: #f43f5e;
+            --accent-red-dim: rgba(244, 63, 94, 0.12);
+            --accent-green: #4ade80;
+            --accent-green-dim: rgba(74, 222, 128, 0.12);
+
+            --text-primary: #f0f0f8;
+            --text-secondary: rgba(240, 240, 248, 0.6);
+            --text-tertiary: rgba(240, 240, 248, 0.35);
+            --text-accent: var(--accent-lime);
+
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --radius-pill: 9999px;
+
+            --shadow-lime: 0 0 40px rgba(200, 255, 0, 0.18), 0 8px 32px rgba(0, 0, 0, 0.6);
+            --shadow-violet: 0 0 40px rgba(139, 92, 246, 0.22), 0 8px 32px rgba(0, 0, 0, 0.6);
+            --shadow-cyan: 0 0 30px rgba(34, 211, 238, 0.18), 0 4px 24px rgba(0, 0, 0, 0.5);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+            --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(200, 255, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.12);
+
+            --transition-fast: 180ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-base: 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-slow: 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-screen: 420ms cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
