@@ -1,172 +1,385 @@
-﻿import type { DietFormState, GoalOption } from '../types';
+import type {
+  ActivityLevel,
+  CardioIntensity,
+  CardioModality,
+  DeficitHistory,
+  DeficitSeverity,
+  Ethnicity,
+  FormData,
+  GoalMetricMode,
+  GoalOption,
+  HealthCondition,
+  HormoneCompound,
+  MenstrualPhase,
+  OccupationType,
+  ThermogenicOption,
+  TrainingType,
+} from '../types';
 
-export const stressLabels = ['Baixo', 'Leve', 'Moderado', 'Alto', 'Máximo'] as const;
+import { CARDIO_MODE_ICONS, GOAL_ICONS, THERMOGENIC_ICONS, TRAINING_ICONS } from './icons';
 
-export const primaryGoals: GoalOption[] = [
+export const goalOptions: GoalOption[] = [
   {
-    id: 'hard-cut',
-    icon: '??',
+    id: 'hard_cut',
+    icon: GOAL_ICONS.hard_cut,
     title: 'Hard Cut',
-    description: 'Déficit agressivo. Perda rápida de gordura. Ideal para quem tem pressa.',
-    badge: { label: '-750 kcal/dia', tone: 'red' },
+    description: 'D\u00e9ficit agressivo para reduzir gordura rapidamente.',
+    accent: 'red',
+    badge: { label: '-25%', tone: 'red' },
   },
   {
-    id: 'mini-cut',
-    icon: '??',
+    id: 'mini_cut',
+    icon: GOAL_ICONS.mini_cut,
     title: 'Mini Cut',
-    description: 'Déficit moderado. Preserva músculo. Resultado sustentável e seguro.',
-    badge: { label: '-465 kcal/dia', tone: 'orange' },
+    description: 'D\u00e9ficit moderado com melhor preserva\u00e7\u00e3o de massa magra.',
+    accent: 'orange',
+    badge: { label: '-15%', tone: 'orange' },
+  },
+  {
+    id: 'recomp',
+    icon: GOAL_ICONS.recomp,
+    title: 'Recomposi\u00e7\u00e3o',
+    description: 'Ajuste leve para reduzir gordura e preservar desempenho.',
+    accent: 'violet',
+    badge: { label: '-8%', tone: 'cyan' },
   },
   {
     id: 'maintenance',
-    icon: '??',
-    title: 'Manutenção',
-    description: 'Manter peso e composição corporal atuais em equilíbrio calórico.',
-    badge: { label: '0 kcal/dia', tone: 'lime' },
+    icon: GOAL_ICONS.maintenance,
+    title: 'Manuten\u00e7\u00e3o',
+    description: 'Estrat\u00e9gia neutra para estabilizar peso e composi\u00e7\u00e3o.',
+    accent: 'blue',
+    badge: { label: '0%', tone: 'lime' },
   },
   {
-    id: 'lean-bulk',
-    icon: '??',
+    id: 'lean_bulk',
+    icon: GOAL_ICONS.lean_bulk,
     title: 'Lean Bulk',
-    description: 'Superávit controlado. Ganho de massa com mínimo de gordura.',
-    badge: { label: '+250 kcal/dia', tone: 'cyan' },
+    description: 'Super\u00e1vit controlado para ganho gradual de massa.',
+    accent: 'green',
+    badge: { label: '+10%', tone: 'violet' },
   },
   {
-    id: 'bulk',
-    icon: '??',
-    title: 'Bulk',
-    description: 'Superávit maior. Foco em força e volume muscular acelerado.',
-    badge: { label: '+500 kcal/dia', tone: 'violet' },
-  },
-  {
-    id: 'competition',
-    icon: '??',
-    title: 'Competição',
-    description: 'Protocolo avançado de contest prep. Requer acompanhamento profissional.',
-    badge: { label: 'Personalizado', tone: 'red' },
+    id: 'dirty_bulk',
+    icon: GOAL_ICONS.dirty_bulk,
+    title: 'Dirty Bulk',
+    description: 'Super\u00e1vit agressivo focado em ganho de peso r\u00e1pido.',
+    accent: 'lime',
+    badge: { label: '+18%', tone: 'green' },
   },
 ];
 
 export const sexOptions: GoalOption[] = [
   {
     id: 'male',
-    icon: '??',
+    icon: '♂️',
     title: 'Masculino',
-    description: 'BMR base mais elevado. Maior limiar anabólico.',
+    description: 'Par\u00e2metros hormonais e limiares masculinos.',
   },
   {
     id: 'female',
-    icon: '??',
+    icon: '♀️',
     title: 'Feminino',
-    description: 'Ajuste hormonal. Variação cíclica considerada.',
+    description: 'Par\u00e2metros hormonais e limiares femininos.',
   },
 ];
 
-export const experienceOptions: GoalOption[] = [
+export const menstrualPhaseOptions: Array<{ id: MenstrualPhase; icon: string; title: string; description: string }> = [
   {
-    id: 'beginner',
-    icon: '??',
-    title: 'Iniciante',
-    description: '0–1 ano',
-    badge: { label: 'Novato', tone: 'green' },
+    id: 'follicular',
+    icon: '🌱',
+    title: 'Fase folicular',
+    description: 'Primeiros 14 dias do ciclo.',
   },
   {
-    id: 'intermediate',
-    icon: '??',
-    title: 'Intermediário',
-    description: '1–3 anos',
-    badge: { label: 'Intermediário', tone: 'orange' },
+    id: 'luteal',
+    icon: '🌙',
+    title: 'Fase l\u00fatea',
+    description: '\u00daltimos 14 dias do ciclo.',
   },
   {
-    id: 'advanced',
-    icon: '??',
-    title: 'Avançado',
-    description: '3–7 anos',
-    badge: { label: 'Avançado', tone: 'violet' },
-  },
-  {
-    id: 'elite',
-    icon: '??',
-    title: 'Elite',
-    description: '7+ anos',
-    badge: { label: 'Elite', tone: 'red' },
+    id: 'unknown',
+    icon: '❔',
+    title: 'N\u00e3o sei / N\u00e3o aplica',
+    description: 'Fallback neutro para o c\u00e1lculo.',
   },
 ];
 
-export const nutritionOptions: GoalOption[] = [
+export const activityOptions: Array<{ id: ActivityLevel; icon: string; title: string; description: string; badge: string }> = [
+  { id: 'sedentary', icon: '🪑', title: 'Sedent\u00e1rio', description: 'Rotina majoritariamente sentada', badge: 'x1.20' },
+  { id: 'light', icon: '🚶', title: 'Levemente ativo', description: 'Movimento leve no dia', badge: 'x1.375' },
+  { id: 'moderate', icon: '🏃', title: 'Moderadamente ativo', description: 'Boa movimenta\u00e7\u00e3o di\u00e1ria', badge: 'x1.55' },
+  { id: 'very_active', icon: '🏋️', title: 'Muito ativo', description: 'Trabalho ativo ou alto NEAT', badge: 'x1.725' },
+  { id: 'athlete', icon: '🥇', title: 'Atleta', description: 'Rotina intensa e alto volume', badge: 'x1.90' },
+];
+
+export const occupationTypeOptions: Array<{
+  id: OccupationType;
+  icon: string;
+  title: string;
+  description: string;
+}> = [
   {
-    id: 'traditional',
-    icon: '???',
-    title: 'Tradicional',
-    description: '3–5 refeições distribuídas ao longo do dia. Janela de alimentação ampla.',
-    badge: { label: 'Mais fácil', tone: 'lime' },
+    id: 'sedentary',
+    icon: '🪑',
+    title: 'Sedent\u00e1rio',
+    description: 'Escrit\u00f3rio, sentado na maior parte do dia.',
   },
   {
-    id: 'if168',
-    icon: '?',
-    title: 'Jejum 16/8',
-    description: 'Janela de 8h. Refeições concentradas. Alta aderência para muitos perfis.',
-    badge: { label: 'IF', tone: 'violet' },
+    id: 'mixed',
+    icon: '🚶',
+    title: 'Misto',
+    description: 'Em p\u00e9 e caminhando parte do tempo.',
   },
   {
-    id: 'lowcarb',
-    icon: '??',
-    title: 'Low Carb',
-    description: 'Carboidratos até 30% das calorias. Maior proporção de gordura e proteína.',
-    badge: { label: 'LC', tone: 'orange' },
+    id: 'active',
+    icon: '🏗️',
+    title: 'Ativo',
+    description: 'Trabalho f\u00edsico leve e movimento frequente.',
   },
   {
-    id: 'plant',
-    icon: '??',
-    title: 'Plant-Based',
-    description: 'Proteínas vegetais. Ajuste de leucina e aminoácidos essenciais incluído.',
-    badge: { label: 'Vegano', tone: 'green' },
-  },
-  {
-    id: 'cycling',
-    icon: '??',
-    title: 'Carb Cycling',
-    description: 'Dias de treino com mais carbs. Dias de descanso com mais gordura.',
-    badge: { label: 'Avançado', tone: 'cyan' },
-  },
-  {
-    id: 'iifym',
-    icon: '??',
-    title: 'IIFYM',
-    description: 'If it fits your macros. Máxima flexibilidade com controle calórico rigoroso.',
-    badge: { label: 'Flexível', tone: 'violet' },
+    id: 'very_active',
+    icon: '⚒️',
+    title: 'Muito ativo',
+    description: 'Trabalho manual intenso e alta carga f\u00edsica.',
   },
 ];
 
-export const initialFormState: DietFormState = {
-  goalId: 'mini-cut',
-  trainingFrequency: { value: 4, min: 0, max: 7, step: 1 },
-  sessionDuration: { value: 60, min: 20, max: 120, step: 1 },
-  dailySteps: { value: 7000, min: 1000, max: 20000, step: 500 },
-  stressLevel: { value: 3, min: 1, max: 5, step: 1 },
+export const deficitHistoryOptions: Array<{
+  id: DeficitHistory;
+  icon: string;
+  title: string;
+  description: string;
+}> = [
+  {
+    id: 'none',
+    icon: '🟰',
+    title: 'N\u00e3o estou em d\u00e9ficit',
+    description: 'Comendo normalmente ou acima.',
+  },
+  {
+    id: 'lt4weeks',
+    icon: '🕒',
+    title: 'H\u00e1 menos de 4 semanas',
+    description: 'In\u00edcio recente de restri\u00e7\u00e3o cal\u00f3rica.',
+  },
+  {
+    id: '1to3months',
+    icon: '📆',
+    title: 'H\u00e1 1 a 3 meses',
+    description: 'D\u00e9ficit intermedi\u00e1rio em andamento.',
+  },
+  {
+    id: 'gt3months',
+    icon: '⏳',
+    title: 'H\u00e1 mais de 3 meses',
+    description: 'D\u00e9ficit prolongado com maior adapta\u00e7\u00e3o.',
+  },
+];
+
+export const deficitSeverityOptions: Array<{
+  id: DeficitSeverity;
+  icon: string;
+  title: string;
+  description: string;
+}> = [
+  {
+    id: 'light',
+    icon: '🟢',
+    title: 'Leve',
+    description: 'D\u00e9ficit pequeno, perda lenta.',
+  },
+  {
+    id: 'moderate',
+    icon: '🟠',
+    title: 'Moderado',
+    description: 'D\u00e9ficit em torno de 15-20%.',
+  },
+  {
+    id: 'aggressive',
+    icon: '🔴',
+    title: 'Agressivo',
+    description: 'D\u00e9ficit grande, perda r\u00e1pida.',
+  },
+];
+
+export const ethnicityOptions: Array<{ id: Ethnicity; title: string; icon: string }> = [
+  { id: 'western', title: 'Ocidental/Europeia', icon: '🇪🇺' },
+  { id: 'asian', title: 'Asi\u00e1tica/Oriental', icon: '🌏' },
+  { id: 'african', title: 'Africana', icon: '🌍' },
+  { id: 'latin', title: 'Latino-americana', icon: '🌎' },
+  { id: 'unspecified', title: 'Prefiro n\u00e3o informar', icon: '🌐' },
+];
+
+export const trainingTypeOptions: Array<{ id: TrainingType; icon: string; title: string; description: string; badge: string }> = [
+  {
+    id: 'strength',
+    icon: TRAINING_ICONS.strength,
+    title: 'For\u00e7a/Hipertrofia',
+    description: 'Muscula\u00e7\u00e3o tradicional',
+    badge: 'MET 5.5',
+  },
+  {
+    id: 'hiit',
+    icon: TRAINING_ICONS.hiit,
+    title: 'HIIT/Cross',
+    description: 'Sess\u00f5es de alta intensidade',
+    badge: 'MET 8.5',
+  },
+  {
+    id: 'endurance',
+    icon: TRAINING_ICONS.endurance,
+    title: 'Endurance',
+    description: 'Cardiorrespirat\u00f3rio prolongado',
+    badge: 'MET 7.0',
+  },
+];
+
+export const cardioModalityOptions: Array<{ id: CardioModality; title: string }> = [
+  { id: 'treadmill', title: 'Esteira' },
+  { id: 'bike', title: 'Bike' },
+  { id: 'elliptical', title: 'El\u00edptico' },
+  { id: 'swimming', title: 'Nata\u00e7\u00e3o' },
+  { id: 'hiit', title: 'HIIT' },
+];
+
+export const cardioIntensityOptions: Array<{ id: CardioIntensity; title: string; badge: string }> = [
+  { id: 'low', title: 'Baixa', badge: 'MET 4.0' },
+  { id: 'moderate', title: 'Moderada', badge: 'MET 6.0' },
+  { id: 'high', title: 'Alta', badge: 'MET 8.0' },
+];
+
+export const bodyFatPhotoPresets: Record<'male' | 'female', Array<{ id: string; label: string; value: number }>> = {
+  male: [
+    { id: 'm10', label: 'Atl\u00e9tico seco \u00b7 10%', value: 10 },
+    { id: 'm14', label: 'Atl\u00e9tico padr\u00e3o \u00b7 14%', value: 14 },
+    { id: 'm18', label: 'Fitness casual \u00b7 18%', value: 18 },
+    { id: 'm22', label: 'Acima da m\u00e9dia \u00b7 22%', value: 22 },
+    { id: 'm26', label: 'Adiposidade alta \u00b7 26%', value: 26 },
+  ],
+  female: [
+    { id: 'f18', label: 'Atl\u00e9tica \u00b7 18%', value: 18 },
+    { id: 'f22', label: 'Fitness \u00b7 22%', value: 22 },
+    { id: 'f26', label: 'M\u00e9dia \u00b7 26%', value: 26 },
+    { id: 'f30', label: 'Acima da m\u00e9dia \u00b7 30%', value: 30 },
+    { id: 'f34', label: 'Adiposidade alta \u00b7 34%', value: 34 },
+  ],
+};
+
+export const hormoneOptions: Array<{ id: HormoneCompound; title: string; defaultDose: number }> = [
+  { id: 'testosterone', title: 'Testosterona', defaultDose: 250 },
+  { id: 'oxandrolone', title: 'Oxandrolona', defaultDose: 140 },
+  { id: 'deca', title: 'Deca', defaultDose: 200 },
+  { id: 'tren', title: 'Trembolona', defaultDose: 200 },
+  { id: 'boldenone', title: 'Boldenona', defaultDose: 300 },
+  { id: 'gh', title: 'GH', defaultDose: 20 },
+  { id: 'semaglutide', title: 'Semaglutida', defaultDose: 2 },
+  { id: 'other', title: 'Outro', defaultDose: 100 },
+];
+
+export const healthConditionOptions: Array<{ id: HealthCondition; title: string; description: string }> = [
+  {
+    id: 'insulin_resistance',
+    title: 'Resist\u00eancia \u00e0 insulina',
+    description: 'Ajusta distribui\u00e7\u00e3o de carboidratos.',
+  },
+  {
+    id: 'hypothyroidism',
+    title: 'Hipotireoidismo',
+    description: 'Reduz taxa metab\u00f3lica estimada.',
+  },
+  {
+    id: 'pcos',
+    title: 'SOP/PCOS',
+    description: 'Condi\u00e7\u00e3o hormonal com ajuste de sensibilidade.',
+  },
+  {
+    id: 'inflammatory_condition',
+    title: 'Condi\u00e7\u00e3o inflamat\u00f3ria',
+    description: 'Modula gasto e recupera\u00e7\u00e3o.',
+  },
+  {
+    id: 'eating_disorder_history',
+    title: 'Hist\u00f3rico de transtorno alimentar',
+    description: 'Restringe d\u00e9ficit m\u00e1ximo por seguran\u00e7a.',
+  },
+  {
+    id: 'none',
+    title: 'Nenhuma',
+    description: 'Sem condi\u00e7\u00f5es adicionais.',
+  },
+];
+
+export const thermogenicOptions: Array<{ id: ThermogenicOption; icon: string; title: string; description: string }> = [
+  { id: 'none', icon: THERMOGENIC_ICONS.none, title: 'Nenhum', description: 'Sem termog\u00eanicos ativos.' },
+  { id: 'caffeine', icon: THERMOGENIC_ICONS.caffeine, title: 'Cafe\u00edna', description: 'Uso habitual >300mg/dia.' },
+  { id: 'eca', icon: THERMOGENIC_ICONS.eca, title: 'ECA stack', description: 'Protocolo estimulante avan\u00e7ado.' },
+];
+
+export const goalModeOptions: Array<{ id: GoalMetricMode; title: string; description: string }> = [
+  { id: 'weight', title: 'Peso alvo', description: 'Defina um peso final desejado.' },
+  { id: 'bf', title: 'BF% alvo', description: 'Defina um percentual de gordura.' },
+  { id: 'fat_kg', title: 'Kg de gordura', description: 'Defina gordura total a perder/ganhar.' },
+];
+
+export const cardioModeOptions: Array<{ id: FormData['cardioMode']; icon: string; title: string; description: string }> = [
+  { id: 'steps', icon: CARDIO_MODE_ICONS.steps, title: 'Passos/dia', description: 'Baseado em passos totais di\u00e1rios.' },
+  {
+    id: 'structured',
+    icon: CARDIO_MODE_ICONS.structured,
+    title: 'Cardio estruturado',
+    description: 'Minutos e intensidade definidos.',
+  },
+  { id: 'both', icon: CARDIO_MODE_ICONS.both, title: 'Ambos', description: 'Com deduplica\u00e7\u00e3o autom\u00e1tica de passos.' },
+];
+
+export const initialFormData: FormData = {
+  goal: 'mini_cut',
+  sex: 'male',
   age: 28,
-  currentWeight: 80,
-  height: 177,
-  bodyFat: 18,
-  biologicalSex: 'male',
-  liftingExperience: 'intermediate',
-  nutritionApproach: 'traditional',
-  targetWeight: 73,
-  targetBodyFat: 12,
-  targetWeeks: 14,
+  weightKg: 80,
+  heightCm: 177,
+  bodyFatMode: 'declared',
+  bodyFatDeclaredPct: null,
+  bodyFatPhotoPresetPct: null,
+  navyNeckCm: null,
+  navyWaistCm: null,
+  navyHipCm: null,
+  bfDecision: null,
+  activityLevel: 'moderate',
+  trainingSessions: 4,
+  trainingType: 'strength',
+  trainingDurationMin: 60,
+  cardioMode: 'steps',
+  stepsPerDay: null,
+  cardioMinutesPerDay: null,
+  cardioModality: 'treadmill',
+  cardioIntensity: 'moderate',
+  hormonesEnabled: false,
+  hormones: [],
+  cyclePhase: 'middle',
+  occupationType: 'sedentary',
+  deficitHistory: 'none',
+  deficitSeverity: 'light',
+  menstrualPhase: 'unknown',
+  ethnicity: 'unspecified',
+  calibratedTdeeKcal: null,
+  healthConditions: ['none'],
+  thermogenic: 'none',
+  mealsPerDay: 4,
+  fastedTraining: false,
+  plantBasedStrict: false,
+  goalMode: 'bf',
+  targetWeightKg: null,
+  targetBodyFatPct: null,
+  targetFatKg: null,
+  targetWeeks: null,
 };
 
 export const sliderTicks = {
-  frequency: ['0×', '1×', '2×', '3×', '4×', '5×', '6×', '7×'],
-  duration: ['20', '45', '60', '90', '120'],
-  steps: ['1k', '5k', '10k', '15k', '20k'],
-  stress: ['Baixo', 'Leve', 'Mod.', 'Alto', 'Máx.'],
+  trainingFrequency: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  trainingDuration: ['20', '45', '60', '90', '120'],
+  targetWeeks: ['1', '8', '16', '24', '32', '40', '52'],
+  meals: ['2', '3', '4', '5', '6+'],
+  cardioMinutes: ['0', '20', '40', '60', '90'],
 };
-
-export const whatIfSliderDefaults = [
-  { id: 'deficit', label: 'Déficit calórico ajustado', value: '-600 kcal', percent: 60 },
-  { id: 'freq', label: 'Frequência de treino', value: '5× / semana', percent: 71 },
-  { id: 'steps', label: 'Passos diários', value: '10.000', percent: 47 },
-  { id: 'weeks', label: 'Semanas de protocolo', value: '16 semanas', percent: 56 },
-] as const;
-

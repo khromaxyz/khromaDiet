@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DietForge">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF3B3B" />
+      <stop offset="100%" stop-color="#FF2020" />
+    </linearGradient>
+    <radialGradient id="shine" cx="0.28" cy="0.22" r="0.72">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="#0B0A0F" />
+  <rect x="8" y="8" width="48" height="48" rx="14" fill="url(#bg)" />
+  <rect x="8" y="8" width="48" height="48" rx="14" fill="url(#shine)" />
+  <path d="M22 22h10c7 0 11 4.4 11 10.1 0 6.1-4.4 10.1-11.2 10.1H22V22Zm6 4.8v10.8h3.4c3.5 0 5.8-2 5.8-5.4 0-3.3-2.2-5.4-5.8-5.4H28Z" fill="#FFF" />
+  <path d="M25.7 45.2h12.4v-3.7h-12.4z" fill="#FFF" opacity="0.9" />
+</svg>

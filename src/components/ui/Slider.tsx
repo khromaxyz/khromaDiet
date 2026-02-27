@@ -1,4 +1,4 @@
-﻿import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler } from 'react';
 
 interface SliderProps {
   id: string;
@@ -23,7 +23,9 @@ export const Slider = ({
   ticks,
   onChange,
 }: SliderProps) => {
-  const percent = ((value - min) / (max - min)) * 100;
+  const range = max - min;
+  const percent = range > 0 ? ((value - min) / range) * 100 : 0;
+  const activeTickIndex = ticks.length > 1 ? Math.round((percent / 100) * (ticks.length - 1)) : 0;
 
   return (
     <div className="slider-item">
@@ -38,6 +40,7 @@ export const Slider = ({
       </div>
       <input
         type="range"
+        className="range-input"
         min={min}
         max={max}
         value={value}
@@ -46,8 +49,8 @@ export const Slider = ({
         id={id}
       />
       <div className="slider-ticks">
-        {ticks.map((tick) => (
-          <span key={tick} className="slider-tick">
+        {ticks.map((tick, index) => (
+          <span key={tick} className={index === activeTickIndex ? 'slider-tick slider-tick-active' : 'slider-tick'}>
             {tick}
           </span>
         ))}
@@ -55,4 +58,3 @@ export const Slider = ({
     </div>
   );
 };
-

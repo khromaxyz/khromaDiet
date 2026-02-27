@@ -10,11 +10,35 @@ interface GoalOptionCardProps {
   onSelect: (id: string) => void;
 }
 
+const resolveCardIcon = (icon: string): string => {
+  const value = icon.trim();
+  if (!value) {
+    return '\u2728';
+  }
+
+  const isPlaceholder =
+    value === '.' || value === '\u2022' || value === '-' || value === '_' || /^[A-Za-z]{1,3}$/.test(value);
+
+  if (isPlaceholder) {
+    return '\u2728';
+  }
+
+  // Defensive fallback for common mojibake sequences (broken emoji encoding).
+  if (/[ÃÂâðï]/.test(value)) {
+    return '\u2728';
+  }
+
+  return value;
+};
+
 export const GoalOptionCard = ({ option, selected, onSelect }: GoalOptionCardProps) => {
+  const accentClass = option.accent ? `goal-card-accent-${option.accent}` : '';
+  const cardIcon = resolveCardIcon(option.icon);
+
   return (
     <Card
       variant="goal"
-      className={selected ? 'selected' : undefined}
+      className={[selected ? 'selected' : '', accentClass].filter(Boolean).join(' ')}
       onClick={() => onSelect(option.id)}
       role="button"
       tabIndex={0}
@@ -25,11 +49,11 @@ export const GoalOptionCard = ({ option, selected, onSelect }: GoalOptionCardPro
         }
       }}
     >
-      <div className="goal-card-check">
-        <Check size={10} strokeWidth={3} />
+      <div className={selected ? 'goal-card-check goal-card-check-selected' : 'goal-card-check'} aria-hidden>
+        {selected ? <Check size={11} strokeWidth={3} /> : null}
       </div>
       <span className="goal-card-icon" aria-hidden>
-        {option.icon}
+        {cardIcon}
       </span>
       <div className="goal-card-title">{option.title}</div>
       <div className="goal-card-desc">{option.description}</div>
@@ -37,4 +61,3 @@ export const GoalOptionCard = ({ option, selected, onSelect }: GoalOptionCardPro
     </Card>
   );
 };
-

@@ -1,52 +1,33 @@
-﻿import { useCallback, useMemo, useState } from 'react';
-
-import type { ScreenId } from '../lib/types';
+﻿import type { ScreenId } from '../lib/types';
+import { useDietForgeStore } from '../store/useDietForgeStore';
 
 const screens: ScreenId[] = ['hero', 'form', 'summary', 'dashboard'];
 
 export const useWizardState = () => {
-  const [currentScreen, setCurrentScreen] = useState<ScreenId>('hero');
-  const [currentFormStep, setCurrentFormStep] = useState(1);
+  const currentScreen = useDietForgeStore((state) => state.currentScreen);
+  const currentFormStep = useDietForgeStore((state) => state.currentStep);
+  const setScreen = useDietForgeStore((state) => state.setScreen);
+  const nextStep = useDietForgeStore((state) => state.nextStep);
+  const prevStep = useDietForgeStore((state) => state.prevStep);
+  const setStep = useDietForgeStore((state) => state.setStep);
 
-  const currentScreenIndex = useMemo(() => screens.indexOf(currentScreen), [currentScreen]);
-
-  const goToScreen = useCallback((screen: ScreenId) => {
-    setCurrentScreen(screen);
-  }, []);
-
-  const goToScreenIndex = useCallback((index: number) => {
-    const bounded = Math.max(0, Math.min(index, screens.length - 1));
-    const next = screens[bounded];
-    if (next) {
-      setCurrentScreen(next);
-    }
-  }, []);
-
-  const nextFormStep = useCallback((totalSteps: number) => {
-    setCurrentFormStep((prev) => {
-      const next = prev + 1;
-      return next > totalSteps ? totalSteps : next;
-    });
-  }, []);
-
-  const prevFormStep = useCallback(() => {
-    setCurrentFormStep((prev) => Math.max(1, prev - 1));
-  }, []);
-
-  const resetFormStep = useCallback(() => {
-    setCurrentFormStep(1);
-  }, []);
+  const currentScreenIndex = screens.indexOf(currentScreen);
 
   return {
     screens,
     currentScreen,
     currentScreenIndex,
     currentFormStep,
-    goToScreen,
-    goToScreenIndex,
-    nextFormStep,
-    prevFormStep,
-    resetFormStep,
+    goToScreen: setScreen,
+    goToScreenIndex: (index: number) => {
+      const bounded = Math.max(0, Math.min(index, screens.length - 1));
+      const next = screens[bounded];
+      if (next) {
+        setScreen(next);
+      }
+    },
+    nextFormStep: nextStep,
+    prevFormStep: prevStep,
+    resetFormStep: () => setStep(1),
   };
 };
-

@@ -1,8 +1,9 @@
 ﻿import { ArrowLeft, ArrowRight } from 'lucide-react';
+import type { ReactNode } from 'react';
 
 import { summaryCopy } from '../../../lib/constants/copy';
-import { summaryMiniStats } from '../../../lib/constants/mockSummary';
 import type { ScreenId } from '../../../lib/types';
+import { useDietForgeStore } from '../../../store/useDietForgeStore';
 import { Button } from '../../ui/Button';
 
 import { SummaryMetrics } from './SummaryMetrics';
@@ -13,6 +14,41 @@ interface SummaryScreenProps {
 }
 
 export const SummaryScreen = ({ active, onNavigate }: SummaryScreenProps) => {
+  const results = useDietForgeStore((state) => state.results);
+
+  const miniStats: Array<{
+    id: string;
+    tone: 'violet' | 'cyan' | 'lime' | 'orange';
+    content: ReactNode;
+  }> = [
+    {
+      id: 'bmr',
+      content: `BMR: ${(results?.breakdown.bmr ?? 0).toLocaleString('pt-BR')} kcal`,
+      tone: 'violet',
+    },
+    {
+      id: 'lbm',
+      content: `LBM: ${results?.bmr.lbm !== null && results?.bmr.lbm !== undefined ? `${results.bmr.lbm.toLocaleString('pt-BR')} kg` : 'N/A'}`,
+      tone: 'cyan',
+    },
+    {
+      id: 'tef',
+      content: `TEF: ${(results?.breakdown.tef ?? 0).toLocaleString('pt-BR')} kcal`,
+      tone: 'lime',
+    },
+    {
+      id: 'macros',
+      content: (
+        <span>
+          Proteína <strong className="summary-mini-stat-val-protein">{results?.macros.proteinG ?? 0}g</strong> · Carb{' '}
+          <strong className="summary-mini-stat-val-carb">{results?.macros.carbsG ?? 0}g</strong> · Gordura{' '}
+          <strong className="summary-mini-stat-val-fat">{results?.macros.fatG ?? 0}g</strong>
+        </span>
+      ),
+      tone: 'orange',
+    },
+  ];
+
   return (
     <section className="screen active" id="screen-summary">
       <div className="summary-bg-gradient" />
@@ -48,10 +84,10 @@ export const SummaryScreen = ({ active, onNavigate }: SummaryScreenProps) => {
         </div>
 
         <div className="summary-mini-stats">
-          {summaryMiniStats.map((item) => (
+          {miniStats.map((item) => (
             <div key={item.id} className="summary-mini-stat">
               <div className={`summary-mini-stat-dot dot-${item.tone}`} />
-              {item.label}
+              {item.content}
             </div>
           ))}
         </div>
@@ -59,4 +95,3 @@ export const SummaryScreen = ({ active, onNavigate }: SummaryScreenProps) => {
     </section>
   );
 };
-

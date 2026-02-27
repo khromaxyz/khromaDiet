@@ -1,30 +1,23 @@
-﻿import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import { Button } from '../../ui/Button';
 import { heroCopy } from '../../../lib/constants/copy';
-import { HeroParticlesCanvas } from './HeroParticlesCanvas';
 import { HeroStats } from './HeroStats';
 import type { ScreenId } from '../../../lib/types';
 
 interface HeroScreenProps {
   onNavigate: (screen: ScreenId) => void;
+  onOpenExample: () => void;
 }
 
-export const HeroScreen = ({ onNavigate }: HeroScreenProps) => {
+export const HeroScreen = ({ onNavigate, onOpenExample }: HeroScreenProps) => {
   return (
     <section className="screen active" id="screen-hero">
-      <HeroParticlesCanvas />
       <div className="hero-grid-overlay" />
-      <div className="hero-gradient-blob blob-1" />
-      <div className="hero-gradient-blob blob-2" />
-      <div className="hero-gradient-blob blob-3" />
 
       <div className="hero-content">
-        <div className="hero-badge">
-          <span className="hero-badge-dot" />
-          {heroCopy.badge}
-        </div>
+        <div className="hero-badge">{heroCopy.badge}</div>
 
         <h1 className="hero-headline">
           <span className="line-1">{heroCopy.titleLine1}</span>
@@ -41,7 +34,7 @@ export const HeroScreen = ({ onNavigate }: HeroScreenProps) => {
           >
             Calcular minha dieta
           </Button>
-          <Button variant="secondary" onClick={() => onNavigate('dashboard')}>
+          <Button variant="secondary" onClick={onOpenExample}>
             Ver exemplo
           </Button>
         </div>
@@ -53,4 +46,3 @@ export const HeroScreen = ({ onNavigate }: HeroScreenProps) => {
     </section>
   );
 };
-

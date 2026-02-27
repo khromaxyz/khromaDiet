@@ -70,4 +70,3 @@ export interface DashboardViewModel {
   supplements: SupplementItem[];
   meals: MealItem[];
 }
-

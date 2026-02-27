@@ -1,125 +1,86 @@
-﻿
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        html {
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-        body {
-            font-family: var(--font-display);
-            background-color: var(--bg-900);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            cursor: none;
-            position: relative;
-        }
+body {
+  font-family: var(--font-display);
+  background-color: var(--bg-900);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: auto;
+  position: relative;
+}
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.6;
-        }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
 
-        /* ============================================================
-   CURSOR CUSTOMIZADO
-   ============================================================ */
-        #cursor-dot {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--accent-lime);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: opacity var(--transition-fast), width 200ms ease, height 200ms ease, background 200ms ease;
-            mix-blend-mode: difference;
-        }
-
-        #cursor-ring {
-            position: fixed;
-            width: 36px;
-            height: 36px;
-            border: 1.5px solid rgba(200, 255, 0, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition: opacity var(--transition-fast), width 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94), height 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        body:has(button:hover) #cursor-ring,
-        body:has(a:hover) #cursor-ring,
-        body:has(.card:hover) #cursor-ring,
-        body:has(.goal-card:hover) #cursor-ring {
-            width: 56px;
-            height: 56px;
-            border-color: rgba(200, 255, 0, 0.8);
-        }
-
-        /* ============================================================
+/* ============================================================
    SCROLLBAR
    ============================================================ */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
+::-webkit-scrollbar {
+  width: 6px;
+}
 
-        ::-webkit-scrollbar-track {
-            background: var(--bg-800);
-        }
+::-webkit-scrollbar-track {
+  background: var(--bg-800);
+}
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--bg-500);
-            border-radius: 3px;
-        }
+::-webkit-scrollbar-thumb {
+  background: var(--bg-500);
+  border-radius: 3px;
+}
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-violet);
-        }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-violet);
+}
 
-        /* ============================================================
+/* ============================================================
    APP WRAPPER & SCREEN SYSTEM
    ============================================================ */
-        #app {
-            position: relative;
-            min-height: 100vh;
-        }
+#app {
+  position: relative;
+  min-height: 100vh;
+}
 
-        .screen {
-            position: absolute;
-            inset: 0;
-            min-height: 100vh;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            transition: opacity var(--transition-screen), transform var(--transition-screen);
-            overflow-y: auto;
-        }
+.screen {
+  position: absolute;
+  inset: 0;
+  min-height: 100vh;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity var(--transition-screen), transform var(--transition-screen);
+  overflow-y: auto;
+}
 
-        .screen.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: all;
-            position: relative;
-        }
+.screen.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+  position: relative;
+}
 
-        .screen.exit {
-            opacity: 0;
-            transform: translateY(-20px);
-            pointer-events: none;
-        }
-
+.screen.exit {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
