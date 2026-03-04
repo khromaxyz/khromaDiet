@@ -2,54 +2,38 @@
     /* DESIGN SYSTEM — VARIÁVEIS CSS               */
     /* =========================================== */
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy {
-      --color-bg-base:        #0a0a0c;
-      --color-bg-surface:     #111114;
-      --color-bg-elevated:    #18181d;
-      --color-bg-overlay:     #1f1f26;
-      --color-bg-card:        #16161b;
-      --color-bg-card-hover:  #1c1c23;
 
-      --color-accent:         #e63946;
-      --color-accent-light:   #ff4d5a;
-      --color-accent-dark:    #b52d38;
-      --color-accent-muted:   rgba(230, 57, 70, 0.12);
-      --color-accent-glow:    rgba(230, 57, 70, 0.35);
+      /*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
 
-      --color-gold:           #d4a843;
-      --color-gold-light:     #f0c060;
-      --color-gold-muted:     rgba(212, 168, 67, 0.15);
-      --color-gold-glow:      rgba(212, 168, 67, 0.3);
+      --accent-primary:         #e63946;
 
-      --color-text-primary:   #f0f0f5;
-      --color-text-secondary: #9898a8;
-      --color-text-tertiary:  #5a5a6e;
-      --color-text-accent:    #e63946;
+      /*  OVERRIDE: valor diferente do :root (#f0f0f5 vs #ffffff) - sera unificado na fase Design System  */
 
-      --color-border:         rgba(255, 255, 255, 0.06);
-      --color-border-accent:  rgba(230, 57, 70, 0.3);
-      --color-border-gold:    rgba(212, 168, 67, 0.3);
+      --text-primary:   #f0f0f5;
+      /*  OVERRIDE: valor diferente do :root (#9898a8 vs rgba(255, 255, 255, 0.65)) - sera unificado na fase Design System  */
+      --text-secondary: #9898a8;
+      /*  OVERRIDE: valor diferente do :root (#5a5a6e vs rgba(255, 255, 255, 0.3)) - sera unificado na fase Design System  */
+      --text-tertiary:  #5a5a6e;
 
-      --shadow-sm:   0 1px 3px rgba(0,0,0,0.4);
-      --shadow-md:   0 4px 16px rgba(0,0,0,0.5);
-      --shadow-lg:   0 8px 32px rgba(0,0,0,0.6);
-      --shadow-xl:   0 16px 64px rgba(0,0,0,0.7);
-      --shadow-accent: 0 0 32px rgba(230,57,70,0.2), 0 0 64px rgba(230,57,70,0.08);
-      --shadow-gold:   0 0 32px rgba(212,168,67,0.2), 0 0 64px rgba(212,168,67,0.08);
+      /*  OVERRIDE: valor diferente do :root (6px vs 8px) - sera unificado na fase Design System  */
 
       --radius-sm:   6px;
+      /*  OVERRIDE: valor diferente do :root (12px vs 14px) - sera unificado na fase Design System  */
       --radius-md:   12px;
+      /*  OVERRIDE: valor diferente do :root (18px vs 20px) - sera unificado na fase Design System  */
       --radius-lg:   18px;
+      /*  OVERRIDE: valor diferente do :root (24px vs 28px) - sera unificado na fase Design System  */
       --radius-xl:   24px;
-      --radius-2xl:  32px;
-      --radius-full: 9999px;
-
-      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      /*  OVERRIDE: valor diferente do :root ('SF Mono', 'Fira Code', 'Cascadia Code', monospace vs 'JetBrains Mono', 'Fira Code', monospace) - sera unificado na fase Design System  */
       --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
 
+      /*  OVERRIDE: valor diferente do :root (150ms cubic-bezier(0.4, 0, 0.2, 1) vs 180ms cubic-bezier(0.25, 0.46, 0.45, 0.94)) - sera unificado na fase Design System  */
+
       --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+      /*  OVERRIDE: valor diferente do :root (250ms cubic-bezier(0.4, 0, 0.2, 1) vs 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)) - sera unificado na fase Design System  */
       --transition-base:   250ms cubic-bezier(0.4, 0, 0.2, 1);
+      /*  OVERRIDE: valor diferente do :root (400ms cubic-bezier(0.4, 0, 0.2, 1) vs 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)) - sera unificado na fase Design System  */
       --transition-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     /* =========================================== */
@@ -69,8 +53,8 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy {
       font-family: var(--font-sans);
-      background-color: var(--color-bg-base);
-      color: var(--color-text-primary);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
       line-height: 1.6;
       min-height: 100vh;
       overflow-x: hidden;
@@ -290,7 +274,7 @@
       height: 120px;
       background: linear-gradient(
         to bottom,
-        var(--color-bg-base) 0%,
+        var(--bg-base) 0%,
         transparent 100%
       );
       display: flex;
@@ -320,7 +304,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .section-divider-label {
       position: relative;
       z-index: 1;
-      background: var(--color-bg-base);
+      background: var(--bg-base);
       padding: 8px 24px;
       border: 1px solid var(--color-border-accent);
       border-radius: var(--radius-full);
@@ -328,7 +312,7 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--color-accent);
+      color: var(--accent-primary);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -338,7 +322,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--color-accent);
+      background: var(--accent-primary);
       animation: final-pulseGlow 2s ease-in-out infinite;
     }
 
@@ -431,56 +415,56 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-1 {
       width: 3px; height: 3px;
-      background: var(--color-accent);
+      background: var(--accent-primary);
       top: 15%; left: 12%;
       animation: final-particleFloat 6s ease-in-out infinite;
       opacity: 0.5;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-2 {
       width: 2px; height: 2px;
-      background: var(--color-gold);
+      background: var(--accent-gold);
       top: 25%; left: 80%;
       animation: final-particleFloat 8s ease-in-out infinite 1s;
       opacity: 0.4;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-3 {
       width: 4px; height: 4px;
-      background: var(--color-accent);
+      background: var(--accent-primary);
       top: 60%; left: 6%;
       animation: final-particleFloat 7s ease-in-out infinite 2s;
       opacity: 0.3;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-4 {
       width: 2px; height: 2px;
-      background: var(--color-gold-light);
+      background: var(--accent-gold-light);
       top: 70%; left: 92%;
       animation: final-particleFloat 9s ease-in-out infinite 0.5s;
       opacity: 0.5;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-5 {
       width: 3px; height: 3px;
-      background: var(--color-accent-light);
+      background: var(--accent-primary-bright);
       top: 45%; left: 50%;
       animation: final-particleFloat 5s ease-in-out infinite 3s;
       opacity: 0.25;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-6 {
       width: 2px; height: 2px;
-      background: var(--color-gold);
+      background: var(--accent-gold);
       top: 10%; left: 60%;
       animation: final-particleFloat 10s ease-in-out infinite 1.5s;
       opacity: 0.4;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-7 {
       width: 3px; height: 3px;
-      background: var(--color-accent);
+      background: var(--accent-primary);
       top: 85%; left: 30%;
       animation: final-particleFloat 7.5s ease-in-out infinite 4s;
       opacity: 0.35;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .particle-8 {
       width: 2px; height: 2px;
-      background: var(--color-gold-light);
+      background: var(--accent-gold-light);
       top: 55%; left: 72%;
       animation: final-particleFloat 6.5s ease-in-out infinite 2.5s;
       opacity: 0.45;
@@ -527,8 +511,8 @@
       inset: 0;
       border-radius: 50%;
       border: 1px solid transparent;
-      background: linear-gradient(var(--color-bg-base), var(--color-bg-base)) padding-box,
-                  linear-gradient(135deg, var(--color-accent), transparent, var(--color-gold), transparent, var(--color-accent)) border-box;
+      background: linear-gradient(var(--bg-base), var(--bg-base)) padding-box,
+                  linear-gradient(135deg, var(--accent-primary), transparent, var(--accent-gold), transparent, var(--accent-primary)) border-box;
       animation: final-rotateSlow 8s linear infinite;
     }
 
@@ -547,7 +531,7 @@
       position: absolute;
       inset: 24px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-bg-overlay) 100%);
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--color-bg-overlay) 100%);
       border: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
@@ -563,7 +547,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .completion-check-circle {
       fill: none;
-      stroke: var(--color-accent);
+      stroke: var(--accent-primary);
       stroke-width: 2;
       stroke-linecap: round;
       stroke-dasharray: 100;
@@ -573,7 +557,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .completion-check-mark {
       fill: none;
-      stroke: var(--color-gold);
+      stroke: var(--accent-gold);
       stroke-width: 2.5;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -587,7 +571,7 @@
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: var(--color-gold);
+      background: var(--accent-gold);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .badge-spark-1 {
@@ -598,7 +582,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .badge-spark-2 {
       bottom: 8px; left: 20px;
       width: 3px; height: 3px;
-      background: var(--color-accent-light);
+      background: var(--accent-primary-bright);
       animation: final-particleFloat 5s ease-in-out infinite 0.8s;
       opacity: 0.6;
     }
@@ -606,7 +590,7 @@
       top: 50%; right: -4px;
       transform: translateY(-50%);
       width: 5px; height: 5px;
-      background: var(--color-gold-light);
+      background: var(--accent-gold-light);
       animation: final-particleFloat 3.5s ease-in-out infinite 1.4s;
       opacity: 0.5;
     }
@@ -614,7 +598,7 @@
       top: 50%; left: -2px;
       transform: translateY(-50%);
       width: 3px; height: 3px;
-      background: var(--color-accent);
+      background: var(--accent-primary);
       animation: final-particleFloat 4.5s ease-in-out infinite 0.6s;
       opacity: 0.6;
     }
@@ -625,7 +609,7 @@
       font-weight: 700;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--color-accent);
+      color: var(--accent-primary);
       margin-bottom: 16px;
       display: flex;
       align-items: center;
@@ -639,11 +623,11 @@
       display: block;
       width: 32px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--color-accent));
+      background: linear-gradient(90deg, transparent, var(--accent-primary));
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .completion-label::after {
-      background: linear-gradient(90deg, var(--color-accent), transparent);
+      background: linear-gradient(90deg, var(--accent-primary), transparent);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .completion-title {
@@ -651,7 +635,7 @@
       font-weight: 800;
       line-height: 1.1;
       letter-spacing: -0.03em;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       margin-bottom: 20px;
       animation: final-fadeInUp 0.7s ease 0.5s both;
     }
@@ -659,7 +643,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .completion-title .accent-word {
       position: relative;
       display: inline-block;
-      background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 40%, var(--color-accent-light) 100%);
+      background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 40%, var(--accent-primary-bright) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -672,7 +656,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: linear-gradient(90deg, var(--color-gold), var(--color-accent));
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-primary));
       border-radius: 2px;
       transform-origin: left;
       animation: final-scaleIn 0.8s ease 1.3s both;
@@ -680,7 +664,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .completion-subtitle {
       font-size: clamp(15px, 2vw, 18px);
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       max-width: 560px;
       line-height: 1.7;
       animation: final-fadeIn 0.6s ease 0.7s both;
@@ -700,7 +684,7 @@
       margin-bottom: 80px;
       border-top: 1px solid var(--color-border);
       border-bottom: 1px solid var(--color-border);
-      background: var(--color-bg-surface);
+      background: var(--bg-surface);
       animation: final-fadeIn 0.8s ease 0.9s both;
     }
 
@@ -717,11 +701,11 @@
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .stats-ticker-wrapper::before {
       left: 0;
-      background: linear-gradient(90deg, var(--color-bg-surface), transparent);
+      background: linear-gradient(90deg, var(--bg-surface), transparent);
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .stats-ticker-wrapper::after {
       right: 0;
-      background: linear-gradient(-90deg, var(--color-bg-surface), transparent);
+      background: linear-gradient(-90deg, var(--bg-surface), transparent);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .stats-ticker-track {
@@ -752,18 +736,18 @@
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .ticker-item-value {
       font-size: 14px;
       font-weight: 700;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       font-variant-numeric: tabular-nums;
     }
 
-    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .ticker-item-value.accent { color: var(--color-accent); }
-    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .ticker-item-value.gold   { color: var(--color-gold); }
+    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .ticker-item-value.accent { color: var(--accent-primary); }
+    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .ticker-item-value.gold   { color: var(--accent-gold); }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .ticker-item-value.green  { color: #4ade80; }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .ticker-dot {
@@ -797,14 +781,14 @@
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.15em;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       font-family: var(--font-mono);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .section-title-text {
       font-size: 22px;
       font-weight: 700;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       letter-spacing: -0.02em;
     }
 
@@ -817,7 +801,7 @@
     /* Card principal do recibo */
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .protocol-receipt {
       position: relative;
-      background: var(--color-bg-card);
+      background: var(--bg-card);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-xl);
       overflow: hidden;
@@ -834,7 +818,7 @@
     /* Linha de destaque topo do card */
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .receipt-top-accent {
       height: 3px;
-      background: linear-gradient(90deg, var(--color-accent), var(--color-gold), var(--color-accent-light));
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold), var(--accent-primary-bright));
       background-size: 200% 100%;
       animation: final-borderFlow 4s ease infinite;
     }
@@ -859,18 +843,18 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .receipt-plan-name {
       font-size: 26px;
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .receipt-plan-name span {
-      background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent-dark));
+      background: linear-gradient(135deg, var(--accent-primary-bright), var(--accent-primary-dark));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -908,7 +892,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .receipt-id {
       font-size: 11px;
       font-family: var(--font-mono);
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       letter-spacing: 0.1em;
     }
 
@@ -947,7 +931,7 @@
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       margin-bottom: 10px;
       display: flex;
       align-items: center;
@@ -965,20 +949,20 @@
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       font-variant-numeric: tabular-nums;
       margin-bottom: 6px;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .metric-cell-value.value-accent {
-      background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+      background: linear-gradient(135deg, var(--accent-primary-bright), var(--accent-primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .metric-cell-value.value-gold {
-      background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+      background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -987,13 +971,13 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .metric-cell-unit {
       font-size: 13px;
       font-weight: 500;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       margin-left: 4px;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .metric-cell-sub {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       display: flex;
       align-items: center;
       gap: 4px;
@@ -1011,7 +995,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .delta.negative {
       background: rgba(230, 57, 70, 0.12);
-      color: var(--color-accent-light);
+      color: var(--accent-primary-bright);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .delta.positive {
@@ -1032,7 +1016,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .deficit-bar-label-text {
       font-size: 10px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       letter-spacing: 0.08em;
     }
 
@@ -1047,7 +1031,7 @@
       height: 100%;
       width: 85%;
       border-radius: var(--radius-full);
-      background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent));
+      background: linear-gradient(90deg, var(--accent-primary-dark), var(--accent-primary));
       position: relative;
       animation: final-slideInLeft 1.2s ease 1s both;
     }
@@ -1074,7 +1058,7 @@
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       margin-bottom: 24px;
       display: flex;
       align-items: center;
@@ -1096,7 +1080,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .macro-block {
       position: relative;
-      background: var(--color-bg-elevated);
+      background: var(--bg-elevated);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
       padding: 24px;
@@ -1135,7 +1119,7 @@
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .macro-block-pct {
@@ -1151,7 +1135,7 @@
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .carbs .macro-block-pct {
       background: rgba(212, 168, 67, 0.12);
-      color: var(--color-gold-light);
+      color: var(--accent-gold-light);
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .fat .macro-block-pct {
       background: rgba(129, 140, 248, 0.12);
@@ -1173,7 +1157,7 @@
       background-clip: text;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .carbs .macro-block-value {
-      background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+      background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -1193,7 +1177,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .macro-block-kcal {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       margin-bottom: 16px;
     }
 
@@ -1217,7 +1201,7 @@
       animation: final-slideInLeft 1.4s ease 1.2s both;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .carbs .macro-bar-fill {
-      background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-light));
       width: 60%;
       animation: final-slideInLeft 1.4s ease 1.4s both;
     }
@@ -1247,13 +1231,13 @@
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .receipt-footer-value {
       font-size: 15px;
       font-weight: 600;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .receipt-footer-divider {
@@ -1282,13 +1266,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--color-bg-elevated);
+      background: var(--bg-elevated);
       border: 1px solid var(--color-border-gold);
       border-radius: var(--radius-full);
       padding: 8px 20px;
       font-size: 13px;
       font-weight: 700;
-      color: var(--color-gold);
+      color: var(--accent-gold);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-duration-badge svg {
@@ -1300,7 +1284,7 @@
     /* Barra de linha do tempo */
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-track {
       position: relative;
-      background: var(--color-bg-card);
+      background: var(--bg-card);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-xl);
       padding: 40px;
@@ -1314,7 +1298,7 @@
       left: 40px;
       right: 40px;
       height: 2px;
-      background: linear-gradient(90deg, var(--color-accent), var(--color-gold) 50%, var(--color-bg-border) 100%);
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold) 50%, var(--color-bg-border) 100%);
       transform: translateY(-50%);
       transform-origin: left;
       animation: final-scaleIn 1.5s ease 0.8s both;
@@ -1354,7 +1338,7 @@
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       margin-bottom: 8px;
     }
 
@@ -1362,29 +1346,29 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      border: 2px solid var(--color-accent);
-      background: var(--color-bg-base);
+      border: 2px solid var(--accent-primary);
+      background: var(--bg-base);
       transition: all var(--transition-base);
       cursor: default;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-point-dot.active {
-      background: var(--color-accent);
+      background: var(--accent-primary);
       box-shadow: 0 0 12px rgba(230, 57, 70, 0.5);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-point-dot.gold {
-      border-color: var(--color-gold);
+      border-color: var(--accent-gold);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-point-dot.gold.active {
-      background: var(--color-gold);
+      background: var(--accent-gold);
       box-shadow: 0 0 12px rgba(212, 168, 67, 0.5);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-point-dot.completed {
-      background: var(--color-accent);
-      border-color: var(--color-accent);
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
     }
 
     /* Ponto abaixo: label da fase */
@@ -1399,13 +1383,13 @@
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.05em;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       text-align: center;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-point-detail {
       font-size: 9px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       text-align: center;
       margin-top: 2px;
     }
@@ -1422,7 +1406,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .progress-label-text {
       font-size: 11px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       font-weight: 600;
       white-space: nowrap;
     }
@@ -1439,7 +1423,7 @@
       height: 100%;
       width: 0%;
       border-radius: var(--radius-full);
-      background: linear-gradient(90deg, var(--color-accent), var(--color-gold));
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
       position: relative;
       transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -1459,7 +1443,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .progress-pct-text {
       font-size: 13px;
       font-weight: 800;
-      color: var(--color-gold);
+      color: var(--accent-gold);
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
@@ -1487,7 +1471,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-primary-card {
       position: relative;
-      background: var(--color-bg-card);
+      background: var(--bg-card);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-xl);
       padding: 0;
@@ -1503,7 +1487,7 @@
       position: absolute;
       inset: -1px;
       border-radius: calc(var(--radius-xl) + 1px);
-      background: linear-gradient(135deg, var(--color-accent), var(--color-gold), var(--color-accent-light), var(--color-gold-light));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-gold), var(--accent-primary-bright), var(--accent-gold-light));
       background-size: 300% 300%;
       animation: final-borderFlow 4s ease infinite;
       opacity: 0;
@@ -1523,7 +1507,7 @@
     /* Camada interna para criar efeito de borda */
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-primary-inner {
       position: relative;
-      background: var(--color-bg-card);
+      background: var(--bg-card);
       border-radius: var(--radius-xl);
       height: 100%;
       overflow: hidden;
@@ -1593,7 +1577,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .coming-soon-badge-icon {
       width: 16px;
       height: 16px;
-      color: var(--color-gold);
+      color: var(--accent-gold);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .coming-soon-badge-text {
@@ -1601,14 +1585,14 @@
       font-weight: 800;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--color-gold);
+      color: var(--accent-gold);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .coming-soon-badge-dot {
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: var(--color-gold);
+      background: var(--accent-gold);
       animation: final-pulseGoldGlow 2s ease-in-out infinite;
     }
 
@@ -1618,12 +1602,12 @@
       font-weight: 900;
       letter-spacing: -0.03em;
       line-height: 1.1;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       margin-bottom: 16px;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-primary-headline .gradient-text {
-      background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-accent) 40%, var(--color-gold) 100%);
+      background: linear-gradient(135deg, var(--accent-primary-bright) 0%, var(--accent-primary) 40%, var(--accent-gold) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -1631,7 +1615,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-primary-description {
       font-size: 15px;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       line-height: 1.7;
       max-width: 520px;
       margin-bottom: 36px;
@@ -1651,12 +1635,12 @@
       align-items: center;
       gap: 12px;
       font-size: 13px;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       transition: color var(--transition-fast);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-feature-item:hover {
-      color: var(--color-text-primary);
+      color: var(--text-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-feature-check {
@@ -1674,7 +1658,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-feature-check svg {
       width: 10px;
       height: 10px;
-      color: var(--color-accent);
+      color: var(--accent-primary);
     }
 
     /* Botão principal */
@@ -1685,7 +1669,7 @@
       justify-content: center;
       gap: 12px;
       padding: 18px 36px;
-      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-dark));
       border: none;
       border-radius: var(--radius-lg);
       color: #fff;
@@ -1714,7 +1698,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+      background: linear-gradient(135deg, var(--accent-primary-bright), var(--accent-primary));
       opacity: 0;
       transition: opacity var(--transition-base);
     }
@@ -1755,7 +1739,7 @@
       gap: 8px;
       margin-top: 14px;
       font-size: 11px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .btn-soon-note svg {
@@ -1777,7 +1761,7 @@
     /* Card de CTA secundário */
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-secondary-card {
       position: relative;
-      background: var(--color-bg-card);
+      background: var(--bg-card);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
       padding: 28px 28px;
@@ -1852,14 +1836,14 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-secondary-title {
       font-size: 16px;
       font-weight: 700;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       margin-bottom: 4px;
       letter-spacing: -0.01em;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-secondary-desc {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       line-height: 1.5;
     }
 
@@ -1868,7 +1852,7 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: var(--color-bg-elevated);
+      background: var(--bg-elevated);
       border: 1px solid var(--color-border);
       display: flex;
       align-items: center;
@@ -1878,15 +1862,15 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-secondary-card:hover .cta-secondary-arrow {
-      background: var(--color-accent);
-      border-color: var(--color-accent);
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
       transform: translateX(4px);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .cta-secondary-arrow svg {
       width: 14px;
       height: 14px;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       transition: color var(--transition-fast);
     }
 
@@ -1909,7 +1893,7 @@
       opacity: 1;
     }
 
-    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .card-line-pdf   { background: linear-gradient(90deg, var(--color-accent), transparent); }
+    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .card-line-pdf   { background: linear-gradient(90deg, var(--accent-primary), transparent); }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .card-line-share { background: linear-gradient(90deg, #818cf8, transparent); }
 
     /* =========================================== */
@@ -1925,7 +1909,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .insight-card {
-      background: var(--color-bg-card);
+      background: var(--bg-card);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
       padding: 24px;
@@ -1987,14 +1971,14 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .trend-neutral {
       background: rgba(212, 168, 67, 0.1);
-      color: var(--color-gold);
+      color: var(--accent-gold);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .insight-value {
       font-size: 24px;
       font-weight: 800;
       letter-spacing: -0.03em;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       margin-bottom: 4px;
       font-variant-numeric: tabular-nums;
     }
@@ -2004,7 +1988,7 @@
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     /* =========================================== */
@@ -2015,7 +1999,7 @@
       position: relative;
       border-top: 1px solid var(--color-border);
       padding: 0 40px;
-      background: var(--color-bg-base);
+      background: var(--bg-base);
       animation: final-fadeIn 1s ease 0.8s both;
     }
 
@@ -2028,7 +2012,7 @@
       transform: translateX(-50%);
       width: 200px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
     }
 
     /* Bloco superior do footer: metadados + disclaimer */
@@ -2059,7 +2043,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-brand-logo {
       width: 36px;
       height: 36px;
-      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-dark));
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
@@ -2076,11 +2060,11 @@
       font-size: 16px;
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-brand-name span {
-      color: var(--color-accent);
+      color: var(--accent-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-divider-vertical {
@@ -2101,19 +2085,19 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--color-bg-elevated);
+      background: var(--bg-elevated);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-full);
       padding: 6px 12px;
       font-size: 11px;
       font-weight: 600;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       transition: all var(--transition-fast);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .meta-chip:hover {
       border-color: rgba(255,255,255,0.12);
-      color: var(--color-text-primary);
+      color: var(--text-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .meta-chip svg {
@@ -2125,7 +2109,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .meta-chip.highlight {
       border-color: var(--color-border-accent);
       background: var(--color-accent-muted);
-      color: var(--color-accent-light);
+      color: var(--accent-primary-bright);
     }
 
     /* Disclaimer */
@@ -2138,7 +2122,7 @@
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       margin-bottom: 8px;
       display: flex;
       align-items: center;
@@ -2153,7 +2137,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .disclaimer-text {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       line-height: 1.65;
     }
 
@@ -2169,11 +2153,11 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-copyright {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-copyright strong {
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-links {
@@ -2184,14 +2168,14 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-link {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       text-decoration: none;
       cursor: pointer;
       transition: color var(--transition-fast);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-link:hover {
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-links-divider {
@@ -2203,8 +2187,8 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .footer-version {
       font-size: 11px;
       font-family: var(--font-mono);
-      color: var(--color-text-tertiary);
-      background: var(--color-bg-elevated);
+      color: var(--text-tertiary);
+      background: var(--bg-elevated);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-full);
       padding: 4px 10px;
@@ -2229,7 +2213,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: var(--color-bg-elevated);
+      background: var(--bg-elevated);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
       padding: 16px 20px;
@@ -2274,7 +2258,7 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-icon.warning {
       background: rgba(212, 168, 67, 0.12);
       border: 1px solid rgba(212, 168, 67, 0.2);
-      color: var(--color-gold);
+      color: var(--accent-gold);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-body {
@@ -2284,13 +2268,13 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-title {
       font-size: 13px;
       font-weight: 700;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       margin-bottom: 2px;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-desc {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-close {
@@ -2303,14 +2287,14 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       transition: all var(--transition-fast);
       flex-shrink: 0;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-close:hover {
       background: rgba(255,255,255,0.06);
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-close svg {
@@ -2330,7 +2314,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-progress.success { background: #4ade80; }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-progress.info    { background: #818cf8; }
-    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-progress.warning { background: var(--color-gold); }
+    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .toast-progress.warning { background: var(--accent-gold); }
 
     /* =========================================== */
     /* MODAL DE CONFIRMAÇÃO — PDF / SHARE          */
@@ -2356,7 +2340,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-card {
-      background: var(--color-bg-elevated);
+      background: var(--bg-elevated);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-xl);
       padding: 40px;
@@ -2411,14 +2395,14 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-title {
       font-size: 20px;
       font-weight: 800;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       letter-spacing: -0.02em;
       margin-bottom: 6px;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-subtitle {
       font-size: 13px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       line-height: 1.5;
     }
 
@@ -2432,14 +2416,14 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
       transition: all var(--transition-fast);
       flex-shrink: 0;
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-close:hover {
       background: rgba(255,255,255,0.08);
-      color: var(--color-text-primary);
+      color: var(--text-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-close svg {
@@ -2469,13 +2453,13 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-content-item-label {
       font-size: 12px;
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-content-item-value {
       font-size: 12px;
       font-weight: 600;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-actions {
@@ -2506,16 +2490,16 @@
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-btn-cancel {
       background: var(--color-bg-overlay);
       border: 1px solid var(--color-border);
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-btn-cancel:hover {
       background: rgba(255,255,255,0.05);
-      color: var(--color-text-primary);
+      color: var(--text-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-btn-confirm {
-      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-dark));
       color: white;
     }
 
@@ -2576,7 +2560,7 @@
     /* =========================================== */
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy :focus-visible {
-      outline: 2px solid var(--color-accent);
+      outline: 2px solid var(--accent-primary);
       outline-offset: 3px;
       border-radius: 4px;
     }

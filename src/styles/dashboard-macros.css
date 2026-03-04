@@ -4,98 +4,65 @@
         /* SEÇÃO: DESIGN SYSTEM / VARIÁVEIS              */
         /* ============================================= */
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a28;
+            /*  OVERRIDE: valor diferente do :root (#0a0a0f vs #0a0a0c) - sera unificado na fase Design System  */
+            --bg-base: #0a0a0f;
+            /*  OVERRIDE: valor diferente do :root (#12121a vs #111114) - sera unificado na fase Design System  */
+            --bg-surface: #12121a;
+            /*  OVERRIDE: valor diferente do :root (#1a1a28 vs #18181d) - sera unificado na fase Design System  */
+            --bg-elevated: #1a1a28;
+            /*  OVERRIDE: valor diferente do :root (#111119 vs #16161b) - sera unificado na fase Design System  */
             --bg-card: #111119;
-            --bg-card-hover: #1c1c2a;
+            /*  OVERRIDE: valor diferente do :root (#1e1e2e vs #18181d) - sera unificado na fase Design System  */
             --bg-elevated: #1e1e2e;
+            /*  OVERRIDE: valor diferente do :root (rgba(255, 255, 255, 0.03) vs #111114) - sera unificado na fase Design System  */
             --bg-surface: rgba(255, 255, 255, 0.03);
-            --bg-glass: rgba(17, 17, 25, 0.75);
-            --bg-glass-heavy: rgba(10, 10, 15, 0.85);
 
-            --accent-red: #e63946;
-            --accent-red-light: #ff4d5a;
-            --accent-red-dark: #c0313d;
-            --accent-red-glow: rgba(230, 57, 70, 0.3);
-            --accent-red-subtle: rgba(230, 57, 70, 0.08);
+            /*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
+
+            --accent-primary: #e63946;
+            /*  OVERRIDE: valor diferente do :root (#c0313d vs #b52d38) - sera unificado na fase Design System  */
+            --accent-primary-dark: #c0313d;
+
+            /*  OVERRIDE: valor diferente do :root (#f0f0f5 vs #ffffff) - sera unificado na fase Design System  */
 
             --text-primary: #f0f0f5;
+            /*  OVERRIDE: valor diferente do :root (#a0a0b8 vs rgba(255, 255, 255, 0.65)) - sera unificado na fase Design System  */
             --text-secondary: #a0a0b8;
+            /*  OVERRIDE: valor diferente do :root (#6a6a80 vs rgba(255, 255, 255, 0.3)) - sera unificado na fase Design System  */
             --text-tertiary: #6a6a80;
-            --text-muted: #4a4a5e;
-            --text-white: #ffffff;
-
-            --border-primary: rgba(255, 255, 255, 0.06);
-            --border-secondary: rgba(255, 255, 255, 0.03);
-            --border-accent: rgba(230, 57, 70, 0.2);
-            --border-glow: rgba(255, 255, 255, 0.08);
-
-            --protein-color: #e63946;
-            --protein-color-light: #ff6b76;
-            --protein-color-lighter: #ff9da5;
-            --protein-glow: rgba(230, 57, 70, 0.25);
-            --protein-glow-strong: rgba(230, 57, 70, 0.4);
-            --protein-bg: rgba(230, 57, 70, 0.06);
-            --protein-bg-mid: rgba(230, 57, 70, 0.10);
-            --protein-gradient: linear-gradient(135deg, #e63946, #ff6b76);
-            --protein-gradient-h: linear-gradient(90deg, #e63946, #ff6b76);
-
-            --carb-color: #f4a261;
-            --carb-color-light: #ffbe85;
-            --carb-color-lighter: #ffd4a8;
-            --carb-glow: rgba(244, 162, 97, 0.25);
-            --carb-glow-strong: rgba(244, 162, 97, 0.4);
-            --carb-bg: rgba(244, 162, 97, 0.06);
-            --carb-bg-mid: rgba(244, 162, 97, 0.10);
-            --carb-gradient: linear-gradient(135deg, #f4a261, #ffbe85);
-            --carb-gradient-h: linear-gradient(90deg, #f4a261, #ffbe85);
-
-            --fat-color: #8b5cf6;
-            --fat-color-light: #a78bfa;
-            --fat-color-lighter: #c4b5fd;
-            --fat-glow: rgba(139, 92, 246, 0.25);
-            --fat-glow-strong: rgba(139, 92, 246, 0.4);
-            --fat-bg: rgba(139, 92, 246, 0.06);
-            --fat-bg-mid: rgba(139, 92, 246, 0.10);
-            --fat-gradient: linear-gradient(135deg, #8b5cf6, #a78bfa);
-            --fat-gradient-h: linear-gradient(90deg, #8b5cf6, #a78bfa);
-
-            --success-color: #4ade80;
-            --success-glow: rgba(74, 222, 128, 0.25);
-            --success-bg: rgba(74, 222, 128, 0.06);
-            --warning-color: #fbbf24;
-            --warning-bg: rgba(251, 191, 36, 0.08);
-            --info-color: #60a5fa;
-
-            --radius-xs: 6px;
             --radius-sm: 8px;
+            /*  OVERRIDE: valor diferente do :root (12px vs 14px) - sera unificado na fase Design System  */
             --radius-md: 12px;
+            /*  OVERRIDE: valor diferente do :root (16px vs 20px) - sera unificado na fase Design System  */
             --radius-lg: 16px;
+            /*  OVERRIDE: valor diferente do :root (20px vs 28px) - sera unificado na fase Design System  */
             --radius-xl: 20px;
+            /*  OVERRIDE: valor diferente do :root (24px vs 32px) - sera unificado na fase Design System  */
             --radius-2xl: 24px;
-            --radius-3xl: 32px;
+            /*  OVERRIDE: valor diferente do :root (100px vs 9999px) - sera unificado na fase Design System  */
             --radius-full: 100px;
 
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5);
-            --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.6);
-            --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            /*  OVERRIDE: valor diferente do :root (0 2px 8px rgba(0, 0, 0, 0.2) vs 0 1px 3px rgba(0,0,0,0.4)) - sera unificado na fase Design System  */
 
-            --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            /*  OVERRIDE: valor diferente do :root (0 4px 16px rgba(0, 0, 0, 0.3) vs 0 4px 16px rgba(0,0,0,0.5)) - sera unificado na fase Design System  */
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+            /*  OVERRIDE: valor diferente do :root (0 8px 32px rgba(0, 0, 0, 0.4) vs 0 8px 32px rgba(0,0,0,0.6)) - sera unificado na fase Design System  */
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+            /*  OVERRIDE: valor diferente do :root (0 16px 48px rgba(0, 0, 0, 0.5) vs 0 16px 64px rgba(0,0,0,0.7)) - sera unificado na fase Design System  */
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5);
+            /*  OVERRIDE: valor diferente do :root ('SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', Consolas, monospace vs 'JetBrains Mono', 'Fira Code', monospace) - sera unificado na fase Design System  */
             --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
 
-            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            --transition-smooth: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            /*  OVERRIDE: valor diferente do :root (0.15s cubic-bezier(0.4, 0, 0.2, 1) vs 180ms cubic-bezier(0.25, 0.46, 0.45, 0.94)) - sera unificado na fase Design System  */
 
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            /*  OVERRIDE: valor diferente do :root (0.25s cubic-bezier(0.4, 0, 0.2, 1) vs 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)) - sera unificado na fase Design System  */
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            /*  OVERRIDE: valor diferente do :root (0.4s cubic-bezier(0.4, 0, 0.2, 1) vs 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)) - sera unificado na fase Design System  */
+            --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            /*  OVERRIDE: valor diferente do :root (0.6s cubic-bezier(0.34, 1.56, 0.64, 1) vs 500ms cubic-bezier(0.34, 1.56, 0.64, 1)) - sera unificado na fase Design System  */
+            --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         /* ============================================= */
@@ -115,7 +82,7 @@
 
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy {
             font-family: var(--font-stack);
-            background-color: var(--bg-primary);
+            background-color: var(--bg-base);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
@@ -212,7 +179,7 @@
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--accent-red-light);
+            color: var(--accent-primary-bright);
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
@@ -1824,11 +1791,11 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
+            background: var(--bg-base);
         }
 
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy ::-webkit-scrollbar-thumb {
-            background: var(--bg-tertiary);
+            background: var(--bg-elevated);
             border-radius: var(--radius-full);
         }
 
@@ -1848,7 +1815,7 @@
 
         /* Focus visible for accessibility */
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy *:focus-visible {
-            outline: 2px solid var(--accent-red-light);
+            outline: 2px solid var(--accent-primary-bright);
             outline-offset: 2px;
         }
 
