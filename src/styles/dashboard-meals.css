@@ -93,12 +93,6 @@
         /* ============================================= */
         /* SEÇÃO: RESET E BASE                           */
         /* ============================================= */
-        #screen-dashboard[data-dashboard-presentation] .meals-section-legacy *, #screen-dashboard[data-dashboard-presentation] .meals-section-legacy *::before, #screen-dashboard[data-dashboard-presentation] .meals-section-legacy *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy {
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
@@ -112,7 +106,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.5;
+            line-height: var(--leading-relaxed);
         }
 
         /* ============================================= */
@@ -264,8 +258,8 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .section-header__label {
             font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
+            font-weight: var(--weight-semibold);
+            letter-spacing: var(--tracking-caps-max);
             text-transform: uppercase;
             color: var(--accent-primary);
             font-family: var(--font-mono);
@@ -273,10 +267,10 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .section-header__title {
             font-size: 1.75rem;
-            font-weight: 700;
+            font-weight: var(--weight-bold);
             color: var(--text-primary);
-            letter-spacing: -0.03em;
-            line-height: 1.1;
+            letter-spacing: var(--tracking-neg-sm);
+            line-height: var(--leading-tight);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .section-header__right {
@@ -304,7 +298,7 @@
             color: var(--text-tertiary);
             font-family: var(--font-sans);
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: var(--weight-semibold);
             cursor: pointer;
             transition: all var(--duration-normal) var(--ease-out);
             display: flex;
@@ -383,10 +377,10 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .daily-totals__title-text {
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: var(--weight-medium);
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: var(--tracking-caps);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .daily-totals__badge {
@@ -398,9 +392,9 @@
             background: var(--accent-subtle);
             border: 1px solid var(--border-accent);
             font-size: 0.72rem;
-            font-weight: 600;
+            font-weight: var(--weight-semibold);
             color: var(--accent-secondary);
-            letter-spacing: 0.05em;
+            letter-spacing: var(--tracking-semi);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .daily-totals__badge-dot {
@@ -442,12 +436,12 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat--kcal {
-            background: linear-gradient(135deg, rgba(230, 57, 70, 0.08), rgba(230, 57, 70, 0.02));
+            background: linear-gradient(135deg, var(--accent-red-subtle), rgba(230, 57, 70, 0.02));
             border-color: var(--border-accent);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat--kcal:hover {
-            border-color: rgba(230, 57, 70, 0.4);
+            border-color: var(--hero-border-accent);
             box-shadow: var(--shadow-glow);
         }
 
@@ -489,7 +483,7 @@
             align-items: center;
             gap: var(--space-4);
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: var(--weight-semibold);
             font-family: var(--font-mono);
             padding: var(--space-4) var(--space-8);
             border-radius: var(--radius-full);
@@ -504,8 +498,8 @@
             font-size: 0.75rem;
             color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
+            letter-spacing: var(--tracking-caps-wide);
+            font-weight: var(--weight-medium);
             margin-bottom: var(--space-8);
         }
 
@@ -516,10 +510,10 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat__value {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            line-height: 1;
+            font-size: var(--text-3xl);
+            font-weight: var(--weight-extrabold);
+            letter-spacing: var(--tracking-neg-md);
+            line-height: var(--leading-none);
             font-variant-numeric: tabular-nums;
         }
 
@@ -531,7 +525,7 @@
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat__unit {
             font-size: 0.85rem;
             color: var(--text-tertiary);
-            font-weight: 500;
+            font-weight: var(--weight-medium);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat__bar {
@@ -557,7 +551,7 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat__bar-fill--protein {
-            background: linear-gradient(90deg, var(--protein-color), #ff6b76);
+            background: linear-gradient(90deg, var(--protein-color), var(--protein-color-light));
             box-shadow: 0 0 12px var(--protein-glow);
         }
 
@@ -567,7 +561,7 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat__bar-fill--fat {
-            background: linear-gradient(90deg, var(--fat-color), #a78bfa);
+            background: linear-gradient(90deg, var(--fat-color), var(--fat-color-light));
             box-shadow: 0 0 12px var(--fat-glow);
         }
 
@@ -683,9 +677,9 @@
             font-size: 0.65rem;
             font-family: var(--font-mono);
             color: var(--text-tertiary);
-            letter-spacing: 0.05em;
+            letter-spacing: var(--tracking-semi);
             margin-top: var(--space-12);
-            font-weight: 500;
+            font-weight: var(--weight-medium);
         }
 
         /* Main card body */
@@ -791,10 +785,10 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__name {
             font-size: 1.15rem;
-            font-weight: 700;
+            font-weight: var(--weight-bold);
             color: var(--text-primary);
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            letter-spacing: var(--tracking-neg-xs);
+            line-height: var(--leading-snug);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__meta {
@@ -807,7 +801,7 @@
             font-size: 0.75rem;
             font-family: var(--font-mono);
             color: var(--text-tertiary);
-            font-weight: 500;
+            font-weight: var(--weight-medium);
             display: flex;
             align-items: center;
             gap: var(--space-4);
@@ -823,8 +817,8 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__tag {
             font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+            font-weight: var(--weight-bold);
+            letter-spacing: var(--tracking-caps);
             text-transform: uppercase;
             padding: var(--space-2) var(--space-8);
             border-radius: var(--radius-full);
@@ -835,7 +829,7 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__tag--pre-workout {
             background: rgba(96, 165, 250, 0.12);
-            color: #60a5fa;
+            color: var(--info-color);
             border: 1px solid rgba(96, 165, 250, 0.2);
         }
 
@@ -853,7 +847,7 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__tag--pre-workout .meal-card__tag-dot {
-            background: #60a5fa;
+            background: var(--info-color);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__tag--post-workout .meal-card__tag-dot {
@@ -870,10 +864,10 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__kcal {
             font-size: 1.5rem;
-            font-weight: 800;
+            font-weight: var(--weight-extrabold);
             color: var(--text-primary);
-            letter-spacing: -0.04em;
-            line-height: 1;
+            letter-spacing: var(--tracking-neg-md);
+            line-height: var(--leading-none);
             font-variant-numeric: tabular-nums;
             position: relative;
         }
@@ -881,7 +875,7 @@
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__kcal-unit {
             font-size: 0.7rem;
             color: var(--text-tertiary);
-            font-weight: 500;
+            font-weight: var(--weight-medium);
             margin-left: var(--space-2);
         }
 
@@ -889,7 +883,7 @@
             font-size: 0.7rem;
             font-family: var(--font-mono);
             color: var(--accent-primary);
-            font-weight: 600;
+            font-weight: var(--weight-semibold);
         }
 
         /* ============================================= */
@@ -977,7 +971,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 0.55rem;
-            font-weight: 700;
+            font-weight: var(--weight-bold);
             font-family: var(--font-mono);
             color: var(--text-secondary);
         }
@@ -993,16 +987,16 @@
             font-size: 0.7rem;
             color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 500;
+            letter-spacing: var(--tracking-caps);
+            font-weight: var(--weight-medium);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .macro-pill__value {
             font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-weight: var(--weight-bold);
+            letter-spacing: var(--tracking-neg-xs);
             font-variant-numeric: tabular-nums;
-            line-height: 1;
+            line-height: var(--leading-none);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .macro-pill__value--protein { color: var(--protein-color); }
@@ -1012,7 +1006,7 @@
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .macro-pill__value-unit {
             font-size: 0.7rem;
             color: var(--text-tertiary);
-            font-weight: 400;
+            font-weight: var(--weight-regular);
         }
 
         /* ============================================= */
@@ -1027,8 +1021,8 @@
             border-radius: var(--radius-full);
             display: flex;
             overflow: hidden;
-            gap: 2px;
-            background: rgba(255,255,255,0.03);
+            gap: var(--space-0-5);
+            background: var(--surface-1);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .distribution-bar__segment {
@@ -1044,7 +1038,7 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .distribution-bar__segment--protein {
-            background: linear-gradient(90deg, var(--protein-color), #ff6b76);
+            background: linear-gradient(90deg, var(--protein-color), var(--protein-color-light));
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .distribution-bar__segment--carb {
@@ -1052,7 +1046,7 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .distribution-bar__segment--fat {
-            background: linear-gradient(90deg, var(--fat-color), #a78bfa);
+            background: linear-gradient(90deg, var(--fat-color), var(--fat-color-light));
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .distribution-labels {
@@ -1101,9 +1095,9 @@
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card__expand-text {
             font-size: 0.72rem;
-            font-weight: 500;
+            font-weight: var(--weight-medium);
             color: var(--text-tertiary);
-            letter-spacing: 0.05em;
+            letter-spacing: var(--tracking-semi);
             text-transform: uppercase;
             transition: color var(--duration-normal) var(--ease-out);
         }
@@ -1183,7 +1177,7 @@
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .food-item__name {
             font-size: 0.82rem;
             color: var(--text-secondary);
-            font-weight: 500;
+            font-weight: var(--weight-medium);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .food-item__portion {
@@ -1201,7 +1195,7 @@
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .food-item__macro {
             font-size: 0.7rem;
             font-family: var(--font-mono);
-            font-weight: 500;
+            font-weight: var(--weight-medium);
             min-width: 42px;
             text-align: right;
         }
@@ -1283,28 +1277,20 @@
             filter: drop-shadow(0 0 6px var(--accent-glow));
         }
 
-        #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .calorie-ring__center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .calorie-ring__center-value {
             font-size: 1.1rem;
-            font-weight: 800;
+            font-weight: var(--weight-extrabold);
             color: var(--accent-primary);
-            letter-spacing: -0.04em;
-            line-height: 1;
+            letter-spacing: var(--tracking-neg-md);
+            line-height: var(--leading-none);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .calorie-ring__center-label {
             font-size: 0.55rem;
             color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 500;
+            letter-spacing: var(--tracking-caps);
+            font-weight: var(--weight-medium);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .calorie-detail {
@@ -1317,16 +1303,16 @@
             font-size: 0.72rem;
             color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
+            letter-spacing: var(--tracking-caps-wide);
+            font-weight: var(--weight-medium);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .calorie-detail__value {
             font-size: 2.2rem;
-            font-weight: 800;
+            font-weight: var(--weight-extrabold);
             color: var(--accent-primary);
-            letter-spacing: -0.04em;
-            line-height: 1;
+            letter-spacing: var(--tracking-neg-md);
+            line-height: var(--leading-none);
             font-variant-numeric: tabular-nums;
         }
 
@@ -1447,7 +1433,7 @@
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .calorie-flow {
             display: flex;
             align-items: flex-end;
-            gap: 3px;
+            gap: var(--space-0-75);
             height: 32px;
             margin-top: var(--space-12);
         }
@@ -1475,14 +1461,6 @@
         }
 
 /* Dashboard integration adjustments (scope-only, no cross-section overrides) */
-#screen-dashboard[data-dashboard-presentation] .meals-section-legacy {
-  position: relative;
-  isolation: isolate;
-  overflow: visible;
-  width: 100%;
-  min-height: 100dvh;
-}
-
 #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .ambient-bg,
 #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .noise-overlay {
   position: fixed;
@@ -1501,14 +1479,6 @@
 
 #screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='meals'] {
   align-items: flex-start;
-}
-
-#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='meals'] .dfp-slide-inner {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  flex: 1 1 100%;
-  padding: calc(var(--header-height) + var(--spacing-md)) 0 56px;
 }
 
 #screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='meals']::before {

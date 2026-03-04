@@ -8,6 +8,7 @@ import './styles/base.css';
 import './styles/animations.css';
 import './styles/screens.css';
 import './styles/dashboard-presentation.css';
+import './styles/shared-patterns.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
