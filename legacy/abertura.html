@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DietForge — Protocol Dashboard</title>
+  <style>
+    /* ============================================= */
+    /* SEÇÃO: DESIGN SYSTEM — CSS CUSTOM PROPERTIES  */
+    /* ============================================= */
+    :root {
+      /* Core Palette */
+      --bg-primary:        #0a0a0c;
+      --bg-secondary:      #111115;
+      --bg-tertiary:       #18181e;
+      --bg-elevated:       #1e1e26;
+      --bg-glass:          rgba(255, 255, 255, 0.03);
+      --bg-glass-hover:    rgba(255, 255, 255, 0.055);
+
+      /* Accent System */
+      --accent:            #e63946;
+      --accent-vivid:      #ff3d4d;
+      --accent-muted:      rgba(230, 57, 70, 0.15);
+      --accent-glow:       rgba(230, 57, 70, 0.35);
+      --accent-glow-soft:  rgba(230, 57, 70, 0.12);
+      --accent-dark:       #9c1a23;
+
+      /* Text Hierarchy */
+      --text-primary:      #f0f0f5;
+      --text-secondary:    #9999aa;
+      --text-tertiary:     #555566;
+      --text-accent:       #e63946;
+      --text-positive:     #3dd68c;
+      --text-warning:      #f5a623;
+
+      /* Border System */
+      --border-subtle:     rgba(255, 255, 255, 0.055);
+      --border-medium:     rgba(255, 255, 255, 0.09);
+      --border-strong:     rgba(255, 255, 255, 0.14);
+      --border-accent:     rgba(230, 57, 70, 0.4);
+
+      /* Spacing Scale (4px base) */
+      --spacing-1:   4px;
+      --spacing-2:   8px;
+      --spacing-3:   12px;
+      --spacing-4:   16px;
+      --spacing-5:   20px;
+      --spacing-6:   24px;
+      --spacing-8:   32px;
+      --spacing-10:  40px;
+      --spacing-12:  48px;
+      --spacing-16:  64px;
+      --spacing-20:  80px;
+      --spacing-24:  96px;
+
+      /* Radius Scale */
+      --radius-sm:   6px;
+      --radius-md:   10px;
+      --radius-lg:   16px;
+      --radius-xl:   24px;
+      --radius-2xl:  32px;
+      --radius-full: 9999px;
+
+      /* Typography */
+      --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono:   'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+
+      /* Shadow System */
+      --shadow-sm:   0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md:   0 4px 12px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.4);
+      --shadow-lg:   0 10px 30px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4);
+      --shadow-xl:   0 20px 60px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.5);
+      --shadow-accent: 0 0 40px rgba(230, 57, 70, 0.25), 0 0 80px rgba(230, 57, 70, 0.1);
+
+      /* Timing */
+      --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring:   cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --duration-fast: 180ms;
+      --duration-mid:  320ms;
+      --duration-slow: 600ms;
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: RESET & BASE                           */
+    /* ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--font-system);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: HEADER / NAV                           */
+    /* ============================================= */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing-8);
+      background: rgba(10, 10, 12, 0.75);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px var(--accent-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-icon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    }
+
+    .logo-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-wordmark {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .logo-wordmark span {
+      color: var(--accent);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-1);
+    }
+
+    .nav-link {
+      padding: var(--spacing-2) var(--spacing-4);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-out),
+                  background var(--duration-fast) var(--ease-out);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-glass);
+    }
+
+    .nav-link.active {
+      color: var(--text-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .header-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: 5px var(--spacing-3);
+      background: var(--accent-muted);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .header-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a2a35, #1a1a22);
+      border: 1px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .avatar:hover {
+      border-color: var(--accent);
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: HERO — BACKGROUND SYSTEM               */
+    /* ============================================= */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 60px);
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--spacing-12) var(--spacing-8) var(--spacing-16);
+      overflow: hidden;
+    }
+
+    /* Deep background gradient */
+    .hero-bg-base {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230, 57, 70, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 0% 100%, rgba(15, 15, 25, 0.9) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 100% 100%, rgba(15, 15, 25, 0.9) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg-primary) 0%, #0c0c12 50%, #0a0a10 100%);
+      z-index: 0;
+    }
+
+    /* Noise texture overlay */
+    .hero-bg-noise {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+      pointer-events: none;
+    }
+
+    /* Dot grid pattern */
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+      pointer-events: none;
+    }
+
+    /* Accent glow blob — top center */
+    .hero-glow-top {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(230, 57, 70, 0.13) 0%, transparent 70%);
+      z-index: 2;
+      pointer-events: none;
+      animation: glow-breathe 8s ease-in-out infinite;
+    }
+
+    /* Secondary glow — bottom left */
+    .hero-glow-left {
+      position: absolute;
+      bottom: 10%;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(230, 57, 70, 0.05) 0%, transparent 70%);
+      z-index: 2;
+      pointer-events: none;
+      animation: glow-breathe 10s ease-in-out infinite 2s;
+    }
+
+    /* Tertiary glow — right */
+    .hero-glow-right {
+      position: absolute;
+      top: 30%;
+      right: -80px;
+      width: 400px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(100, 60, 200, 0.04) 0%, transparent 70%);
+      z-index: 2;
+      pointer-events: none;
+      animation: glow-breathe 12s ease-in-out infinite 4s;
+    }
+
+    /* Subtle horizontal line accent */
+    .hero-line-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--accent-glow) 30%, var(--accent) 50%, var(--accent-glow) 70%, transparent 100%);
+      z-index: 3;
+      opacity: 0.6;
+    }
+
+    @keyframes glow-breathe {
+      0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.6; transform: translateX(-50%) scale(1.1); }
+    }
+
+    @keyframes glow-breathe-static {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: HERO — CONTENT LAYER                   */
+    /* ============================================= */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-12);
+    }
+
+    /* ---- PROTOCOL BADGE ---- */
+    .protocol-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      padding: var(--spacing-2) var(--spacing-5) var(--spacing-2) var(--spacing-3);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      cursor: default;
+      transition: background var(--duration-mid) var(--ease-out),
+                  border-color var(--duration-mid) var(--ease-out),
+                  transform var(--duration-mid) var(--ease-spring);
+
+      /* Entrance animation */
+      opacity: 0;
+      transform: translateY(-16px);
+      animation: fade-up var(--duration-slow) var(--ease-out) 0.1s forwards;
+    }
+
+    .protocol-badge:hover {
+      background: var(--bg-glass-hover);
+      border-color: rgba(230, 57, 70, 0.65);
+      transform: translateY(-1px);
+    }
+
+    .protocol-badge-icon {
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px var(--accent-glow);
+      flex-shrink: 0;
+    }
+
+    .protocol-badge-icon svg {
+      width: 12px;
+      height: 12px;
+      fill: white;
+    }
+
+    .protocol-badge-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .protocol-badge-sep {
+      width: 1px;
+      height: 12px;
+      background: var(--border-medium);
+    }
+
+    .protocol-badge-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .protocol-badge-duration {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      letter-spacing: 0.02em;
+    }
+
+    .protocol-badge-duration::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 12px;
+      background: var(--border-medium);
+    }
+
+    /* ---- HERO HEADLINE ---- */
+    .hero-headline-wrapper {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-5);
+
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fade-up var(--duration-slow) var(--ease-out) 0.25s forwards;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-medium));
+    }
+
+    .hero-eyebrow::after {
+      background: linear-gradient(90deg, var(--border-medium), transparent);
+    }
+
+    .hero-title {
+      font-size: clamp(48px, 6vw, 88px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      position: relative;
+    }
+
+    .hero-title-line1 {
+      display: block;
+      color: var(--text-secondary);
+      font-weight: 300;
+      font-size: clamp(18px, 2.2vw, 28px);
+      letter-spacing: 0.02em;
+      margin-bottom: var(--spacing-2);
+    }
+
+    .hero-title-accent {
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    /* Red underline glow on title */
+    .hero-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 2px;
+      margin: var(--spacing-4) auto 0;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(14px, 1.3vw, 17px);
+      color: var(--text-secondary);
+      max-width: 520px;
+      text-align: center;
+      line-height: 1.65;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-subtitle strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ---- CONFIDENCE METER ---- */
+    .confidence-strip {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+      padding: var(--spacing-3) var(--spacing-6);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fade-up var(--duration-slow) var(--ease-out) 0.4s forwards;
+    }
+
+    .confidence-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .confidence-bar-track {
+      width: 120px;
+      height: 4px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .confidence-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-dark), var(--accent), #ff8c96);
+      border-radius: var(--radius-full);
+      box-shadow: 0 0 8px var(--accent-glow);
+      transition: width 1.6s cubic-bezier(0.25, 1, 0.5, 1) 1s;
+    }
+
+    .confidence-bar-fill.animated {
+      width: 82%;
+    }
+
+    .confidence-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-positive);
+      letter-spacing: -0.01em;
+      font-family: var(--font-mono);
+    }
+
+    .confidence-desc {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.02em;
+    }
+
+    .confidence-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--border-subtle);
+    }
+
+    /* ---- KPI CARDS GRID ---- */
+    .kpi-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-5);
+      max-width: 960px;
+
+      opacity: 0;
+      transform: translateY(32px);
+      animation: fade-up var(--duration-slow) var(--ease-out) 0.55s forwards;
+    }
+
+    /* Individual KPI Card */
+    .kpi-card {
+      position: relative;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-8) var(--spacing-8) var(--spacing-6);
+      overflow: hidden;
+      cursor: default;
+      transition:
+        transform var(--duration-mid) var(--ease-out),
+        border-color var(--duration-mid) var(--ease-out),
+        background var(--duration-mid) var(--ease-out),
+        box-shadow var(--duration-mid) var(--ease-out);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-medium);
+      background: var(--bg-glass-hover);
+    }
+
+    /* Card inner top shimmer line */
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 16px;
+      right: 16px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      transition: opacity var(--duration-mid) var(--ease-out);
+    }
+
+    /* — TDEE Card (neutral glow) */
+    .kpi-card--tdee {
+      background: linear-gradient(160deg, rgba(30,30,42,0.6) 0%, rgba(18,18,26,0.5) 100%);
+    }
+
+    .kpi-card--tdee:hover {
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(255,255,255,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* — Meta Card (accent glow — this is the hero number) */
+    .kpi-card--meta {
+      background: linear-gradient(160deg, rgba(35,18,22,0.7) 0%, rgba(22,10,14,0.65) 100%);
+      border-color: var(--border-accent);
+      box-shadow:
+        0 0 0 1px rgba(230, 57, 70, 0.18),
+        0 8px 32px rgba(230, 57, 70, 0.12);
+    }
+
+    .kpi-card--meta:hover {
+      border-color: rgba(230, 57, 70, 0.6);
+      box-shadow:
+        0 0 0 1px rgba(230, 57, 70, 0.35),
+        0 20px 60px rgba(0,0,0,0.5),
+        0 0 80px rgba(230, 57, 70, 0.12),
+        inset 0 1px 0 rgba(230, 57, 70, 0.15);
+    }
+
+    /* — Déficit Card (negative / green accent) */
+    .kpi-card--deficit {
+      background: linear-gradient(160deg, rgba(18,28,24,0.6) 0%, rgba(12,20,18,0.5) 100%);
+    }
+
+    .kpi-card--deficit:hover {
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(61, 214, 140, 0.1),
+        0 0 40px rgba(61, 214, 140, 0.05),
+        inset 0 1px 0 rgba(61, 214, 140, 0.06);
+    }
+
+    /* Card decorative corner accent */
+    .kpi-card-corner {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 80px;
+      height: 80px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .kpi-card-corner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.04), transparent 70%);
+    }
+
+    .kpi-card--meta .kpi-card-corner::before {
+      background: radial-gradient(circle at top right, rgba(230, 57, 70, 0.1), transparent 70%);
+    }
+
+    /* Card glow orb — background decoration */
+    .kpi-card-glow {
+      position: absolute;
+      bottom: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease-out);
+    }
+
+    .kpi-card--tdee   .kpi-card-glow { background: radial-gradient(circle, rgba(120,120,200,0.06), transparent 70%); }
+    .kpi-card--meta   .kpi-card-glow { background: radial-gradient(circle, rgba(230,57,70,0.1), transparent 70%); }
+    .kpi-card--deficit .kpi-card-glow { background: radial-gradient(circle, rgba(61,214,140,0.07), transparent 70%); }
+
+    .kpi-card:hover .kpi-card-glow { opacity: 1; }
+
+    /* Card Header row */
+    .kpi-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .kpi-card-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card-icon-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 100%);
+    }
+
+    .kpi-card--tdee .kpi-card-icon-wrap {
+      background: linear-gradient(135deg, #2a2a40, #1e1e32);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .kpi-card--meta .kpi-card-icon-wrap {
+      background: linear-gradient(135deg, var(--accent-dark), #6b0f17);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      box-shadow: 0 0 16px rgba(230, 57, 70, 0.25);
+    }
+
+    .kpi-card--deficit .kpi-card-icon-wrap {
+      background: linear-gradient(135deg, #0d2a1e, #091e15);
+      border: 1px solid rgba(61, 214, 140, 0.15);
+    }
+
+    .kpi-card-icon-wrap svg {
+      width: 18px;
+      height: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kpi-card--tdee .kpi-card-icon-wrap svg { color: #8888cc; }
+    .kpi-card--meta .kpi-card-icon-wrap svg { color: white; }
+    .kpi-card--deficit .kpi-card-icon-wrap svg { color: var(--text-positive); }
+
+    /* Status pill top-right */
+    .kpi-card-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .kpi-card-status--neutral {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--text-tertiary);
+    }
+
+    .kpi-card-status--primary {
+      background: rgba(230, 57, 70, 0.12);
+      border: 1px solid rgba(230, 57, 70, 0.25);
+      color: var(--accent);
+    }
+
+    .kpi-card-status--positive {
+      background: rgba(61, 214, 140, 0.08);
+      border: 1px solid rgba(61, 214, 140, 0.2);
+      color: var(--text-positive);
+    }
+
+    .kpi-card-status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Main value */
+    .kpi-card-body {
+      margin-bottom: var(--spacing-4);
+    }
+
+    .kpi-card-value {
+      display: flex;
+      align-items: baseline;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .kpi-card-number {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    .kpi-card--tdee .kpi-card-number {
+      color: var(--text-primary);
+    }
+
+    .kpi-card--meta .kpi-card-number {
+      background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.9) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .kpi-card--deficit .kpi-card-number {
+      color: var(--text-positive);
+    }
+
+    .kpi-card-unit {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      letter-spacing: 0.02em;
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+
+    .kpi-card-sign {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-positive);
+      align-self: baseline;
+    }
+
+    /* Card label */
+    .kpi-card-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    .kpi-card--meta .kpi-card-label {
+      color: rgba(230, 57, 70, 0.7);
+    }
+
+    /* Card footer */
+    .kpi-card-footer {
+      margin-top: var(--spacing-6);
+      padding-top: var(--spacing-5);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-3);
+    }
+
+    .kpi-card-meta-text {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    .kpi-card-meta-text strong {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    /* Progress arc / sparkline placeholder */
+    .kpi-mini-chart {
+      flex-shrink: 0;
+    }
+
+    .kpi-mini-chart svg {
+      display: block;
+    }
+
+    /* ---- FOOTER STRIP ---- */
+    .hero-footer-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-8);
+      padding: var(--spacing-4) var(--spacing-8);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fade-up var(--duration-slow) var(--ease-out) 0.85s forwards;
+    }
+
+    .footer-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .footer-stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .footer-stat-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .footer-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--border-subtle);
+    }
+
+    /* ---- SCROLL INDICATOR ---- */
+    .hero-scroll-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-3);
+      cursor: pointer;
+
+      opacity: 0;
+      animation: fade-up var(--duration-slow) var(--ease-out) 1.1s forwards;
+    }
+
+    .hero-scroll-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    .hero-scroll-mouse {
+      width: 26px;
+      height: 40px;
+      border: 1.5px solid var(--border-medium);
+      border-radius: 13px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 7px;
+      transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .hero-scroll-cta:hover .hero-scroll-mouse {
+      border-color: var(--accent);
+    }
+
+    .hero-scroll-wheel {
+      width: 3px;
+      height: 7px;
+      background: var(--text-tertiary);
+      border-radius: var(--radius-full);
+      animation: scroll-wheel 2s ease-in-out infinite;
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+
+    .hero-scroll-cta:hover .hero-scroll-wheel {
+      background: var(--accent);
+    }
+
+    @keyframes scroll-wheel {
+      0% { transform: translateY(0); opacity: 1; }
+      60% { transform: translateY(10px); opacity: 0; }
+      61% { transform: translateY(0); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: FLOATING PARTICLES                     */
+    /* ============================================= */
+    .particles-container {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: particle-float linear infinite;
+    }
+
+    @keyframes particle-float {
+      0%   { transform: translateY(0px) translateX(0px) scale(1); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-120px) translateX(var(--drift)) scale(0.5); opacity: 0; }
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: PROTOCOL TAG DETAIL ROW                */
+    /* ============================================= */
+    .protocol-detail-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-3);
+
+      opacity: 0;
+      animation: fade-up var(--duration-slow) var(--ease-out) 0.7s forwards;
+    }
+
+    .proto-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: 5px var(--spacing-4);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.03em;
+      transition: background var(--duration-fast) var(--ease-out),
+                  border-color var(--duration-fast) var(--ease-out),
+                  color var(--duration-fast) var(--ease-out);
+    }
+
+    .proto-tag:hover {
+      background: var(--bg-glass-hover);
+      border-color: var(--border-medium);
+      color: var(--text-primary);
+    }
+
+    .proto-tag svg {
+      width: 11px;
+      height: 11px;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .proto-tag--highlight {
+      background: var(--accent-muted);
+      border-color: rgba(230, 57, 70, 0.25);
+      color: var(--accent);
+    }
+
+    .proto-tag--highlight:hover {
+      background: rgba(230, 57, 70, 0.2);
+      border-color: rgba(230, 57, 70, 0.45);
+      color: var(--accent-vivid);
+    }
+
+    .proto-tag--highlight svg {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: HERO SECONDARY SECTION (STUB)          */
+    /* ============================================= */
+    .section-stub {
+      min-height: 100vh;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .section-stub-inner {
+      text-align: center;
+      opacity: 0.3;
+    }
+
+    .section-stub-inner h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: -0.02em;
+    }
+
+    .section-stub-inner p {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      margin-top: var(--spacing-3);
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: GLOBAL ANIMATIONS                      */
+    /* ============================================= */
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(var(--from-y, 20px));
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes count-up {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* KPI cards staggered entrance */
+    .kpi-card:nth-child(1) { animation: kpi-enter 0.7s var(--ease-out) 0.6s both; }
+    .kpi-card:nth-child(2) { animation: kpi-enter 0.7s var(--ease-out) 0.75s both; }
+    .kpi-card:nth-child(3) { animation: kpi-enter 0.7s var(--ease-out) 0.9s both; }
+
+    @keyframes kpi-enter {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Number counting animation class */
+    .number-animated {
+      animation: count-up 0.5s var(--ease-out) 1.2s both;
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: RESPONSIVE — TABLET                    */
+    /* ============================================= */
+    @media (max-width: 1024px) {
+      .kpi-grid {
+        max-width: 720px;
+        gap: var(--spacing-4);
+      }
+
+      .kpi-card-number {
+        font-size: clamp(28px, 4vw, 40px);
+      }
+
+      .hero-footer-strip {
+        gap: var(--spacing-5);
+      }
+
+      .header {
+        padding: 0 var(--spacing-6);
+      }
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: RESPONSIVE — MOBILE                    */
+    /* ============================================= */
+    @media (max-width: 768px) {
+      .header-nav {
+        display: none;
+      }
+
+      .hero {
+        padding: var(--spacing-8) var(--spacing-5) var(--spacing-12);
+        gap: var(--spacing-8);
+      }
+
+      .hero-content {
+        gap: var(--spacing-8);
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        gap: var(--spacing-4);
+      }
+
+      .hero-footer-strip {
+        flex-wrap: wrap;
+        gap: var(--spacing-4);
+        padding: var(--spacing-4);
+      }
+
+      .footer-divider {
+        display: none;
+      }
+
+      .hero-title {
+        font-size: clamp(36px, 9vw, 56px);
+      }
+
+      .hero-glow-top {
+        width: 400px;
+        height: 200px;
+      }
+
+      .confidence-strip {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-3);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .protocol-badge {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-footer-strip {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        text-align: center;
+      }
+    }
+
+    /* ============================================= */
+    /* SEÇÃO: FINE DETAILS & POLISHING               */
+    /* ============================================= */
+
+    /* Prevent layout shift on number animation */
+    .kpi-card-number {
+      min-width: 1ch;
+    }
+
+    /* Selection color */
+    ::selection {
+      background: var(--accent-muted);
+      color: var(--accent);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--bg-elevated);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--border-medium);
+    }
+
+    /* Focus visible */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* Hover lift utility */
+    .hover-lift {
+      transition: transform var(--duration-mid) var(--ease-out);
+    }
+    .hover-lift:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================= -->
+  <!-- SEÇÃO: HEADER                                 -->
+  <!-- ============================================= -->
+  <header class="header" role="banner">
+    <a class="header-logo" href="#" aria-label="DietForge Home">
+      <div class="logo-icon" aria-hidden="true">
+        <!-- Flame / bolt icon inline SVG -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2C12 2 7 8 7 13a5 5 0 0010 0c0-2.5-2-5-2-5s-1 2.5-2 2.5c-.8 0-1-.5-1-1 0-2.5 2-5 2-7.5z"/>
+        </svg>
+      </div>
+      <span class="logo-wordmark">Diet<span>Forge</span></span>
+    </a>
+
+    <nav class="header-nav" role="navigation" aria-label="Main navigation">
+      <a href="#" class="nav-link active">Dashboard</a>
+      <a href="#" class="nav-link">Protocolo</a>
+      <a href="#" class="nav-link">Histórico</a>
+      <a href="#" class="nav-link">Métricas</a>
+      <a href="#" class="nav-link">Ajustes</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="header-badge" role="status" aria-live="polite">
+        <div class="header-badge-dot" aria-hidden="true"></div>
+        Protocolo Ativo
+      </div>
+      <div class="avatar" role="button" tabindex="0" aria-label="Perfil do usuário">AS</div>
+    </div>
+  </header>
+
+  <!-- ============================================= -->
+  <!-- SEÇÃO: HERO                                   -->
+  <!-- ============================================= -->
+  <main>
+    <section class="hero" aria-label="Visão geral do protocolo nutricional">
+
+      <!-- Background layers -->
+      <div class="hero-bg-base"      aria-hidden="true"></div>
+      <div class="hero-bg-noise"     aria-hidden="true"></div>
+      <div class="hero-bg-grid"      aria-hidden="true"></div>
+      <div class="hero-glow-top"     aria-hidden="true"></div>
+      <div class="hero-glow-left"    aria-hidden="true"></div>
+      <div class="hero-glow-right"   aria-hidden="true"></div>
+      <div class="hero-line-accent"  aria-hidden="true"></div>
+
+      <!-- Floating particles -->
+      <div class="particles-container" aria-hidden="true" id="particlesContainer"></div>
+
+      <!-- Content -->
+      <div class="hero-content">
+
+        <!-- Protocol Badge -->
+        <div class="protocol-badge" role="status">
+          <div class="protocol-badge-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <span class="protocol-badge-label">Protocolo</span>
+          <div class="protocol-badge-sep" aria-hidden="true"></div>
+          <span class="protocol-badge-name">Hard Cut</span>
+          <span class="protocol-badge-duration">
+            <svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/>
+            </svg>
+            16 semanas
+          </span>
+        </div>
+
+        <!-- Headline -->
+        <div class="hero-headline-wrapper">
+          <p class="hero-eyebrow">Análise de Protocolo Ativo</p>
+          <h1 class="hero-title">
+            <span class="hero-title-line1">Seu plano está</span>
+            <span class="hero-title-accent">calibrado.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Modelo metabólico calculado com base em <strong>7 variáveis biométricas</strong>.
+            Protocolo <strong>Hard Cut</strong> em execução — cada caloria está contada,
+            cada grama importa.
+          </p>
+        </div>
+
+        <!-- Confidence strip -->
+        <div class="confidence-strip" role="meter" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="Precisão do modelo: 82%">
+          <span class="confidence-label">Precisão do Modelo</span>
+          <div class="confidence-bar-track" aria-hidden="true">
+            <div class="confidence-bar-fill" id="confidenceBar"></div>
+          </div>
+          <span class="confidence-value">82%</span>
+          <div class="confidence-sep" aria-hidden="true"></div>
+          <span class="confidence-desc">Alta confiança — dados suficientes</span>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid" role="list" aria-label="KPIs do protocolo">
+
+          <!-- ———————— CARD 1: TDEE ———————— -->
+          <article class="kpi-card kpi-card--tdee" role="listitem" tabindex="0">
+            <div class="kpi-card-corner" aria-hidden="true"></div>
+            <div class="kpi-card-glow"   aria-hidden="true"></div>
+
+            <header class="kpi-card-header">
+              <div class="kpi-card-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M17 2H7L2 12h5v10l10-12h-6l6-8z"/>
+                </svg>
+              </div>
+              <div class="kpi-card-status kpi-card-status--neutral" aria-label="Calculado">
+                <div class="kpi-card-status-dot" aria-hidden="true"></div>
+                Calculado
+              </div>
+            </header>
+
+            <div class="kpi-card-body">
+              <div class="kpi-card-value">
+                <span class="kpi-card-number number-animated" id="tdeeNumber" aria-label="3985 quilocalorias">3.985</span>
+                <span class="kpi-card-unit">kcal</span>
+              </div>
+              <div class="kpi-card-label">TDEE — Gasto Total Diário</div>
+            </div>
+
+            <footer class="kpi-card-footer">
+              <div class="kpi-card-meta-text">
+                Metabolismo basal <strong>2.730 kcal</strong><br>
+                + Atividade física <strong>+1.255 kcal</strong>
+              </div>
+              <div class="kpi-mini-chart" aria-hidden="true">
+                <!-- Sparkline SVG — static decorative -->
+                <svg width="56" height="28" viewBox="0 0 56 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <polyline
+                    points="0,22 8,18 16,20 24,12 32,14 40,8 48,10 56,6"
+                    stroke="rgba(120,120,200,0.5)"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                  />
+                  <polyline
+                    points="0,22 8,18 16,20 24,12 32,14 40,8 48,10 56,6 56,28 0,28"
+                    fill="url(#sparkGrad1)"
+                    opacity="0.15"
+                  />
+                  <defs>
+                    <linearGradient id="sparkGrad1" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#8888cc"/>
+                      <stop offset="100%" stop-color="transparent"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="56" cy="6" r="2.5" fill="#8888cc" opacity="0.8"/>
+                </svg>
+              </div>
+            </footer>
+          </article>
+
+          <!-- ———————— CARD 2: META CALÓRICA (Hero card) ———————— -->
+          <article class="kpi-card kpi-card--meta" role="listitem" tabindex="0">
+            <div class="kpi-card-corner" aria-hidden="true"></div>
+            <div class="kpi-card-glow"   aria-hidden="true"></div>
+
+            <header class="kpi-card-header">
+              <div class="kpi-card-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 3a7 7 0 110 14A7 7 0 0112 5zm0 3a4 4 0 100 8 4 4 0 000-8z"/>
+                </svg>
+              </div>
+              <div class="kpi-card-status kpi-card-status--primary" aria-label="Meta ativa">
+                <div class="kpi-card-status-dot" aria-hidden="true"></div>
+                Meta Ativa
+              </div>
+            </header>
+
+            <div class="kpi-card-body">
+              <div class="kpi-card-value">
+                <span class="kpi-card-number number-animated" id="metaNumber" aria-label="3387 quilocalorias">3.387</span>
+                <span class="kpi-card-unit">kcal</span>
+              </div>
+              <div class="kpi-card-label">Meta Calórica Diária</div>
+            </div>
+
+            <footer class="kpi-card-footer">
+              <div class="kpi-card-meta-text">
+                Proteína <strong>220g</strong> · Carbo <strong>380g</strong><br>
+                Gordura <strong>75g</strong> · Fibras <strong>35g+</strong>
+              </div>
+              <div class="kpi-mini-chart" aria-hidden="true">
+                <!-- Donut arc SVG — progress ring decorative -->
+                <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="20" cy="20" r="14" stroke="rgba(230,57,70,0.12)" stroke-width="3" fill="none"/>
+                  <circle
+                    cx="20" cy="20" r="14"
+                    stroke="url(#ringGrad)"
+                    stroke-width="3"
+                    fill="none"
+                    stroke-dasharray="72 88"
+                    stroke-dashoffset="22"
+                    stroke-linecap="round"
+                    transform="rotate(-90 20 20)"
+                  />
+                  <defs>
+                    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#ff6b7a"/>
+                      <stop offset="100%" stop-color="#e63946"/>
+                    </linearGradient>
+                  </defs>
+                  <text x="20" y="24" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="system-ui">85%</text>
+                </svg>
+              </div>
+            </footer>
+          </article>
+
+          <!-- ———————— CARD 3: DÉFICIT ———————— -->
+          <article class="kpi-card kpi-card--deficit" role="listitem" tabindex="0">
+            <div class="kpi-card-corner" aria-hidden="true"></div>
+            <div class="kpi-card-glow"   aria-hidden="true"></div>
+
+            <header class="kpi-card-header">
+              <div class="kpi-card-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20 12a8 8 0 01-8 8V12H4a8 8 0 018-8v8h8z"/>
+                </svg>
+              </div>
+              <div class="kpi-card-status kpi-card-status--positive" aria-label="No alvo">
+                <div class="kpi-card-status-dot" aria-hidden="true"></div>
+                No Alvo
+              </div>
+            </header>
+
+            <div class="kpi-card-body">
+              <div class="kpi-card-value">
+                <span class="kpi-card-sign" aria-hidden="true">−</span>
+                <span class="kpi-card-number number-animated" id="deficitNumber" aria-label="déficit de 598 quilocalorias">598</span>
+                <span class="kpi-card-unit">kcal</span>
+              </div>
+              <div class="kpi-card-label">Déficit Calórico Diário</div>
+            </div>
+
+            <footer class="kpi-card-footer">
+              <div class="kpi-card-meta-text">
+                Projeção semanal <strong>−4.186 kcal</strong><br>
+                ≈ <strong>0,6 kg</strong> de perda/semana
+              </div>
+              <div class="kpi-mini-chart" aria-hidden="true">
+                <svg width="56" height="28" viewBox="0 0 56 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <polyline
+                    points="0,6 8,10 16,8 24,14 32,12 40,18 48,16 56,20"
+                    stroke="rgba(61,214,140,0.5)"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                  />
+                  <polyline
+                    points="0,6 8,10 16,8 24,14 32,12 40,18 48,16 56,20 56,28 0,28"
+                    fill="url(#sparkGrad3)"
+                    opacity="0.15"
+                  />
+                  <defs>
+                    <linearGradient id="sparkGrad3" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#3dd68c"/>
+                      <stop offset="100%" stop-color="transparent"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="56" cy="20" r="2.5" fill="#3dd68c" opacity="0.8"/>
+                </svg>
+              </div>
+            </footer>
+          </article>
+
+        </div>
+        <!-- / KPI Grid -->
+
+        <!-- Protocol Detail Tags -->
+        <div class="protocol-detail-row" role="list" aria-label="Detalhes do protocolo">
+
+          <div class="proto-tag proto-tag--highlight" role="listitem">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Hard Cut
+          </div>
+
+          <div class="proto-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M9 11H7a5 5 0 000 10h3v-2H7a3 3 0 010-6h2v-2zm5-2h2a5 5 0 010 10h-3v-2h3a3 3 0 000-6h-2V9zm-4 3h4v2h-4v-2z"/>
+            </svg>
+            Semana 3 / 16
+          </div>
+
+          <div class="proto-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/>
+            </svg>
+            15% Déficit
+          </div>
+
+          <div class="proto-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.81 6-4.72 7.72L13 18v5h5l-1.22-1.22C19.91 19.07 22 15.76 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.95 2.55 2 6.82 2 12c0 3.76 2.09 7.07 5.22 8.78L6 22h5V2.05z"/>
+            </svg>
+            Fator Atividade 1.55
+          </div>
+
+          <div class="proto-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+            </svg>
+            Ajuste Automático
+          </div>
+
+          <div class="proto-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19.35 10.04A7.49 7.49 0 0012 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 000 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+            </svg>
+            Sync Diário
+          </div>
+
+        </div>
+        <!-- / Protocol Detail Tags -->
+
+        <!-- Footer stats strip -->
+        <div class="hero-footer-strip" role="region" aria-label="Estatísticas de progresso">
+
+          <div class="footer-stat">
+            <span class="footer-stat-value">87,4 kg</span>
+            <span class="footer-stat-label">Peso Atual</span>
+          </div>
+
+          <div class="footer-divider" aria-hidden="true"></div>
+
+          <div class="footer-stat">
+            <span class="footer-stat-value">83,0 kg</span>
+            <span class="footer-stat-label">Meta Final</span>
+          </div>
+
+          <div class="footer-divider" aria-hidden="true"></div>
+
+          <div class="footer-stat">
+            <span class="footer-stat-value">−4,4 kg</span>
+            <span class="footer-stat-label">Restante</span>
+          </div>
+
+          <div class="footer-divider" aria-hidden="true"></div>
+
+          <div class="footer-stat">
+            <span class="footer-stat-value">19%</span>
+            <span class="footer-stat-label">Progresso</span>
+          </div>
+
+          <div class="footer-divider" aria-hidden="true"></div>
+
+          <div class="footer-stat">
+            <span class="footer-stat-value">7,3 sem</span>
+            <span class="footer-stat-label">Projeção</span>
+          </div>
+
+          <div class="footer-divider" aria-hidden="true"></div>
+
+          <div class="footer-stat">
+            <span class="footer-stat-value">21 dias</span>
+            <span class="footer-stat-label">Streak Atual</span>
+          </div>
+
+        </div>
+        <!-- / Footer strip -->
+
+        <!-- Scroll CTA -->
+        <button
+          class="hero-scroll-cta"
+          aria-label="Rolar para ver mais detalhes"
+          onclick="document.querySelector('.section-stub').scrollIntoView({ behavior: 'smooth' })"
+        >
+          <span class="hero-scroll-label">Explorar protocolo</span>
+          <div class="hero-scroll-mouse" aria-hidden="true">
+            <div class="hero-scroll-wheel"></div>
+          </div>
+        </button>
+
+      </div>
+      <!-- / hero-content -->
+
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SEÇÃO: STUB (Resto do Dashboard)              -->
+    <!-- ============================================= -->
+    <section class="section-stub" aria-label="Seções futuras do dashboard">
+      <div class="section-stub-inner">
+        <h2>↑ Demais seções do Dashboard</h2>
+        <p>Detalhamento macros · Histórico semanal · Ajustes de protocolo · Análise de progresso</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================= -->
+  <!-- SEÇÃO: JAVASCRIPT                             -->
+  <!-- ============================================= -->
+  <script>
+    // ============================================= //
+    // SEÇÃO: PARTICLES SYSTEM                       //
+    // ============================================= //
+    (function initParticles() {
+      const container = document.getElementById('particlesContainer');
+      if (!container) return;
+
+      const PARTICLE_COUNT  = 22;
+      const COLORS = [
+        'rgba(230, 57, 70, 0.6)',
+        'rgba(230, 57, 70, 0.4)',
+        'rgba(255, 100, 120, 0.3)',
+        'rgba(200, 50, 60, 0.5)',
+        'rgba(255, 255, 255, 0.15)',
+        'rgba(255, 255, 255, 0.1)',
+        'rgba(61, 214, 140, 0.25)',
+      ];
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+
+        const size     = Math.random() * 3 + 1;       // 1–4px
+        const left     = Math.random() * 100;          // 0–100%
+        const bottom   = Math.random() * 40;           // 0–40% from bottom
+        const duration = Math.random() * 12 + 8;      // 8–20s
+        const delay    = Math.random() * 10;           // 0–10s delay
+        const drift    = (Math.random() - 0.5) * 80;  // horizontal drift px
+        const color    = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+        particle.style.cssText = `
+          width:            ${size}px;
+          height:           ${size}px;
+          left:             ${left}%;
+          bottom:           ${bottom}%;
+          background:       ${color};
+          animation-duration:  ${duration}s;
+          animation-delay:     ${delay}s;
+          --drift:          ${drift}px;
+          box-shadow:       0 0 ${size * 4}px ${color};
+          opacity:          0;
+        `;
+
+        container.appendChild(particle);
+      }
+    })();
+
+    // ============================================= //
+    // SEÇÃO: CONFIDENCE BAR ANIMATION               //
+    // ============================================= //
+    (function initConfidenceBar() {
+      const bar = document.getElementById('confidenceBar');
+      if (!bar) return;
+
+      // Trigger the CSS transition after a small delay
+      // to ensure the element is in the DOM and painted
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            requestAnimationFrame(() => {
+              bar.classList.add('animated');
+            });
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(bar);
+    })();
+
+    // ============================================= //
+    // SEÇÃO: NUMBER COUNTER ANIMATION               //
+    // ============================================= //
+    (function initCounters() {
+      const counters = [
+        { id: 'tdeeNumber',   target: 3985, prefix: '',  suffix: '',    decimals: 0, separator: '.' },
+        { id: 'metaNumber',   target: 3387, prefix: '',  suffix: '',    decimals: 0, separator: '.' },
+        { id: 'deficitNumber',target: 598,  prefix: '',  suffix: '',    decimals: 0, separator: '.' },
+      ];
+
+      // Format number with thousands separator
+      function formatNumber(num, separator, decimals) {
+        if (decimals > 0) {
+          return num.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+        }
+        return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+      }
+
+      // Easing function — ease out cubic
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      // Animate a single counter
+      function animateCounter(config) {
+        const el = document.getElementById(config.id);
+        if (!el) return;
+
+        const DURATION = 1800; // ms
+        const DELAY    = 1000; // ms — after page load
+
+        let startTime = null;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const elapsed  = timestamp - startTime;
+          const progress = Math.min(elapsed / DURATION, 1);
+          const eased    = easeOutCubic(progress);
+          const current  = eased * config.target;
+
+          el.textContent = config.prefix + formatNumber(current, config.separator, config.decimals) + config.suffix;
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = config.prefix + formatNumber(config.target, config.separator, config.decimals) + config.suffix;
+          }
+        }
+
+        // Use IntersectionObserver to start only when visible
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                requestAnimationFrame(step);
+              }, DELAY);
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.4 });
+
+        observer.observe(el);
+      }
+
+      counters.forEach(animateCounter);
+    })();
+
+    // ============================================= //
+    // SEÇÃO: HEADER SCROLL EFFECT                   //
+    // ============================================= //
+    (function initHeaderScroll() {
+      const header = document.querySelector('.header');
+      if (!header) return;
+
+      let lastScrollY = 0;
+      let ticking     = false;
+
+      function onScroll() {
+        lastScrollY = window.scrollY;
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            if (lastScrollY > 20) {
+              header.style.background = 'rgba(10, 10, 12, 0.92)';
+              header.style.borderBottomColor = 'rgba(255,255,255,0.075)';
+            } else {
+              header.style.background = 'rgba(10, 10, 12, 0.75)';
+              header.style.borderBottomColor = 'rgba(255,255,255,0.055)';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // ============================================= //
+    // SEÇÃO: KPI CARD TILT MICRO-INTERACTION        //
+    // ============================================= //
+    (function initCardTilt() {
+      const cards = document.querySelectorAll('.kpi-card');
+
+      // Only apply tilt on non-touch devices
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        cards.forEach(card => {
+          card.addEventListener('mousemove', handleTilt);
+          card.addEventListener('mouseleave', resetTilt);
+        });
+      }
+
+      function handleTilt(e) {
+        const card   = e.currentTarget;
+        const rect   = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width  / 2;
+        const centerY = rect.top  + rect.height / 2;
+        const mouseX  = e.clientX - centerX;
+        const mouseY  = e.clientY - centerY;
+
+        const maxTilt = 5; // degrees
+        const rotateX = -(mouseY / (rect.height / 2)) * maxTilt;
+        const rotateY =  (mouseX / (rect.width  / 2)) * maxTilt;
+
+        card.style.transform = `
+          translateY(-4px)
+          perspective(800px)
+          rotateX(${rotateX}deg)
+          rotateY(${rotateY}deg)
+        `;
+        card.style.transition = 'transform 0.1s linear, border-color 320ms ease, background 320ms ease, box-shadow 320ms ease';
+      }
+
+      function resetTilt(e) {
+        const card = e.currentTarget;
+        card.style.transform  = '';
+        card.style.transition = '';
+      }
+    })();
+
+    // ============================================= //
+    // SEÇÃO: PROTOCOL BADGE GLOW PULSE              //
+    // ============================================= //
+    (function initBadgePulse() {
+      const badge = document.querySelector('.protocol-badge');
+      if (!badge) return;
+
+      // Add a subtle periodic glow pulse every few seconds
+      setInterval(() => {
+        badge.style.boxShadow = '0 0 24px rgba(230, 57, 70, 0.2), 0 0 0 1px rgba(230,57,70,0.35)';
+        setTimeout(() => {
+          badge.style.boxShadow = '';
+        }, 800);
+      }, 4500);
+    })();
+
+    // ============================================= //
+    // SEÇÃO: SCROLL CTA KEYBOARD SUPPORT            //
+    // ============================================= //
+    (function initScrollCTA() {
+      const cta = document.querySelector('.hero-scroll-cta');
+      if (!cta) return;
+
+      cta.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const target = document.querySelector('.section-stub');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    })();
+
+    // ============================================= //
+    // SEÇÃO: HERO GRID MOUSE PARALLAX               //
+    // ============================================= //
+    (function initGridParallax() {
+      const grid  = document.querySelector('.hero-bg-grid');
+      const glowT = document.querySelector('.hero-glow-top');
+      if (!grid || !glowT) return;
+
+      // Only on desktop with mouse
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+      let rafId = null;
+
+      document.addEventListener('mousemove', (e) => {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const xRatio = (e.clientX / window.innerWidth  - 0.5) * 2; // -1 to 1
+          const yRatio = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+
+          // Subtle grid shift
+          grid.style.backgroundPosition = `
+            ${50 + xRatio * 4}px
+            ${50 + yRatio * 4}px
+          `;
+
+          // Glow follows mouse subtly
+          glowT.style.transform = `
+            translateX(calc(-50% + ${xRatio * 30}px))
+            translateY(${yRatio * 15}px)
+          `;
+        });
+      });
+    })();
+
+    // ============================================= //
+    // SEÇÃO: ACCESSIBILITY — REDUCE MOTION          //
+    // ============================================= //
+    (function handleReducedMotion() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (prefersReduced.matches) {
+        // Remove all animation delays and set everything visible immediately
+        const style = document.createElement('style');
+        style.textContent = `
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-delay: 0ms !important;
+            transition-duration: 0.01ms !important;
+          }
+          .hero-bg-grid { animation: none !important; }
+          .particle { display: none !important; }
+          .hero-glow-top,
+          .hero-glow-left,
+          .hero-glow-right { animation: none !important; }
+          .header-badge-dot { animation: none !important; }
+          .hero-scroll-wheel { animation: none !important; }
+          /* Make hidden-at-start elements visible */
+          .protocol-badge,
+          .hero-headline-wrapper,
+          .confidence-strip,
+          .kpi-grid,
+          .protocol-detail-row,
+          .hero-footer-strip,
+          .hero-scroll-cta {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          .kpi-card {
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          .confidence-bar-fill { width: 82% !important; }
+        `;
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
+
+</body>
+</html>

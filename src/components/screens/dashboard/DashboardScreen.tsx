@@ -1,65 +1,126 @@
-﻿import { motion, type Transition } from 'framer-motion';
-import { Download, MoonStar, RotateCcw, Share2, SlidersHorizontal, Sun, Zap } from 'lucide-react';
-import { useEffect, useState, type ReactNode } from 'react';
+﻿import { RotateCcw } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { formSteps } from '../../../lib/constants/steps';
-import { serializeShareState } from '../../../lib/shareState';
 import type { SharedProfileMeta } from '../../../lib/profiles/types';
 import type { ScreenId } from '../../../lib/types';
 import { useDietForgeStore } from '../../../store/useDietForgeStore';
-import { BeforeAfterSection } from './sections/BeforeAfterSection';
-import { CalibrationSection } from './sections/CalibrationSection';
-import { DashboardFooter } from './sections/DashboardFooter';
-import { KpiStrip } from './sections/KpiStrip';
-import { MacroCards } from './sections/MacroCards';
-import { MealsSection } from './sections/MealsSection';
-import { ProfileStrip } from './sections/ProfileStrip';
-import { ProjectionSection } from './sections/ProjectionSection';
-import { ReceiptCard } from './sections/ReceiptCard';
-import { RefeedSection } from './sections/RefeedSection';
-import { SupplementsSection } from './sections/SupplementsSection';
-import { WhatIfSection } from './sections/WhatIfSection';
+import { FinalSlide } from './sections/presentation/FinalSlide';
+import { GoalSlide } from './sections/presentation/GoalSlide';
+import { MacrosSlide } from './sections/presentation/MacrosSlide';
+import { MealsSlide } from './sections/presentation/MealsSlide';
+import { ProjectionSlide } from './sections/presentation/ProjectionSlide';
+import { SupplementsSlide } from './sections/presentation/SupplementsSlide';
+import { TdeeSlide } from './sections/presentation/TdeeSlide';
+import type { DashboardSectionId, DashboardSectionItem } from './sections/presentation/types';
+import { WelcomeSlide } from './sections/presentation/WelcomeSlide';
+import { WhatIfSlide } from './sections/presentation/WhatIfSlide';
 
 interface DashboardScreenProps {
   onNavigate: (screen: ScreenId) => void;
   profileTrigger?: ReactNode;
-  activeProfileMeta?: SharedProfileMeta;
+  activeProfileMeta?: (SharedProfileMeta & { createdAt?: string }) | undefined;
 }
 
-type DashboardTheme = 'dark' | 'light';
+const isInteractiveTarget = (target: EventTarget | null): boolean => {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
 
-const DASHBOARD_THEME_KEY = 'dietforge.dashboard.theme';
+  if (target.isContentEditable) {
+    return true;
+  }
 
-const sectionTransition: Transition = {
-  duration: 0.45,
-  ease: [0.25, 0.46, 0.45, 0.94],
+  return Boolean(target.closest('input, textarea, select, button, [role="slider"], [contenteditable="true"]'));
 };
 
-const sectionMotion = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: sectionTransition,
+const makeSectionRefs = (): Record<DashboardSectionId, HTMLElement | null> => ({
+  welcome: null,
+  tdee: null,
+  goal: null,
+  macros: null,
+  projection: null,
+  meals: null,
+  supplements: null,
+  whatif: null,
+  final: null,
+});
+
+const makeRatioMap = (): Record<DashboardSectionId, number> => ({
+  welcome: 0,
+  tdee: 0,
+  goal: 0,
+  macros: 0,
+  projection: 0,
+  meals: 0,
+  supplements: 0,
+  whatif: 0,
+  final: 0,
+});
+
+const areSetsEqual = <T,>(left: Set<T>, right: Set<T>): boolean => {
+  if (left.size !== right.size) {
+    return false;
+  }
+
+  for (const item of left) {
+    if (!right.has(item)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const usePrefersReducedMotion = (): boolean => {
+  const [prefersReduced, setPrefersReduced] = useState<boolean>(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return false;
+    }
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return undefined;
+    }
+
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = () => setPrefersReduced(media.matches);
+
+    media.addEventListener?.('change', onChange);
+    media.addListener?.(onChange);
+
+    return () => {
+      media.removeEventListener?.('change', onChange);
+      media.removeListener?.(onChange);
+    };
+  }, []);
+
+  return prefersReduced;
 };
 
 export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta }: DashboardScreenProps) => {
   const formData = useDietForgeStore((state) => state.formData);
-  const currentStep = useDietForgeStore((state) => state.currentStep);
-  const viewMode = useDietForgeStore((state) => state.viewMode);
   const isExamplePreview = useDietForgeStore((state) => state.isExamplePreview);
-  const setViewMode = useDietForgeStore((state) => state.setViewMode);
+  const results = useDietForgeStore((state) => state.results);
   const resetAll = useDietForgeStore((state) => state.resetAll);
   const restoreFromExamplePreview = useDietForgeStore((state) => state.restoreFromExamplePreview);
   const setStep = useDietForgeStore((state) => state.setStep);
 
-  const [shareStatus, setShareStatus] = useState('');
-  const [dashboardTheme, setDashboardTheme] = useState<DashboardTheme>(() => {
-    if (typeof window === 'undefined') {
-      return 'dark';
-    }
+  const reducedMotion = usePrefersReducedMotion();
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const sectionRefs = useRef<Record<DashboardSectionId, HTMLElement | null>>(makeSectionRefs());
+  const ratiosRef = useRef<Record<DashboardSectionId, number>>(makeRatioMap());
+  const activeSectionRef = useRef<DashboardSectionId>('welcome');
 
-    return window.localStorage.getItem(DASHBOARD_THEME_KEY) === 'light' ? 'light' : 'dark';
-  });
+  const [activeSectionId, setActiveSectionId] = useState<DashboardSectionId>('welcome');
+  const [visitedSectionIds, setVisitedSectionIds] = useState<Set<DashboardSectionId>>(() => new Set(['welcome']));
+  const [activatedSectionIds, setActivatedSectionIds] = useState<Set<DashboardSectionId>>(() => new Set(['welcome']));
+
+  useEffect(() => {
+    activeSectionRef.current = activeSectionId;
+  }, [activeSectionId]);
 
   useEffect(() => {
     document.body.classList.add('dashboard-active');
@@ -68,187 +129,321 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
     };
   }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem(DASHBOARD_THEME_KEY, dashboardTheme);
-  }, [dashboardTheme]);
-
-  const handleShare = async () => {
-    const shareState = activeProfileMeta
-      ? {
-          formData,
-          currentStep,
-          viewMode,
-          sharedProfile: activeProfileMeta,
-        }
-      : {
-          formData,
-          currentStep,
-          viewMode,
-        };
-
-    const payload = serializeShareState(shareState);
-
-    const url = new URL(window.location.href);
-    url.searchParams.set('state', payload);
-
-    try {
-      await navigator.clipboard.writeText(url.toString());
-      setShareStatus('Link copiado');
-      setTimeout(() => setShareStatus(''), 2200);
-    } catch {
-      setShareStatus('Falha ao copiar');
-      setTimeout(() => setShareStatus(''), 2200);
-    }
-  };
-
-  const handleRestart = () => {
+  const handleRestart = useCallback(() => {
     if (isExamplePreview) {
       restoreFromExamplePreview();
       onNavigate('hero');
       return;
     }
+
     resetAll();
     onNavigate('hero');
-  };
+  }, [isExamplePreview, onNavigate, resetAll, restoreFromExamplePreview]);
 
-  const handleGoToGoalStep = () => {
+  const handleGoToGoalStep = useCallback(() => {
     const goalStepIndex = formSteps.findIndex((step) => step.id === 'goal_timeline');
     setStep(goalStepIndex >= 0 ? goalStepIndex + 1 : formSteps.length);
     onNavigate('form');
+  }, [onNavigate, setStep]);
+
+  const sections = useMemo<DashboardSectionItem[]>(() => {
+    if (!results) {
+      return [];
+    }
+
+    return [
+      { id: 'welcome', label: 'Abertura', headingId: 'dfp-heading-welcome' },
+      { id: 'tdee', label: 'TDEE', headingId: 'dfp-heading-tdee' },
+      { id: 'goal', label: 'Meta', headingId: 'dfp-heading-goal' },
+      { id: 'macros', label: 'Macros', headingId: 'dfp-heading-macros' },
+      { id: 'projection', label: 'Projeção', headingId: 'dfp-heading-projection' },
+      { id: 'meals', label: 'Refeições', headingId: 'dfp-heading-meals' },
+      { id: 'supplements', label: 'Suplementos', headingId: 'dfp-heading-supplements' },
+      { id: 'whatif', label: 'Simulador', headingId: 'dfp-heading-whatif' },
+      { id: 'final', label: 'Encerramento', headingId: 'dfp-heading-final' },
+    ];
+  }, [results]);
+
+  const activeSectionMeta = useMemo(() => {
+    const activeIndex = sections.findIndex((section) => section.id === activeSectionId);
+
+    if (activeIndex < 0) {
+      return { index: '01', label: 'Abertura' };
+    }
+
+    return {
+      index: String(activeIndex + 1).padStart(2, '0'),
+      label: sections[activeIndex]?.label ?? 'Abertura',
+    };
+  }, [activeSectionId, sections]);
+
+  const sectionIds = useMemo(() => sections.map((section) => section.id), [sections]);
+  const sectionIdsKey = useMemo(() => sectionIds.join('|'), [sectionIds]);
+
+  const scrollToSection = useCallback(
+    (index: number) => {
+      const targetId = sectionIds[index];
+      if (!targetId) {
+        return;
+      }
+
+      sectionRefs.current[targetId]?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      setActiveSectionId((current) => (current === targetId ? current : targetId));
+    },
+    [reducedMotion, sectionIds],
+  );
+
+  useEffect(() => {
+    if (sectionIds.length === 0) {
+      return;
+    }
+
+    const valid = new Set(sectionIds);
+    const firstSectionId = sectionIds[0] ?? 'welcome';
+
+    setVisitedSectionIds((previous) => {
+      const next = new Set(Array.from(previous).filter((id) => valid.has(id)));
+      next.add(firstSectionId);
+      return areSetsEqual(previous, next) ? previous : next;
+    });
+
+    setActivatedSectionIds((previous) => {
+      const next = new Set(Array.from(previous).filter((id) => valid.has(id)));
+      next.add(firstSectionId);
+      return areSetsEqual(previous, next) ? previous : next;
+    });
+
+    setActiveSectionId((previous) => (valid.has(previous) ? previous : firstSectionId));
+  }, [sectionIdsKey, sectionIds]);
+
+  useEffect(() => {
+    const root = scrollRef.current;
+    if (!root || sectionIds.length === 0) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const rawId = entry.target.getAttribute('data-section-id') as DashboardSectionId | null;
+          if (!rawId) {
+            return;
+          }
+
+          ratiosRef.current[rawId] = entry.intersectionRatio;
+
+          if (entry.intersectionRatio >= 0.5) {
+            setActivatedSectionIds((previous) => {
+              if (previous.has(rawId)) {
+                return previous;
+              }
+              const next = new Set(previous);
+              next.add(rawId);
+              return next;
+            });
+          }
+        });
+
+        let nextActive = activeSectionRef.current;
+        let maxRatio = -1;
+
+        sectionIds.forEach((id) => {
+          const ratio = ratiosRef.current[id] ?? 0;
+          if (ratio >= 0.5 && ratio > maxRatio) {
+            maxRatio = ratio;
+            nextActive = id;
+          }
+        });
+
+        if (nextActive !== activeSectionRef.current) {
+          setActiveSectionId(nextActive);
+        }
+      },
+      {
+        root,
+        threshold: 0.5,
+      },
+    );
+
+    sectionIds.forEach((id) => {
+      const node = sectionRefs.current[id];
+      if (node) {
+        observer.observe(node);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [sectionIdsKey, sectionIds]);
+
+  useEffect(() => {
+    setVisitedSectionIds((previous) => {
+      if (previous.has(activeSectionId)) {
+        return previous;
+      }
+      const next = new Set(previous);
+      next.add(activeSectionId);
+      return next;
+    });
+  }, [activeSectionId]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+        return;
+      }
+
+      if (isInteractiveTarget(event.target)) {
+        return;
+      }
+
+      const currentIndex = sectionIds.indexOf(activeSectionRef.current);
+      if (currentIndex < 0) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (event.key === 'ArrowDown') {
+        scrollToSection(Math.min(sectionIds.length - 1, currentIndex + 1));
+      } else {
+        scrollToSection(Math.max(0, currentIndex - 1));
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [scrollToSection, sectionIds]);
+
+  const renderSectionContent = (sectionId: DashboardSectionId): ReactNode => {
+    if (!results) {
+      return null;
+    }
+
+    switch (sectionId) {
+      case 'welcome':
+        return (
+          <WelcomeSlide
+            activated={activatedSectionIds.has('welcome')}
+            results={results}
+            formData={formData}
+            profileMeta={activeProfileMeta}
+          />
+        );
+      case 'tdee':
+        return <TdeeSlide activated={activatedSectionIds.has('tdee')} results={results} formData={formData} />;
+      case 'goal':
+        return <GoalSlide activated={activatedSectionIds.has('goal')} results={results} formData={formData} />;
+      case 'macros':
+        return <MacrosSlide results={results} activated={activatedSectionIds.has('macros')} />;
+      case 'projection':
+        return <ProjectionSlide onGoToGoalStep={handleGoToGoalStep} />;
+      case 'meals':
+        return <MealsSlide isActive={activeSectionId === 'meals'} />;
+      case 'supplements':
+        return <SupplementsSlide isActive={activeSectionId === 'supplements'} />;
+      case 'whatif':
+        return <WhatIfSlide isActive={activeSectionId === 'whatif'} />;
+      case 'final':
+        return <FinalSlide isActive={activeSectionId === 'final'} />;
+      default:
+        return null;
+    }
   };
 
-  const modeLabel = viewMode === 'technical' ? 'Visão técnica' : 'Resultados';
+  if (!results) {
+    return (
+      <section className="screen active" id="screen-dashboard">
+        <div className="dfp-loading">Resultados indisponíveis.</div>
+      </section>
+    );
+  }
 
   return (
-    <section className="screen active" id="screen-dashboard" data-theme={dashboardTheme}>
-      <header className="dashboard-header">
-        <div className="dashboard-header-top">
-          <div className="dashboard-logo-area">
-            <div className="dashboard-logo form-logo-inline">
-              <Zap size={20} fill="var(--dash-accent, var(--accent-red))" color="var(--dash-accent, var(--accent-red))" />
-              DIETFORGE
-            </div>
-            <div className="dashboard-header-badge">{isExamplePreview ? 'Modo Exemplo' : 'Plano Ativo'}</div>
-            {shareStatus ? <div className="dashboard-header-badge">{shareStatus}</div> : null}
-          </div>
-          <div className="dashboard-header-actions">
-            <button
-              className="theme-toggle icon-tooltip"
-              title="Alternar tema do dashboard"
-              aria-label="Alternar tema do dashboard"
-              aria-pressed={dashboardTheme === 'light'}
-              type="button"
-              data-tooltip={dashboardTheme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
-              onClick={() => setDashboardTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
-            >
-              {dashboardTheme === 'dark' ? <Sun size={14} /> : <MoonStar size={14} />}
-            </button>
-            <button
-              className="btn-icon icon-tooltip"
-              title="Alternar visão"
-              aria-label="Alternar visão"
-              type="button"
-              data-tooltip={`Alternar para ${viewMode === 'technical' ? 'resultados' : 'visão técnica'}`}
-              onClick={() => setViewMode(viewMode === 'technical' ? 'simple' : 'technical')}
-            >
-              <SlidersHorizontal size={16} strokeWidth={2} />
-            </button>
-            <button
-              className="btn-icon icon-tooltip"
-              title="Compartilhar"
-              aria-label="Compartilhar"
-              type="button"
-              data-tooltip="Copiar link com estado"
-              onClick={handleShare}
-            >
-              <Share2 size={16} strokeWidth={2} />
-            </button>
-            <button className="btn-restart" type="button" onClick={handleRestart}>
-              <RotateCcw size={14} strokeWidth={2} />
-              {isExamplePreview ? 'Sair do exemplo' : 'Recalcular'}
-            </button>
-            <button className="btn-export" type="button" onClick={() => window.print()}>
-              <Download size={14} strokeWidth={2.5} />
-              Exportar PDF
-            </button>
-            {profileTrigger}
-          </div>
+    <section
+      className="screen active"
+      id="screen-dashboard"
+      data-dashboard-presentation
+      data-reduced-motion={reducedMotion ? 'true' : 'false'}
+    >
+      <div id="topbar">
+        <div className="logo">
+          <span className="logo-accent">Diet</span>
+          <span className="logo-main">Forge</span>
         </div>
-        <div className="dashboard-header-sub">
-          <span className="dashboard-header-sub-item">MODO</span>
-          <div
-            className={viewMode === 'technical' ? 'dashboard-mode-toggle technical' : 'dashboard-mode-toggle simple'}
-            role="tablist"
-            aria-label="Modo de visualização do dashboard"
-          >
-            <span className="dashboard-mode-thumb" aria-hidden />
-            <button
-              type="button"
-              role="tab"
-              aria-selected={viewMode === 'simple'}
-              className={viewMode === 'simple' ? 'dashboard-mode-btn active' : 'dashboard-mode-btn'}
-              onClick={() => setViewMode('simple')}
-            >
-              Resultados
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={viewMode === 'technical'}
-              className={viewMode === 'technical' ? 'dashboard-mode-btn active' : 'dashboard-mode-btn'}
-              onClick={() => setViewMode('technical')}
-            >
-              Visão técnica
-            </button>
-          </div>
-          <span className="dashboard-header-sub-state">{modeLabel}</span>
+        <p className="topbar-section-pill" aria-live="polite">
+          <span className="topbar-section-index">{activeSectionMeta.index}</span>
+          <span className="topbar-section-separator" aria-hidden>
+            ·
+          </span>
+          <span className="topbar-section-label">{activeSectionMeta.label}</span>
+        </p>
+        <div className="topbar-right">
+          <span className="topbar-mode">{isExamplePreview ? 'Modo Exemplo' : 'Plano Ativo'}</span>
+          <button type="button" className={`topbar-btn${isExamplePreview ? ' is-danger' : ''}`} onClick={handleRestart}>
+            <RotateCcw size={14} />
+            {isExamplePreview ? 'Sair do exemplo' : 'Recalcular'}
+          </button>
+          {profileTrigger}
         </div>
-      </header>
-
-      <div className="dashboard-body">
-        <motion.div {...sectionMotion}>
-          <ProfileStrip />
-        </motion.div>
-        <motion.div {...sectionMotion}>
-          <KpiStrip onGoToGoalStep={handleGoToGoalStep} />
-        </motion.div>
-        <motion.div {...sectionMotion}>
-          <MacroCards />
-        </motion.div>
-
-        {viewMode === 'technical' ? (
-          <>
-            <motion.div {...sectionMotion}>
-              <ReceiptCard />
-            </motion.div>
-            <motion.div {...sectionMotion}>
-              <ProjectionSection onGoToGoalStep={handleGoToGoalStep} theme={dashboardTheme} />
-            </motion.div>
-            <motion.div {...sectionMotion}>
-              <BeforeAfterSection />
-            </motion.div>
-            <motion.div {...sectionMotion}>
-              <SupplementsSection />
-            </motion.div>
-            <motion.div {...sectionMotion}>
-              <WhatIfSection />
-            </motion.div>
-            <motion.div {...sectionMotion}>
-              <MealsSection />
-            </motion.div>
-            <motion.div {...sectionMotion}>
-              <RefeedSection />
-            </motion.div>
-            <motion.div {...sectionMotion}>
-              <CalibrationSection />
-            </motion.div>
-          </>
-        ) : null}
-
-        <motion.div {...sectionMotion}>
-          <DashboardFooter />
-        </motion.div>
       </div>
+
+      <nav id="sidenav" aria-label="Progresso das seções">
+        {sections.map((section, index) => {
+          const stateClass =
+            section.id === activeSectionId ? 'active' : visitedSectionIds.has(section.id) ? 'visited' : 'future';
+
+          return (
+            <button
+              key={section.id}
+              type="button"
+              className={`nav-dot ${stateClass}`}
+              data-section={index}
+              onClick={() => scrollToSection(index)}
+              aria-label={`Ir para seção ${section.label}`}
+            >
+              <span className="nav-dot-label">{section.label}</span>
+              <span className="nav-pip" aria-hidden />
+            </button>
+          );
+        })}
+      </nav>
+
+      <div className="dfp-mobile-progress" aria-label="Progresso mobile das seções">
+        {sections.map((section, index) => {
+          const stateClass =
+            section.id === activeSectionId ? 'is-active' : visitedSectionIds.has(section.id) ? 'is-visited' : 'is-future';
+
+          return (
+            <button
+              key={section.id}
+              type="button"
+              className={`dfp-mobile-dot ${stateClass}`}
+              onClick={() => scrollToSection(index)}
+              aria-label={`Ir para seção ${section.label}`}
+            />
+          );
+        })}
+      </div>
+
+      <div className="dfp-shell" ref={scrollRef}>
+        {sections.map((section) => (
+          <section
+            key={section.id}
+            ref={(node) => {
+              sectionRefs.current[section.id] = node;
+            }}
+            className="dfp-slide section"
+            data-section-id={section.id}
+            data-active={section.id === activeSectionId ? 'true' : 'false'}
+            data-activated={activatedSectionIds.has(section.id) ? 'true' : 'false'}
+            tabIndex={0}
+            aria-labelledby={section.headingId}
+          >
+            <div className="dfp-slide-inner">{renderSectionContent(section.id)}</div>
+          </section>
+        ))}
+      </div>
+
     </section>
   );
 };

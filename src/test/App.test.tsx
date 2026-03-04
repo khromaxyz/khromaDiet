@@ -32,7 +32,7 @@ describe('DietForge app flow', () => {
     await screen.findByText(/plano funcional foi calculado/i);
 
     fireEvent.click(screen.getByRole('button', { name: /ver análise completa/i }));
-    await screen.findByText(/visão geral/i);
+    await screen.findByText(/protocolo ativo/i);
   });
 
   it('supports back navigation in wizard', async () => {
@@ -58,7 +58,7 @@ describe('DietForge app flow', () => {
     const { container } = render(<App />);
 
     fireEvent.click(screen.getByRole('button', { name: /ver exemplo/i }));
-    await screen.findByText(/composição corporal/i);
+    await screen.findByText(/protocolo ativo/i);
     expect(container.querySelector('canvas')).toBeInTheDocument();
   });
 

@@ -1,4 +1,4 @@
-﻿import type { ComponentType } from 'react';
+﻿import type { ComponentType, ReactNode } from 'react';
 
 import type { ValidationIssue } from './engine';
 import type { FormData, FormPatch } from './form';
@@ -21,7 +21,7 @@ export type FormStepId =
 
 export interface GoalOption {
   id: string;
-  icon: string;
+  icon: ReactNode;
   title: string;
   description: string;
   accent?: 'red' | 'orange' | 'violet' | 'green' | 'cyan' | 'lime' | 'blue';

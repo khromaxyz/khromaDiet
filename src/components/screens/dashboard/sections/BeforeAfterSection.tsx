@@ -1,4 +1,6 @@
-﻿import { useDietForgeStore } from '../../../../store/useDietForgeStore';
+﻿import { ArrowRight, Gauge, LineChart } from 'lucide-react';
+
+import { useDietForgeStore } from '../../../../store/useDietForgeStore';
 
 const formatBf = (value: number | null): string => (value === null ? 'N/A' : `${value.toFixed(1)}%`);
 
@@ -39,7 +41,7 @@ export const BeforeAfterSection = () => {
             </div>
           </div>
           <div className="ba-arrow-wrapper">
-            <div className="ba-arrow">&gt;</div>
+            <div className="ba-arrow"><ArrowRight size={22} strokeWidth={2} /></div>
             <div className="ba-weeks">{beforeAfter.projected.week} semanas</div>
           </div>
           <div className="ba-side">
@@ -66,6 +68,7 @@ export const BeforeAfterSection = () => {
 
       <div className="speed-stack">
         <div className="speed-card">
+          <div className="speed-card-icon" aria-hidden><Gauge size={16} strokeWidth={1.5} /></div>
           <div className="speed-label">Velocidade de resultado</div>
           <div className="speed-main speed-main-premium">
             ~<span className="highlight">{results.weeklyRateKg.toFixed(2)} kg</span> por semana
@@ -80,6 +83,7 @@ export const BeforeAfterSection = () => {
         </div>
 
         <div className="speed-card speed-card-cyan">
+          <div className="speed-card-icon" aria-hidden><LineChart size={16} strokeWidth={1.5} /></div>
           <div className="speed-label speed-label-cyan">Evolução projetada</div>
           <div className="speed-main">
             {results.projection

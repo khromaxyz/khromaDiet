@@ -1,4 +1,5 @@
-﻿import { useMemo } from 'react';
+﻿import { Target } from 'lucide-react';
+import { useMemo } from 'react';
 
 import { useDietForgeStore } from '../../../../store/useDietForgeStore';
 import { ProjectionChart } from '../../../charts/ProjectionChart';
@@ -71,7 +72,7 @@ export const ProjectionSection = ({ onGoToGoalStep, theme = 'dark' }: Projection
 
         <div className="target-info-card projection-empty-card">
           <div className="target-info-row">
-            <span className="target-info-icon">🎯</span>
+            <span className="target-info-icon"><Target size={14} strokeWidth={1.5} /></span>
             <p className="target-info-text">
               Preencha sua meta em Meta e prazo para ver o prazo estimado e o gráfico de evolução.
             </p>

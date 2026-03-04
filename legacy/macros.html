@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DietForge — Macronutrientes</title>
+    <style>
+        /* ============================================= */
+        /* SEÇÃO: DESIGN SYSTEM / VARIÁVEIS              */
+        /* ============================================= */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a28;
+            --bg-card: #111119;
+            --bg-card-hover: #1c1c2a;
+            --bg-elevated: #1e1e2e;
+            --bg-surface: rgba(255, 255, 255, 0.03);
+            --bg-glass: rgba(17, 17, 25, 0.75);
+            --bg-glass-heavy: rgba(10, 10, 15, 0.85);
+
+            --accent-red: #e63946;
+            --accent-red-light: #ff4d5a;
+            --accent-red-dark: #c0313d;
+            --accent-red-glow: rgba(230, 57, 70, 0.3);
+            --accent-red-subtle: rgba(230, 57, 70, 0.08);
+
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b8;
+            --text-tertiary: #6a6a80;
+            --text-muted: #4a4a5e;
+            --text-white: #ffffff;
+
+            --border-primary: rgba(255, 255, 255, 0.06);
+            --border-secondary: rgba(255, 255, 255, 0.03);
+            --border-accent: rgba(230, 57, 70, 0.2);
+            --border-glow: rgba(255, 255, 255, 0.08);
+
+            --protein-color: #e63946;
+            --protein-color-light: #ff6b76;
+            --protein-color-lighter: #ff9da5;
+            --protein-glow: rgba(230, 57, 70, 0.25);
+            --protein-glow-strong: rgba(230, 57, 70, 0.4);
+            --protein-bg: rgba(230, 57, 70, 0.06);
+            --protein-bg-mid: rgba(230, 57, 70, 0.10);
+            --protein-gradient: linear-gradient(135deg, #e63946, #ff6b76);
+            --protein-gradient-h: linear-gradient(90deg, #e63946, #ff6b76);
+
+            --carb-color: #f4a261;
+            --carb-color-light: #ffbe85;
+            --carb-color-lighter: #ffd4a8;
+            --carb-glow: rgba(244, 162, 97, 0.25);
+            --carb-glow-strong: rgba(244, 162, 97, 0.4);
+            --carb-bg: rgba(244, 162, 97, 0.06);
+            --carb-bg-mid: rgba(244, 162, 97, 0.10);
+            --carb-gradient: linear-gradient(135deg, #f4a261, #ffbe85);
+            --carb-gradient-h: linear-gradient(90deg, #f4a261, #ffbe85);
+
+            --fat-color: #8b5cf6;
+            --fat-color-light: #a78bfa;
+            --fat-color-lighter: #c4b5fd;
+            --fat-glow: rgba(139, 92, 246, 0.25);
+            --fat-glow-strong: rgba(139, 92, 246, 0.4);
+            --fat-bg: rgba(139, 92, 246, 0.06);
+            --fat-bg-mid: rgba(139, 92, 246, 0.10);
+            --fat-gradient: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            --fat-gradient-h: linear-gradient(90deg, #8b5cf6, #a78bfa);
+
+            --success-color: #4ade80;
+            --success-glow: rgba(74, 222, 128, 0.25);
+            --success-bg: rgba(74, 222, 128, 0.06);
+            --warning-color: #fbbf24;
+            --warning-bg: rgba(251, 191, 36, 0.08);
+            --info-color: #60a5fa;
+
+            --radius-xs: 6px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-3xl: 32px;
+            --radius-full: 100px;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5);
+            --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.6);
+            --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+
+            --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-smooth: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: RESET & BASE                           */
+        /* ============================================= */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: PAGE WRAPPER                           */
+        /* ============================================= */
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 48px 24px 96px;
+            position: relative;
+        }
+
+        .page-wrapper::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 100% 70% at 50% -20%, rgba(230, 57, 70, 0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 10% 90%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 50% at 90% 80%, rgba(244, 162, 97, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-wrapper::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .section-macros {
+            width: 100%;
+            max-width: 1240px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: GLOW CURSOR EFFECT                     */
+        /* ============================================= */
+        .glow-cursor {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.035) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: opacity 0.4s ease;
+            opacity: 0;
+            will-change: transform;
+        }
+
+        .section-macros:hover .glow-cursor {
+            opacity: 1;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: HEADER ÉPICO                           */
+        /* ============================================= */
+        .macros-header {
+            margin-bottom: 48px;
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 0.8s var(--ease-spring) 0.1s forwards;
+        }
+
+        .macros-header__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 18px;
+            background: linear-gradient(135deg, var(--accent-red-subtle), rgba(139, 92, 246, 0.06));
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-red-light);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .macros-header__badge::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; right: 0; bottom: 0;
+            width: 300%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+            animation: shimmerBadge 3s ease-in-out infinite;
+        }
+
+        .macros-header__title {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .macros-header__subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 620px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .macros-header__subtitle strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .macros-header__divider {
+            width: 80px;
+            height: 3px;
+            margin: 24px auto 0;
+            border-radius: var(--radius-full);
+            background: linear-gradient(90deg, var(--protein-color), var(--carb-color), var(--fat-color));
+            opacity: 0.6;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: HERO METRIC — TOTAL CALÓRICO           */
+        /* ============================================= */
+        .hero-metric {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 0.8s var(--ease-spring) 0.2s forwards;
+        }
+
+        .hero-metric__card {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 28px 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-2xl);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-metric__card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(230, 57, 70, 0.3), rgba(244, 162, 97, 0.3), rgba(139, 92, 246, 0.3), transparent);
+        }
+
+        .hero-metric__card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+        }
+
+        .hero-metric__icon-wrap {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.12), rgba(244, 162, 97, 0.08));
+            border: 1px solid rgba(230, 57, 70, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .hero-metric__icon-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.2), transparent, rgba(244, 162, 97, 0.2));
+            z-index: -1;
+            filter: blur(8px);
+            opacity: 0.5;
+        }
+
+        .hero-metric__content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .hero-metric__label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        .hero-metric__value-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .hero-metric__value {
+            font-family: var(--font-mono);
+            font-size: 44px;
+            font-weight: 900;
+            color: var(--text-primary);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .hero-metric__unit {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+        }
+
+        .hero-metric__status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: var(--success-bg);
+            border: 1px solid rgba(74, 222, 128, 0.15);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--success-color);
+            margin-left: 20px;
+            white-space: nowrap;
+        }
+
+        .hero-metric__mini-bar {
+            display: flex;
+            gap: 3px;
+            margin-top: 4px;
+        }
+
+        .hero-metric__mini-seg {
+            height: 4px;
+            border-radius: var(--radius-full);
+            transition: width 1.2s var(--ease-spring);
+        }
+
+        .hero-metric__mini-seg--protein {
+            background: var(--protein-gradient-h);
+            width: 0;
+        }
+
+        .hero-metric__mini-seg--carb {
+            background: var(--carb-gradient-h);
+            width: 0;
+        }
+
+        .hero-metric__mini-seg--fat {
+            background: var(--fat-gradient-h);
+            width: 0;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: MACRO TRIO — 3 CARDS PRINCIPAIS        */
+        /* ============================================= */
+        .macro-trio {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .macro-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-2xl);
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            transition: all 0.4s var(--ease-spring);
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+        }
+
+        .macro-card:nth-child(1) { animation: cardReveal 0.8s var(--ease-spring) 0.35s forwards; }
+        .macro-card:nth-child(2) { animation: cardReveal 0.8s var(--ease-spring) 0.5s forwards; }
+        .macro-card:nth-child(3) { animation: cardReveal 0.8s var(--ease-spring) 0.65s forwards; }
+
+        .macro-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .macro-card--protein:hover {
+            border-color: rgba(230, 57, 70, 0.3);
+            box-shadow: var(--shadow-xl), 0 0 60px rgba(230, 57, 70, 0.12), 0 0 120px rgba(230, 57, 70, 0.06);
+        }
+        .macro-card--carb:hover {
+            border-color: rgba(244, 162, 97, 0.3);
+            box-shadow: var(--shadow-xl), 0 0 60px rgba(244, 162, 97, 0.12), 0 0 120px rgba(244, 162, 97, 0.06);
+        }
+        .macro-card--fat:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: var(--shadow-xl), 0 0 60px rgba(139, 92, 246, 0.12), 0 0 120px rgba(139, 92, 246, 0.06);
+        }
+
+        /* Card top accent line */
+        .macro-card__accent-line {
+            height: 3px;
+            width: 100%;
+            position: relative;
+        }
+
+        .macro-card--protein .macro-card__accent-line { background: var(--protein-gradient-h); }
+        .macro-card--carb .macro-card__accent-line { background: var(--carb-gradient-h); }
+        .macro-card--fat .macro-card__accent-line { background: var(--fat-gradient-h); }
+
+        .macro-card__accent-line::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 20px;
+            filter: blur(12px);
+            opacity: 0.5;
+        }
+
+        .macro-card--protein .macro-card__accent-line::after { background: var(--protein-gradient-h); }
+        .macro-card--carb .macro-card__accent-line::after { background: var(--carb-gradient-h); }
+        .macro-card--fat .macro-card__accent-line::after { background: var(--fat-gradient-h); }
+
+        /* Glow orb */
+        .macro-card__glow-orb {
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .macro-card:hover .macro-card__glow-orb { opacity: 0.7; }
+
+        .macro-card--protein .macro-card__glow-orb { background: var(--protein-glow); }
+        .macro-card--carb .macro-card__glow-orb { background: var(--carb-glow); }
+        .macro-card--fat .macro-card__glow-orb { background: var(--fat-glow); }
+
+        /* Card inner body */
+        .macro-card__body {
+            padding: 28px 28px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card header row: emoji + name + badge */
+        .macro-card__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .macro-card__identity {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .macro-card__emoji-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            position: relative;
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .macro-card:hover .macro-card__emoji-wrap {
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        .macro-card--protein .macro-card__emoji-wrap {
+            background: linear-gradient(135deg, var(--protein-bg), var(--protein-bg-mid));
+            border: 1px solid rgba(230, 57, 70, 0.15);
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.08);
+        }
+        .macro-card--carb .macro-card__emoji-wrap {
+            background: linear-gradient(135deg, var(--carb-bg), var(--carb-bg-mid));
+            border: 1px solid rgba(244, 162, 97, 0.15);
+            box-shadow: 0 0 20px rgba(244, 162, 97, 0.08);
+        }
+        .macro-card--fat .macro-card__emoji-wrap {
+            background: linear-gradient(135deg, var(--fat-bg), var(--fat-bg-mid));
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.08);
+        }
+
+        .macro-card__name-group {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .macro-card__name {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .macro-card__role {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .macro-card__pct-badge {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+
+        .macro-card--protein .macro-card__pct-badge {
+            color: var(--protein-color-light);
+            background: var(--protein-bg);
+            border: 1px solid rgba(230, 57, 70, 0.12);
+        }
+        .macro-card--carb .macro-card__pct-badge {
+            color: var(--carb-color-light);
+            background: var(--carb-bg);
+            border: 1px solid rgba(244, 162, 97, 0.12);
+        }
+        .macro-card--fat .macro-card__pct-badge {
+            color: var(--fat-color-light);
+            background: var(--fat-bg);
+            border: 1px solid rgba(139, 92, 246, 0.12);
+        }
+
+        /* Big number display */
+        .macro-card__big-number {
+            margin-bottom: 4px;
+        }
+
+        .macro-card__value-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .macro-card__grams-value {
+            font-family: var(--font-mono);
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: -3px;
+            line-height: 1;
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .macro-card:hover .macro-card__grams-value {
+            transform: scale(1.03);
+        }
+
+        .macro-card--protein .macro-card__grams-value { color: var(--protein-color-light); }
+        .macro-card--carb .macro-card__grams-value { color: var(--carb-color-light); }
+        .macro-card--fat .macro-card__grams-value { color: var(--fat-color-light); }
+
+        .macro-card__grams-unit {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+        }
+
+        /* Kcal sub-row */
+        .macro-card__kcal-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            padding: 10px 14px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-secondary);
+        }
+
+        .macro-card__kcal-value {
+            font-family: var(--font-mono);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .macro-card__kcal-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+        }
+
+        .macro-card__kcal-divider {
+            width: 1px;
+            height: 16px;
+            background: var(--border-primary);
+        }
+
+        .macro-card__kcal-formula {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: DONUT RING INSIDE CARD                 */
+        /* ============================================= */
+        .macro-card__ring-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .macro-card__ring {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            flex-shrink: 0;
+        }
+
+        .macro-card__ring svg {
+            width: 90px;
+            height: 90px;
+            transform: rotate(-90deg);
+        }
+
+        .macro-card__ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.04);
+            stroke-width: 7;
+        }
+
+        .macro-card__ring-fill {
+            fill: none;
+            stroke-width: 7;
+            stroke-linecap: round;
+            stroke-dasharray: 226.195;
+            stroke-dashoffset: 226.195;
+            transition: stroke-dashoffset 1.8s var(--ease-spring);
+        }
+
+        .macro-card__ring-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .macro-card__ring-pct {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .macro-card--protein .macro-card__ring-pct { color: var(--protein-color-light); }
+        .macro-card--carb .macro-card__ring-pct { color: var(--carb-color-light); }
+        .macro-card--fat .macro-card__ring-pct { color: var(--fat-color-light); }
+
+        .macro-card__ring-label {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Stats next to ring */
+        .macro-card__ring-stats {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .macro-card__stat-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+
+        .macro-card__stat-item:not(:last-child) {
+            border-bottom: 1px solid var(--border-secondary);
+        }
+
+        .macro-card__stat-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .macro-card__stat-value {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: RANGE GAUGE — FAIXA RECOMENDADA        */
+        /* ============================================= */
+        .range-gauge {
+            margin-bottom: 20px;
+        }
+
+        .range-gauge__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .range-gauge__title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .range-gauge__status {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .range-gauge__status--low {
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.12);
+        }
+
+        .range-gauge__status--ideal {
+            color: var(--success-color);
+            background: var(--success-bg);
+            border: 1px solid rgba(74, 222, 128, 0.12);
+        }
+
+        .range-gauge__status--max {
+            color: #f97316;
+            background: rgba(249, 115, 22, 0.08);
+            border: 1px solid rgba(249, 115, 22, 0.12);
+        }
+
+        /* Track with colored zones */
+        .range-gauge__track-wrapper {
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .range-gauge__track {
+            position: relative;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: var(--radius-full);
+            overflow: visible;
+            box-shadow: var(--shadow-inner);
+        }
+
+        .range-gauge__zone-ideal {
+            position: absolute;
+            top: 0; bottom: 0;
+            border-radius: var(--radius-full);
+            opacity: 0.15;
+        }
+
+        .macro-card--protein .range-gauge__zone-ideal { background: var(--protein-color); }
+        .macro-card--carb .range-gauge__zone-ideal { background: var(--carb-color); }
+        .macro-card--fat .range-gauge__zone-ideal { background: var(--fat-color); }
+
+        .range-gauge__fill {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            border-radius: var(--radius-full);
+            width: 0%;
+            transition: width 1.4s var(--ease-spring);
+        }
+
+        .macro-card--protein .range-gauge__fill { background: var(--protein-gradient-h); box-shadow: 0 0 16px var(--protein-glow); }
+        .macro-card--carb .range-gauge__fill { background: var(--carb-gradient-h); box-shadow: 0 0 16px var(--carb-glow); }
+        .macro-card--fat .range-gauge__fill { background: var(--fat-gradient-h); box-shadow: 0 0 16px var(--fat-glow); }
+
+        /* Marker */
+        .range-gauge__marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-card);
+            z-index: 3;
+            transition: left 1.4s var(--ease-spring);
+            left: 0%;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+        }
+
+        .macro-card--protein .range-gauge__marker { background: var(--protein-color-light); box-shadow: 0 0 12px var(--protein-glow-strong), 0 0 0 2px rgba(230, 57, 70, 0.2); }
+        .macro-card--carb .range-gauge__marker { background: var(--carb-color-light); box-shadow: 0 0 12px var(--carb-glow-strong), 0 0 0 2px rgba(244, 162, 97, 0.2); }
+        .macro-card--fat .range-gauge__marker { background: var(--fat-color-light); box-shadow: 0 0 12px var(--fat-glow-strong), 0 0 0 2px rgba(139, 92, 246, 0.2); }
+
+        /* Tooltip on marker */
+        .range-gauge__marker-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-sm);
+            padding: 4px 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .range-gauge__marker-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid transparent;
+            border-top-color: var(--bg-elevated);
+        }
+
+        .macro-card:hover .range-gauge__marker-tooltip {
+            opacity: 1;
+        }
+
+        /* Limits */
+        .range-gauge__limits {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .range-gauge__limit {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .range-gauge__limit-label {
+            font-family: var(--font-stack);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: DETAIL TOGGLE INSIDE CARD              */
+        /* ============================================= */
+        .macro-card__toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            color: var(--text-tertiary);
+            font-family: var(--font-stack);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .macro-card__toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            border-color: var(--border-primary);
+        }
+
+        .macro-card__toggle-btn:active {
+            transform: scale(0.98);
+        }
+
+        .macro-card__toggle-icon {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s var(--ease-spring);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .macro-card__toggle-btn.is-open .macro-card__toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .macro-card__toggle-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* Detail panel */
+        .macro-card__details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--ease-spring);
+        }
+
+        .macro-card__details.is-open {
+            max-height: 600px;
+        }
+
+        .macro-card__details-inner {
+            padding: 20px 28px 28px;
+            border-top: 1px solid var(--border-secondary);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .detail-cell {
+            padding: 10px 12px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: all var(--transition-fast);
+        }
+
+        .detail-cell:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-primary);
+        }
+
+        .detail-cell__label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .detail-cell__value {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .detail-cell--full {
+            grid-column: 1 / -1;
+        }
+
+        .detail-cell--highlight {
+            background: var(--success-bg);
+            border-color: rgba(74, 222, 128, 0.1);
+        }
+
+        .detail-cell--highlight .detail-cell__value {
+            color: var(--success-color);
+        }
+
+        .detail-cell--warn {
+            background: var(--warning-bg);
+            border-color: rgba(251, 191, 36, 0.1);
+        }
+
+        .detail-cell--warn .detail-cell__value {
+            color: var(--warning-color);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: COMPOSITION RIVER BAR                  */
+        /* ============================================= */
+        .composition-river {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-2xl);
+            padding: 32px 36px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 0.8s var(--ease-spring) 0.8s forwards;
+        }
+
+        .composition-river::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(230, 57, 70, 0.25), rgba(244, 162, 97, 0.25), rgba(139, 92, 246, 0.25), transparent);
+        }
+
+        .composition-river__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .composition-river__title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .composition-river__title-text {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        .composition-river__title-emoji {
+            font-size: 16px;
+        }
+
+        .composition-river__total-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .composition-river__total-val {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .composition-river__total-unit {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+        }
+
+        .composition-river__check {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--success-color);
+            background: var(--success-bg);
+            border: 1px solid rgba(74, 222, 128, 0.12);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+        }
+
+        /* The River Bar */
+        .river-bar {
+            position: relative;
+            height: 64px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.04),
+                var(--shadow-lg),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .river-bar__seg {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: filter 0.3s ease, flex 1.2s var(--ease-spring);
+            flex: 0 0 0%;
+        }
+
+        .river-bar__seg:hover {
+            filter: brightness(1.15);
+        }
+
+        .river-bar__seg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 40%, rgba(0,0,0,0.1) 100%);
+            pointer-events: none;
+        }
+
+        .river-bar__seg--protein {
+            background: var(--protein-gradient);
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+        }
+
+        .river-bar__seg--carb {
+            background: var(--carb-gradient);
+        }
+
+        .river-bar__seg--fat {
+            background: var(--fat-gradient);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+        }
+
+        .river-bar__seg-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.4s ease 1.2s;
+        }
+
+        .river-bar__seg-emoji {
+            font-size: 18px;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+        }
+
+        .river-bar__seg-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .river-bar__seg-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .river-bar__seg-pct {
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            letter-spacing: -0.5px;
+        }
+
+        .river-bar__divider {
+            width: 2px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Legend under river */
+        .river-legend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .river-legend__item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            transition: background 0.2s ease;
+            cursor: default;
+        }
+
+        .river-legend__item:hover {
+            background: var(--bg-surface);
+        }
+
+        .river-legend__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .river-legend__dot--protein { background: var(--protein-gradient); box-shadow: 0 0 8px var(--protein-glow); }
+        .river-legend__dot--carb { background: var(--carb-gradient); box-shadow: 0 0 8px var(--carb-glow); }
+        .river-legend__dot--fat { background: var(--fat-gradient); box-shadow: 0 0 8px var(--fat-glow); }
+
+        .river-legend__text {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .river-legend__val {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: CALORIC CONTRIBUTION BARS               */
+        /* ============================================= */
+        .contrib-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-2xl);
+            padding: 32px 36px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 0.8s var(--ease-spring) 0.95s forwards;
+        }
+
+        .contrib-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+        }
+
+        .contrib-section__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .contrib-section__title {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contrib-section__subtitle {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* Contribution row */
+        .contrib-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .contrib-row:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .contrib-row__emoji {
+            font-size: 20px;
+            width: 32px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .contrib-row__label {
+            width: 90px;
+            flex-shrink: 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .contrib-row__bar-wrap {
+            flex: 1;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-inner);
+        }
+
+        .contrib-row__bar-fill {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 14px;
+            width: 0%;
+            transition: width 1.6s var(--ease-spring);
+            min-width: 0;
+        }
+
+        .contrib-row__bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(0,0,0,0.08) 100%);
+            pointer-events: none;
+        }
+
+        .contrib-row__bar-fill--protein { background: var(--protein-gradient-h); }
+        .contrib-row__bar-fill--carb { background: var(--carb-gradient-h); }
+        .contrib-row__bar-fill--fat { background: var(--fat-gradient-h); }
+
+        .contrib-row__bar-text {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        .contrib-row__kcal {
+            width: 90px;
+            flex-shrink: 0;
+            text-align: right;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .contrib-row__kcal span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Caloric density pills */
+        .density-pills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-secondary);
+        }
+
+        .density-pill {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 12px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-secondary);
+            transition: all var(--transition-fast);
+            cursor: default;
+            position: relative;
+        }
+
+        .density-pill:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-primary);
+            transform: translateY(-2px);
+        }
+
+        .density-pill__emoji {
+            font-size: 16px;
+        }
+
+        .density-pill__number {
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .density-pill__number--protein { color: var(--protein-color-light); }
+        .density-pill__number--carb { color: var(--carb-color-light); }
+        .density-pill__number--fat { color: var(--fat-color-light); }
+
+        .density-pill__label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: CALORIC PROOF — SOMA VALIDADA          */
+        /* ============================================= */
+        .caloric-proof {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-2xl);
+            padding: 28px 36px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 0.8s var(--ease-spring) 1.1s forwards;
+        }
+
+        .caloric-proof::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.3), transparent);
+        }
+
+        .caloric-proof__header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .caloric-proof__header-text {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .caloric-proof__equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .caloric-proof__term {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .caloric-proof__term:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-primary);
+            transform: translateY(-2px);
+        }
+
+        .caloric-proof__term-emoji {
+            font-size: 16px;
+        }
+
+        .caloric-proof__term-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .caloric-proof__term-name {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .caloric-proof__term-val {
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .caloric-proof__op {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-muted);
+        }
+
+        .caloric-proof__result {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.08), rgba(74, 222, 128, 0.04));
+            border: 1px solid rgba(74, 222, 128, 0.18);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 0 30px rgba(74, 222, 128, 0.06);
+            transition: all var(--transition-fast);
+        }
+
+        .caloric-proof__result:hover {
+            box-shadow: 0 0 40px rgba(74, 222, 128, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .caloric-proof__result-emoji {
+            font-size: 20px;
+        }
+
+        .caloric-proof__result-value {
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--success-color);
+            letter-spacing: -1px;
+        }
+
+        .caloric-proof__result-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(74, 222, 128, 0.7);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: INSIGHTS BAR — BOTTOM INFO             */
+        /* ============================================= */
+        .insights-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 0.8s var(--ease-spring) 1.25s forwards;
+        }
+
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--ease-spring);
+            cursor: default;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-glow);
+            box-shadow: var(--shadow-md);
+        }
+
+        .insight-card__emoji {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .insight-card__value {
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+
+        .insight-card__label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .insight-card__sub {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 6px;
+            opacity: 0.7;
+        }
+
+        .insight-card--protein .insight-card__value { color: var(--protein-color-light); }
+        .insight-card--carb .insight-card__value { color: var(--carb-color-light); }
+        .insight-card--fat .insight-card__value { color: var(--fat-color-light); }
+        .insight-card--total .insight-card__value { color: var(--success-color); }
+
+        /* ============================================= */
+        /* SEÇÃO: ANIMATED KEYFRAMES                     */
+        /* ============================================= */
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardReveal {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes shimmerBadge {
+            0% { transform: translateX(-100%); }
+            50%, 100% { transform: translateX(100%); }
+        }
+
+        @keyframes pulseRing {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes floatEmoji {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(74, 222, 128, 0.06); }
+            50% { box-shadow: 0 0 30px rgba(74, 222, 128, 0.12); }
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: RESPONSIVIDADE                         */
+        /* ============================================= */
+        @media (max-width: 1024px) {
+            .macro-trio {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .insights-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-metric__card {
+                flex-direction: column;
+                text-align: center;
+                padding: 24px 32px;
+                gap: 20px;
+            }
+
+            .hero-metric__status {
+                margin-left: 0;
+            }
+
+            .caloric-proof__equation {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .density-pills {
+                grid-template-columns: 1fr;
+            }
+
+            .macros-header__title {
+                font-size: 32px;
+            }
+
+            .contrib-row {
+                flex-wrap: wrap;
+            }
+
+            .contrib-row__bar-wrap {
+                min-width: 100%;
+                order: 3;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-wrapper {
+                padding: 24px 16px 64px;
+            }
+
+            .insights-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .macros-header__title {
+                font-size: 26px;
+            }
+
+            .macro-card__grams-value {
+                font-size: 40px;
+            }
+
+            .composition-river,
+            .contrib-section,
+            .caloric-proof {
+                padding: 24px 20px;
+            }
+
+            .river-bar {
+                height: 52px;
+            }
+
+            .river-legend {
+                gap: 12px;
+            }
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: SCROLLBAR CUSTOM                       */
+        /* ============================================= */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: SVG GRADIENT DEFS (HIDDEN)             */
+        /* ============================================= */
+        .svg-defs {
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        /* Focus visible for accessibility */
+        *:focus-visible {
+            outline: 2px solid var(--accent-red-light);
+            outline-offset: 2px;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: rgba(230, 57, 70, 0.3);
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <section class="section-macros" id="sectionMacros" aria-label="Distribuição de Macronutrientes">
+            <div class="glow-cursor" id="glowCursor" aria-hidden="true"></div>
+
+            <!-- SVG Gradient Definitions -->
+            <svg class="svg-defs" aria-hidden="true">
+                <defs>
+                    <linearGradient id="proteinGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#e63946" />
+                        <stop offset="100%" stop-color="#ff6b76" />
+                    </linearGradient>
+                    <linearGradient id="carbGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#f4a261" />
+                        <stop offset="100%" stop-color="#ffbe85" />
+                    </linearGradient>
+                    <linearGradient id="fatGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#8b5cf6" />
+                        <stop offset="100%" stop-color="#a78bfa" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- ============================================= -->
+            <!-- SEÇÃO: HEADER ÉPICO                            -->
+            <!-- ============================================= -->
+            <header class="macros-header">
+                <div class="macros-header__badge">
+                    🧬 Protocolo Nutricional Ativo
+                </div>
+                <h2 class="macros-header__title">Distribuição de Macronutrientes</h2>
+                <p class="macros-header__subtitle">
+                    Suas <strong>3.387 kcal</strong> decompostas em proteína, carboidrato e gordura — cada grama com propósito, cada caloria posicionada.
+                </p>
+                <div class="macros-header__divider" aria-hidden="true"></div>
+            </header>
+
+            <!-- ============================================= -->
+            <!-- SEÇÃO: HERO METRIC — TOTAL CALÓRICO            -->
+            <!-- ============================================= -->
+            <div class="hero-metric">
+                <div class="hero-metric__card">
+                    <div class="hero-metric__icon-wrap">🔥</div>
+                    <div class="hero-metric__content">
+                        <span class="hero-metric__label">Meta Calórica Diária</span>
+                        <div class="hero-metric__value-row">
+                            <span class="hero-metric__value count-up" data-target="3387" data-suffix="">0</span>
+                            <span class="hero-metric__unit">kcal</span>
+                        </div>
+                        <div class="hero-metric__mini-bar">
+                            <div class="hero-metric__mini-seg hero-metric__mini-seg--protein" data-target-w="56"></div>
+                            <div class="hero-metric__mini-seg hero-metric__mini-seg--carb" data-target-w="178"></div>
+                            <div class="hero-metric__mini-seg hero-metric__mini-seg--fat" data-target-w="66"></div>
+                        </div>
+                    </div>
+                    <div class="hero-metric__status">✅ Distribuição Validada</div>
+                </div>
+            </div>
+
+            <!-- ============================================= -->
+            <!-- SEÇÃO: MACRO TRIO — 3 CARDS PRINCIPAIS         -->
+            <!-- ============================================= -->
+            <div class="macro-trio" role="list" aria-label="Detalhes dos macronutrientes">
+
+                <!-- ======== PROTEÍNA CARD ======== -->
+                <article class="macro-card macro-card--protein" role="listitem">
+                    <div class="macro-card__accent-line" aria-hidden="true"></div>
+                    <div class="macro-card__glow-orb" aria-hidden="true"></div>
+                    <div class="macro-card__body">
+                        <!-- Header -->
+                        <div class="macro-card__header">
+                            <div class="macro-card__identity">
+                                <div class="macro-card__emoji-wrap">🥩</div>
+                                <div class="macro-card__name-group">
+                                    <span class="macro-card__name">Proteína</span>
+                                    <span class="macro-card__role">💪 Construção · Recuperação</span>
+                                </div>
+                            </div>
+                            <span class="macro-card__pct-badge">18.7%</span>
+                        </div>
+
+                        <!-- Big number -->
+                        <div class="macro-card__big-number">
+                            <div class="macro-card__value-row">
+                                <span class="macro-card__grams-value count-up" data-target="158" data-suffix="g">0g</span>
+                                <span class="macro-card__grams-unit">gramas</span>
+                            </div>
+                        </div>
+
+                        <!-- Kcal info -->
+                        <div class="macro-card__kcal-row">
+                            <span class="macro-card__kcal-value">632 kcal</span>
+                            <div class="macro-card__kcal-divider"></div>
+                            <span class="macro-card__kcal-formula">158g × 4 kcal/g</span>
+                            <div class="macro-card__kcal-divider"></div>
+                            <span class="macro-card__kcal-label">🔥 18.7% do total</span>
+                        </div>
+
+                        <!-- Ring + Stats -->
+                        <div class="macro-card__ring-section">
+                            <div class="macro-card__ring">
+                                <svg viewBox="0 0 80 80">
+                                    <circle class="macro-card__ring-bg" cx="40" cy="40" r="36" />
+                                    <circle class="macro-card__ring-fill" cx="40" cy="40" r="36"
+                                        stroke="url(#proteinGrad)"
+                                        data-target-pct="18.7" />
+                                </svg>
+                                <div class="macro-card__ring-center">
+                                    <span class="macro-card__ring-pct count-up" data-target="18.7" data-suffix="%">0%</span>
+                                    <span class="macro-card__ring-label">do total</span>
+                                </div>
+                            </div>
+                            <div class="macro-card__ring-stats">
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">🔢 Gramas</span>
+                                    <span class="macro-card__stat-value">158g</span>
+                                </div>
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">🔥 Calorias</span>
+                                    <span class="macro-card__stat-value">632 kcal</span>
+                                </div>
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">⚡ Densidade</span>
+                                    <span class="macro-card__stat-value">4 kcal/g</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Range Gauge -->
+                        <div class="range-gauge">
+                            <div class="range-gauge__header">
+                                <span class="range-gauge__title">📏 Faixa Recomendada</span>
+                                <span class="range-gauge__status range-gauge__status--low">⚠️ Próximo ao Mínimo</span>
+                            </div>
+                            <div class="range-gauge__track-wrapper">
+                                <div class="range-gauge__track">
+                                    <div class="range-gauge__zone-ideal" style="left: 0%; right: 0%;"></div>
+                                    <div class="range-gauge__fill" data-target-width="17.8"></div>
+                                    <div class="range-gauge__marker" data-target-left="17.8">
+                                        <div class="range-gauge__marker-tooltip">158g</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="range-gauge__limits">
+                                <span class="range-gauge__limit">
+                                    <span class="range-gauge__limit-label">Min</span> 134g
+                                </span>
+                                <span class="range-gauge__limit">
+                                    <span class="range-gauge__limit-label">Max</span> 269g
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Toggle -->
+                        <button class="macro-card__toggle-btn" aria-expanded="false" onclick="togglePanel(this, 'proteinDetails')">
+                            📊 Mais detalhes
+                            <span class="macro-card__toggle-icon">
+                                <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Detail panel -->
+                    <div class="macro-card__details" id="proteinDetails">
+                        <div class="macro-card__details-inner">
+                            <div class="detail-grid">
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">🔥 Calorias</span>
+                                    <span class="detail-cell__value">632 kcal</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">📊 % do Total</span>
+                                    <span class="detail-cell__value">18.7%</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⚡ Kcal/grama</span>
+                                    <span class="detail-cell__value">4 kcal</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">📏 Posição na Faixa</span>
+                                    <span class="detail-cell__value">17.8% do range</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⬇️ Faixa Mínima</span>
+                                    <span class="detail-cell__value">134g (536 kcal)</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⬆️ Faixa Máxima</span>
+                                    <span class="detail-cell__value">269g (1.076 kcal)</span>
+                                </div>
+                                <div class="detail-cell detail-cell--highlight">
+                                    <span class="detail-cell__label">✅ Acima do Mínimo</span>
+                                    <span class="detail-cell__value">+24g disponíveis</span>
+                                </div>
+                                <div class="detail-cell detail-cell--warn">
+                                    <span class="detail-cell__label">📈 Até o Máximo</span>
+                                    <span class="detail-cell__value">−111g restantes</span>
+                                </div>
+                                <div class="detail-cell detail-cell--full">
+                                    <span class="detail-cell__label">💡 Insight</span>
+                                    <span class="detail-cell__value" style="font-family: var(--font-stack); font-size: 12px; font-weight: 500; color: var(--text-tertiary); line-height: 1.5;">Sua proteína está próxima ao mínimo recomendado. Se o objetivo é maximizar hipertrofia, considere redistribuir calorias de carboidrato para proteína, visando 2.0g/kg como meta ótima.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ======== CARBOIDRATO CARD ======== -->
+                <article class="macro-card macro-card--carb" role="listitem">
+                    <div class="macro-card__accent-line" aria-hidden="true"></div>
+                    <div class="macro-card__glow-orb" aria-hidden="true"></div>
+                    <div class="macro-card__body">
+                        <!-- Header -->
+                        <div class="macro-card__header">
+                            <div class="macro-card__identity">
+                                <div class="macro-card__emoji-wrap">🍚</div>
+                                <div class="macro-card__name-group">
+                                    <span class="macro-card__name">Carboidrato</span>
+                                    <span class="macro-card__role">⚡ Energia · Combustível</span>
+                                </div>
+                            </div>
+                            <span class="macro-card__pct-badge">59.3%</span>
+                        </div>
+
+                        <!-- Big number -->
+                        <div class="macro-card__big-number">
+                            <div class="macro-card__value-row">
+                                <span class="macro-card__grams-value count-up" data-target="502" data-suffix="g">0g</span>
+                                <span class="macro-card__grams-unit">gramas</span>
+                            </div>
+                        </div>
+
+                        <!-- Kcal info -->
+                        <div class="macro-card__kcal-row">
+                            <span class="macro-card__kcal-value">2.008 kcal</span>
+                            <div class="macro-card__kcal-divider"></div>
+                            <span class="macro-card__kcal-formula">502g × 4 kcal/g</span>
+                            <div class="macro-card__kcal-divider"></div>
+                            <span class="macro-card__kcal-label">🔥 59.3% do total</span>
+                        </div>
+
+                        <!-- Ring + Stats -->
+                        <div class="macro-card__ring-section">
+                            <div class="macro-card__ring">
+                                <svg viewBox="0 0 80 80">
+                                    <circle class="macro-card__ring-bg" cx="40" cy="40" r="36" />
+                                    <circle class="macro-card__ring-fill" cx="40" cy="40" r="36"
+                                        stroke="url(#carbGrad)"
+                                        data-target-pct="59.3" />
+                                </svg>
+                                <div class="macro-card__ring-center">
+                                    <span class="macro-card__ring-pct count-up" data-target="59.3" data-suffix="%">0%</span>
+                                    <span class="macro-card__ring-label">do total</span>
+                                </div>
+                            </div>
+                            <div class="macro-card__ring-stats">
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">🔢 Gramas</span>
+                                    <span class="macro-card__stat-value">502g</span>
+                                </div>
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">🔥 Calorias</span>
+                                    <span class="macro-card__stat-value">2.008 kcal</span>
+                                </div>
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">⚡ Densidade</span>
+                                    <span class="macro-card__stat-value">4 kcal/g</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Range Gauge -->
+                        <div class="range-gauge">
+                            <div class="range-gauge__header">
+                                <span class="range-gauge__title">📏 Faixa Recomendada</span>
+                                <span class="range-gauge__status range-gauge__status--max">🔶 No Máximo</span>
+                            </div>
+                            <div class="range-gauge__track-wrapper">
+                                <div class="range-gauge__track">
+                                    <div class="range-gauge__zone-ideal" style="left: 0%; right: 0%;"></div>
+                                    <div class="range-gauge__fill" data-target-width="99.5"></div>
+                                    <div class="range-gauge__marker" data-target-left="99.5">
+                                        <div class="range-gauge__marker-tooltip">502g</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="range-gauge__limits">
+                                <span class="range-gauge__limit">
+                                    <span class="range-gauge__limit-label">Min</span> 126g
+                                </span>
+                                <span class="range-gauge__limit">
+                                    <span class="range-gauge__limit-label">Max</span> 504g
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Toggle -->
+                        <button class="macro-card__toggle-btn" aria-expanded="false" onclick="togglePanel(this, 'carbDetails')">
+                            📊 Mais detalhes
+                            <span class="macro-card__toggle-icon">
+                                <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Detail panel -->
+                    <div class="macro-card__details" id="carbDetails">
+                        <div class="macro-card__details-inner">
+                            <div class="detail-grid">
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">🔥 Calorias</span>
+                                    <span class="detail-cell__value">2.008 kcal</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">📊 % do Total</span>
+                                    <span class="detail-cell__value">59.3%</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⚡ Kcal/grama</span>
+                                    <span class="detail-cell__value">4 kcal</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">📏 Posição na Faixa</span>
+                                    <span class="detail-cell__value">99.5% do range</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⬇️ Faixa Mínima</span>
+                                    <span class="detail-cell__value">126g (504 kcal)</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⬆️ Faixa Máxima</span>
+                                    <span class="detail-cell__value">504g (2.016 kcal)</span>
+                                </div>
+                                <div class="detail-cell detail-cell--highlight">
+                                    <span class="detail-cell__label">✅ Acima do Mínimo</span>
+                                    <span class="detail-cell__value">+376g disponíveis</span>
+                                </div>
+                                <div class="detail-cell detail-cell--warn">
+                                    <span class="detail-cell__label">📈 Até o Máximo</span>
+                                    <span class="detail-cell__value">−2g restantes</span>
+                                </div>
+                                <div class="detail-cell detail-cell--full">
+                                    <span class="detail-cell__label">💡 Insight</span>
+                                    <span class="detail-cell__value" style="font-family: var(--font-stack); font-size: 12px; font-weight: 500; color: var(--text-tertiary); line-height: 1.5;">Carboidratos estão no teto da faixa recomendada, o que é ideal para atletas de alta performance e esportes de endurance. Esse volume de carbs maximiza os estoques de glicogênio muscular e hepático.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ======== GORDURA CARD ======== -->
+                <article class="macro-card macro-card--fat" role="listitem">
+                    <div class="macro-card__accent-line" aria-hidden="true"></div>
+                    <div class="macro-card__glow-orb" aria-hidden="true"></div>
+                    <div class="macro-card__body">
+                        <!-- Header -->
+                        <div class="macro-card__header">
+                            <div class="macro-card__identity">
+                                <div class="macro-card__emoji-wrap">🥑</div>
+                                <div class="macro-card__name-group">
+                                    <span class="macro-card__name">Gordura</span>
+                                    <span class="macro-card__role">🧬 Regulação · Equilíbrio</span>
+                                </div>
+                            </div>
+                            <span class="macro-card__pct-badge">22.1%</span>
+                        </div>
+
+                        <!-- Big number -->
+                        <div class="macro-card__big-number">
+                            <div class="macro-card__value-row">
+                                <span class="macro-card__grams-value count-up" data-target="83" data-suffix="g">0g</span>
+                                <span class="macro-card__grams-unit">gramas</span>
+                            </div>
+                        </div>
+
+                        <!-- Kcal info -->
+                        <div class="macro-card__kcal-row">
+                            <span class="macro-card__kcal-value">747 kcal</span>
+                            <div class="macro-card__kcal-divider"></div>
+                            <span class="macro-card__kcal-formula">83g × 9 kcal/g</span>
+                            <div class="macro-card__kcal-divider"></div>
+                            <span class="macro-card__kcal-label">🔥 22.1% do total</span>
+                        </div>
+
+                        <!-- Ring + Stats -->
+                        <div class="macro-card__ring-section">
+                            <div class="macro-card__ring">
+                                <svg viewBox="0 0 80 80">
+                                    <circle class="macro-card__ring-bg" cx="40" cy="40" r="36" />
+                                    <circle class="macro-card__ring-fill" cx="40" cy="40" r="36"
+                                        stroke="url(#fatGrad)"
+                                        data-target-pct="22.1" />
+                                </svg>
+                                <div class="macro-card__ring-center">
+                                    <span class="macro-card__ring-pct count-up" data-target="22.1" data-suffix="%">0%</span>
+                                    <span class="macro-card__ring-label">do total</span>
+                                </div>
+                            </div>
+                            <div class="macro-card__ring-stats">
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">🔢 Gramas</span>
+                                    <span class="macro-card__stat-value">83g</span>
+                                </div>
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">🔥 Calorias</span>
+                                    <span class="macro-card__stat-value">747 kcal</span>
+                                </div>
+                                <div class="macro-card__stat-item">
+                                    <span class="macro-card__stat-label">⚡ Densidade</span>
+                                    <span class="macro-card__stat-value">9 kcal/g</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Range Gauge -->
+                        <div class="range-gauge">
+                            <div class="range-gauge__header">
+                                <span class="range-gauge__title">📏 Faixa Recomendada</span>
+                                <span class="range-gauge__status range-gauge__status--ideal">✅ Faixa Ideal</span>
+                            </div>
+                            <div class="range-gauge__track-wrapper">
+                                <div class="range-gauge__track">
+                                    <div class="range-gauge__zone-ideal" style="left: 0%; right: 0%;"></div>
+                                    <div class="range-gauge__fill" data-target-width="48.5"></div>
+                                    <div class="range-gauge__marker" data-target-left="48.5">
+                                        <div class="range-gauge__marker-tooltip">83g</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="range-gauge__limits">
+                                <span class="range-gauge__limit">
+                                    <span class="range-gauge__limit-label">Min</span> 50g
+                                </span>
+                                <span class="range-gauge__limit">
+                                    <span class="range-gauge__limit-label">Max</span> 118g
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Toggle -->
+                        <button class="macro-card__toggle-btn" aria-expanded="false" onclick="togglePanel(this, 'fatDetails')">
+                            📊 Mais detalhes
+                            <span class="macro-card__toggle-icon">
+                                <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Detail panel -->
+                    <div class="macro-card__details" id="fatDetails">
+                        <div class="macro-card__details-inner">
+                            <div class="detail-grid">
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">🔥 Calorias</span>
+                                    <span class="detail-cell__value">747 kcal</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">📊 % do Total</span>
+                                    <span class="detail-cell__value">22.1%</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⚡ Kcal/grama</span>
+                                    <span class="detail-cell__value">9 kcal</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">📏 Posição na Faixa</span>
+                                    <span class="detail-cell__value">48.5% do range</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⬇️ Faixa Mínima</span>
+                                    <span class="detail-cell__value">50g (450 kcal)</span>
+                                </div>
+                                <div class="detail-cell">
+                                    <span class="detail-cell__label">⬆️ Faixa Máxima</span>
+                                    <span class="detail-cell__value">118g (1.062 kcal)</span>
+                                </div>
+                                <div class="detail-cell detail-cell--highlight">
+                                    <span class="detail-cell__label">✅ Acima do Mínimo</span>
+                                    <span class="detail-cell__value">+33g disponíveis</span>
+                                </div>
+                                <div class="detail-cell detail-cell--highlight">
+                                    <span class="detail-cell__label">📉 Até o Máximo</span>
+                                    <span class="detail-cell__value">−35g restantes</span>
+                                </div>
+                                <div class="detail-cell detail-cell--full">
+                                    <span class="detail-cell__label">💡 Insight</span>
+                                    <span class="detail-cell__value" style="font-family: var(--font-stack); font-size: 12px; font-weight: 500; color: var(--text-tertiary); line-height: 1.5;">Gordura posicionada perfeitamente no centro da faixa recomendada. Isso garante produção hormonal adequada (testosterona, estrogênio), absorção de vitaminas lipossolúveis (A, D, E, K) e saúde celular.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- ============================================= -->
+            <!-- SEÇÃO: COMPOSITION RIVER BAR                   -->
+            <!-- ============================================= -->
+            <div class="composition-river">
+                <div class="composition-river__header">
+                    <div class="composition-river__title">
+                        <span class="composition-river__title-emoji">🧩</span>
+                        <span class="composition-river__title-text">Composição Calórica</span>
+                    </div>
+                    <div class="composition-river__total-badge">
+                        <span class="composition-river__total-val">3.387</span>
+                        <span class="composition-river__total-unit">kcal/dia</span>
+                        <span class="composition-river__check">✅ Validado</span>
+                    </div>
+                </div>
+
+                <div class="river-bar" role="img" aria-label="Barra de proporção: Proteína 18.7%, Carboidrato 59.3%, Gordura 22.1%">
+                    <div class="river-bar__seg river-bar__seg--protein" data-target-flex="18.7">
+                        <div class="river-bar__seg-content">
+                            <span class="river-bar__seg-emoji">🥩</span>
+                            <div class="river-bar__seg-info">
+                                <span class="river-bar__seg-name">Proteína</span>
+                                <span class="river-bar__seg-pct">18.7%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="river-bar__divider" aria-hidden="true"></div>
+                    <div class="river-bar__seg river-bar__seg--carb" data-target-flex="59.3">
+                        <div class="river-bar__seg-content">
+                            <span class="river-bar__seg-emoji">🍚</span>
+                            <div class="river-bar__seg-info">
+                                <span class="river-bar__seg-name">Carboidrato</span>
+                                <span class="river-bar__seg-pct">59.3%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="river-bar__divider" aria-hidden="true"></div>
+                    <div class="river-bar__seg river-bar__seg--fat" data-target-flex="22.1">
+                        <div class="river-bar__seg-content">
+                            <span class="river-bar__seg-emoji">🥑</span>
+                            <div class="river-bar__seg-info">
+                                <span class="river-bar__seg-name">Gordura</span>
+                                <span class="river-bar__seg-pct">22.1%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="river-legend">
+                    <div class="river-legend__item">
+                        <div class="river-legend__dot river-legend__dot--protein" aria-hidden="true"></div>
+                        <span class="river-legend__text">🥩 Proteína</span>
+                        <span class="river-legend__val">158g</span>
+                    </div>
+                    <div class="river-legend__item">
+                        <div class="river-legend__dot river-legend__dot--carb" aria-hidden="true"></div>
+                        <span class="river-legend__text">🍚 Carboidrato</span>
+                        <span class="river-legend__val">502g</span>
+                    </div>
+                    <div class="river-legend__item">
+                        <div class="river-legend__dot river-legend__dot--fat" aria-hidden="true"></div>
+                        <span class="river-legend__text">🥑 Gordura</span>
+                        <span class="river-legend__val">83g</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================= -->
+            <!-- SEÇÃO: CALORIC CONTRIBUTION BARS               -->
+            <!-- ============================================= -->
+            <div class="contrib-section">
+                <div class="contrib-section__header">
+                    <span class="contrib-section__title">📊 Contribuição Calórica</span>
+                    <span class="contrib-section__subtitle">Como cada macro contribui para o total de 3.387 kcal</span>
+                </div>
+
+                <div class="contrib-row">
+                    <span class="contrib-row__emoji">🥩</span>
+                    <span class="contrib-row__label">Proteína</span>
+                    <div class="contrib-row__bar-wrap">
+                        <div class="contrib-row__bar-fill contrib-row__bar-fill--protein" data-target-width="31.5">
+                            <span class="contrib-row__bar-text">158g × 4 kcal/g</span>
+                        </div>
+                    </div>
+                    <span class="contrib-row__kcal">632 <span>kcal</span></span>
+                </div>
+
+                <div class="contrib-row">
+                    <span class="contrib-row__emoji">🍚</span>
+                    <span class="contrib-row__label">Carboidrato</span>
+                    <div class="contrib-row__bar-wrap">
+                        <div class="contrib-row__bar-fill contrib-row__bar-fill--carb" data-target-width="100">
+                            <span class="contrib-row__bar-text">502g × 4 kcal/g</span>
+                        </div>
+                    </div>
+                    <span class="contrib-row__kcal">2.008 <span>kcal</span></span>
+                </div>
+
+                <div class="contrib-row">
+                    <span class="contrib-row__emoji">🥑</span>
+                    <span class="contrib-row__label">Gordura</span>
+                    <div class="contrib-row__bar-wrap">
+                        <div class="contrib-row__bar-fill contrib-row__bar-fill--fat" data-target-width="37.2">
+                            <span class="contrib-row__bar-text">83g × 9 kcal/g</span>
+                        </div>
+                    </div>
+                    <span class="contrib-row__kcal">747 <span>kcal</span></span>
+                </div>
+
+                <!-- Density pills -->
+                <div class="density-pills">
+                    <div class="density-pill">
+                        <span class="density-pill__emoji">🥩</span>
+                        <span class="density-pill__number density-pill__number--protein">4</span>
+                        <span class="density-pill__label">kcal por grama<br>de proteína</span>
+                    </div>
+                    <div class="density-pill">
+                        <span class="density-pill__emoji">🍚</span>
+                        <span class="density-pill__number density-pill__number--carb">4</span>
+                        <span class="density-pill__label">kcal por grama<br>de carboidrato</span>
+                    </div>
+                    <div class="density-pill">
+                        <span class="density-pill__emoji">🥑</span>
+                        <span class="density-pill__number density-pill__number--fat">9</span>
+                        <span class="density-pill__label">kcal por grama<br>de gordura</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================= -->
+            <!-- SEÇÃO: CALORIC PROOF                            -->
+            <!-- ============================================= -->
+            <div class="caloric-proof">
+                <div class="caloric-proof__header">
+                    <span style="font-size: 16px;">🧮</span>
+                    <span class="caloric-proof__header-text">Validação da Soma Calórica</span>
+                </div>
+
+                <div class="caloric-proof__equation">
+                    <div class="caloric-proof__term">
+                        <span class="caloric-proof__term-emoji">🥩</span>
+                        <div class="caloric-proof__term-info">
+                            <span class="caloric-proof__term-name">Proteína</span>
+                            <span class="caloric-proof__term-val">632</span>
+                        </div>
+                    </div>
+
+                    <span class="caloric-proof__op">+</span>
+
+                    <div class="caloric-proof__term">
+                        <span class="caloric-proof__term-emoji">🍚</span>
+                        <div class="caloric-proof__term-info">
+                            <span class="caloric-proof__term-name">Carboidrato</span>
+                            <span class="caloric-proof__term-val">2.008</span>
+                        </div>
+                    </div>
+
+                    <span class="caloric-proof__op">+</span>
+
+                    <div class="caloric-proof__term">
+                        <span class="caloric-proof__term-emoji">🥑</span>
+                        <div class="caloric-proof__term-info">
+                            <span class="caloric-proof__term-name">Gordura</span>
+                            <span class="caloric-proof__term-val">747</span>
+                        </div>
+                    </div>
+
+                    <span class="caloric-proof__op">=</span>
+
+                    <div class="caloric-proof__result">
+                        <span class="caloric-proof__result-emoji">✅</span>
+                        <span class="caloric-proof__result-value count-up" data-target="3387" data-suffix="">0</span>
+                        <span class="caloric-proof__result-label">kcal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================= -->
+            <!-- SEÇÃO: INSIGHTS BAR — BOTTOM INFO              -->
+            <!-- ============================================= -->
+            <div class="insights-bar">
+                <div class="insight-card insight-card--protein">
+                    <span class="insight-card__emoji">🥩</span>
+                    <span class="insight-card__value">158g</span>
+                    <span class="insight-card__label">Proteína Diária</span>
+                    <span class="insight-card__sub">632 kcal · 18.7%</span>
+                </div>
+                <div class="insight-card insight-card--carb">
+                    <span class="insight-card__emoji">🍚</span>
+                    <span class="insight-card__value">502g</span>
+                    <span class="insight-card__label">Carboidrato Diário</span>
+                    <span class="insight-card__sub">2.008 kcal · 59.3%</span>
+                </div>
+                <div class="insight-card insight-card--fat">
+                    <span class="insight-card__emoji">🥑</span>
+                    <span class="insight-card__value">83g</span>
+                    <span class="insight-card__label">Gordura Diária</span>
+                    <span class="insight-card__sub">747 kcal · 22.1%</span>
+                </div>
+                <div class="insight-card insight-card--total">
+                    <span class="insight-card__emoji">🎯</span>
+                    <span class="insight-card__value">743g</span>
+                    <span class="insight-card__label">Total de Macros</span>
+                    <span class="insight-card__sub">3.387 kcal · 100%</span>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- SEÇÃO: JAVASCRIPT — ANIMAÇÕES E INTERAÇÕES     -->
+    <!-- ============================================= -->
+    <script>
+        (function() {
+            'use strict';
+
+            var hasAnimated = false;
+
+            // ============================================= //
+            // SEÇÃO: MAIN ANIMATION TRIGGER                 //
+            // ============================================= //
+            function animateOnView() {
+                if (hasAnimated) return;
+                hasAnimated = true;
+
+                animateRings();
+                animateCountUps();
+                animateMiniBar();
+
+                setTimeout(function() {
+                    animateRangeGauges();
+                }, 500);
+
+                setTimeout(function() {
+                    animateRiverBar();
+                }, 700);
+
+                setTimeout(function() {
+                    animateContribBars();
+                }, 1000);
+            }
+
+            // ============================================= //
+            // SEÇÃO: RING ANIMATION                         //
+            // ============================================= //
+            function animateRings() {
+                try {
+                    var fills = document.querySelectorAll('.macro-card__ring-fill');
+                    fills.forEach(function(fill, index) {
+                        var r = parseFloat(fill.getAttribute('r')) || 36;
+                        var circumference = 2 * Math.PI * r;
+                        fill.style.strokeDasharray = circumference.toString();
+                        fill.style.strokeDashoffset = circumference.toString();
+
+                        var pct = parseFloat(fill.getAttribute('data-target-pct')) || 0;
+                        var offset = circumference - (circumference * pct / 100);
+
+                        setTimeout(function() {
+                            fill.style.strokeDashoffset = offset.toString();
+                        }, 400 + (index * 200));
+                    });
+                } catch (e) {
+                    console.error('Ring animation error:', e);
+                }
+            }
+
+            // ============================================= //
+            // SEÇÃO: RANGE GAUGE ANIMATION                  //
+            // ============================================= //
+            function animateRangeGauges() {
+                try {
+                    var fills = document.querySelectorAll('.range-gauge__fill');
+                    var markers = document.querySelectorAll('.range-gauge__marker');
+
+                    fills.forEach(function(fill) {
+                        var w = fill.getAttribute('data-target-width');
+                        if (w) fill.style.width = w + '%';
+                    });
+
+                    markers.forEach(function(marker) {
+                        var l = marker.getAttribute('data-target-left');
+                        if (l) marker.style.left = l + '%';
+                    });
+                } catch (e) {
+                    console.error('Range gauge animation error:', e);
+                }
+            }
+
+            // ============================================= //
+            // SEÇÃO: RIVER BAR ANIMATION                    //
+            // ============================================= //
+            function animateRiverBar() {
+                try {
+                    var segments = document.querySelectorAll('.river-bar__seg');
+                    segments.forEach(function(seg, index) {
+                        var targetFlex = seg.getAttribute('data-target-flex');
+                        if (targetFlex) {
+                            setTimeout(function() {
+                                seg.style.flex = '0 0 ' + targetFlex + '%';
+                                var content = seg.querySelector('.river-bar__seg-content');
+                                if (content) {
+                                    setTimeout(function() {
+                                        content.style.opacity = '1';
+                                    }, 600);
+                                }
+                            }, index * 150);
+                        }
+                    });
+                } catch (e) {
+                    console.error('River bar animation error:', e);
+                }
+            }
+
+            // ============================================= //
+            // SEÇÃO: CONTRIBUTION BARS ANIMATION            //
+            // ============================================= //
+            function animateContribBars() {
+                try {
+                    var bars = document.querySelectorAll('.contrib-row__bar-fill');
+                    bars.forEach(function(bar, index) {
+                        var w = bar.getAttribute('data-target-width');
+                        if (w) {
+                            setTimeout(function() {
+                                bar.style.width = w + '%';
+                            }, index * 200);
+                        }
+                    });
+                } catch (e) {
+                    console.error('Contribution bar animation error:', e);
+                }
+            }
+
+            // ============================================= //
+            // SEÇÃO: MINI BAR ANIMATION                     //
+            // ============================================= //
+            function animateMiniBar() {
+                try {
+                    var segs = document.querySelectorAll('.hero-metric__mini-seg');
+                    segs.forEach(function(seg) {
+                        var w = seg.getAttribute('data-target-w');
+                        if (w) {
+                            setTimeout(function() {
+                                seg.style.width = w + 'px';
+                            }, 800);
+                        }
+                    });
+                } catch (e) {
+                    console.error('Mini bar animation error:', e);
+                }
+            }
+
+            // ============================================= //
+            // SEÇÃO: COUNT-UP ANIMATION                     //
+            // ============================================= //
+            function animateCountUps() {
+                try {
+                    var els = document.querySelectorAll('.count-up');
+                    els.forEach(function(el, index) {
+                        var target = parseFloat(el.getAttribute('data-target')) || 0;
+                        var suffix = el.getAttribute('data-suffix') || '';
+                        var isDecimal = target % 1 !== 0;
+                        var duration = 1400;
+                        var startTime = null;
+                        var delay = 400 + (index * 80);
+
+                        setTimeout(function() {
+                            function step(timestamp) {
+                                if (!startTime) startTime = timestamp;
+                                var progress = Math.min((timestamp - startTime) / duration, 1);
+                                var eased = 1 - Math.pow(1 - progress, 4);
+                                var current = eased * target;
+
+                                if (isDecimal) {
+                                    el.textContent = current.toFixed(1) + suffix;
+                                } else {
+                                    el.textContent = Math.round(current).toLocaleString('pt-BR') + suffix;
+                                }
+
+                                if (progress < 1) {
+                                    requestAnimationFrame(step);
+                                } else {
+                                    if (isDecimal) {
+                                        el.textContent = target.toFixed(1) + suffix;
+                                    } else {
+                                        el.textContent = Math.round(target).toLocaleString('pt-BR') + suffix;
+                                    }
+                                }
+                            }
+
+                            requestAnimationFrame(step);
+                        }, delay);
+                    });
+                } catch (e) {
+                    console.error('Count-up animation error:', e);
+                }
+            }
+
+            // ============================================= //
+            // SEÇÃO: INTERSECTION OBSERVER                  //
+            // ============================================= //
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            animateOnView();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                var target = document.getElementById('sectionMacros');
+                if (target) {
+                    observer.observe(target);
+                }
+            } else {
+                setTimeout(animateOnView, 300);
+            }
+
+            // ============================================= //
+            // SEÇÃO: GLOW CURSOR EFFECT                     //
+            // ============================================= //
+            var glowCursor = document.getElementById('glowCursor');
+            var sectionMacros = document.getElementById('sectionMacros');
+
+            if (glowCursor && sectionMacros) {
+                var rafId = null;
+                sectionMacros.addEventListener('mousemove', function(e) {
+                    if (rafId) return;
+                    rafId = requestAnimationFrame(function() {
+                        var rect = sectionMacros.getBoundingClientRect();
+                        var x = e.clientX - rect.left;
+                        var y = e.clientY - rect.top;
+                        glowCursor.style.left = x + 'px';
+                        glowCursor.style.top = y + 'px';
+                        rafId = null;
+                    });
+                });
+            }
+        })();
+
+        // ============================================= //
+        // SEÇÃO: TOGGLE PANEL FUNCTION                  //
+        // ============================================= //
+        function togglePanel(btn, panelId) {
+            try {
+                var panel = document.getElementById(panelId);
+                if (!panel) return;
+
+                var isOpen = panel.classList.contains('is-open');
+
+                if (isOpen) {
+                    panel.classList.remove('is-open');
+                    btn.classList.remove('is-open');
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.childNodes[0].textContent = '📊 Mais detalhes ';
+                } else {
+                    panel.classList.add('is-open');
+                    btn.classList.add('is-open');
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.childNodes[0].textContent = '📊 Menos detalhes ';
+                }
+            } catch (e) {
+                console.error('Toggle panel error:', e);
+            }
+        }
+    </script>
+</body>
+</html>

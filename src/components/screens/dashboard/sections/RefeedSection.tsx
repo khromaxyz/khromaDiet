@@ -1,4 +1,4 @@
-import { useDietForgeStore } from '../../../../store/useDietForgeStore';
+﻿import { useDietForgeStore } from '../../../../store/useDietForgeStore';
 
 const getAdaptationFactor = (week: number): number => Math.max(0.85, 1 - 0.005 * Math.floor(week / 4));
 
@@ -34,7 +34,7 @@ export const RefeedSection = () => {
     return {
       title: `Semana ${week} · Refeed`,
       value: `${maintenance.toLocaleString('pt-BR')} kcal`,
-      subtitle: `Fator adaptação ${adaptationFactor.toFixed(3)}`,
+      subtitle: `Fator de adaptação ${adaptationFactor.toFixed(3)}`,
       macros: `CHO ${carbHigh}g · GORD ${results.macros.fatG}g · PROT ${results.macros.proteinG}g`,
     };
   });
@@ -59,8 +59,8 @@ export const RefeedSection = () => {
         </div>
         <div className="refeed-info-box">
           <p className="refeed-info-text">
-            <span className="refeed-lamp" role="img" aria-label="Dica">
-              💡
+            <span className="refeed-lamp" aria-hidden>
+              *
             </span>
             Refeed usa manutenção temporária para aliviar adaptação metabólica e manter aderência do protocolo.
           </p>

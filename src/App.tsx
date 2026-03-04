@@ -144,8 +144,11 @@ function App() {
     [activeProfileId, profiles],
   );
 
-  const activeProfileMeta = useMemo<SharedProfileMeta | undefined>(
-    () => (activeProfile ? { name: activeProfile.name, avatarId: activeProfile.avatarId } : undefined),
+  const activeProfileMeta = useMemo<(SharedProfileMeta & { createdAt?: string }) | undefined>(
+    () =>
+      activeProfile
+        ? { name: activeProfile.name, avatarId: activeProfile.avatarId, createdAt: activeProfile.createdAt }
+        : undefined,
     [activeProfile],
   );
 

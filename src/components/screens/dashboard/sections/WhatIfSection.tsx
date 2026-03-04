@@ -1,7 +1,7 @@
 ﻿import { RefreshCw } from 'lucide-react';
 import { useMemo } from 'react';
 
-import { GOAL_ICONS, THERMOGENIC_ICONS } from '../../../../lib/constants/icons';
+import { GOAL_ICONS, THERMOGENIC_ICONS } from '../../../../lib/constants/icons.tsx';
 import { GOAL_LABELS, THERMOGENIC_LABELS } from '../../../../lib/constants/labels';
 import { useDietForgeStore } from '../../../../store/useDietForgeStore';
 
@@ -69,7 +69,7 @@ export const WhatIfSection = () => {
         changed: preview.dailyDelta !== results.dailyDelta,
       },
       {
-        label: 'Perda/ganho semana',
+        label: 'Perda/ganho semanal',
         value: `${preview.weeklyRateKg.toFixed(2)} kg`,
       },
       {
@@ -88,151 +88,146 @@ export const WhatIfSection = () => {
   }
 
   return (
-    <>
-      <div className="dash-section-header">
-        <div className="dash-section-title dash-title-with-icon">
-          <RefreshCw size={13} />
-          E se você mudasse algo?
-        </div>
-        <span className="dash-section-action">Atualização em tempo real</span>
-      </div>
-
-      <div className="whatif-card whatif-card-zone">
-        <div className="whatif-inner-grid">
-          <div className="whatif-sliders">
-            <div className="whatif-slider-item">
-              <div className="whatif-slider-label-row">
-                <span className="whatif-slider-label">Treino por semana</span>
-                <span className="whatif-slider-value">{trainingSessions}x</span>
-              </div>
-              <div className="slider-track">
-                <div className="slider-fill" style={{ width: `${(trainingSessions / 7) * 100}%` }} />
-              </div>
-              <input
-                type="range"
-                className="range-input"
-                min={0}
-                max={7}
-                step={1}
-                value={trainingSessions}
-                aria-label="Treino por semana"
-                onChange={(event) => patchSimulatorData({ trainingSessions: Number(event.target.value) })}
-              />
-            </div>
-
-            <div className="whatif-slider-item">
-              <div className="whatif-slider-label-row">
-                <span className="whatif-slider-label">Cardio diário</span>
-                <span className="whatif-slider-value">{cardioMinutes} min</span>
-              </div>
-              <div className="slider-track">
-                <div className="slider-fill" style={{ width: `${(cardioMinutes / 90) * 100}%` }} />
-              </div>
-              <input
-                type="range"
-                className="range-input"
-                min={0}
-                max={90}
-                step={5}
-                value={cardioMinutes}
-                aria-label="Cardio diário"
-                onChange={(event) =>
-                  patchSimulatorData({
-                    cardioMode: 'structured',
-                    cardioMinutesPerDay: Number(event.target.value),
-                  })
-                }
-              />
-            </div>
-
-            <div className="whatif-slider-item">
-              <div className="whatif-slider-label-row">
-                <span className="whatif-slider-label">Objetivo</span>
-                <span className="whatif-slider-value">{GOAL_LABELS[goal]}</span>
-              </div>
-              <div className="goal-cards-grid goal-cards-grid-3">
-                {goalOptions.map((option) => (
-                  <button
-                    key={option.id}
-                    className={goal === option.id ? 'goal-card selected' : 'goal-card'}
-                    type="button"
-                    onClick={() => patchSimulatorData({ goal: option.id })}
-                  >
-                    <div className="goal-card-icon">{option.icon}</div>
-                    <div className="goal-card-title">{option.label}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="whatif-slider-item">
-              <div className="whatif-slider-label-row">
-                <span className="whatif-slider-label">Termogênico</span>
-                <span className="whatif-slider-value">{THERMOGENIC_LABELS[thermogenic]}</span>
-              </div>
-              <div className="goal-cards-grid goal-cards-grid-3">
-                {thermogenicOptions.map((option) => (
-                  <button
-                    key={option.id}
-                    className={thermogenic === option.id ? 'goal-card selected' : 'goal-card'}
-                    type="button"
-                    onClick={() => patchSimulatorData({ thermogenic: option.id })}
-                  >
-                    <div className="goal-card-icon">{option.icon}</div>
-                    <div className="goal-card-title">{option.label}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="form-nav">
-              <button className="btn-form-back" type="button" onClick={clearSimulatorData}>
-                Limpar simulação
-              </button>
-              <button className="btn-form-next" type="button" onClick={applySimulator}>
-                Aplicar simulação
-              </button>
-            </div>
+    <div className="whatif-card whatif-card-zone">
+      <div className="whatif-inner-grid">
+        <div className="whatif-sliders">
+          <div className="sim-panel-title">
+            <RefreshCw size={12} />
+            Simulação dinâmica
           </div>
 
-          <div className="whatif-preview whatif-preview-live">
-            <div className="whatif-preview-title">Preview · Resultado estimado</div>
-            {diffRows.map((row, index) => (
-              <div
-                key={row.label}
-                className={index === diffRows.length - 1 ? 'whatif-result-row whatif-result-row-last' : 'whatif-result-row'}
-              >
-                <span className="whatif-result-label">{row.label}</span>
-                <span
-                  className={[
-                    'whatif-result-value',
-                    row.changed ? 'changed whatif-delta-flash' : '',
-                    row.deltaTone === 'positive' ? 'delta-positive' : '',
-                    row.deltaTone === 'negative' ? 'delta-negative' : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
+          <div className="whatif-slider-item">
+            <div className="whatif-slider-label-row">
+              <span className="whatif-slider-label">Treinos por semana</span>
+              <span className="whatif-slider-value">{trainingSessions}x</span>
+            </div>
+            <div className="slider-track">
+              <div className="slider-fill" style={{ width: `${(trainingSessions / 7) * 100}%` }} />
+            </div>
+            <input
+              type="range"
+              className="range-input"
+              min={0}
+              max={7}
+              step={1}
+              value={trainingSessions}
+              aria-label="Treino por semana"
+              onChange={(event) => patchSimulatorData({ trainingSessions: Number(event.target.value) })}
+            />
+          </div>
+
+          <div className="whatif-slider-item">
+            <div className="whatif-slider-label-row">
+              <span className="whatif-slider-label">Cardio diário</span>
+              <span className="whatif-slider-value">{cardioMinutes} min</span>
+            </div>
+            <div className="slider-track">
+              <div className="slider-fill" style={{ width: `${(cardioMinutes / 90) * 100}%` }} />
+            </div>
+            <input
+              type="range"
+              className="range-input"
+              min={0}
+              max={90}
+              step={5}
+              value={cardioMinutes}
+              aria-label="Cardio diário"
+              onChange={(event) =>
+                patchSimulatorData({
+                  cardioMode: 'structured',
+                  cardioMinutesPerDay: Number(event.target.value),
+                })
+              }
+            />
+          </div>
+
+          <div className="whatif-slider-item">
+            <div className="whatif-slider-label-row">
+              <span className="whatif-slider-label">Objetivo</span>
+              <span className="whatif-slider-value">{GOAL_LABELS[goal]}</span>
+            </div>
+            <div className="goal-cards-grid goal-cards-grid-3">
+              {goalOptions.map((option) => (
+                <button
+                  key={option.id}
+                  className={goal === option.id ? 'goal-card selected' : 'goal-card'}
+                  type="button"
+                  onClick={() => patchSimulatorData({ goal: option.id })}
                 >
-                  {row.value}
-                  {row.diff ? (
-                    <span
-                      className={[
-                        'whatif-result-diff',
-                        row.deltaTone === 'positive' ? 'delta-positive' : '',
-                        row.deltaTone === 'negative' ? 'delta-negative' : '',
-                      ]
-                        .filter(Boolean)
-                        .join(' ')}
-                    >
-                      {row.diff}
-                    </span>
-                  ) : null}
-                </span>
-              </div>
-            ))}
+                  <div className="goal-card-icon">{option.icon}</div>
+                  <div className="goal-card-title">{option.label}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="whatif-slider-item">
+            <div className="whatif-slider-label-row">
+              <span className="whatif-slider-label">Termogênico</span>
+              <span className="whatif-slider-value">{THERMOGENIC_LABELS[thermogenic]}</span>
+            </div>
+            <div className="goal-cards-grid goal-cards-grid-3">
+              {thermogenicOptions.map((option) => (
+                <button
+                  key={option.id}
+                  className={thermogenic === option.id ? 'goal-card selected' : 'goal-card'}
+                  type="button"
+                  onClick={() => patchSimulatorData({ thermogenic: option.id })}
+                >
+                  <div className="goal-card-icon">{option.icon}</div>
+                  <div className="goal-card-title">{option.label}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="form-nav">
+            <button className="btn-form-back" type="button" onClick={clearSimulatorData}>
+              Limpar simulação
+            </button>
+            <button className="btn-form-next" type="button" onClick={applySimulator}>
+              Aplicar simulação
+            </button>
           </div>
         </div>
+
+        <div className="whatif-preview whatif-preview-live">
+          <div className="whatif-preview-title">Preview · resultado estimado</div>
+          {diffRows.map((row, index) => (
+            <div
+              key={row.label}
+              className={index === diffRows.length - 1 ? 'whatif-result-row whatif-result-row-last' : 'whatif-result-row'}
+            >
+              <span className="whatif-result-label">{row.label}</span>
+              <span
+                className={[
+                  'whatif-result-value',
+                  row.changed ? 'changed whatif-delta-flash' : '',
+                  row.deltaTone === 'positive' ? 'delta-positive' : '',
+                  row.deltaTone === 'negative' ? 'delta-negative' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
+                {row.value}
+                {row.diff ? (
+                  <span
+                    className={[
+                      'whatif-result-diff',
+                      row.deltaTone === 'positive' ? 'delta-positive' : '',
+                      row.deltaTone === 'negative' ? 'delta-negative' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                  >
+                    {row.diff}
+                  </span>
+                ) : null}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 };

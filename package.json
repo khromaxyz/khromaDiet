@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
+    "sync:projection": "node tools/sync-projection-legacy.mjs",
+    "sync:meals": "node tools/sync-meals-legacy.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

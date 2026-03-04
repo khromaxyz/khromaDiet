@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DietForge — Meta & Déficit</title>
+    <style>
+        /* ============================================= */
+        /* DESIGN SYSTEM — CSS CUSTOM PROPERTIES         */
+        /* ============================================= */
+        :root {
+            /* Core Colors */
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #18181b;
+            --bg-elevated: #1c1c20;
+            --bg-card: #141416;
+            --bg-card-hover: #1a1a1e;
+            --bg-subtle: rgba(255, 255, 255, 0.03);
+
+            /* Accent — Red */
+            --accent-primary: #e63946;
+            --accent-secondary: #ff4d5a;
+            --accent-tertiary: #ff6b76;
+            --accent-muted: rgba(230, 57, 70, 0.15);
+            --accent-glow: rgba(230, 57, 70, 0.25);
+            --accent-subtle: rgba(230, 57, 70, 0.08);
+
+            /* Text */
+            --text-primary: #f0f0f2;
+            --text-secondary: #a0a0a8;
+            --text-tertiary: #6b6b75;
+            --text-muted: #4a4a52;
+            --text-inverse: #0a0a0b;
+
+            /* Borders */
+            --border-primary: rgba(255, 255, 255, 0.08);
+            --border-secondary: rgba(255, 255, 255, 0.04);
+            --border-accent: rgba(230, 57, 70, 0.3);
+
+            /* Status */
+            --success: #22c55e;
+            --success-muted: rgba(34, 197, 94, 0.12);
+            --warning: #f59e0b;
+            --warning-muted: rgba(245, 158, 11, 0.12);
+            --info: #3b82f6;
+            --info-muted: rgba(59, 130, 246, 0.12);
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+            --shadow-accent: 0 4px 24px rgba(230, 57, 70, 0.2);
+            --shadow-accent-lg: 0 8px 40px rgba(230, 57, 70, 0.3);
+
+            /* Spacing */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+
+            /* Radius */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-full: 9999px;
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+
+            /* Transitions */
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-fast: 150ms;
+            --duration-normal: 300ms;
+            --duration-slow: 500ms;
+            --duration-glacial: 800ms;
+        }
+
+        /* ============================================= */
+        /* RESET & BASE                                  */
+        /* ============================================= */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: META & DÉFICIT — CONTAINER              */
+        /* ============================================= */
+        .deficit-section {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: var(--space-16) var(--space-8);
+            position: relative;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: HEADER DA SEÇÃO                        */
+        /* ============================================= */
+        .deficit-section__header {
+            margin-bottom: var(--space-12);
+            position: relative;
+        }
+
+        .deficit-section__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            margin-bottom: var(--space-4);
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideUp 0.6s var(--ease-out) 0.1s forwards;
+        }
+
+        .deficit-section__eyebrow::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 1px;
+        }
+
+        .deficit-section__title {
+            font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: var(--space-3);
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideUp 0.6s var(--ease-out) 0.2s forwards;
+        }
+
+        .deficit-section__subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideUp 0.6s var(--ease-out) 0.3s forwards;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: PIPELINE NARRATIVO (TDEE → DÉFICIT → META) */
+        /* ============================================= */
+        .deficit-pipeline {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            align-items: stretch;
+            gap: 0;
+            margin-bottom: var(--space-12);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.7s var(--ease-out) 0.4s forwards;
+        }
+
+        /* Pipeline Node — Shared */
+        .pipeline-node {
+            position: relative;
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8) var(--space-6);
+            background: var(--bg-card);
+            transition: all var(--duration-normal) var(--ease-out);
+            overflow: hidden;
+        }
+
+        .pipeline-node::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity var(--duration-normal) var(--ease-out);
+        }
+
+        .pipeline-node:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pipeline-node:hover::before {
+            opacity: 1;
+        }
+
+        /* Pipeline Node — TDEE (Input) */
+        .pipeline-node--tdee {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(59, 130, 246, 0.03) 100%);
+        }
+
+        .pipeline-node--tdee::before {
+            background: radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+        }
+
+        .pipeline-node--tdee:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Pipeline Node — Déficit (Operator) */
+        .pipeline-node--deficit {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--accent-subtle) 100%);
+        }
+
+        .pipeline-node--deficit::before {
+            background: radial-gradient(ellipse at 50% 30%, var(--accent-muted) 0%, transparent 70%);
+        }
+
+        .pipeline-node--deficit:hover {
+            border-color: var(--border-accent);
+            box-shadow: var(--shadow-accent);
+        }
+
+        /* Pipeline Node — Meta (Output) */
+        .pipeline-node--meta {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(34, 197, 94, 0.03) 100%);
+            border-color: rgba(34, 197, 94, 0.12);
+        }
+
+        .pipeline-node--meta::before {
+            background: radial-gradient(ellipse at 70% 30%, rgba(34, 197, 94, 0.06) 0%, transparent 70%);
+        }
+
+        .pipeline-node--meta:hover {
+            border-color: rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);
+        }
+
+        /* Node Header */
+        .pipeline-node__header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+        }
+
+        .pipeline-node__icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .pipeline-node__icon--tdee {
+            background: var(--info-muted);
+            color: var(--info);
+        }
+
+        .pipeline-node__icon--deficit {
+            background: var(--accent-muted);
+            color: var(--accent-primary);
+        }
+
+        .pipeline-node__icon--meta {
+            background: var(--success-muted);
+            color: var(--success);
+        }
+
+        .pipeline-node__icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .pipeline-node__label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        .pipeline-node__sublabel {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        /* Node Value */
+        .pipeline-node__value-block {
+            margin-bottom: var(--space-5);
+        }
+
+        .pipeline-node__value {
+            font-size: clamp(2rem, 3vw, 2.75rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: var(--text-primary);
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-2);
+        }
+
+        .pipeline-node__value--tdee {
+            color: var(--text-primary);
+        }
+
+        .pipeline-node__value--deficit {
+            color: var(--accent-primary);
+        }
+
+        .pipeline-node__value--meta {
+            color: var(--success);
+        }
+
+        .pipeline-node__unit {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            letter-spacing: 0;
+        }
+
+        .pipeline-node__descriptor {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: var(--space-2);
+            line-height: 1.4;
+        }
+
+        /* Node Footer / Tag */
+        .pipeline-node__tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .pipeline-node__tag--info {
+            background: var(--info-muted);
+            color: #60a5fa;
+        }
+
+        .pipeline-node__tag--accent {
+            background: var(--accent-muted);
+            color: var(--accent-tertiary);
+        }
+
+        .pipeline-node__tag--success {
+            background: var(--success-muted);
+            color: #4ade80;
+        }
+
+        .pipeline-node__tag-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: CONECTORES DO PIPELINE                 */
+        /* ============================================= */
+        .pipeline-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 var(--space-4);
+            position: relative;
+            min-width: 60px;
+        }
+
+        .pipeline-connector__line {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pipeline-connector__arrow {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            position: relative;
+            z-index: 1;
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+
+        .pipeline-connector__arrow svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .pipeline-connector__arrow--subtract {
+            color: var(--accent-primary);
+            border-color: rgba(230, 57, 70, 0.2);
+            background: rgba(230, 57, 70, 0.08);
+        }
+
+        .pipeline-connector__arrow--result {
+            color: var(--success);
+            border-color: rgba(34, 197, 94, 0.2);
+            background: rgba(34, 197, 94, 0.08);
+        }
+
+        .pipeline-connector__label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: var(--space-2);
+            white-space: nowrap;
+        }
+
+        /* Dashed lines extending from arrow */
+        .pipeline-connector__arrow::before,
+        .pipeline-connector__arrow::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            height: 1px;
+            width: 20px;
+            border-top: 1.5px dashed var(--border-primary);
+        }
+
+        .pipeline-connector__arrow::before {
+            right: 100%;
+            margin-right: -1px;
+        }
+
+        .pipeline-connector__arrow::after {
+            left: 100%;
+            margin-left: -1px;
+        }
+
+        .pipeline-connector__arrow--subtract::before,
+        .pipeline-connector__arrow--subtract::after {
+            border-color: rgba(230, 57, 70, 0.2);
+        }
+
+        .pipeline-connector__arrow--result::before,
+        .pipeline-connector__arrow--result::after {
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: VISUALIZAÇÃO PROPORCIONAL RADIAL        */
+        /* ============================================= */
+        .deficit-visual {
+            margin-bottom: var(--space-12);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.7s var(--ease-out) 0.6s forwards;
+        }
+
+        .deficit-visual__container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-10) var(--space-8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deficit-visual__container::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, var(--accent-subtle) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .deficit-visual__inner {
+            display: grid;
+            grid-template-columns: 1fr 340px 1fr;
+            gap: var(--space-10);
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Left Side — Breakdown Legend */
+        .deficit-visual__legend {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .deficit-legend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-4);
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            transition: background var(--duration-fast) var(--ease-out);
+        }
+
+        .deficit-legend-item:hover {
+            background: var(--bg-subtle);
+        }
+
+        .deficit-legend-item__marker {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .deficit-legend-item__marker--tdee {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .deficit-legend-item__marker--meta {
+            background: var(--accent-muted);
+            border: 1px solid rgba(230, 57, 70, 0.25);
+            color: var(--accent-secondary);
+        }
+
+        .deficit-legend-item__marker--deficit {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            color: var(--text-tertiary);
+        }
+
+        .deficit-legend-item__info {
+            flex: 1;
+        }
+
+        .deficit-legend-item__label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .deficit-legend-item__value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .deficit-legend-item__value span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            margin-left: 2px;
+        }
+
+        .deficit-legend-item__percent {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Center — Radial Chart */
+        .deficit-visual__chart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .radial-chart {
+            position: relative;
+            width: 280px;
+            height: 280px;
+        }
+
+        .radial-chart__svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .radial-chart__track {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.04);
+            stroke-width: 20;
+        }
+
+        .radial-chart__deficit-zone {
+            fill: none;
+            stroke: rgba(230, 57, 70, 0.08);
+            stroke-width: 20;
+            stroke-dasharray: 0 753;
+            stroke-linecap: round;
+            transition: stroke-dasharray 1.5s var(--ease-out);
+        }
+
+        .radial-chart__deficit-zone.animate {
+            stroke-dasharray: 113 753;
+        }
+
+        .radial-chart__progress {
+            fill: none;
+            stroke: url(#radialGradient);
+            stroke-width: 20;
+            stroke-linecap: round;
+            stroke-dasharray: 0 753;
+            filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.3));
+            transition: stroke-dasharray 1.8s var(--ease-out);
+        }
+
+        .radial-chart__progress.animate {
+            stroke-dasharray: 640 753;
+        }
+
+        .radial-chart__center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .radial-chart__center-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .radial-chart__center-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .radial-chart__center-unit {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+        }
+
+        .radial-chart__center-sub {
+            font-size: 0.7rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            margin-top: var(--space-1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .radial-chart__center-sub svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* Percentage badge floating on the ring */
+        .radial-chart__badge {
+            position: absolute;
+            top: 8px;
+            right: 30px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-full);
+            padding: var(--space-1) var(--space-3);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            box-shadow: var(--shadow-accent);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: badgePop 0.4s var(--ease-spring) 2s forwards;
+        }
+
+        /* Right Side — Equation Visualization */
+        .deficit-visual__equation {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-5);
+        }
+
+        .equation-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            transition: all var(--duration-fast) var(--ease-out);
+        }
+
+        .equation-row:hover {
+            background: var(--bg-subtle);
+        }
+
+        .equation-row__operator {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .equation-row__operator--base {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+        }
+
+        .equation-row__operator--minus {
+            background: var(--accent-muted);
+            color: var(--accent-primary);
+        }
+
+        .equation-row__operator--equals {
+            background: var(--success-muted);
+            color: var(--success);
+        }
+
+        .equation-row__content {
+            flex: 1;
+        }
+
+        .equation-row__name {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .equation-row__number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: -0.02em;
+        }
+
+        .equation-row__number--base {
+            color: var(--text-primary);
+        }
+
+        .equation-row__number--minus {
+            color: var(--accent-primary);
+        }
+
+        .equation-row__number--result {
+            color: var(--success);
+        }
+
+        .equation-divider {
+            height: 1px;
+            background: var(--border-primary);
+            margin: 0 var(--space-4);
+            margin-left: calc(28px + var(--space-3) + var(--space-4));
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: RESULTADO / PAYOFF CARDS               */
+        /* ============================================= */
+        .deficit-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--space-6);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.7s var(--ease-out) 0.8s forwards;
+        }
+
+        .result-card {
+            position: relative;
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8) var(--space-6);
+            background: var(--bg-card);
+            overflow: hidden;
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity var(--duration-normal) var(--ease-out);
+        }
+
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .result-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Result Card — Ritmo */
+        .result-card--ritmo {
+            background: linear-gradient(160deg, var(--bg-card) 0%, rgba(230, 57, 70, 0.04) 100%);
+            border-color: rgba(230, 57, 70, 0.1);
+        }
+
+        .result-card--ritmo::before {
+            background: radial-gradient(ellipse at 20% 80%, var(--accent-muted) 0%, transparent 60%);
+        }
+
+        .result-card--ritmo:hover {
+            border-color: rgba(230, 57, 70, 0.25);
+            box-shadow: var(--shadow-accent);
+        }
+
+        /* Result Card — Prazo */
+        .result-card--prazo {
+            background: linear-gradient(160deg, var(--bg-card) 0%, rgba(59, 130, 246, 0.04) 100%);
+            border-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .result-card--prazo::before {
+            background: radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+        }
+
+        .result-card--prazo:hover {
+            border-color: rgba(59, 130, 246, 0.25);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.12);
+        }
+
+        /* Result Card — Classificação */
+        .result-card--class {
+            background: linear-gradient(160deg, var(--bg-card) 0%, rgba(34, 197, 94, 0.04) 100%);
+            border-color: rgba(34, 197, 94, 0.1);
+        }
+
+        .result-card--class::before {
+            background: radial-gradient(ellipse at 50% 20%, rgba(34, 197, 94, 0.06) 0%, transparent 60%);
+        }
+
+        .result-card--class:hover {
+            border-color: rgba(34, 197, 94, 0.25);
+            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.12);
+        }
+
+        .result-card__icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-6);
+            position: relative;
+        }
+
+        .result-card__icon svg {
+            width: 22px;
+            height: 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-card__icon--ritmo {
+            background: var(--accent-muted);
+            color: var(--accent-primary);
+        }
+
+        .result-card__icon--ritmo::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: inherit;
+            border: 1px solid rgba(230, 57, 70, 0.15);
+            animation: pulse-ring 3s ease-in-out infinite;
+        }
+
+        .result-card__icon--prazo {
+            background: var(--info-muted);
+            color: var(--info);
+        }
+
+        .result-card__icon--class {
+            background: var(--success-muted);
+            color: var(--success);
+        }
+
+        .result-card__label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: var(--space-2);
+        }
+
+        .result-card__value {
+            font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: var(--space-2);
+        }
+
+        .result-card__value--ritmo {
+            color: var(--accent-secondary);
+        }
+
+        .result-card__value--prazo {
+            color: #60a5fa;
+        }
+
+        .result-card__value--class {
+            color: #4ade80;
+        }
+
+        .result-card__value-unit {
+            font-size: 0.85rem;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+
+        .result-card__desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--space-5);
+        }
+
+        /* Mini progress/confidence bar in result cards */
+        .result-card__bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .result-card__bar-fill {
+            height: 100%;
+            border-radius: var(--radius-full);
+            width: 0;
+            transition: width 1.5s var(--ease-out);
+        }
+
+        .result-card__bar-fill--ritmo {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+        }
+
+        .result-card__bar-fill--prazo {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .result-card__bar-fill--class {
+            background: linear-gradient(90deg, #22c55e, #4ade80);
+        }
+
+        .result-card__bar-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--space-2);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* Classification Badge */
+        .classification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            background: var(--success-muted);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            margin-bottom: var(--space-4);
+        }
+
+        .classification-badge__icon {
+            width: 16px;
+            height: 16px;
+            color: var(--success);
+        }
+
+        .classification-badge__text {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #4ade80;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Scale visualization for classification */
+        .classification-scale {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            margin-top: var(--space-5);
+        }
+
+        .classification-scale__segment {
+            flex: 1;
+            height: 6px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.04);
+            position: relative;
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+
+        .classification-scale__segment--active {
+            background: var(--success);
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+        }
+
+        .classification-scale__segment--warning {
+            background: rgba(245, 158, 11, 0.15);
+        }
+
+        .classification-scale__segment--danger {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .classification-scale__labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-2);
+            font-size: 0.58rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+        }
+
+        .classification-scale__pointer {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: pointerAppear 0.4s var(--ease-spring) 2.2s forwards;
+        }
+
+        .classification-scale__pointer svg {
+            width: 10px;
+            height: 10px;
+            color: var(--success);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: WEEKLY PROJECTION SPARKLINE             */
+        /* ============================================= */
+        .deficit-projection {
+            margin-top: var(--space-12);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.7s var(--ease-out) 1s forwards;
+        }
+
+        .deficit-projection__container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6) var(--space-8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deficit-projection__container::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, rgba(230, 57, 70, 0.03), transparent);
+            pointer-events: none;
+        }
+
+        .deficit-projection__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-6);
+        }
+
+        .deficit-projection__title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .deficit-projection__title-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            background: var(--accent-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+        }
+
+        .deficit-projection__title-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .deficit-projection__title-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .deficit-projection__title-sub {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+        }
+
+        .deficit-projection__summary {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+        }
+
+        .deficit-projection__stat {
+            text-align: right;
+        }
+
+        .deficit-projection__stat-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-mono);
+        }
+
+        .deficit-projection__stat-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        /* SVG Chart */
+        .deficit-projection__chart {
+            position: relative;
+            height: 120px;
+            width: 100%;
+        }
+
+        .deficit-projection__chart svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Weekly markers below chart */
+        .deficit-projection__weeks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-2);
+            padding: 0 var(--space-1);
+        }
+
+        .deficit-projection__week-marker {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .deficit-projection__week-marker--current {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .deficit-projection__week-marker--end {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* ============================================= */
+        /* ANIMAÇÕES KEYFRAMES                           */
+        /* ============================================= */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 0;
+            }
+        }
+
+        @keyframes badgePop {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pointerAppear {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes drawLine {
+            from {
+                stroke-dashoffset: 1200;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* Glow effect for deficit node */
+        .pipeline-node--deficit .pipeline-node__value {
+            text-shadow: 0 0 30px rgba(230, 57, 70, 0.3);
+        }
+
+        .pipeline-node--meta .pipeline-node__value {
+            text-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: DECORATIVE GRID BACKGROUND             */
+        /* ============================================= */
+        .deficit-section__bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: SECTION DIVIDER TOP                    */
+        /* ============================================= */
+        .deficit-section__divider-top {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            opacity: 0.4;
+        }
+
+        /* ============================================= */
+        /* SEÇÃO: DÉFICIT TYPE INDICATOR                  */
+        /* ============================================= */
+        .deficit-type-strip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-6);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-full);
+            margin: 0 auto var(--space-10);
+            width: fit-content;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideUp 0.6s var(--ease-out) 0.35s forwards;
+        }
+
+        .deficit-type-strip__dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            box-shadow: 0 0 8px var(--accent-glow);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        .deficit-type-strip__text {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+        }
+
+        .deficit-type-strip__text strong {
+            color: var(--accent-secondary);
+            font-weight: 700;
+        }
+
+        .deficit-type-strip__separator {
+            width: 1px;
+            height: 14px;
+            background: var(--border-primary);
+        }
+
+        /* ============================================= */
+        /* RESPONSIVIDADE                                */
+        /* ============================================= */
+        @media (max-width: 1280px) {
+            .deficit-section {
+                padding: var(--space-12) var(--space-6);
+            }
+
+            .deficit-visual__inner {
+                grid-template-columns: 1fr 280px 1fr;
+                gap: var(--space-6);
+            }
+
+            .radial-chart {
+                width: 240px;
+                height: 240px;
+            }
+
+            .radial-chart__center-value {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .deficit-pipeline {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+
+            .pipeline-connector {
+                padding: var(--space-2) 0;
+                flex-direction: row;
+                gap: var(--space-3);
+                min-width: unset;
+            }
+
+            .pipeline-connector__arrow::before,
+            .pipeline-connector__arrow::after {
+                display: none;
+            }
+
+            .deficit-visual__inner {
+                grid-template-columns: 1fr;
+                gap: var(--space-8);
+            }
+
+            .deficit-visual__chart {
+                order: -1;
+            }
+
+            .deficit-results {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================= -->
+    <!-- SEÇÃO: META & DÉFICIT                         -->
+    <!-- ============================================= -->
+    <section class="deficit-section" aria-label="Meta Calórica e Déficit">
+
+        <!-- Decorative Background Grid -->
+        <div class="deficit-section__bg-grid" aria-hidden="true"></div>
+
+        <!-- Decorative Top Divider -->
+        <div class="deficit-section__divider-top" aria-hidden="true"></div>
+
+        <!-- Section Header -->
+        <header class="deficit-section__header">
+            <div class="deficit-section__eyebrow">
+                <span>Protocolo Calórico</span>
+            </div>
+            <h2 class="deficit-section__title">Meta & Déficit</h2>
+            <p class="deficit-section__subtitle">
+                Seu gasto energético traduzido em estratégia. O déficit calibrado que transforma dados metabólicos em resultado previsível.
+            </p>
+        </header>
+
+        <!-- Deficit Type Strip -->
+        <div class="deficit-type-strip" role="status" aria-label="Tipo de déficit aplicado">
+            <div class="deficit-type-strip__dot" aria-hidden="true"></div>
+            <span class="deficit-type-strip__text">Estratégia: <strong>Mini Cut</strong></span>
+            <div class="deficit-type-strip__separator" aria-hidden="true"></div>
+            <span class="deficit-type-strip__text">Déficit de <strong>-15%</strong> vs TDEE</span>
+            <div class="deficit-type-strip__separator" aria-hidden="true"></div>
+            <span class="deficit-type-strip__text">Protocolo <strong>Ativo</strong></span>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- PIPELINE NARRATIVO: TDEE → DÉFICIT → META     -->
+        <!-- ============================================= -->
+        <div class="deficit-pipeline" role="region" aria-label="Pipeline de cálculo calórico">
+
+            <!-- Node 1: TDEE (Input) -->
+            <div class="pipeline-node pipeline-node--tdee">
+                <div class="pipeline-node__header">
+                    <div class="pipeline-node__icon pipeline-node__icon--tdee">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="pipeline-node__label">TDEE Referência</div>
+                        <div class="pipeline-node__sublabel">Gasto energético total</div>
+                    </div>
+                </div>
+                <div class="pipeline-node__value-block">
+                    <div class="pipeline-node__value pipeline-node__value--tdee">
+                        <span data-count="3985">3.985</span>
+                        <span class="pipeline-node__unit">kcal/dia</span>
+                    </div>
+                    <div class="pipeline-node__descriptor">Energia que seu corpo consome em 24h considerando todos os componentes metabólicos</div>
+                </div>
+                <div class="pipeline-node__tag pipeline-node__tag--info">
+                    <span class="pipeline-node__tag-dot"></span>
+                    Calculado via Harris-Benedict + FA
+                </div>
+            </div>
+
+            <!-- Connector 1: Subtraction -->
+            <div class="pipeline-connector" aria-hidden="true">
+                <div class="pipeline-connector__line">
+                    <div class="pipeline-connector__arrow pipeline-connector__arrow--subtract">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="pipeline-connector__label">15% off</div>
+            </div>
+
+            <!-- Node 2: Déficit (Operator) -->
+            <div class="pipeline-node pipeline-node--deficit">
+                <div class="pipeline-node__header">
+                    <div class="pipeline-node__icon pipeline-node__icon--deficit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="pipeline-node__label">Déficit Aplicado</div>
+                        <div class="pipeline-node__sublabel">Calorias removidas/dia</div>
+                    </div>
+                </div>
+                <div class="pipeline-node__value-block">
+                    <div class="pipeline-node__value pipeline-node__value--deficit">
+                        <span>-598</span>
+                        <span class="pipeline-node__unit">kcal/dia</span>
+                    </div>
+                    <div class="pipeline-node__descriptor">Redução estratégica de 15% sobre o TDEE — zona de corte moderada e sustentável</div>
+                </div>
+                <div class="pipeline-node__tag pipeline-node__tag--accent">
+                    <span class="pipeline-node__tag-dot"></span>
+                    Mini Cut — Moderado
+                </div>
+            </div>
+
+            <!-- Connector 2: Result -->
+            <div class="pipeline-connector" aria-hidden="true">
+                <div class="pipeline-connector__line">
+                    <div class="pipeline-connector__arrow pipeline-connector__arrow--result">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="pipeline-connector__label">Resultado</div>
+            </div>
+
+            <!-- Node 3: Meta (Output) -->
+            <div class="pipeline-node pipeline-node--meta">
+                <div class="pipeline-node__header">
+                    <div class="pipeline-node__icon pipeline-node__icon--meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="pipeline-node__label">Meta Calórica</div>
+                        <div class="pipeline-node__sublabel">Ingestão diária alvo</div>
+                    </div>
+                </div>
+                <div class="pipeline-node__value-block">
+                    <div class="pipeline-node__value pipeline-node__value--meta">
+                        <span data-count="3387">3.387</span>
+                        <span class="pipeline-node__unit">kcal/dia</span>
+                    </div>
+                    <div class="pipeline-node__descriptor">Quantidade exata que você deve consumir diariamente para atingir seu objetivo de composição corporal</div>
+                </div>
+                <div class="pipeline-node__tag pipeline-node__tag--success">
+                    <span class="pipeline-node__tag-dot"></span>
+                    Meta definida e ativa
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- VISUALIZAÇÃO PROPORCIONAL — RADIAL CHART      -->
+        <!-- ============================================= -->
+        <div class="deficit-visual" role="img" aria-label="Visualização proporcional: 85% do TDEE é consumido, 15% é o déficit">
+            <div class="deficit-visual__container">
+                <div class="deficit-visual__inner">
+
+                    <!-- Left: Legend Items -->
+                    <div class="deficit-visual__legend">
+                        <div class="deficit-legend-item">
+                            <div class="deficit-legend-item__marker deficit-legend-item__marker--meta">85%</div>
+                            <div class="deficit-legend-item__info">
+                                <div class="deficit-legend-item__label">Meta Calórica</div>
+                                <div class="deficit-legend-item__value">3.387 <span>kcal</span></div>
+                                <div class="deficit-legend-item__percent">85% do TDEE → Ingestão alvo</div>
+                            </div>
+                        </div>
+                        <div class="deficit-legend-item">
+                            <div class="deficit-legend-item__marker deficit-legend-item__marker--deficit">15%</div>
+                            <div class="deficit-legend-item__info">
+                                <div class="deficit-legend-item__label">Zona de Déficit</div>
+                                <div class="deficit-legend-item__value">598 <span>kcal</span></div>
+                                <div class="deficit-legend-item__percent">15% do TDEE → Calorias cortadas</div>
+                            </div>
+                        </div>
+                        <div class="deficit-legend-item">
+                            <div class="deficit-legend-item__marker deficit-legend-item__marker--tdee">∑</div>
+                            <div class="deficit-legend-item__info">
+                                <div class="deficit-legend-item__label">TDEE Total (100%)</div>
+                                <div class="deficit-legend-item__value">3.985 <span>kcal</span></div>
+                                <div class="deficit-legend-item__percent">Gasto energético referência</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center: Radial Chart -->
+                    <div class="deficit-visual__chart">
+                        <div class="radial-chart">
+                            <svg class="radial-chart__svg" viewBox="0 0 260 260">
+                                <defs>
+                                    <linearGradient id="radialGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#e63946"/>
+                                        <stop offset="50%" stop-color="#ff4d5a"/>
+                                        <stop offset="100%" stop-color="#ff6b76"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Background track (full circle = TDEE) -->
+                                <circle class="radial-chart__track"
+                                    cx="130" cy="130" r="110"/>
+                                <!-- Deficit zone (the gap - appears as subtle area) -->
+                                <circle class="radial-chart__deficit-zone"
+                                    cx="130" cy="130" r="110"
+                                    stroke-dashoffset="0"/>
+                                <!-- Progress arc (Meta = 85% of circle) -->
+                                <circle class="radial-chart__progress"
+                                    cx="130" cy="130" r="110"/>
+                            </svg>
+
+                            <!-- Center Content -->
+                            <div class="radial-chart__center">
+                                <div class="radial-chart__center-label">Sua Meta</div>
+                                <div class="radial-chart__center-value" data-target="3387">3.387</div>
+                                <div class="radial-chart__center-unit">kcal / dia</div>
+                                <div class="radial-chart__center-sub">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"/>
+                                    </svg>
+                                    -598 kcal do TDEE
+                                </div>
+                            </div>
+
+                            <!-- Floating Badge -->
+                            <div class="radial-chart__badge" aria-label="85% do TDEE">85%</div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Equation Breakdown -->
+                    <div class="deficit-visual__equation">
+                        <div class="equation-row">
+                            <div class="equation-row__operator equation-row__operator--base">∑</div>
+                            <div class="equation-row__content">
+                                <div class="equation-row__name">TDEE Referência</div>
+                                <div class="equation-row__number equation-row__number--base">3.985 kcal</div>
+                            </div>
+                        </div>
+
+                        <div class="equation-row">
+                            <div class="equation-row__operator equation-row__operator--minus">−</div>
+                            <div class="equation-row__content">
+                                <div class="equation-row__name">Déficit 15% (Mini Cut)</div>
+                                <div class="equation-row__number equation-row__number--minus">598 kcal</div>
+                            </div>
+                        </div>
+
+                        <div class="equation-divider"></div>
+
+                        <div class="equation-row">
+                            <div class="equation-row__operator equation-row__operator--equals">=</div>
+                            <div class="equation-row__content">
+                                <div class="equation-row__name">Meta Calórica Diária</div>
+                                <div class="equation-row__number equation-row__number--result">3.387 kcal</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1);">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="16" x2="12" y2="12"/>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                </svg>
+                                <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em;">Déficit Semanal</span>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 700; color: var(--accent-secondary); font-family: var(--font-mono); letter-spacing: -0.02em;">
+                                -4.186 <span style="font-size: 0.75rem; font-weight: 400; color: var(--text-tertiary);">kcal/semana</span>
+                            </div>
+                            <div style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">
+                                ≈ 0.54 kg de gordura equivalente
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- RESULT / PAYOFF CARDS                         -->
+        <!-- ============================================= -->
+        <div class="deficit-results" role="region" aria-label="Resultados projetados do déficit calórico">
+
+            <!-- Card 1: Ritmo Estimado -->
+            <div class="result-card result-card--ritmo">
+                <div class="result-card__icon result-card__icon--ritmo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                </div>
+                <div class="result-card__label">Ritmo Estimado de Perda</div>
+                <div class="result-card__value result-card__value--ritmo">
+                    ~0.50 <span class="result-card__value-unit">kg/sem</span>
+                </div>
+                <div class="result-card__desc">
+                    Ritmo de perda consistente e sustentável, otimizado para preservação de massa muscular e aderência ao protocolo.
+                </div>
+                <div class="result-card__bar">
+                    <div class="result-card__bar-fill result-card__bar-fill--ritmo" data-width="50"></div>
+                </div>
+                <div class="result-card__bar-label">
+                    <span>0 kg/sem</span>
+                    <span>Agressivo →</span>
+                    <span>1.0 kg/sem</span>
+                </div>
+            </div>
+
+            <!-- Card 2: Prazo Projetado -->
+            <div class="result-card result-card--prazo">
+                <div class="result-card__icon result-card__icon--prazo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                        <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+                    </svg>
+                </div>
+                <div class="result-card__label">Prazo Projetado</div>
+                <div class="result-card__value result-card__value--prazo">
+                    16 <span class="result-card__value-unit">semanas</span>
+                </div>
+                <div class="result-card__desc">
+                    Aproximadamente 4 meses para atingir o objetivo de composição corporal, com margem para ajustes adaptativos.
+                </div>
+                <div class="result-card__bar">
+                    <div class="result-card__bar-fill result-card__bar-fill--prazo" data-width="65"></div>
+                </div>
+                <div class="result-card__bar-label">
+                    <span>4 sem</span>
+                    <span>Moderado</span>
+                    <span>24 sem</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Classificação -->
+            <div class="result-card result-card--class">
+                <div class="result-card__icon result-card__icon--class">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <div class="result-card__label">Classificação do Plano</div>
+
+                <div class="classification-badge">
+                    <svg class="classification-badge__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span class="classification-badge__text">Realista</span>
+                </div>
+
+                <div class="result-card__value result-card__value--class">
+                    Realista
+                </div>
+                <div class="result-card__desc">
+                    Déficit de 15% está na zona ideal para resultados sustentáveis. Alta probabilidade de aderência e manutenção de performance.
+                </div>
+
+                <!-- Classification Scale -->
+                <div class="classification-scale">
+                    <div class="classification-scale__segment classification-scale__segment--danger"></div>
+                    <div class="classification-scale__segment classification-scale__segment--danger"></div>
+                    <div class="classification-scale__segment classification-scale__segment--warning"></div>
+                    <div class="classification-scale__segment classification-scale__segment--active" style="position: relative;">
+                        <div class="classification-scale__pointer">
+                            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                <path d="M12 18l-6-6h12l-6 6z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="classification-scale__segment"></div>
+                </div>
+                <div class="classification-scale__labels">
+                    <span>Extremo</span>
+                    <span>Agressivo</span>
+                    <span>Moderado</span>
+                    <span>Realista</span>
+                    <span>Conservador</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- PROJEÇÃO SEMANAL — SPARKLINE                  -->
+        <!-- ============================================= -->
+        <div class="deficit-projection">
+            <div class="deficit-projection__container">
+                <div class="deficit-projection__header">
+                    <div class="deficit-projection__title">
+                        <div class="deficit-projection__title-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="deficit-projection__title-text">Projeção de Peso — 16 Semanas</div>
+                            <div class="deficit-projection__title-sub">Estimativa baseada no déficit de -598 kcal/dia</div>
+                        </div>
+                    </div>
+                    <div class="deficit-projection__summary">
+                        <div class="deficit-projection__stat">
+                            <div class="deficit-projection__stat-label">Peso Inicial</div>
+                            <div class="deficit-projection__stat-value">98.0 kg</div>
+                        </div>
+                        <div class="deficit-projection__stat">
+                            <div class="deficit-projection__stat-label">Peso Projetado</div>
+                            <div class="deficit-projection__stat-value" style="color: var(--success);">90.0 kg</div>
+                        </div>
+                        <div class="deficit-projection__stat">
+                            <div class="deficit-projection__stat-label">Perda Total</div>
+                            <div class="deficit-projection__stat-value" style="color: var(--accent-secondary);">-8.0 kg</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deficit-projection__chart">
+                    <svg viewBox="0 0 1100 120" preserveAspectRatio="none" id="projectionChart">
+                        <defs>
+                            <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(230, 57, 70, 0.15)"/>
+                                <stop offset="100%" stop-color="rgba(230, 57, 70, 0)"/>
+                            </linearGradient>
+                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#e63946"/>
+                                <stop offset="100%" stop-color="#22c55e"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Grid Lines -->
+                        <line x1="0" y1="30" x2="1100" y2="30" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                        <line x1="0" y1="60" x2="1100" y2="60" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                        <line x1="0" y1="90" x2="1100" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+                        <!-- Area fill -->
+                        <path class="projection-area" d="M0,10 L68.75,16.25 L137.5,22.5 L206.25,28.75 L275,35 L343.75,41.25 L412.5,47.5 L481.25,53.75 L550,60 L618.75,66.25 L687.5,72.5 L756.25,78.75 L825,85 L893.75,88.75 L962.5,93.5 L1031.25,97.5 L1100,100 L1100,120 L0,120 Z"
+                            fill="url(#chartGradient)"
+                            opacity="0"
+                            style="transition: opacity 1s ease-out 1.5s;"/>
+
+                        <!-- Projection Line -->
+                        <polyline class="projection-line"
+                            points="0,10 68.75,16.25 137.5,22.5 206.25,28.75 275,35 343.75,41.25 412.5,47.5 481.25,53.75 550,60 618.75,66.25 687.5,72.5 756.25,78.75 825,85 893.75,88.75 962.5,93.5 1031.25,97.5 1100,100"
+                            fill="none"
+                            stroke="url(#lineGradient)"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-dasharray="1200"
+                            stroke-dashoffset="1200"
+                            style="transition: stroke-dashoffset 2s ease-out 1.2s;"/>
+
+                        <!-- Data Points -->
+                        <circle cx="0" cy="10" r="3" fill="#e63946" opacity="0" class="data-point" style="transition: opacity 0.3s ease-out 1.3s;"/>
+                        <circle cx="275" cy="35" r="3" fill="#d9444f" opacity="0" class="data-point" style="transition: opacity 0.3s ease-out 1.6s;"/>
+                        <circle cx="550" cy="60" r="3" fill="#b0585e" opacity="0" class="data-point" style="transition: opacity 0.3s ease-out 1.9s;"/>
+                        <circle cx="825" cy="85" r="3" fill="#5aad6e" opacity="0" class="data-point" style="transition: opacity 0.3s ease-out 2.2s;"/>
+                        <circle cx="1100" cy="100" r="3" fill="#22c55e" opacity="0" class="data-point" style="transition: opacity 0.3s ease-out 2.5s;"/>
+
+                        <!-- Start label -->
+                        <text x="8" y="6" fill="#a0a0a8" font-size="9" font-family="monospace" opacity="0" class="chart-label" style="transition: opacity 0.5s ease-out 2.5s;">98.0 kg</text>
+                        <!-- End label -->
+                        <text x="1050" y="115" fill="#4ade80" font-size="9" font-family="monospace" opacity="0" class="chart-label" style="transition: opacity 0.5s ease-out 2.8s;">90.0 kg</text>
+                    </svg>
+                </div>
+
+                <div class="deficit-projection__weeks">
+                    <span class="deficit-projection__week-marker deficit-projection__week-marker--current">Sem 1</span>
+                    <span class="deficit-projection__week-marker">Sem 2</span>
+                    <span class="deficit-projection__week-marker">Sem 3</span>
+                    <span class="deficit-projection__week-marker">Sem 4</span>
+                    <span class="deficit-projection__week-marker">Sem 5</span>
+                    <span class="deficit-projection__week-marker">Sem 6</span>
+                    <span class="deficit-projection__week-marker">Sem 7</span>
+                    <span class="deficit-projection__week-marker">Sem 8</span>
+                    <span class="deficit-projection__week-marker">Sem 9</span>
+                    <span class="deficit-projection__week-marker">Sem 10</span>
+                    <span class="deficit-projection__week-marker">Sem 11</span>
+                    <span class="deficit-projection__week-marker">Sem 12</span>
+                    <span class="deficit-projection__week-marker">Sem 13</span>
+                    <span class="deficit-projection__week-marker">Sem 14</span>
+                    <span class="deficit-projection__week-marker">Sem 15</span>
+                    <span class="deficit-projection__week-marker deficit-projection__week-marker--end">Sem 16</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ============================================= -->
+    <!-- JAVASCRIPT — ANIMAÇÕES E INTERAÇÕES           -->
+    <!-- ============================================= -->
+    <script>
+        // ============================================= //
+        // SEÇÃO: INTERSECTION OBSERVER PARA ANIMAÇÕES   //
+        // ============================================= //
+        (function() {
+            'use strict';
+
+            // Wait for DOM to be ready
+            document.addEventListener('DOMContentLoaded', function() {
+
+                // ============================================= //
+                // Animate radial chart on scroll into view       //
+                // ============================================= //
+                var radialObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            // Animate the progress arc (85% of circle)
+                            var progress = entry.target.querySelector('.radial-chart__progress');
+                            var deficitZone = entry.target.querySelector('.radial-chart__deficit-zone');
+
+                            if (progress) {
+                                setTimeout(function() {
+                                    progress.classList.add('animate');
+                                }, 300);
+                            }
+
+                            if (deficitZone) {
+                                setTimeout(function() {
+                                    deficitZone.classList.add('animate');
+                                }, 600);
+                            }
+
+                            radialObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                var radialChart = document.querySelector('.radial-chart');
+                if (radialChart) {
+                    radialObserver.observe(radialChart);
+                }
+
+                // ============================================= //
+                // Animate result card progress bars              //
+                // ============================================= //
+                var barObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            var bars = entry.target.querySelectorAll('.result-card__bar-fill');
+                            bars.forEach(function(bar, index) {
+                                var targetWidth = bar.getAttribute('data-width');
+                                setTimeout(function() {
+                                    bar.style.width = targetWidth + '%';
+                                }, 400 + (index * 200));
+                            });
+                            barObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+
+                var resultsSection = document.querySelector('.deficit-results');
+                if (resultsSection) {
+                    barObserver.observe(resultsSection);
+                }
+
+                // ============================================= //
+                // Animate projection chart line drawing          //
+                // ============================================= //
+                var chartObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            // Trigger line draw animation
+                            var line = entry.target.querySelector('.projection-line');
+                            var area = entry.target.querySelector('.projection-area');
+                            var points = entry.target.querySelectorAll('.data-point');
+                            var labels = entry.target.querySelectorAll('.chart-label');
+
+                            if (line) {
+                                setTimeout(function() {
+                                    line.style.strokeDashoffset = '0';
+                                }, 200);
+                            }
+
+                            if (area) {
+                                setTimeout(function() {
+                                    area.style.opacity = '1';
+                                }, 600);
+                            }
+
+                            points.forEach(function(point) {
+                                setTimeout(function() {
+                                    point.style.opacity = '1';
+                                }, 800);
+                            });
+
+                            labels.forEach(function(label) {
+                                setTimeout(function() {
+                                    label.style.opacity = '1';
+                                }, 1200);
+                            });
+
+                            chartObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+
+                var projectionChart = document.querySelector('.deficit-projection__chart');
+                if (projectionChart) {
+                    chartObserver.observe(projectionChart);
+                }
+
+                // ============================================= //
+                // Hover glow effect on pipeline nodes            //
+                // ============================================= //
+                var pipelineNodes = document.querySelectorAll('.pipeline-node');
+                pipelineNodes.forEach(function(node) {
+                    node.addEventListener('mouseenter', function() {
+                        this.style.zIndex = '2';
+                    });
+                    node.addEventListener('mouseleave', function() {
+                        this.style.zIndex = '';
+                    });
+                });
+
+                // ============================================= //
+                // Tooltip-like hover on radial chart segments    //
+                // ============================================= //
+                var legendItems = document.querySelectorAll('.deficit-legend-item');
+                legendItems.forEach(function(item) {
+                    item.addEventListener('mouseenter', function() {
+                        this.style.background = 'rgba(255, 255, 255, 0.03)';
+                    });
+                    item.addEventListener('mouseleave', function() {
+                        this.style.background = '';
+                    });
+                });
+
+                // ============================================= //
+                // Animate numbers counting up on scroll          //
+                // ============================================= //
+                function animateCountUp(element, target, duration, suffix) {
+                    var start = 0;
+                    var startTime = null;
+
+                    function step(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        var progress = Math.min((timestamp - startTime) / duration, 1);
+                        var eased = 1 - Math.pow(1 - progress, 3);
+                        var current = Math.floor(start + (target - start) * eased);
+
+                        var formatted = current.toLocaleString('pt-BR');
+                        element.textContent = formatted + (suffix || '');
+
+                        if (progress < 1) {
+                            requestAnimationFrame(step);
+                        }
+                    }
+
+                    requestAnimationFrame(step);
+                }
+
+                var countObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            var countElements = entry.target.querySelectorAll('[data-count]');
+                            countElements.forEach(function(el, idx) {
+                                var target = parseInt(el.getAttribute('data-count'));
+                                setTimeout(function() {
+                                    animateCountUp(el, target, 1500);
+                                }, idx * 200);
+                            });
+                            countObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                var pipeline = document.querySelector('.deficit-pipeline');
+                if (pipeline) {
+                    countObserver.observe(pipeline);
+                }
+
+                // ============================================= //
+                // Keyboard accessibility for interactive elements//
+                // ============================================= //
+                var interactiveCards = document.querySelectorAll('.result-card, .pipeline-node');
+                interactiveCards.forEach(function(card) {
+                    card.setAttribute('tabindex', '0');
+                    card.setAttribute('role', 'article');
+
+                    card.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.click();
+                        }
+                    });
+
+                    card.addEventListener('focus', function() {
+                        this.style.outline = '2px solid var(--accent-primary)';
+                        this.style.outlineOffset = '2px';
+                    });
+
+                    card.addEventListener('blur', function() {
+                        this.style.outline = '';
+                        this.style.outlineOffset = '';
+                    });
+                });
+
+            });
+        })();
+    </script>
+
+</body>
+</html>

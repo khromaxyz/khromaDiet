@@ -1,4 +1,7 @@
-﻿import { useMemo } from 'react';
+﻿import type { ReactNode } from 'react';
+import { useMemo } from 'react';
+
+import { Coffee, Droplets, Fish, Moon, Pill, Sun, TestTubes, Zap } from 'lucide-react';
 
 import { useDietForgeStore } from '../../../../store/useDietForgeStore';
 
@@ -10,13 +13,18 @@ const priorityToClass: Record<string, string> = {
   Baixa: 'priority-low',
 };
 
-const safeIcon = (icon: string): string => {
-  const trimmed = icon.trim();
-  if (!trimmed || trimmed.includes('\uFFFD')) {
-    return '💊';
-  }
-  return trimmed;
+const SUPP_ICON_MAP: Record<string, ReactNode> = {
+  creatine: <Pill size={22} strokeWidth={1.5} />,
+  vitd: <Sun size={22} strokeWidth={1.5} />,
+  omega3: <Fish size={22} strokeWidth={1.5} />,
+  magnesium: <Moon size={22} strokeWidth={1.5} />,
+  whey: <Droplets size={22} strokeWidth={1.5} />,
+  b12: <TestTubes size={22} strokeWidth={1.5} />,
+  caffeine: <Coffee size={22} strokeWidth={1.5} />,
+  zma: <Zap size={22} strokeWidth={1.5} />,
 };
+
+const DEFAULT_ICON = <Pill size={22} strokeWidth={1.5} />;
 
 export const SupplementsSection = () => {
   const supplements = useDietForgeStore((state) => state.results?.supplements ?? []);
@@ -46,7 +54,7 @@ export const SupplementsSection = () => {
                 <div className="supp-priority">
                   <span className={`priority-badge ${priorityToClass[supp.priority] ?? 'priority-low'}`}>{supp.priority}</span>
                 </div>
-                <span className="supp-icon">{safeIcon(supp.icon)}</span>
+                <span className="supp-icon">{SUPP_ICON_MAP[supp.id] ?? DEFAULT_ICON}</span>
                 <div className="supp-name">{supp.name}</div>
                 <div className="supp-dose">{supp.dose}</div>
                 <div className="supp-timing">{supp.timing}</div>
@@ -58,3 +66,4 @@ export const SupplementsSection = () => {
     </>
   );
 };
+

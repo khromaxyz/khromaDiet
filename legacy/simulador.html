@@ -1,0 +1,3477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DietForge — Protocol Simulator</title>
+  <style>
+    /* =========================================== */
+    /* DESIGN SYSTEM — ROOT VARIABLES             */
+    /* =========================================== */
+    :root {
+      --bg-base:        #0a0a0c;
+      --bg-surface:     #111116;
+      --bg-elevated:    #18181f;
+      --bg-panel:       #1e1e28;
+      --bg-hover:       #24242f;
+      --bg-active:      #2a2a38;
+
+      --accent-red:         #e8293a;
+      --accent-red-bright:  #ff3347;
+      --accent-red-dim:     #b01f2d;
+      --accent-red-glow:    rgba(232, 41, 58, 0.35);
+      --accent-red-subtle:  rgba(232, 41, 58, 0.08);
+      --accent-red-mid:     rgba(232, 41, 58, 0.18);
+
+      --accent-orange:      #f7612a;
+      --accent-amber:       #f5a623;
+      --accent-green:       #2ed573;
+      --accent-green-dim:   rgba(46, 213, 115, 0.15);
+      --accent-blue:        #3d8ef8;
+      --accent-purple:      #a855f7;
+
+      --text-primary:   #f0f0f5;
+      --text-secondary: #9090a8;
+      --text-muted:     #5a5a72;
+      --text-disabled:  #3a3a50;
+
+      --border-subtle:  rgba(255, 255, 255, 0.05);
+      --border-dim:     rgba(255, 255, 255, 0.08);
+      --border-normal:  rgba(255, 255, 255, 0.12);
+      --border-bright:  rgba(255, 255, 255, 0.20);
+
+      --shadow-sm:   0 2px 8px rgba(0,0,0,0.4);
+      --shadow-md:   0 4px 20px rgba(0,0,0,0.5);
+      --shadow-lg:   0 8px 40px rgba(0,0,0,0.6);
+      --shadow-xl:   0 16px 64px rgba(0,0,0,0.7);
+      --shadow-red:  0 0 40px rgba(232, 41, 58, 0.25);
+      --shadow-red-sm: 0 0 16px rgba(232, 41, 58, 0.20);
+
+      --radius-sm:  6px;
+      --radius-md:  10px;
+      --radius-lg:  14px;
+      --radius-xl:  20px;
+      --radius-2xl: 28px;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+
+      --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+      --ease-in-out:  cubic-bezier(0.4, 0, 0.6, 1);
+
+      --transition-fast:   120ms var(--ease-smooth);
+      --transition-normal: 220ms var(--ease-smooth);
+      --transition-slow:   380ms var(--ease-smooth);
+      --transition-spring: 500ms var(--ease-spring);
+    }
+
+    /* =========================================== */
+    /* RESET & BASE                               */
+    /* =========================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* =========================================== */
+    /* PAGE WRAPPER                               */
+    /* =========================================== */
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 24px 80px;
+      position: relative;
+    }
+
+    /* Ambient glow background */
+    .page-wrapper::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(232,41,58,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrapper::after {
+      content: '';
+      position: fixed;
+      bottom: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(61,142,248,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .simulator-root {
+      width: 100%;
+      max-width: 1480px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================================== */
+    /* SECTION HEADER                             */
+    /* =========================================== */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      gap: 24px;
+    }
+
+    .section-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-red-subtle);
+      border: 1px solid rgba(232, 41, 58, 0.25);
+      border-radius: 100px;
+      padding: 6px 14px;
+      width: fit-content;
+    }
+
+    .section-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      box-shadow: 0 0 8px var(--accent-red);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    .section-badge-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-red);
+    }
+
+    .section-title {
+      font-size: clamp(26px, 3vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--accent-red-bright) 0%, var(--accent-orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 440px;
+      line-height: 1.65;
+    }
+
+    .section-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+      padding-top: 4px;
+    }
+
+    .header-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .header-stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .header-stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      font-family: var(--font-mono);
+    }
+
+    .header-stat-unit {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-left: 2px;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border-normal);
+    }
+
+    /* =========================================== */
+    /* MAIN GRID LAYOUT                           */
+    /* =========================================== */
+    .simulator-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      grid-template-rows: auto auto;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 1100px) {
+      .simulator-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =========================================== */
+    /* PANEL BASE STYLES                          */
+    /* =========================================== */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .panel-inner-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity var(--transition-slow);
+    }
+
+    .panel:hover .panel-inner-glow {
+      opacity: 1;
+    }
+
+    /* =========================================== */
+    /* CONTROLS PANEL                             */
+    /* =========================================== */
+    .controls-panel {
+      grid-column: 1;
+      grid-row: 1;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .controls-panel .panel-inner-glow {
+      background: radial-gradient(ellipse at 10% 10%, rgba(232,41,58,0.05) 0%, transparent 60%);
+    }
+
+    .controls-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .controls-panel-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-red-subtle);
+      border: 1px solid rgba(232,41,58,0.2);
+    }
+
+    .panel-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .panel-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .panel-title-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(46,213,115,0.08);
+      border: 1px solid rgba(46,213,115,0.2);
+      border-radius: 100px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-green);
+      letter-spacing: 0.06em;
+    }
+
+    .status-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      animation: pulse-green 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(46,213,115,0.6); }
+      50%       { box-shadow: 0 0 0 4px rgba(46,213,115,0); }
+    }
+
+    /* =========================================== */
+    /* CONTROLS GRID                              */
+    /* =========================================== */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 40px;
+    }
+
+    @media (max-width: 800px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .control-group-full {
+      grid-column: 1 / -1;
+    }
+
+    .control-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .control-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-label-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      flex-shrink: 0;
+    }
+
+    .control-label-icon svg {
+      width: 13px;
+      height: 13px;
+      color: var(--text-secondary);
+    }
+
+    .control-label-text {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .control-value-display {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .control-current-value {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      transition: color var(--transition-fast);
+    }
+
+    .control-current-value.changing {
+      color: var(--accent-red);
+    }
+
+    .control-value-unit {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* =========================================== */
+    /* CUSTOM SLIDER                              */
+    /* =========================================== */
+    .slider-container {
+      position: relative;
+      padding: 8px 0 24px;
+    }
+
+    .slider-track-wrapper {
+      position: relative;
+      height: 6px;
+      border-radius: 100px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .slider-track-fill {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      height: 6px;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent-red-dim) 0%, var(--accent-red) 50%, var(--accent-red-bright) 100%);
+      pointer-events: none;
+      transition: width var(--transition-fast);
+      box-shadow: 0 0 12px rgba(232,41,58,0.5);
+    }
+
+    .slider-thumb {
+      position: absolute;
+      top: 50%;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-base);
+      border: 2.5px solid var(--accent-red);
+      box-shadow: 0 0 0 4px rgba(232,41,58,0.15), var(--shadow-md);
+      cursor: grab;
+      transition: box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-thumb::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      transition: transform var(--transition-spring);
+    }
+
+    .slider-thumb:hover,
+    .slider-thumb.active {
+      box-shadow: 0 0 0 8px rgba(232,41,58,0.2), var(--shadow-lg);
+      border-color: var(--accent-red-bright);
+      transform: translate(-50%, -50%) scale(1.15);
+      cursor: grabbing;
+    }
+
+    .slider-thumb.active::after {
+      transform: scale(1.3);
+    }
+
+    .slider-marks {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding: 0 2px;
+    }
+
+    .slider-mark {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-disabled);
+      letter-spacing: 0.04em;
+      font-family: var(--font-mono);
+      transition: color var(--transition-fast);
+    }
+
+    .slider-mark.active-mark {
+      color: var(--accent-red);
+    }
+
+    /* Glowing particle effect on track */
+    .slider-glow-orb {
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,41,58,0.3) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      transition: left var(--transition-fast);
+    }
+
+    /* =========================================== */
+    /* INTENSITY INDICATOR                        */
+    /* =========================================== */
+    .intensity-bar {
+      display: flex;
+      gap: 3px;
+      margin-top: 6px;
+    }
+
+    .intensity-segment {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--bg-elevated);
+      transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .intensity-segment.lit {
+      background: var(--accent-red);
+      box-shadow: 0 0 6px rgba(232,41,58,0.6);
+    }
+
+    .intensity-segment.lit.amber {
+      background: var(--accent-amber);
+      box-shadow: 0 0 6px rgba(245,166,35,0.6);
+    }
+
+    .intensity-segment.lit.green {
+      background: var(--accent-green);
+      box-shadow: 0 0 6px rgba(46,213,115,0.6);
+    }
+
+    /* =========================================== */
+    /* OBJECTIVE SELECTOR                         */
+    /* =========================================== */
+    .objective-selector {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+
+    .objective-option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      user-select: none;
+      overflow: hidden;
+    }
+
+    .objective-option::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .objective-option[data-obj="hard-cut"]::before {
+      background: radial-gradient(ellipse at 0% 50%, rgba(232,41,58,0.12) 0%, transparent 60%);
+    }
+
+    .objective-option[data-obj="mini-cut"]::before {
+      background: radial-gradient(ellipse at 0% 50%, rgba(247,97,42,0.12) 0%, transparent 60%);
+    }
+
+    .objective-option[data-obj="lean-bulk"]::before {
+      background: radial-gradient(ellipse at 0% 50%, rgba(46,213,115,0.10) 0%, transparent 60%);
+    }
+
+    .objective-option:hover {
+      border-color: var(--border-bright);
+      background: var(--bg-panel);
+      transform: translateX(3px);
+    }
+
+    .objective-option:hover::before {
+      opacity: 1;
+    }
+
+    .objective-option.selected {
+      transform: translateX(5px);
+    }
+
+    .objective-option[data-obj="hard-cut"].selected {
+      border-color: rgba(232,41,58,0.5);
+      background: rgba(232,41,58,0.06);
+      box-shadow: inset 0 0 30px rgba(232,41,58,0.05), -3px 0 0 var(--accent-red);
+    }
+
+    .objective-option[data-obj="mini-cut"].selected {
+      border-color: rgba(247,97,42,0.5);
+      background: rgba(247,97,42,0.06);
+      box-shadow: inset 0 0 30px rgba(247,97,42,0.05), -3px 0 0 var(--accent-orange);
+    }
+
+    .objective-option[data-obj="lean-bulk"].selected {
+      border-color: rgba(46,213,115,0.5);
+      background: rgba(46,213,115,0.06);
+      box-shadow: inset 0 0 30px rgba(46,213,115,0.05), -3px 0 0 var(--accent-green);
+    }
+
+    .objective-option.selected::before {
+      opacity: 1;
+    }
+
+    .objective-icon-wrap {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+      transition: transform var(--transition-spring);
+    }
+
+    .objective-option:hover .objective-icon-wrap,
+    .objective-option.selected .objective-icon-wrap {
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    .objective-option[data-obj="hard-cut"] .objective-icon-wrap {
+      background: rgba(232,41,58,0.12);
+      border: 1px solid rgba(232,41,58,0.2);
+    }
+
+    .objective-option[data-obj="mini-cut"] .objective-icon-wrap {
+      background: rgba(247,97,42,0.12);
+      border: 1px solid rgba(247,97,42,0.2);
+    }
+
+    .objective-option[data-obj="lean-bulk"] .objective-icon-wrap {
+      background: rgba(46,213,115,0.12);
+      border: 1px solid rgba(46,213,115,0.2);
+    }
+
+    .objective-text-col {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .objective-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .objective-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .objective-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    .objective-option[data-obj="hard-cut"] .objective-badge {
+      color: var(--accent-red);
+      background: rgba(232,41,58,0.12);
+      border: 1px solid rgba(232,41,58,0.25);
+    }
+
+    .objective-option[data-obj="mini-cut"] .objective-badge {
+      color: var(--accent-orange);
+      background: rgba(247,97,42,0.12);
+      border: 1px solid rgba(247,97,42,0.25);
+    }
+
+    .objective-option[data-obj="lean-bulk"] .objective-badge {
+      color: var(--accent-green);
+      background: rgba(46,213,115,0.12);
+      border: 1px solid rgba(46,213,115,0.25);
+    }
+
+    .objective-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border-normal);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-spring);
+    }
+
+    .objective-option.selected .objective-check {
+      border-width: 0;
+    }
+
+    .objective-option[data-obj="hard-cut"].selected .objective-check {
+      background: var(--accent-red);
+      box-shadow: 0 0 12px rgba(232,41,58,0.6);
+    }
+
+    .objective-option[data-obj="mini-cut"].selected .objective-check {
+      background: var(--accent-orange);
+      box-shadow: 0 0 12px rgba(247,97,42,0.6);
+    }
+
+    .objective-option[data-obj="lean-bulk"].selected .objective-check {
+      background: var(--accent-green);
+      box-shadow: 0 0 12px rgba(46,213,115,0.6);
+    }
+
+    .objective-check svg {
+      width: 10px;
+      height: 10px;
+      color: #fff;
+      opacity: 0;
+      transform: scale(0);
+      transition: all var(--transition-spring);
+    }
+
+    .objective-option.selected .objective-check svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* =========================================== */
+    /* THERMOGENIC SELECTOR                       */
+    /* =========================================== */
+    .thermo-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .thermo-option {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 12px 16px;
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thermo-option::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .thermo-option[data-thermo="none"]::after        { background: var(--text-muted); }
+    .thermo-option[data-thermo="caffeine"]::after    { background: var(--accent-amber); }
+    .thermo-option[data-thermo="eca"]::after         { background: var(--accent-red); }
+
+    .thermo-option:hover::after, .thermo-option.selected::after {
+      opacity: 1;
+    }
+
+    .thermo-option:hover {
+      border-color: var(--border-bright);
+      background: var(--bg-panel);
+      transform: translateY(-2px);
+    }
+
+    .thermo-option[data-thermo="none"].selected {
+      border-color: rgba(144,144,168,0.4);
+      background: rgba(144,144,168,0.06);
+    }
+
+    .thermo-option[data-thermo="caffeine"].selected {
+      border-color: rgba(245,166,35,0.4);
+      background: rgba(245,166,35,0.06);
+      box-shadow: 0 4px 24px rgba(245,166,35,0.08);
+    }
+
+    .thermo-option[data-thermo="eca"].selected {
+      border-color: rgba(232,41,58,0.4);
+      background: rgba(232,41,58,0.06);
+      box-shadow: 0 4px 24px rgba(232,41,58,0.10);
+    }
+
+    .thermo-emoji {
+      font-size: 26px;
+      line-height: 1;
+      transition: transform var(--transition-spring);
+    }
+
+    .thermo-option:hover .thermo-emoji,
+    .thermo-option.selected .thermo-emoji {
+      transform: scale(1.2);
+    }
+
+    .thermo-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--text-secondary);
+      transition: color var(--transition-fast);
+    }
+
+    .thermo-option[data-thermo="none"].selected .thermo-name     { color: var(--text-primary); }
+    .thermo-option[data-thermo="caffeine"].selected .thermo-name { color: var(--accent-amber); }
+    .thermo-option[data-thermo="eca"].selected .thermo-name      { color: var(--accent-red-bright); }
+
+    .thermo-boost {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 100px;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: all var(--transition-normal);
+    }
+
+    .thermo-option.selected .thermo-boost {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .thermo-option[data-thermo="none"].selected .thermo-boost {
+      background: rgba(144,144,168,0.15);
+      color: var(--text-secondary);
+    }
+
+    .thermo-option[data-thermo="caffeine"].selected .thermo-boost {
+      background: rgba(245,166,35,0.15);
+      color: var(--accent-amber);
+    }
+
+    .thermo-option[data-thermo="eca"].selected .thermo-boost {
+      background: rgba(232,41,58,0.15);
+      color: var(--accent-red-bright);
+    }
+
+    /* =========================================== */
+    /* SECTION SEPARATOR                          */
+    /* =========================================== */
+    .controls-section-sep {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0;
+    }
+
+    .controls-section-sep-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .controls-section-sep-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-disabled);
+    }
+
+    /* =========================================== */
+    /* RESULT PANEL                               */
+    /* =========================================== */
+    .result-panel {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 24px;
+    }
+
+    @media (max-width: 1100px) {
+      .result-panel {
+        grid-column: 1;
+        grid-row: auto;
+        position: static;
+      }
+    }
+
+    .result-panel .panel-inner-glow {
+      background: radial-gradient(ellipse at 90% 0%, rgba(232,41,58,0.07) 0%, transparent 60%);
+    }
+
+    /* =========================================== */
+    /* RESULT HEADER                              */
+    /* =========================================== */
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .result-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .result-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .result-protocol-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      transition: color var(--transition-normal);
+    }
+
+    .result-update-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-green);
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .result-update-badge.visible {
+      opacity: 1;
+    }
+
+    .result-update-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-green);
+    }
+
+    /* =========================================== */
+    /* MAIN KPI DISPLAY                           */
+    /* =========================================== */
+    .result-main-kpi {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .result-main-kpi::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(232,41,58,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .result-main-kpi.highlight {
+      border-color: rgba(232,41,58,0.3);
+      box-shadow: 0 0 30px rgba(232,41,58,0.08);
+    }
+
+    .kpi-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .kpi-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .kpi-calorie-display {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .kpi-calorie-number {
+      font-family: var(--font-mono);
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text-primary);
+      transition: all var(--transition-normal);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-calorie-unit {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding-bottom: 6px;
+    }
+
+    .kpi-delta {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 100px;
+      transition: all var(--transition-normal);
+    }
+
+    .kpi-delta.negative {
+      color: var(--accent-red);
+      background: rgba(232,41,58,0.12);
+      border: 1px solid rgba(232,41,58,0.2);
+    }
+
+    .kpi-delta.positive {
+      color: var(--accent-green);
+      background: rgba(46,213,115,0.12);
+      border: 1px solid rgba(46,213,115,0.2);
+    }
+
+    .kpi-delta svg {
+      width: 11px;
+      height: 11px;
+    }
+
+    /* Calorie bar viz */
+    .calorie-viz {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .calorie-viz-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-disabled);
+    }
+
+    .calorie-bar-track {
+      height: 8px;
+      background: var(--bg-base);
+      border-radius: 100px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .calorie-bar-tdee {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 100px;
+      background: var(--bg-hover);
+      transition: width var(--transition-slow);
+    }
+
+    .calorie-bar-target {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 100px;
+      transition: width var(--transition-slow), background var(--transition-normal);
+    }
+
+    .calorie-bar-target.cut {
+      background: linear-gradient(90deg, var(--accent-red-dim), var(--accent-red));
+      box-shadow: 0 0 10px rgba(232,41,58,0.4);
+    }
+
+    .calorie-bar-target.bulk {
+      background: linear-gradient(90deg, rgba(46,213,115,0.6), var(--accent-green));
+      box-shadow: 0 0 10px rgba(46,213,115,0.4);
+    }
+
+    /* =========================================== */
+    /* RESULT METRICS GRID                        */
+    /* =========================================== */
+    .result-metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .metric-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition-normal), transform var(--transition-normal);
+    }
+
+    .metric-card:hover {
+      border-color: var(--border-normal);
+      transform: translateY(-1px);
+    }
+
+    .metric-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .metric-card.type-red::after    { background: var(--accent-red); }
+    .metric-card.type-orange::after { background: var(--accent-orange); }
+    .metric-card.type-amber::after  { background: var(--accent-amber); }
+    .metric-card.type-blue::after   { background: var(--accent-blue); }
+    .metric-card.type-green::after  { background: var(--accent-green); }
+    .metric-card.type-purple::after { background: var(--accent-purple); }
+
+    .metric-card:hover::after {
+      opacity: 1;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .metric-value {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      transition: all var(--transition-normal);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-card.type-red .metric-value    { color: var(--accent-red-bright); }
+    .metric-card.type-orange .metric-value { color: var(--accent-orange); }
+    .metric-card.type-amber .metric-value  { color: var(--accent-amber); }
+    .metric-card.type-blue .metric-value   { color: var(--accent-blue); }
+    .metric-card.type-green .metric-value  { color: var(--accent-green); }
+    .metric-card.type-purple .metric-value { color: var(--accent-purple); }
+
+    .metric-sub {
+      font-size: 10px;
+      color: var(--text-disabled);
+      font-weight: 500;
+    }
+
+    /* Spark line mini viz in metric */
+    .metric-sparkbar {
+      width: 100%;
+      height: 3px;
+      background: var(--bg-base);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .metric-sparkbar-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width var(--transition-slow);
+    }
+
+    .metric-card.type-red .metric-sparkbar-fill    { background: var(--accent-red); }
+    .metric-card.type-orange .metric-sparkbar-fill { background: var(--accent-orange); }
+    .metric-card.type-amber .metric-sparkbar-fill  { background: var(--accent-amber); }
+    .metric-card.type-blue .metric-sparkbar-fill   { background: var(--accent-blue); }
+    .metric-card.type-green .metric-sparkbar-fill  { background: var(--accent-green); }
+    .metric-card.type-purple .metric-sparkbar-fill { background: var(--accent-purple); }
+
+    /* =========================================== */
+    /* CLASSIFICATION BADGE                       */
+    /* =========================================== */
+    .classification-block {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .classification-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .classification-block.extreme::before  { background: radial-gradient(ellipse at 0 50%, rgba(232,41,58,0.1), transparent 60%); border-left: 3px solid var(--accent-red); }
+    .classification-block.aggressive::before { background: radial-gradient(ellipse at 0 50%, rgba(247,97,42,0.1), transparent 60%); border-left: 3px solid var(--accent-orange); }
+    .classification-block.moderate::before { background: radial-gradient(ellipse at 0 50%, rgba(245,166,35,0.1), transparent 60%); border-left: 3px solid var(--accent-amber); }
+    .classification-block.lean::before     { background: radial-gradient(ellipse at 0 50%, rgba(46,213,115,0.1), transparent 60%); border-left: 3px solid var(--accent-green); }
+
+    .classification-icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      transition: transform var(--transition-spring);
+    }
+
+    .classification-block:hover .classification-icon-wrap {
+      transform: scale(1.1) rotate(-8deg);
+    }
+
+    .classification-extreme .classification-icon-wrap  { background: rgba(232,41,58,0.12); }
+    .classification-aggressive .classification-icon-wrap { background: rgba(247,97,42,0.12); }
+    .classification-moderate .classification-icon-wrap { background: rgba(245,166,35,0.12); }
+    .classification-lean .classification-icon-wrap     { background: rgba(46,213,115,0.12); }
+
+    .classification-texts {
+      flex: 1;
+    }
+
+    .classification-level-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .classification-level-name {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      transition: color var(--transition-normal);
+    }
+
+    .classification-extreme .classification-level-name  { color: var(--accent-red-bright); }
+    .classification-aggressive .classification-level-name { color: var(--accent-orange); }
+    .classification-moderate .classification-level-name { color: var(--accent-amber); }
+    .classification-lean .classification-level-name     { color: var(--accent-green); }
+
+    .classification-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.5;
+    }
+
+    /* =========================================== */
+    /* DEADLINE DISPLAY                           */
+    /* =========================================== */
+    .deadline-display {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .deadline-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .deadline-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .deadline-value {
+      font-size: 20px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      transition: all var(--transition-normal);
+    }
+
+    .deadline-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .deadline-timeline {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+    }
+
+    .timeline-weeks {
+      display: flex;
+      gap: 3px;
+    }
+
+    .timeline-week-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 1.5px solid var(--border-normal);
+      transition: all var(--transition-normal);
+    }
+
+    .timeline-week-dot.filled {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+      box-shadow: 0 0 6px rgba(232,41,58,0.5);
+    }
+
+    .timeline-week-dot.filled.green {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+      box-shadow: 0 0 6px rgba(46,213,115,0.5);
+    }
+
+    .timeline-label {
+      font-size: 10px;
+      color: var(--text-disabled);
+    }
+
+    /* =========================================== */
+    /* ACTION BUTTONS                             */
+    /* =========================================== */
+    .actions-panel {
+      grid-column: 1;
+      grid-row: 2;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    @media (max-width: 1100px) {
+      .actions-panel {
+        grid-column: 1;
+        grid-row: auto;
+      }
+    }
+
+    .actions-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 22px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      border: none;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background var(--transition-fast);
+    }
+
+    .action-btn:hover::before  { background: rgba(255,255,255,0.04); }
+    .action-btn:active::before { background: rgba(255,255,255,0.08); }
+
+    .action-btn:active { transform: scale(0.97); }
+
+    .action-btn svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      transition: transform var(--transition-spring);
+    }
+
+    .btn-clear {
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--border-normal);
+      color: var(--text-secondary);
+    }
+
+    .btn-clear:hover {
+      background: var(--bg-panel);
+      border-color: var(--border-bright);
+      color: var(--text-primary);
+    }
+
+    .btn-clear:hover svg {
+      transform: rotate(-45deg);
+    }
+
+    .btn-apply {
+      background: linear-gradient(135deg, var(--accent-red-dim) 0%, var(--accent-red) 60%, var(--accent-red-bright) 100%);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 4px 20px rgba(232,41,58,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      min-width: 180px;
+      justify-content: center;
+    }
+
+    .btn-apply:hover {
+      background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-red-bright) 100%);
+      box-shadow: 0 6px 30px rgba(232,41,58,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-apply:active { transform: translateY(0) scale(0.97); }
+
+    .btn-apply svg { width: 16px; height: 16px; }
+
+    .btn-apply:hover svg {
+      transform: translateX(3px);
+    }
+
+    .btn-apply.applying {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    /* Apply animation ripple */
+    .btn-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transform: scale(0);
+      animation: btn-ripple-anim 600ms linear;
+      pointer-events: none;
+    }
+
+    @keyframes btn-ripple-anim {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .simulation-info-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: 100px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .simulation-info-pill svg {
+      width: 13px;
+      height: 13px;
+      color: var(--text-disabled);
+      flex-shrink: 0;
+    }
+
+    /* =========================================== */
+    /* SUCCESS / APPLY TOAST                      */
+    /* =========================================== */
+    .toast-container {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-normal);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transform: translateX(100%) scale(0.95);
+      opacity: 0;
+      transition: all 400ms var(--ease-spring);
+      pointer-events: auto;
+    }
+
+    .toast.visible {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+
+    .toast.hiding {
+      transform: translateX(100%) scale(0.95);
+      opacity: 0;
+    }
+
+    .toast-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toast.success .toast-icon {
+      background: rgba(46,213,115,0.15);
+      color: var(--accent-green);
+    }
+
+    .toast.success {
+      border-color: rgba(46,213,115,0.25);
+    }
+
+    .toast-icon svg { width: 16px; height: 16px; }
+
+    /* =========================================== */
+    /* NUMBER FLIP ANIMATION                      */
+    /* =========================================== */
+    @keyframes num-flip-up {
+      0%   { transform: translateY(8px); opacity: 0; }
+      100% { transform: translateY(0);   opacity: 1; }
+    }
+
+    .value-updating {
+      animation: num-flip-up 280ms var(--ease-out) forwards;
+    }
+
+    /* =========================================== */
+    /* DIFF INDICATORS                            */
+    /* =========================================== */
+    .diff-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 4px;
+      transition: all var(--transition-normal);
+    }
+
+    .diff-indicator svg {
+      width: 9px;
+      height: 9px;
+    }
+
+    .diff-down {
+      color: var(--accent-red);
+      background: rgba(232,41,58,0.10);
+    }
+
+    .diff-up {
+      color: var(--accent-green);
+      background: rgba(46,213,115,0.10);
+    }
+
+    .diff-neutral {
+      color: var(--text-muted);
+      background: var(--bg-base);
+    }
+
+    /* =========================================== */
+    /* VU METER / GAUGE DECORATION                */
+    /* =========================================== */
+    .vu-meter {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 14px;
+    }
+
+    .vu-bar {
+      height: 3px;
+      border-radius: 1px;
+      transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .vu-bar.green { background: var(--accent-green); }
+    .vu-bar.amber { background: var(--accent-amber); }
+    .vu-bar.red   { background: var(--accent-red); box-shadow: 0 0 4px rgba(232,41,58,0.7); }
+    .vu-bar.off   { background: var(--bg-elevated); }
+
+    /* =========================================== */
+    /* RADIAL GAUGE (DEFICIT VISUAL)              */
+    /* =========================================== */
+    .gauge-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      padding: 8px 0;
+    }
+
+    .gauge-svg-wrap {
+      position: relative;
+      width: 130px;
+      height: 76px;
+      flex-shrink: 0;
+    }
+
+    .gauge-svg {
+      width: 130px;
+      height: 76px;
+      overflow: visible;
+    }
+
+    .gauge-track {
+      fill: none;
+      stroke: var(--bg-base);
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+
+    .gauge-fill {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 600ms var(--ease-smooth), stroke 400ms var(--ease-smooth);
+      transform-origin: center;
+    }
+
+    .gauge-needle {
+      fill: var(--text-primary);
+      transition: transform 600ms var(--ease-smooth);
+      transform-origin: 65px 65px;
+    }
+
+    .gauge-center-text {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .gauge-center-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      transition: color var(--transition-normal);
+    }
+
+    .gauge-center-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-disabled);
+      display: block;
+    }
+
+    /* =========================================== */
+    /* MACRO BREAKDOWN MINI BAR                   */
+    /* =========================================== */
+    .macro-breakdown {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .macro-breakdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .macro-breakdown-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .macro-breakdown-total {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .macro-stacked-bar {
+      display: flex;
+      height: 8px;
+      border-radius: 100px;
+      overflow: hidden;
+      gap: 1px;
+    }
+
+    .macro-bar-protein {
+      background: var(--accent-blue);
+      transition: flex var(--transition-slow);
+      box-shadow: 2px 0 8px rgba(61,142,248,0.4);
+    }
+
+    .macro-bar-carbs {
+      background: var(--accent-amber);
+      transition: flex var(--transition-slow);
+    }
+
+    .macro-bar-fat {
+      background: var(--accent-red);
+      transition: flex var(--transition-slow);
+    }
+
+    .macro-legend {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .macro-legend-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .macro-legend-dot-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .macro-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .macro-dot.protein { background: var(--accent-blue); }
+    .macro-dot.carbs   { background: var(--accent-amber); }
+    .macro-dot.fat     { background: var(--accent-red); }
+
+    .macro-legend-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .macro-legend-value {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .macro-legend-unit {
+      font-size: 9px;
+      color: var(--text-disabled);
+    }
+
+    /* =========================================== */
+    /* COCKPIT GLOW LINES (DECORATIVE)            */
+    /* =========================================== */
+    .cockpit-lines {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: inherit;
+      opacity: 0.4;
+    }
+
+    .cockpit-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(232,41,58,0.3));
+      height: 1px;
+    }
+
+    .cockpit-line:nth-child(1) { top: 30px; right: 0; width: 120px; animation: scan-line 4s ease-in-out infinite; }
+    .cockpit-line:nth-child(2) { top: 50px; right: 0; width: 80px;  animation: scan-line 4s ease-in-out infinite 0.5s; }
+    .cockpit-line:nth-child(3) { top: 70px; right: 0; width: 140px; animation: scan-line 4s ease-in-out infinite 1s; }
+    .cockpit-line:nth-child(4) { top: 90px; right: 0; width: 60px;  animation: scan-line 4s ease-in-out infinite 1.5s; }
+
+    @keyframes scan-line {
+      0%, 100% { opacity: 0.3; transform: scaleX(0.6); }
+      50%       { opacity: 0.8; transform: scaleX(1); }
+    }
+
+    /* =========================================== */
+    /* DIFF SUMMARY ROW (BEFORE / AFTER)          */
+    /* =========================================== */
+    .diff-summary {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .diff-summary-header {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .diff-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .diff-row-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      width: 70px;
+    }
+
+    .diff-row-before {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-align: right;
+      flex: 1;
+    }
+
+    .diff-row-arrow {
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .diff-row-arrow svg {
+      width: 12px;
+      height: 12px;
+      color: var(--text-disabled);
+    }
+
+    .diff-row-after {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      flex: 1;
+      transition: color var(--transition-normal);
+    }
+
+    .diff-row-after.down { color: var(--accent-red); }
+    .diff-row-after.up   { color: var(--accent-green); }
+    .diff-row-after.same { color: var(--text-primary); }
+
+    .diff-row-delta {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+    }
+
+    .diff-row-delta.down {
+      background: rgba(232,41,58,0.1);
+      color: var(--accent-red);
+    }
+
+    .diff-row-delta.up {
+      background: rgba(46,213,115,0.1);
+      color: var(--accent-green);
+    }
+
+    /* =========================================== */
+    /* SCROLLBAR STYLING                          */
+    /* =========================================== */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border-normal); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+
+    /* =========================================== */
+    /* FOCUS STYLES (ACCESSIBILITY)               */
+    /* =========================================== */
+    :focus-visible {
+      outline: 2px solid var(--accent-red);
+      outline-offset: 2px;
+    }
+
+    /* =========================================== */
+    /* SELECTION HIGHLIGHT                        */
+    /* =========================================== */
+    ::selection {
+      background: rgba(232,41,58,0.3);
+      color: var(--text-primary);
+    }
+
+    /* =========================================== */
+    /* SHIMMER LOADING ANIMATION                  */
+    /* =========================================== */
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+
+    /* =========================================== */
+    /* PULSE GLOW FOR ACTIVE STATE                */
+    /* =========================================== */
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(232,41,58,0.2); }
+      50%       { box-shadow: 0 0 40px rgba(232,41,58,0.4); }
+    }
+
+    /* =========================================== */
+    /* RESPONSIVE TWEAKS                          */
+    /* =========================================== */
+    @media (max-width: 1280px) {
+      .controls-grid {
+        gap: 22px 28px;
+      }
+
+      .controls-panel {
+        padding: 26px;
+      }
+
+      .result-panel {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-wrapper {
+        padding: 24px 16px 60px;
+      }
+
+      .section-header {
+        flex-direction: column;
+      }
+
+      .section-header-right {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .thermo-selector {
+        flex-wrap: wrap;
+      }
+
+      .thermo-option {
+        min-width: calc(50% - 4px);
+      }
+
+      .actions-panel {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+      }
+
+      .actions-left {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .result-metrics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <div class="simulator-root">
+
+    <!-- =========================================== -->
+    <!-- SECTION HEADER                              -->
+    <!-- =========================================== -->
+    <header class="section-header">
+      <div class="section-header-left">
+        <div class="section-badge">
+          <span class="section-badge-dot"></span>
+          <span class="section-badge-text">Simulador Interativo</span>
+        </div>
+        <h1 class="section-title">
+          Protocol <span>Forge</span>
+        </h1>
+        <p class="section-subtitle">
+          Ajuste os parâmetros em tempo real e veja como cada variável impacta seu protocolo nutricional. Os resultados são recalculados instantaneamente.
+        </p>
+      </div>
+      <div class="section-header-right">
+        <div class="header-stat">
+          <span class="header-stat-label">TDEE Base</span>
+          <span class="header-stat-value">2<span class="header-stat-unit">,</span>840<span class="header-stat-unit">kcal</span></span>
+        </div>
+        <div class="header-divider"></div>
+        <div class="header-stat">
+          <span class="header-stat-label">Peso Atual</span>
+          <span class="header-stat-value">82<span class="header-stat-unit">.</span>4<span class="header-stat-unit">kg</span></span>
+        </div>
+        <div class="header-divider"></div>
+        <div class="header-stat">
+          <span class="header-stat-label">Gordura</span>
+          <span class="header-stat-value">16<span class="header-stat-unit">.</span>2<span class="header-stat-unit">%</span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- =========================================== -->
+    <!-- MAIN SIMULATOR GRID                         -->
+    <!-- =========================================== -->
+    <main class="simulator-grid" role="main">
+
+      <!-- ======== CONTROLS PANEL ======== -->
+      <section class="panel controls-panel" aria-label="Controles do Simulador">
+        <div class="panel-inner-glow"></div>
+        <div class="cockpit-lines" aria-hidden="true">
+          <div class="cockpit-line"></div>
+          <div class="cockpit-line"></div>
+          <div class="cockpit-line"></div>
+          <div class="cockpit-line"></div>
+        </div>
+
+        <div class="controls-panel-header">
+          <div class="controls-panel-title">
+            <div class="panel-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-red)">
+                <circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+              </svg>
+            </div>
+            <div>
+              <div class="panel-title-text">Parâmetros de Simulação</div>
+              <div class="panel-title-sub">Deslize, selecione e veja o resultado</div>
+            </div>
+          </div>
+          <div class="status-pill">
+            <span class="status-pill-dot"></span>
+            LIVE
+          </div>
+        </div>
+
+        <!-- CONTROLS GRID -->
+        <div class="controls-grid">
+
+          <!-- SLIDER: TREINOS POR SEMANA -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <div class="control-label">
+                <div class="control-label-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                  </svg>
+                </div>
+                <span class="control-label-text">Treinos / Semana</span>
+              </div>
+              <div class="control-value-display">
+                <span class="control-current-value" id="val-workouts">4</span>
+                <span class="control-value-unit">×/sem</span>
+              </div>
+            </div>
+
+            <div class="slider-container">
+              <div class="slider-track-wrapper"
+                   id="slider-workouts"
+                   role="slider"
+                   aria-label="Treinos por semana"
+                   aria-valuemin="1"
+                   aria-valuemax="7"
+                   aria-valuenow="4"
+                   tabindex="0">
+                <div class="slider-track-fill" id="fill-workouts"></div>
+                <div class="slider-glow-orb" id="orb-workouts"></div>
+                <div class="slider-thumb" id="thumb-workouts"></div>
+              </div>
+              <div class="slider-marks" id="marks-workouts"></div>
+            </div>
+
+            <div class="intensity-bar" id="intensity-workouts">
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+            </div>
+          </div>
+
+          <!-- SLIDER: CARDIO DIÁRIO -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <div class="control-label">
+                <div class="control-label-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                </div>
+                <span class="control-label-text">Cardio Diário</span>
+              </div>
+              <div class="control-value-display">
+                <span class="control-current-value" id="val-cardio">20</span>
+                <span class="control-value-unit">min</span>
+              </div>
+            </div>
+
+            <div class="slider-container">
+              <div class="slider-track-wrapper"
+                   id="slider-cardio"
+                   role="slider"
+                   aria-label="Cardio diário em minutos"
+                   aria-valuemin="0"
+                   aria-valuemax="60"
+                   aria-valuenow="20"
+                   tabindex="0">
+                <div class="slider-track-fill" id="fill-cardio"></div>
+                <div class="slider-glow-orb" id="orb-cardio"></div>
+                <div class="slider-thumb" id="thumb-cardio"></div>
+              </div>
+              <div class="slider-marks" id="marks-cardio"></div>
+            </div>
+
+            <div class="intensity-bar" id="intensity-cardio">
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+              <div class="intensity-segment"></div>
+            </div>
+          </div>
+
+          <!-- SEPARATOR -->
+          <div class="controls-section-sep control-group-full">
+            <div class="controls-section-sep-line"></div>
+            <span class="controls-section-sep-label">Objetivo &amp; Suplementação</span>
+            <div class="controls-section-sep-line"></div>
+          </div>
+
+          <!-- OBJECTIVE SELECTOR -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <div class="control-label">
+                <div class="control-label-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                  </svg>
+                </div>
+                <span class="control-label-text">Objetivo</span>
+              </div>
+            </div>
+
+            <div class="objective-selector" role="radiogroup" aria-label="Selecione seu objetivo">
+
+              <div class="objective-option selected"
+                   data-obj="hard-cut"
+                   role="radio"
+                   aria-checked="true"
+                   tabindex="0">
+                <div class="objective-icon-wrap">🔥</div>
+                <div class="objective-text-col">
+                  <div class="objective-name">Hard Cut</div>
+                  <div class="objective-desc">Déficit agressivo — perda rápida de gordura</div>
+                </div>
+                <span class="objective-badge">−25%</span>
+                <div class="objective-check">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="2 6 5 9 10 3"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="objective-option"
+                   data-obj="mini-cut"
+                   role="radio"
+                   aria-checked="false"
+                   tabindex="0">
+                <div class="objective-icon-wrap">⚡</div>
+                <div class="objective-text-col">
+                  <div class="objective-name">Mini Cut</div>
+                  <div class="objective-desc">Déficit moderado — preserva musculatura</div>
+                </div>
+                <span class="objective-badge">−15%</span>
+                <div class="objective-check">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="2 6 5 9 10 3"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="objective-option"
+                   data-obj="lean-bulk"
+                   role="radio"
+                   aria-checked="false"
+                   tabindex="0">
+                <div class="objective-icon-wrap">💪</div>
+                <div class="objective-text-col">
+                  <div class="objective-name">Lean Bulk</div>
+                  <div class="objective-desc">Superávit limpo — ganho de massa magra</div>
+                </div>
+                <span class="objective-badge">+10%</span>
+                <div class="objective-check">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="2 6 5 9 10 3"/>
+                  </svg>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- THERMOGENIC SELECTOR -->
+          <div class="control-group">
+            <div class="control-label-row">
+              <div class="control-label">
+                <div class="control-label-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a7 7 0 0 1 7 7c0 4.41-7 13-7 13S5 13.41 5 9a7 7 0 0 1 7-7z"/>
+                  </svg>
+                </div>
+                <span class="control-label-text">Termogênico</span>
+              </div>
+            </div>
+
+            <div class="thermo-selector" role="radiogroup" aria-label="Selecione o termogênico">
+
+              <div class="thermo-option"
+                   data-thermo="none"
+                   role="radio"
+                   aria-checked="false"
+                   tabindex="0">
+                <span class="thermo-emoji">⚪</span>
+                <span class="thermo-name">Nenhum</span>
+                <span class="thermo-boost">+0 kcal</span>
+              </div>
+
+              <div class="thermo-option selected"
+                   data-thermo="caffeine"
+                   role="radio"
+                   aria-checked="true"
+                   tabindex="0">
+                <span class="thermo-emoji">☕</span>
+                <span class="thermo-name">Cafeína</span>
+                <span class="thermo-boost">+80 kcal</span>
+              </div>
+
+              <div class="thermo-option"
+                   data-thermo="eca"
+                   role="radio"
+                   aria-checked="false"
+                   tabindex="0">
+                <span class="thermo-emoji">💊</span>
+                <span class="thermo-name">ECA Stack</span>
+                <span class="thermo-boost">+200 kcal</span>
+              </div>
+
+            </div>
+
+            <!-- Thermo warning -->
+            <div id="thermo-warning" style="display:none; margin-top:8px; padding:10px 12px; background:rgba(232,41,58,0.07); border:1px solid rgba(232,41,58,0.2); border-radius:8px; font-size:11px; color:var(--text-secondary); line-height:1.5;">
+              ⚠️ <strong style="color:var(--accent-red)">ECA Stack</strong> é um protocolo avançado. Consulte um profissional de saúde antes de utilizar.
+            </div>
+          </div>
+
+        </div><!-- /controls-grid -->
+
+      </section>
+
+      <!-- ======== RESULT PANEL ======== -->
+      <aside class="panel result-panel" aria-label="Resultado da Simulação" aria-live="polite">
+        <div class="panel-inner-glow"></div>
+
+        <!-- Result Header -->
+        <div class="result-header">
+          <div class="result-title-group">
+            <div class="result-title">Resultado Estimado</div>
+            <div class="result-protocol-name" id="result-protocol-name">Hard Cut · Cafeína</div>
+          </div>
+          <div class="result-update-badge" id="result-update-badge">
+            <span class="result-update-dot"></span>
+            CALCULANDO
+          </div>
+        </div>
+
+        <!-- MAIN KPI -->
+        <div class="result-main-kpi" id="result-main-kpi">
+          <div class="kpi-top-row">
+            <div class="kpi-label">META CALÓRICA DIÁRIA</div>
+            <div class="kpi-delta negative" id="kpi-delta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 15 12 9 18 15"/>
+              </svg>
+              <span id="kpi-delta-val">−710</span>
+            </div>
+          </div>
+
+          <div class="kpi-calorie-display">
+            <span class="kpi-calorie-number" id="kpi-calories">2.130</span>
+            <span class="kpi-calorie-unit">kcal</span>
+          </div>
+
+          <!-- Calorie bar viz -->
+          <div class="calorie-viz">
+            <div class="calorie-viz-label">
+              <span>0</span>
+              <span id="viz-tdee-label">TDEE: 2.840</span>
+              <span id="viz-max-label">3.500</span>
+            </div>
+            <div class="calorie-bar-track">
+              <div class="calorie-bar-tdee" id="bar-tdee" style="width:81%"></div>
+              <div class="calorie-bar-target cut" id="bar-target" style="width:61%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GAUGE — DEFICIT -->
+        <div class="result-main-kpi" style="background:var(--bg-elevated)">
+          <div class="kpi-label">INTENSIDADE DO DÉFICIT / SUPERÁVIT</div>
+          <div class="gauge-container">
+            <div class="gauge-svg-wrap">
+              <svg class="gauge-svg" viewBox="0 0 130 76" aria-hidden="true">
+                <!-- Track -->
+                <path class="gauge-track"
+                      d="M 15 65 A 50 50 0 0 1 115 65"
+                      stroke="var(--bg-base)"/>
+                <!-- Color zones -->
+                <path d="M 15 65 A 50 50 0 0 1 38 22"
+                      fill="none" stroke="rgba(46,213,115,0.25)" stroke-width="10" stroke-linecap="butt"/>
+                <path d="M 38 22 A 50 50 0 0 1 65 15"
+                      fill="none" stroke="rgba(245,166,35,0.25)" stroke-width="10" stroke-linecap="butt"/>
+                <path d="M 65 15 A 50 50 0 0 1 92 22"
+                      fill="none" stroke="rgba(247,97,42,0.25)" stroke-width="10" stroke-linecap="butt"/>
+                <path d="M 92 22 A 50 50 0 0 1 115 65"
+                      fill="none" stroke="rgba(232,41,58,0.25)" stroke-width="10" stroke-linecap="butt"/>
+                <!-- Fill arc -->
+                <path class="gauge-fill"
+                      id="gauge-fill-arc"
+                      d="M 15 65 A 50 50 0 0 1 115 65"
+                      stroke="var(--accent-red)"
+                      stroke-dasharray="157"
+                      stroke-dashoffset="55"/>
+                <!-- Needle -->
+                <polygon class="gauge-needle"
+                         id="gauge-needle"
+                         points="65,62 63,65 65,35 67,65"
+                         fill="var(--text-primary)"/>
+                <circle cx="65" cy="65" r="5" fill="var(--bg-elevated)" stroke="var(--border-normal)" stroke-width="1.5"/>
+                <circle cx="65" cy="65" r="2.5" fill="var(--text-primary)"/>
+                <!-- Labels -->
+                <text x="10" y="75" fill="var(--text-disabled)" font-size="8" font-family="monospace">Bulk</text>
+                <text x="102" y="75" fill="var(--text-disabled)" font-size="8" font-family="monospace">Cut</text>
+              </svg>
+              <div class="gauge-center-text">
+                <span class="gauge-center-value" id="gauge-value">−25%</span>
+                <span class="gauge-center-label">Déficit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- METRICS GRID -->
+        <div class="result-metrics-grid">
+
+          <div class="metric-card type-blue">
+            <div class="metric-label">Novo TDEE</div>
+            <div class="metric-value" id="m-tdee">2.840</div>
+            <div class="metric-sub">kcal/dia</div>
+            <div class="metric-sparkbar">
+              <div class="metric-sparkbar-fill" id="spark-tdee" style="width:75%"></div>
+            </div>
+          </div>
+
+          <div class="metric-card type-red">
+            <div class="metric-label">Déficit Real</div>
+            <div class="metric-value" id="m-deficit">−710</div>
+            <div class="metric-sub">kcal/dia</div>
+            <div class="metric-sparkbar">
+              <div class="metric-sparkbar-fill" id="spark-deficit" style="width:50%"></div>
+            </div>
+          </div>
+
+          <div class="metric-card type-amber">
+            <div class="metric-label">Perda/Ganho</div>
+            <div class="metric-value" id="m-rate">−0.72</div>
+            <div class="metric-sub">kg/semana</div>
+            <div class="metric-sparkbar">
+              <div class="metric-sparkbar-fill" id="spark-rate" style="width:60%"></div>
+            </div>
+          </div>
+
+          <div class="metric-card type-purple">
+            <div class="metric-label">Prazo Est.</div>
+            <div class="metric-value" id="m-weeks">9 sem</div>
+            <div class="metric-sub">até a meta</div>
+            <div class="metric-sparkbar">
+              <div class="metric-sparkbar-fill" id="spark-weeks" style="width:65%"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CLASSIFICATION -->
+        <div class="classification-block extreme classification-extreme" id="classification-block">
+          <div class="classification-icon-wrap" id="class-icon">🔥</div>
+          <div class="classification-texts">
+            <div class="classification-level-label">Classificação do Protocolo</div>
+            <div class="classification-level-name" id="class-name">Agressivo Extremo</div>
+            <div class="classification-desc" id="class-desc">Déficit elevado. Alto risco de perda muscular sem treino adequado.</div>
+          </div>
+        </div>
+
+        <!-- MACRO BREAKDOWN -->
+        <div class="macro-breakdown">
+          <div class="macro-breakdown-header">
+            <span class="macro-breakdown-title">Distribuição de Macros</span>
+            <span class="macro-breakdown-total" id="macro-total">2.130 kcal</span>
+          </div>
+          <div class="macro-stacked-bar">
+            <div class="macro-bar-protein" id="macro-bar-p" style="flex:1.8"></div>
+            <div class="macro-bar-carbs" id="macro-bar-c" style="flex:1.2"></div>
+            <div class="macro-bar-fat" id="macro-bar-f" style="flex:0.6"></div>
+          </div>
+          <div class="macro-legend">
+            <div class="macro-legend-item">
+              <div class="macro-legend-dot-row">
+                <div class="macro-dot protein"></div>
+                <span class="macro-legend-label">Prot</span>
+              </div>
+              <span class="macro-legend-value" id="macro-p">213</span>
+              <span class="macro-legend-unit">g/dia</span>
+            </div>
+            <div class="macro-legend-item">
+              <div class="macro-legend-dot-row">
+                <div class="macro-dot carbs"></div>
+                <span class="macro-legend-label">Carb</span>
+              </div>
+              <span class="macro-legend-value" id="macro-c">160</span>
+              <span class="macro-legend-unit">g/dia</span>
+            </div>
+            <div class="macro-legend-item">
+              <div class="macro-legend-dot-row">
+                <div class="macro-dot fat"></div>
+                <span class="macro-legend-label">Gord</span>
+              </div>
+              <span class="macro-legend-value" id="macro-f">57</span>
+              <span class="macro-legend-unit">g/dia</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIFF SUMMARY -->
+        <div class="diff-summary">
+          <div class="diff-summary-header">Comparativo: Atual → Simulação</div>
+
+          <div class="diff-row">
+            <span class="diff-row-label">TDEE</span>
+            <span class="diff-row-before">2.760</span>
+            <span class="diff-row-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+            <span class="diff-row-after up" id="diff-tdee">2.840</span>
+            <span class="diff-row-delta up" id="diff-tdee-d">+80</span>
+          </div>
+
+          <div class="diff-row">
+            <span class="diff-row-label">Meta</span>
+            <span class="diff-row-before">2.070</span>
+            <span class="diff-row-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+            <span class="diff-row-after down" id="diff-meta">2.130</span>
+            <span class="diff-row-delta up" id="diff-meta-d">+60</span>
+          </div>
+
+          <div class="diff-row">
+            <span class="diff-row-label">Taxa/sem</span>
+            <span class="diff-row-before">−0.65 kg</span>
+            <span class="diff-row-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+            <span class="diff-row-after down" id="diff-rate">−0.72 kg</span>
+            <span class="diff-row-delta down" id="diff-rate-d">−0.07</span>
+          </div>
+
+        </div>
+
+        <!-- DEADLINE -->
+        <div class="deadline-display">
+          <div class="deadline-left">
+            <div class="deadline-label">Prazo para Meta</div>
+            <div class="deadline-value" id="deadline-value">~9 semanas</div>
+            <div class="deadline-sub" id="deadline-date">Previsão: ~Setembro 2025</div>
+          </div>
+          <div class="deadline-timeline">
+            <div class="timeline-weeks" id="timeline-dots"></div>
+            <div class="timeline-label" id="timeline-label">9 semanas</div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ======== ACTIONS PANEL ======== -->
+      <div class="panel actions-panel" role="toolbar" aria-label="Ações do Simulador">
+
+        <div class="actions-left">
+          <button class="action-btn btn-clear" id="btn-clear" aria-label="Limpar simulação e resetar valores">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.2"/>
+            </svg>
+            Limpar Simulação
+          </button>
+
+          <div class="simulation-info-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Simulação não salva automaticamente
+          </div>
+        </div>
+
+        <div class="actions-right">
+          <button class="action-btn btn-apply" id="btn-apply" aria-label="Aplicar simulação ao protocolo ativo">
+            Aplicar Simulação
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
+
+<!-- =========================================== -->
+<!-- JAVASCRIPT                                  -->
+<!-- =========================================== -->
+<script>
+  // =========================================== //
+  // STATE MANAGEMENT                            //
+  // =========================================== //
+  const state = {
+    workouts:   4,    // 1-7
+    cardio:     20,   // 0-60 min
+    objective:  'hard-cut',
+    thermo:     'caffeine',
+
+    // Base user data (from profile — read-only)
+    baseTDEE:   2760,
+    weight:     82.4,
+    fatPercent: 16.2,
+    fatMass:    13.35,  // kg de gordura (82.4 * 0.162)
+    goalFatPct: 10,     // meta: 10% de gordura
+  };
+
+  const DEFAULT_STATE = { ...state };
+
+  // Thermogenic bonus kcal/day
+  const THERMO_BONUS = { none: 0, caffeine: 80, eca: 200 };
+
+  // Cardio kcal/min
+  const CARDIO_KCAL_PER_MIN = 8;
+
+  // Workout activity bonus (on top of baseTDEE)
+  const WORKOUT_BONUS_PER_SESSION = 60; // kcal per workout session per week, spread daily
+  // e.g. 4 sessions × 60 kcal = 240 weekly / 7 = ~34/day
+
+  // Objective multipliers vs TDEE
+  const OBJECTIVE_CONFIG = {
+    'hard-cut': { name: 'Hard Cut · Cafeína', label: 'Hard Cut', deficit: -0.25, icon: '🔥', color: 'red' },
+    'mini-cut': { name: 'Mini Cut',           label: 'Mini Cut', deficit: -0.15, icon: '⚡', color: 'orange' },
+    'lean-bulk':{ name: 'Lean Bulk',          label: 'Lean Bulk',deficit: +0.10, icon: '💪', color: 'green' },
+  };
+
+  // =========================================== //
+  // CALCULATION ENGINE                          //
+  // =========================================== //
+  function calculate(s) {
+    const thermoBonus  = THERMO_BONUS[s.thermo];
+    const cardioBonus  = Math.round(s.cardio * CARDIO_KCAL_PER_MIN);
+    const workoutBonus = Math.round((s.workouts * WORKOUT_BONUS_PER_SESSION) / 7);
+    const newTDEE      = s.baseTDEE + thermoBonus + cardioBonus + workoutBonus;
+
+    const objConfig   = OBJECTIVE_CONFIG[s.objective];
+    const targetCals  = Math.round(newTDEE * (1 + objConfig.deficit));
+    const deficitReal = targetCals - newTDEE;
+
+    // Weekly rate: 7700 kcal = 1 kg of fat
+    const weeklyRateKg = (deficitReal * 7) / 7700;
+
+    // How many kg to lose/gain to reach goal
+    const currentFatMass = s.fatMass;
+    const leanMass       = s.weight - currentFatMass;
+    let targetFatMass, weeksToGoal;
+
+    if (s.objective === 'lean-bulk') {
+      targetFatMass = currentFatMass + 3; // gain 3kg fat in bulk context
+      weeksToGoal   = weeklyRateKg > 0
+                      ? Math.round((targetFatMass - currentFatMass) / weeklyRateKg)
+                      : 0;
+    } else {
+      // Cut to goal fat %
+      // goalFat = leanMass / (1 - goalFatPct/100) — solve for fatMass at goal
+      const goalWeight  = leanMass / (1 - s.goalFatPct / 100);
+      targetFatMass     = goalWeight * (s.goalFatPct / 100);
+      const kgToLose    = Math.max(0, currentFatMass - targetFatMass);
+      weeksToGoal       = weeklyRateKg < 0
+                          ? Math.round(kgToLose / Math.abs(weeklyRateKg))
+                          : 999;
+    }
+
+    // Deficit percentage
+    const deficitPct = objConfig.deficit * 100;
+
+    // Macro distribution (cuts: high-protein)
+    let pPct, cPct, fPct;
+    if (s.objective === 'hard-cut') {
+      pPct = 0.40; cPct = 0.30; fPct = 0.30;
+    } else if (s.objective === 'mini-cut') {
+      pPct = 0.35; cPct = 0.38; fPct = 0.27;
+    } else {
+      pPct = 0.30; cPct = 0.45; fPct = 0.25;
+    }
+
+    const protG = Math.round((targetCals * pPct) / 4);
+    const carbG = Math.round((targetCals * cPct) / 4);
+    const fatG  = Math.round((targetCals * fPct) / 9);
+
+    // Classification
+    let classification;
+    const absDef = Math.abs(deficitPct);
+    if (s.objective === 'lean-bulk') {
+      classification = { key: 'lean', label: 'Lean Bulk', icon: '💪', desc: 'Superávit limpo. Ganho de massa magra com mínima gordura.' };
+    } else if (absDef >= 25) {
+      classification = { key: 'extreme', label: 'Agressivo Extremo', icon: '🔥', desc: 'Déficit elevado. Alto risco de perda muscular sem treino adequado.' };
+    } else if (absDef >= 20) {
+      classification = { key: 'aggressive', label: 'Agressivo', icon: '⚡', desc: 'Déficit forte. Progresso rápido com bom nível de treinamento.' };
+    } else if (absDef >= 12) {
+      classification = { key: 'moderate', label: 'Moderado', icon: '🎯', desc: 'Déficit equilibrado. Ótimo para sustentabilidade a longo prazo.' };
+    } else {
+      classification = { key: 'lean', label: 'Conservador', icon: '🛡️', desc: 'Déficit mínimo. Máxima preservação muscular.' };
+    }
+
+    return {
+      newTDEE,
+      targetCals,
+      deficitReal,
+      weeklyRateKg,
+      weeksToGoal,
+      deficitPct,
+      protG, carbG, fatG,
+      classification,
+      objConfig,
+    };
+  }
+
+  // =========================================== //
+  // UI UPDATE ENGINE                            //
+  // =========================================== //
+  let updateTimer = null;
+
+  function animateValue(el, newVal, suffix = '') {
+    if (!el) return;
+    el.classList.add('value-updating');
+    el.addEventListener('animationend', () => {
+      el.classList.remove('value-updating');
+    }, { once: true });
+    el.textContent = newVal + suffix;
+  }
+
+  function updateUI(s) {
+    const r = calculate(s);
+
+    // Show "CALCULANDO" badge briefly
+    const badge = document.getElementById('result-update-badge');
+    badge.classList.add('visible');
+    clearTimeout(updateTimer);
+    updateTimer = setTimeout(() => badge.classList.remove('visible'), 1200);
+
+    // ---- Protocol name ----
+    const protName = document.getElementById('result-protocol-name');
+    const thermoLabel = { none: '', caffeine: '· Cafeína', eca: '· ECA Stack' }[s.thermo];
+    protName.textContent = `${r.objConfig.label} ${thermoLabel}`;
+
+    // ---- KPI Main ----
+    const kpiEl = document.getElementById('kpi-calories');
+    animateValue(kpiEl, formatNum(r.targetCals));
+
+    const deltaEl = document.getElementById('kpi-delta');
+    const deltaValEl = document.getElementById('kpi-delta-val');
+    const sign = r.deficitReal > 0 ? '+' : '';
+    deltaValEl.textContent = sign + formatNum(r.deficitReal);
+
+    if (r.deficitReal < 0) {
+      deltaEl.className = 'kpi-delta negative';
+      deltaEl.querySelector('svg').innerHTML = '<polyline points="6 15 12 9 18 15"/>';
+    } else {
+      deltaEl.className = 'kpi-delta positive';
+      deltaEl.querySelector('svg').innerHTML = '<polyline points="6 9 12 15 18 9"/>';
+    }
+
+    // Highlight main KPI
+    const mainKpi = document.getElementById('result-main-kpi');
+    mainKpi.classList.add('highlight');
+    setTimeout(() => mainKpi.classList.remove('highlight'), 800);
+
+    // ---- Calorie bars ----
+    const maxCal  = 3500;
+    const tdeeW   = Math.min((r.newTDEE / maxCal) * 100, 100);
+    const targetW = Math.min((r.targetCals / maxCal) * 100, 100);
+
+    document.getElementById('bar-tdee').style.width   = tdeeW + '%';
+    document.getElementById('bar-target').style.width = targetW + '%';
+
+    const barTarget = document.getElementById('bar-target');
+    if (r.deficitReal < 0) {
+      barTarget.className = 'calorie-bar-target cut';
+    } else {
+      barTarget.className = 'calorie-bar-target bulk';
+    }
+
+    document.getElementById('viz-tdee-label').textContent = `TDEE: ${formatNum(r.newTDEE)}`;
+
+    // ---- Gauge ----
+    updateGauge(r.deficitPct);
+
+    // ---- Metric cards ----
+    animateValue(document.getElementById('m-tdee'), formatNum(r.newTDEE));
+    animateValue(document.getElementById('m-deficit'), (r.deficitReal >= 0 ? '+' : '') + formatNum(r.deficitReal));
+    animateValue(document.getElementById('m-rate'), (r.weeklyRateKg >= 0 ? '+' : '') + r.weeklyRateKg.toFixed(2));
+    animateValue(document.getElementById('m-weeks'), r.weeksToGoal >= 999 ? '∞' : r.weeksToGoal + ' sem');
+
+    // sparkbars
+    document.getElementById('spark-tdee').style.width    = Math.min((r.newTDEE / 4000) * 100, 100) + '%';
+    document.getElementById('spark-deficit').style.width = Math.min((Math.abs(r.deficitReal) / 1200) * 100, 100) + '%';
+    document.getElementById('spark-rate').style.width    = Math.min((Math.abs(r.weeklyRateKg) / 1.5) * 100, 100) + '%';
+    document.getElementById('spark-weeks').style.width   = r.weeksToGoal >= 999 ? 100 : Math.min((r.weeksToGoal / 24) * 100, 100) + '%';
+
+    // ---- Classification ----
+    const cb = document.getElementById('classification-block');
+    cb.className = `classification-block ${r.classification.key} classification-${r.classification.key}`;
+    document.getElementById('class-icon').textContent    = r.classification.icon;
+    document.getElementById('class-name').textContent    = r.classification.label;
+    document.getElementById('class-desc').textContent    = r.classification.desc;
+
+    // ---- Macros ----
+    document.getElementById('macro-total').textContent = formatNum(r.targetCals) + ' kcal';
+    animateValue(document.getElementById('macro-p'), r.protG);
+    animateValue(document.getElementById('macro-c'), r.carbG);
+    animateValue(document.getElementById('macro-f'), r.fatG);
+
+    // macro bars ratios
+    const totalMacroG = (r.protG * 4) + (r.carbG * 4) + (r.fatG * 9);
+    document.getElementById('macro-bar-p').style.flex = ((r.protG * 4) / totalMacroG * 3).toFixed(2);
+    document.getElementById('macro-bar-c').style.flex = ((r.carbG * 4) / totalMacroG * 3).toFixed(2);
+    document.getElementById('macro-bar-f').style.flex = ((r.fatG * 9)  / totalMacroG * 3).toFixed(2);
+
+    // ---- Diff summary ----
+    const diffTDEE  = r.newTDEE - state.baseTDEE;
+    const prevMeta  = 2070; // baseline
+    const diffMeta  = r.targetCals - prevMeta;
+    const prevRate  = -0.65;
+    const diffRate  = r.weeklyRateKg - prevRate;
+
+    const diffTDEEEl = document.getElementById('diff-tdee');
+    diffTDEEEl.textContent = formatNum(r.newTDEE);
+    diffTDEEEl.className   = 'diff-row-after ' + (diffTDEE >= 0 ? 'up' : 'down');
+
+    const diffTDEEDEl = document.getElementById('diff-tdee-d');
+    diffTDEEDEl.textContent = (diffTDEE >= 0 ? '+' : '') + diffTDEE;
+    diffTDEEDEl.className   = 'diff-row-delta ' + (diffTDEE >= 0 ? 'up' : 'down');
+
+    const diffMetaEl = document.getElementById('diff-meta');
+    diffMetaEl.textContent = formatNum(r.targetCals);
+    diffMetaEl.className   = 'diff-row-after ' + (diffMeta >= 0 ? 'up' : 'down');
+
+    const diffMetaDEl = document.getElementById('diff-meta-d');
+    diffMetaDEl.textContent = (diffMeta >= 0 ? '+' : '') + diffMeta;
+    diffMetaDEl.className   = 'diff-row-delta ' + (diffMeta >= 0 ? 'up' : 'down');
+
+    const diffRateEl = document.getElementById('diff-rate');
+    diffRateEl.textContent = r.weeklyRateKg.toFixed(2) + ' kg';
+    diffRateEl.className   = 'diff-row-after ' + (r.weeklyRateKg < 0 ? 'down' : 'up');
+
+    const diffRateDEl = document.getElementById('diff-rate-d');
+    diffRateDEl.textContent = (diffRate >= 0 ? '+' : '') + diffRate.toFixed(2);
+    diffRateDEl.className   = 'diff-row-delta ' + (diffRate < 0 ? 'down' : 'up');
+
+    // ---- Deadline ----
+    const wks = r.weeksToGoal >= 999 ? '∞' : `~${r.weeksToGoal} semanas`;
+    document.getElementById('deadline-value').textContent = wks;
+
+    // Date estimate
+    if (r.weeksToGoal < 999) {
+      const futureDate = new Date();
+      futureDate.setDate(futureDate.getDate() + (r.weeksToGoal * 7));
+      const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      document.getElementById('deadline-date').textContent = `Previsão: ~${monthNames[futureDate.getMonth()]} ${futureDate.getFullYear()}`;
+    } else {
+      document.getElementById('deadline-date').textContent = 'Meta indefinida no superávit';
+    }
+
+    // Timeline dots
+    buildTimelineDots(Math.min(r.weeksToGoal, 16), r.deficitReal < 0);
+    document.getElementById('timeline-label').textContent = r.weeksToGoal >= 999 ? '∞ semanas' : r.weeksToGoal + ' semanas';
+  }
+
+  function formatNum(n) {
+    return Math.round(n).toLocaleString('pt-BR');
+  }
+
+  // =========================================== //
+  // GAUGE UPDATER                               //
+  // =========================================== //
+  function updateGauge(deficitPct) {
+    // deficitPct: -25% (hard cut) to +10% (lean bulk)
+    // Map: -25 → right (cut) | 0 → center | +10 → left (bulk)
+    // Arc total: 157 (π × 50)
+    // Offset: 157 = empty, 0 = full
+    // Center = dashoffset 78.5
+    // Full cut (−25%) = dashoffset 20
+    // Full bulk (+10%) = dashoffset 125
+
+    const clampedPct = Math.max(-30, Math.min(15, deficitPct));
+    // Map [-30, 15] → [1.0, 0.0] for fill fraction
+    const fillFraction = 1 - (clampedPct + 30) / 45;
+    const dashOffset   = Math.round(fillFraction * 157);
+
+    const arc = document.getElementById('gauge-fill-arc');
+    arc.style.strokeDashoffset = dashOffset;
+
+    // Color
+    if (deficitPct >= 5) {
+      arc.style.stroke = 'var(--accent-green)';
+    } else if (deficitPct >= 0) {
+      arc.style.stroke = 'var(--accent-amber)';
+    } else if (deficitPct > -20) {
+      arc.style.stroke = 'var(--accent-orange)';
+    } else {
+      arc.style.stroke = 'var(--accent-red)';
+    }
+
+    // Gauge value text
+    const sign = deficitPct > 0 ? '+' : '';
+    document.getElementById('gauge-value').textContent = sign + deficitPct.toFixed(0) + '%';
+
+    // Needle rotation: center = 0°, full right = -90° (cut), full left = +90° (bulk)
+    const needleRot = -((clampedPct + 30) / 45) * 180 + 90;
+    document.getElementById('gauge-needle').style.transform = `rotate(${needleRot - 90}deg)`;
+  }
+
+  // =========================================== //
+  // TIMELINE DOTS                               //
+  // =========================================== //
+  function buildTimelineDots(weeks, isCut) {
+    const container = document.getElementById('timeline-dots');
+    container.innerHTML = '';
+    const maxDots = 12;
+    const showDots = Math.min(weeks, maxDots);
+    const filledCount = Math.min(Math.ceil(weeks / 2), maxDots);
+
+    for (let i = 0; i < maxDots; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'timeline-week-dot';
+      if (i < filledCount) {
+        dot.classList.add('filled');
+        if (!isCut) dot.classList.add('green');
+      }
+      container.appendChild(dot);
+    }
+  }
+
+  // =========================================== //
+  // INTENSITY BAR UPDATER                       //
+  // =========================================== //
+  function updateIntensityBar(id, value, max) {
+    const bar = document.getElementById(id);
+    if (!bar) return;
+    const segments = bar.querySelectorAll('.intensity-segment');
+    const total = segments.length;
+    const fraction = value / max;
+    const lit = Math.round(fraction * total);
+
+    segments.forEach((seg, i) => {
+      seg.classList.remove('lit', 'amber', 'green');
+      if (i < lit) {
+        seg.classList.add('lit');
+        const pos = i / (total - 1);
+        if (pos < 0.4) seg.classList.add('green');
+        else if (pos < 0.7) seg.classList.add('amber');
+      }
+    });
+  }
+
+  // =========================================== //
+  // CUSTOM SLIDER ENGINE                        //
+  // =========================================== //
+  function initSlider(config) {
+    const {
+      trackId, fillId, thumbId, orbId, marksId,
+      intensityId,
+      min, max, step,
+      stateKey,
+      marks,
+    } = config;
+
+    const track = document.getElementById(trackId);
+    const fill  = document.getElementById(fillId);
+    const thumb = document.getElementById(thumbId);
+    const orb   = document.getElementById(orbId);
+    const marksEl = document.getElementById(marksId);
+
+    // Build marks
+    if (marksEl && marks) {
+      marks.forEach(m => {
+        const span = document.createElement('span');
+        span.className = 'slider-mark';
+        span.textContent = m;
+        marksEl.appendChild(span);
+      });
+    }
+
+    function getPct(v) {
+      return (v - min) / (max - min);
+    }
+
+    function setSlider(value, triggerUpdate = true) {
+      const clamped = Math.max(min, Math.min(max, Math.round(value / step) * step));
+      state[stateKey] = clamped;
+
+      const pct = getPct(clamped) * 100;
+
+      fill.style.width  = `calc(${pct}% + 1px)`;
+      thumb.style.left  = `${pct}%`;
+      orb.style.left    = `${pct}%`;
+
+      // Value display
+      const valEl = document.getElementById(`val-${stateKey}`);
+      if (valEl) {
+        valEl.textContent = clamped;
+        valEl.classList.add('changing');
+        setTimeout(() => valEl.classList.remove('changing'), 300);
+      }
+
+      // Update ARIA
+      track.setAttribute('aria-valuenow', clamped);
+
+      // Intensity bar
+      if (intensityId) {
+        updateIntensityBar(intensityId, clamped - min, max - min);
+      }
+
+      // Active mark
+      if (marksEl) {
+        const markEls = marksEl.querySelectorAll('.slider-mark');
+        markEls.forEach((m, idx) => {
+          const markVal = marks[idx];
+          m.classList.toggle('active-mark', String(markVal) === String(clamped) || (idx === 0 && clamped <= min) || (idx === marks.length - 1 && clamped >= max));
+        });
+      }
+
+      if (triggerUpdate) {
+        debouncedUpdate();
+      }
+    }
+
+    function getValueFromEvent(e) {
+      const rect = track.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      return min + ratio * (max - min);
+    }
+
+    let isDragging = false;
+
+    thumb.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isDragging = true;
+      thumb.classList.add('active');
+    });
+
+    thumb.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      thumb.classList.add('active');
+    }, { passive: true });
+
+    track.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      thumb.classList.add('active');
+      setSlider(getValueFromEvent(e));
+    });
+
+    track.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      thumb.classList.add('active');
+      setSlider(getValueFromEvent(e));
+    }, { passive: true });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      setSlider(getValueFromEvent(e));
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      setSlider(getValueFromEvent(e));
+    }, { passive: true });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        thumb.classList.remove('active');
+      }
+    });
+
+    document.addEventListener('touchend', () => {
+      if (isDragging) {
+        isDragging = false;
+        thumb.classList.remove('active');
+      }
+    });
+
+    // Keyboard
+    track.addEventListener('keydown', (e) => {
+      let newVal = state[stateKey];
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        newVal += step;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        newVal -= step;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        newVal = min;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        newVal = max;
+      }
+      setSlider(newVal);
+    });
+
+    // Init
+    setSlider(state[stateKey], false);
+
+    return { setSlider };
+  }
+
+  // =========================================== //
+  // DEBOUNCED UPDATE                            //
+  // =========================================== //
+  let debounceTimer = null;
+  function debouncedUpdate() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => updateUI(state), 30);
+  }
+
+  // =========================================== //
+  // OBJECTIVE SELECTOR                          //
+  // =========================================== //
+  function initObjectiveSelector() {
+    const options = document.querySelectorAll('.objective-option');
+
+    options.forEach(opt => {
+      function select() {
+        options.forEach(o => {
+          o.classList.remove('selected');
+          o.setAttribute('aria-checked', 'false');
+        });
+        opt.classList.add('selected');
+        opt.setAttribute('aria-checked', 'true');
+        state.objective = opt.dataset.obj;
+        debouncedUpdate();
+      }
+
+      opt.addEventListener('click', select);
+      opt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          select();
+        }
+      });
+    });
+  }
+
+  // =========================================== //
+  // THERMOGENIC SELECTOR                        //
+  // =========================================== //
+  function initThermoSelector() {
+    const options = document.querySelectorAll('.thermo-option');
+
+    options.forEach(opt => {
+      function select() {
+        options.forEach(o => {
+          o.classList.remove('selected');
+          o.setAttribute('aria-checked', 'false');
+        });
+        opt.classList.add('selected');
+        opt.setAttribute('aria-checked', 'true');
+        state.thermo = opt.dataset.thermo;
+
+        // Show warning for ECA
+        const warning = document.getElementById('thermo-warning');
+        warning.style.display = state.thermo === 'eca' ? 'block' : 'none';
+
+        debouncedUpdate();
+      }
+
+      opt.addEventListener('click', select);
+      opt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          select();
+        }
+      });
+    });
+  }
+
+  // =========================================== //
+  // ACTION BUTTONS                              //
+  // =========================================== //
+  function initActionButtons() {
+    // Clear
+    document.getElementById('btn-clear').addEventListener('click', function(e) {
+      createRipple(e, this);
+
+      // Reset state
+      state.workouts  = DEFAULT_STATE.workouts;
+      state.cardio    = DEFAULT_STATE.cardio;
+      state.objective = DEFAULT_STATE.objective;
+      state.thermo    = DEFAULT_STATE.thermo;
+
+      // Reset sliders
+      workoutsSlider.setSlider(DEFAULT_STATE.workouts, false);
+      cardioSlider.setSlider(DEFAULT_STATE.cardio, false);
+
+      // Reset objective
+      document.querySelectorAll('.objective-option').forEach(opt => {
+        const isDefault = opt.dataset.obj === DEFAULT_STATE.objective;
+        opt.classList.toggle('selected', isDefault);
+        opt.setAttribute('aria-checked', isDefault ? 'true' : 'false');
+      });
+
+      // Reset thermo
+      document.querySelectorAll('.thermo-option').forEach(opt => {
+        const isDefault = opt.dataset.thermo === DEFAULT_STATE.thermo;
+        opt.classList.toggle('selected', isDefault);
+        opt.setAttribute('aria-checked', isDefault ? 'true' : 'false');
+      });
+
+      document.getElementById('thermo-warning').style.display = 'none';
+
+      updateUI(state);
+      showToast('Simulação resetada para os valores padrão.', 'success');
+    });
+
+    // Apply
+    document.getElementById('btn-apply').addEventListener('click', function(e) {
+      createRipple(e, this);
+      const btn = this;
+      btn.classList.add('applying');
+      btn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+          <circle cx="12" cy="12" r="10" stroke-dasharray="63" stroke-dashoffset="63" style="animation: dash-anim 1s linear infinite; transform-origin:center">
+          </circle>
+        </svg>
+        Aplicando...
+      `;
+
+      setTimeout(() => {
+        btn.classList.remove('applying');
+        btn.innerHTML = `
+          Aplicar Simulação
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        `;
+        showToast('Protocolo atualizado com sucesso! As alterações foram aplicadas.', 'success');
+      }, 1400);
+    });
+  }
+
+  // =========================================== //
+  // RIPPLE EFFECT                               //
+  // =========================================== //
+  function createRipple(e, btn) {
+    const ripple = document.createElement('span');
+    ripple.className = 'btn-ripple';
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 2;
+    ripple.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${e.clientX - rect.left - size/2}px;
+      top: ${e.clientY - rect.top - size/2}px;
+    `;
+    btn.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  }
+
+  // =========================================== //
+  // TOAST NOTIFICATION                          //
+  // =========================================== //
+  function showToast(msg, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+      <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div>${msg}</div>
+    `;
+    container.appendChild(toast);
+
+    // Force reflow then animate in
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        toast.classList.add('visible');
+      });
+    });
+
+    // Auto-dismiss
+    setTimeout(() => {
+      toast.classList.add('hiding');
+      toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+    }, 3500);
+  }
+
+  // =========================================== //
+  // SMOOTH HOVER PARALLAX ON PANELS            //
+  // =========================================== //
+  function initPanelParallax() {
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(panel => {
+      panel.addEventListener('mousemove', (e) => {
+        const rect = panel.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        panel.style.transform = `perspective(1200px) rotateY(${x * 0.5}deg) rotateX(${-y * 0.5}deg)`;
+      });
+
+      panel.addEventListener('mouseleave', () => {
+        panel.style.transform = '';
+      });
+    });
+  }
+
+  // =========================================== //
+  // INIT                                        //
+  // =========================================== //
+  let workoutsSlider, cardioSlider;
+
+  function init() {
+    // Init sliders
+    workoutsSlider = initSlider({
+      trackId:     'slider-workouts',
+      fillId:      'fill-workouts',
+      thumbId:     'thumb-workouts',
+      orbId:       'orb-workouts',
+      marksId:     'marks-workouts',
+      intensityId: 'intensity-workouts',
+      min: 1, max: 7, step: 1,
+      stateKey: 'workouts',
+      marks: ['1×', '2×', '3×', '4×', '5×', '6×', '7×'],
+    });
+
+    cardioSlider = initSlider({
+      trackId:     'slider-cardio',
+      fillId:      'fill-cardio',
+      thumbId:     'thumb-cardio',
+      orbId:       'orb-cardio',
+      marksId:     'marks-cardio',
+      intensityId: 'intensity-cardio',
+      min: 0, max: 60, step: 5,
+      stateKey: 'cardio',
+      marks: ['0', '15', '30', '45', '60'],
+    });
+
+    initObjectiveSelector();
+    initThermoSelector();
+    initActionButtons();
+    initPanelParallax();
+
+    // Initial calculation
+    updateUI(state);
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>

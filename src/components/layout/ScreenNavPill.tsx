@@ -16,6 +16,10 @@ const order: Array<{ id: ScreenId; title: string }> = [
 ];
 
 export const ScreenNavPill = ({ currentScreen, currentStep, totalSteps, onNavigate }: ScreenNavPillProps) => {
+  if (currentScreen === 'dashboard') {
+    return null;
+  }
+
   if (currentScreen === 'form') {
     return (
       <nav className="screen-nav-pill screen-nav-pill-form" id="screen-nav" aria-label="Progresso do formulário">

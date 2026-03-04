@@ -31,7 +31,7 @@ export const MealsSection = () => {
             <div key={meal.id} className={className}>
               <div className="meal-header">
                 <div className="meal-info">
-                  <div className="meal-number">{meal.number}</div>
+                  <div className="meal-number">R. {String(meal.number).padStart(2, '0')}</div>
                   <div className="meal-name">{meal.name}</div>
                 </div>
                 <div className="meal-time-badge">{meal.time}</div>

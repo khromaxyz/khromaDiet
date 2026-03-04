@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 
 import { calcRealTDEE } from '../../../../lib/engine/calcCalibration';
 import { useDietForgeStore } from '../../../../store/useDietForgeStore';
@@ -57,15 +57,15 @@ export const CalibrationSection = () => {
     <>
       <div className="dash-section-header">
         <div className="dash-section-title">Calibrar meu TDEE</div>
-        <span className="dash-section-action">Baseado na variacao de peso real apos 2 semanas</span>
+        <span className="dash-section-action">Baseado na variação de peso real após 2 semanas</span>
       </div>
 
       <div className="target-info-card">
         <div className="target-info-row">
           <span className="target-info-icon">i</span>
           <p className="target-info-text">
-            Seu TDEE estimado era {results.tdeeEstimated.toLocaleString('pt-BR')} kcal. Com base na sua variacao de peso
-            real, seu TDEE e aproximadamente {calibration.tdeeReal.toLocaleString('pt-BR')} kcal.
+            Seu TDEE estimado era {results.tdeeEstimated.toLocaleString('pt-BR')} kcal. Com base na sua variação de peso
+            real, seu TDEE é aproximadamente {calibration.tdeeReal.toLocaleString('pt-BR')} kcal.
           </p>
         </div>
       </div>
@@ -89,7 +89,7 @@ export const CalibrationSection = () => {
 
         <div className="whatif-slider-item">
           <div className="whatif-slider-label-row">
-            <span className="whatif-slider-label">Aderencia estimada ao plano</span>
+            <span className="whatif-slider-label">Aderência estimada ao plano</span>
             <span className="whatif-slider-value">{adherencePct}%</span>
           </div>
           <input

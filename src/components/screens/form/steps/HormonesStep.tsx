@@ -1,4 +1,4 @@
-﻿import { HORMONE_ICONS } from '../../../../lib/constants/icons';
+﻿import { HORMONE_ICONS } from '../../../../lib/constants/icons.tsx';
 import { HORMONE_LABELS } from '../../../../lib/constants/labels';
 import { hormoneOptions } from '../../../../lib/constants/mockForm';
 import type { CyclePhase, FormStepComponentProps, HormoneCompound, HormoneSelection } from '../../../../lib/types';

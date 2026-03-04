@@ -1,0 +1,3027 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DietForge — Resultados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E8001D;
+    --red-dim: #9B0013;
+    --red-glow: rgba(232,0,29,0.18);
+    --black: #060608;
+    --surface: #0D0D10;
+    --surface2: #141418;
+    --surface3: #1C1C22;
+    --border: rgba(255,255,255,0.07);
+    --border-red: rgba(232,0,29,0.35);
+    --text: #F0F0F0;
+    --text-dim: #888896;
+    --text-muted: #444455;
+    --mono: 'Share Tech Mono', monospace;
+    --display: 'Barlow Condensed', sans-serif;
+    --body: 'Barlow', sans-serif;
+  }
+
+  html {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: var(--black);
+    color: var(--text);
+    font-family: var(--body);
+    scrollbar-width: thin;
+    scrollbar-color: var(--red-dim) var(--surface);
+  }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--red-dim); }
+
+  .section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* NAV LATERAL */
+  #sidenav {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .nav-dot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    group: true;
+  }
+
+  .nav-dot-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity 0.25s, transform 0.25s, color 0.25s;
+    white-space: nowrap;
+  }
+
+  .nav-dot:hover .nav-dot-label,
+  .nav-dot.active .nav-dot-label {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--text-dim);
+  }
+
+  .nav-dot.active .nav-dot-label { color: var(--red); }
+
+  .nav-pip {
+    width: 4px;
+    height: 4px;
+    background: var(--text-muted);
+    transition: background 0.25s, height 0.25s, width 0.25s;
+    clip-path: none;
+  }
+
+  .nav-dot.active .nav-pip {
+    background: var(--red);
+    height: 20px;
+    width: 3px;
+  }
+
+  .nav-dot:hover .nav-pip { background: var(--text-dim); }
+
+  /* TOP BAR */
+  #topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 36px;
+    background: linear-gradient(to bottom, rgba(6,6,8,0.95), transparent);
+    pointer-events: none;
+  }
+
+  .logo {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: all;
+  }
+
+  .logo span { color: var(--red); }
+
+  .topbar-right {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    pointer-events: all;
+  }
+
+  /* SECTION 1 — ABERTURA */
+  #s1 { background: var(--black); }
+
+  .s1-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(232,0,29,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 30% 80%, rgba(232,0,29,0.04) 0%, transparent 60%);
+  }
+
+  .s1-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+
+  .s1-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .s1-left {}
+
+  .s1-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .s1-name {
+    font-family: var(--display);
+    font-size: clamp(52px, 6vw, 80px);
+    font-weight: 900;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .s1-name .accent { color: var(--red); display: block; }
+
+  .s1-goal {
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-left: 2px solid var(--red);
+    padding-left: 14px;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .s1-right {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .s1-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    transform: translateX(24px);
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .s1-stat::before {
+    content: '';
+    position: absolute;
+    left: -1px; top: 0;
+    width: 1px;
+    height: 0;
+    background: var(--red);
+    transition: height 0.6s ease;
+  }
+
+  .s1-stat.animated::before { height: 100%; }
+
+  .s1-stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .s1-stat-value {
+    font-family: var(--display);
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .s1-stat-value.highlight { color: var(--red); }
+
+  .s1-stat-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .s1-precision {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .precision-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--surface3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .precision-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0%;
+    background: linear-gradient(90deg, var(--red-dim), var(--red));
+    transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .precision-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .scroll-hint-text {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+    position: relative;
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* SECTION 2 — GASTO ENERGÉTICO */
+  #s2 {
+    background: var(--surface);
+    padding: 0 60px;
+  }
+
+  .s2-content {
+    max-width: 1100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .s2-left {}
+
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--text-dim);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .tdee-number {
+    font-family: var(--display);
+    font-size: clamp(100px, 14vw, 160px);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(30px);
+    margin-top: 8px;
+  }
+
+  .tdee-unit {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(10px);
+    margin-top: 4px;
+  }
+
+  .s2-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .receipt-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateX(20px);
+    position: relative;
+  }
+
+  .receipt-row:last-child { border-bottom: none; }
+
+  .receipt-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .receipt-code {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+  }
+
+  .receipt-val {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .divider-line {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    margin: 4px 0;
+    opacity: 0;
+  }
+
+  .divider-line::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 0%;
+    height: 100%;
+    background: var(--red);
+    transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .divider-line.drawn::after { width: 100%; }
+
+  .receipt-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 0;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .receipt-total-label {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .receipt-total-val {
+    font-family: var(--display);
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--red);
+  }
+
+  /* SECTION 3 — META E DÉFICIT */
+  #s3 {
+    background: var(--black);
+  }
+
+  .s3-content {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .s3-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .s3-numbers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+
+  .s3-block {
+    background: var(--surface);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(24px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .s3-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--border);
+  }
+
+  .s3-block.primary::before { background: var(--red); }
+
+  .s3-block-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .s3-block-value {
+    font-family: var(--display);
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .s3-block-value.red { color: var(--red); }
+
+  .s3-block-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .s3-bar-container {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .s3-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .s3-bar-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .s3-bar-outer {
+    height: 6px;
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .s3-bar-meta {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0%;
+    background: var(--surface3);
+    border-right: 2px solid var(--red);
+    transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .s3-velocity {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .velocity-card {
+    background: var(--surface);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .velocity-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .velocity-text { display: flex; flex-direction: column; gap: 3px; }
+
+  .velocity-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .velocity-val {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--red);
+  }
+
+  .velocity-sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  /* SECTION 4 — MACROS */
+  #s4 {
+    background: var(--surface);
+  }
+
+  .s4-content {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .macro-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+
+  .macro-donut-wrapper {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+  }
+
+  .macro-donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+
+  .macro-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .macro-center-value {
+    font-family: var(--display);
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .macro-center-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .macro-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .legend-dot { width: 8px; height: 8px; flex-shrink: 0; }
+
+  .macro-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .macro-card {
+    background: var(--surface2);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    transform: translateX(20px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .macro-card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+
+  .macro-card.prot::after { background: #E8001D; }
+  .macro-card.carb::after { background: #FF6B00; }
+  .macro-card.fat::after { background: #FFB800; }
+
+  .macro-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .macro-card-name {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .macro-card-grams {
+    font-family: var(--display);
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .macro-card-meta {
+    display: flex;
+    gap: 16px;
+  }
+
+  .macro-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .macro-meta-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .macro-meta-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .macro-slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .macro-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 3px;
+    background: var(--surface3);
+    outline: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .macro-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--text);
+    border: 2px solid var(--red);
+    cursor: pointer;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+
+  .macro-slider.prot { accent-color: var(--red); }
+  .macro-slider.carb { accent-color: #FF6B00; }
+  .macro-slider.fat { accent-color: #FFB800; }
+
+  .macro-slider-pct {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    width: 32px;
+    text-align: right;
+  }
+
+  /* SECTION 5 — PROJEÇÃO */
+  #s5 { background: var(--black); }
+
+  .s5-content {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .s5-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .s5-chart-container {
+    position: relative;
+    height: 300px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .s5-chart-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .chart-path {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .chart-path-weight {
+    stroke: var(--red);
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .chart-path-bf {
+    stroke: #FF6B00;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1) 0.3s;
+    opacity: 0.6;
+  }
+
+  .chart-area-weight {
+    fill: url(#areaGradW);
+    opacity: 0;
+    transition: opacity 0.8s ease 1.8s;
+  }
+
+  .chart-milestone {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .s5-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .before-after-card {
+    background: var(--surface);
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ba-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .ba-stats {
+    display: flex;
+    gap: 32px;
+  }
+
+  .ba-stat { display: flex; flex-direction: column; gap: 2px; }
+
+  .ba-stat-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ba-stat-value {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .ba-after .ba-stat-value { color: var(--red); }
+
+  .ba-progress-bar {
+    height: 2px;
+    background: var(--surface3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ba-progress-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--red);
+    width: 0%;
+    transition: width 1.4s cubic-bezier(0.16,1,0.3,1) 2.5s;
+  }
+
+  /* SECTION 6 — REFEIÇÕES */
+  #s6 { background: var(--surface); }
+
+  .s6-content {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .meals-carousel-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .meals-carousel {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 8px 0 16px;
+    flex: 1;
+    scroll-behavior: smooth;
+  }
+
+  .meals-carousel::-webkit-scrollbar { display: none; }
+
+  .meal-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 260px;
+    background: var(--surface2);
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    border-top: 2px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .meal-card:hover { border-color: var(--red); }
+
+  .meal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: var(--red);
+    color: white;
+    font-weight: 700;
+    align-self: flex-start;
+  }
+
+  .meal-time {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+  }
+
+  .meal-name {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .meal-kcal {
+    font-family: var(--display);
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .meal-kcal span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .meal-macros {
+    display: flex;
+    gap: 10px;
+  }
+
+  .meal-macro {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: 1;
+  }
+
+  .meal-macro-val {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .meal-macro-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .meal-macro-val.p { color: var(--red); }
+  .meal-macro-val.c { color: #FF6B00; }
+  .meal-macro-val.f { color: #FFB800; }
+
+  .meal-bar {
+    height: 4px;
+    background: var(--surface3);
+    display: flex;
+    overflow: hidden;
+  }
+
+  .meal-bar-p { background: var(--red); }
+  .meal-bar-c { background: #FF6B00; }
+  .meal-bar-f { background: #FFB800; }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 16px;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: var(--mono);
+  }
+
+  .carousel-btn:hover { border-color: var(--red); background: var(--red-glow); }
+
+  /* SECTION 7 — SUPLEMENTAÇÃO */
+  #s7 { background: var(--black); }
+
+  .s7-content {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .supp-tiers {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .supp-tier-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .supp-tier-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .supp-tier-label .tier-badge {
+    padding: 2px 8px;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+  }
+
+  .tier-high .tier-badge { background: var(--red); color: white; }
+  .tier-mid .tier-badge { background: #FF6B0022; color: #FF6B00; border: 1px solid #FF6B0055; }
+  .tier-low .tier-badge { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .supp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+  }
+
+  .supp-item {
+    background: var(--surface);
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(16px);
+    cursor: default;
+    transition: background 0.2s;
+  }
+
+  .supp-item:hover { background: var(--surface2); }
+
+  .supp-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .supp-name {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+
+  .supp-dose {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.08em;
+  }
+
+  .supp-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* SECTION 8 — SIMULADOR */
+  #s8 { background: var(--surface); }
+
+  .s8-content {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .sim-left {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .sim-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  .sim-title {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .sim-slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sim-slider-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sim-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sim-slider-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .sim-slider-value {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--red);
+    letter-spacing: -0.02em;
+  }
+
+  .sim-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 3px;
+    background: var(--surface3);
+    outline: none;
+    cursor: pointer;
+    accent-color: var(--red);
+  }
+
+  .sim-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--red);
+    cursor: pointer;
+    border: 2px solid white;
+  }
+
+  .sim-goals {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .sim-goal-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .sim-goal-card.active {
+    border-color: var(--red);
+    background: var(--red-glow);
+  }
+
+  .sim-goal-card:hover { border-color: var(--red-dim); }
+
+  .sim-goal-icon { font-size: 18px; }
+
+  .sim-goal-name {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .sim-goal-desc {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .sim-panel {
+    background: var(--surface2);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: 2px solid var(--red);
+  }
+
+  .sim-panel-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+  }
+
+  .sim-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sim-result-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .sim-result-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .sim-result-val {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    transition: color 0.3s;
+  }
+
+  .sim-result-val.updated { color: var(--red); }
+
+  /* SECTION 9 — ENCERRAMENTO */
+  #s9 { background: var(--black); }
+
+  .s9-content {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cta-card {
+    position: relative;
+    background: var(--surface);
+    padding: 56px 64px;
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  .cta-border-anim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .cta-border-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cta-border-rect {
+    fill: none;
+    stroke: var(--red);
+    stroke-width: 1.5;
+    stroke-dasharray: 8 4;
+    animation: borderMarch 3s linear infinite;
+  }
+
+  @keyframes borderMarch {
+    to { stroke-dashoffset: -36; }
+  }
+
+  .cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px dashed var(--red-dim);
+    padding: 6px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { border-color: var(--red-dim); }
+    50% { border-color: var(--red); }
+  }
+
+  .cta-title {
+    font-family: var(--display);
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  .cta-title span { color: var(--red); }
+
+  .email-form {
+    display: flex;
+    gap: 0;
+    width: 100%;
+  }
+
+  .email-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-right: none;
+    padding: 14px 18px;
+    font-family: var(--body);
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .email-input:focus { border-color: var(--red); }
+  .email-input::placeholder { color: var(--text-muted); }
+
+  .email-btn {
+    background: var(--red);
+    border: 1px solid var(--red);
+    color: white;
+    padding: 14px 24px;
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .email-btn:hover { background: var(--red-dim); }
+
+  .s9-actions {
+    display: flex;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 12px 24px;
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .action-btn:hover { border-color: var(--red); color: var(--text); background: var(--red-glow); }
+
+  .s9-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .s9-methodology {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  .s9-disclaimer {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 600px;
+    opacity: 0.6;
+  }
+
+  /* TOAST */
+  #toast {
+    position: fixed;
+    bottom: 32px;
+    left: 32px;
+    background: var(--surface2);
+    border: 1px solid var(--red);
+    border-left: 3px solid var(--red);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    z-index: 2000;
+    transform: translateX(-120%);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+
+  #toast.show { transform: translateX(0); }
+
+  .toast-icon { font-size: 16px; }
+
+  /* ANIMATIONS */
+  .anim-ready { transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .anim-in { opacity: 1 !important; transform: none !important; }
+
+  .delay-1 { transition-delay: 0.1s !important; }
+  .delay-2 { transition-delay: 0.2s !important; }
+  .delay-3 { transition-delay: 0.3s !important; }
+  .delay-4 { transition-delay: 0.4s !important; }
+  .delay-5 { transition-delay: 0.5s !important; }
+  .delay-6 { transition-delay: 0.6s !important; }
+  .delay-7 { transition-delay: 0.7s !important; }
+  .delay-8 { transition-delay: 0.8s !important; }
+  .delay-9 { transition-delay: 0.9s !important; }
+  .delay-10 { transition-delay: 1.0s !important; }
+  .delay-11 { transition-delay: 1.1s !important; }
+  .delay-12 { transition-delay: 1.2s !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .anim-ready { opacity: 1 !important; transform: none !important; }
+  }
+
+  .chart-grid-line {
+    stroke: rgba(255,255,255,0.04);
+    stroke-width: 1;
+  }
+
+  .chart-axis-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    fill: rgba(255,255,255,0.25);
+  }
+
+  .milestone-circle {
+    fill: var(--black);
+    stroke-width: 2;
+  }
+
+  .milestone-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    fill: rgba(255,255,255,0.5);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo">Diet<span>Forge</span></div>
+  <div class="topbar-right">Protocolo Personalizado // Ciclo 01</div>
+</div>
+
+<!-- SIDE NAV -->
+<nav id="sidenav">
+  <div class="nav-dot active" data-section="0">
+    <span class="nav-dot-label">Abertura</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="1">
+    <span class="nav-dot-label">TDEE</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="2">
+    <span class="nav-dot-label">Meta</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="3">
+    <span class="nav-dot-label">Macros</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="4">
+    <span class="nav-dot-label">Projeção</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="5">
+    <span class="nav-dot-label">Refeições</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="6">
+    <span class="nav-dot-label">Suplementos</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="7">
+    <span class="nav-dot-label">Simulador</span>
+    <div class="nav-pip"></div>
+  </div>
+  <div class="nav-dot" data-section="8">
+    <span class="nav-dot-label">Encerramento</span>
+    <div class="nav-pip"></div>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div id="toast">
+  <span class="toast-icon">✓</span>
+  <span>Email registrado. Você será notificado no lançamento.</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 1 — ABERTURA -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s1">
+  <div class="s1-bg"></div>
+  <div class="s1-grid"></div>
+  <div class="s1-content">
+    <div class="s1-left">
+      <div class="s1-tag anim-ready">Protocolo Ativo // 2025</div>
+      <div class="s1-name anim-ready delay-1">
+        LUCAS<br>
+        <span class="accent">MENDES</span>
+      </div>
+      <div class="s1-goal anim-ready delay-2">
+        Cutting Agressivo — 16 Semanas
+      </div>
+      <div class="s1-precision anim-ready delay-5">
+        <div style="display:flex;flex-direction:column;gap:4px;flex:1">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);letter-spacing:0.15em;margin-bottom:4px;">PRECISÃO DO MODELO</div>
+          <div class="precision-bar">
+            <div class="precision-fill" id="precisionFill"></div>
+          </div>
+        </div>
+        <div class="precision-text" id="precisionText">0%</div>
+      </div>
+    </div>
+    <div class="s1-right">
+      <div class="s1-stat anim-ready delay-3">
+        <div class="s1-stat-label">TDEE Calculado</div>
+        <div class="s1-stat-value" id="s1tdee">0</div>
+        <div class="s1-stat-sub">kcal / dia • Total Energy Expenditure</div>
+      </div>
+      <div class="s1-stat anim-ready delay-4">
+        <div class="s1-stat-label">Meta Calórica</div>
+        <div class="s1-stat-value" id="s1meta">0</div>
+        <div class="s1-stat-sub">kcal / dia • Alvo Diário</div>
+      </div>
+      <div class="s1-stat anim-ready delay-5">
+        <div class="s1-stat-label">Déficit Diário</div>
+        <div class="s1-stat-value highlight" id="s1deficit">0</div>
+        <div class="s1-stat-sub">kcal / dia • 22% do TDEE</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint anim-ready" id="scrollHint">
+    <span class="scroll-hint-text">Rolar para explorar</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 2 — GASTO ENERGÉTICO -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s2">
+  <div class="s2-content">
+    <div class="s2-left">
+      <div class="section-eyebrow anim-ready">Gasto Energético Total</div>
+      <div class="section-title anim-ready delay-1">TDEE</div>
+      <div class="tdee-number anim-ready delay-2" id="tdeeNumber">0</div>
+      <div class="tdee-unit anim-ready delay-3">kcal / dia</div>
+    </div>
+    <div class="s2-right">
+      <div class="receipt-row anim-ready delay-1">
+        <div class="receipt-label">
+          <div>
+            <div>Taxa Metabólica Basal</div>
+            <div class="receipt-code">BMR — Equação Mifflin-St Jeor</div>
+          </div>
+        </div>
+        <div class="receipt-val">1.820</div>
+      </div>
+      <div class="receipt-row anim-ready delay-2">
+        <div class="receipt-label">
+          <div>
+            <div>Atividade Não-Exercício</div>
+            <div class="receipt-code">NEAT — Fator 1.55</div>
+          </div>
+        </div>
+        <div class="receipt-val">+364</div>
+      </div>
+      <div class="receipt-row anim-ready delay-3">
+        <div class="receipt-label">
+          <div>
+            <div>Atividade de Treino</div>
+            <div class="receipt-code">EAT — 5x/sem • Intensidade Alta</div>
+          </div>
+        </div>
+        <div class="receipt-val">+440</div>
+      </div>
+      <div class="receipt-row anim-ready delay-4">
+        <div class="receipt-label">
+          <div>
+            <div>Efeito Térmico dos Alimentos</div>
+            <div class="receipt-code">TEF — 10% da ingestão</div>
+          </div>
+        </div>
+        <div class="receipt-val">+246</div>
+      </div>
+      <div class="divider-line anim-ready delay-5" id="dividerLine"></div>
+      <div class="receipt-total anim-ready delay-6">
+        <div class="receipt-total-label">Total Diário</div>
+        <div class="receipt-total-val" id="tdeeTotal">2.870</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 3 — META E DÉFICIT -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s3">
+  <div class="s3-content">
+    <div class="s3-header">
+      <div class="section-eyebrow anim-ready">Meta &amp; Déficit Calórico</div>
+      <div class="section-title anim-ready delay-1">OBJETIVO CALCULADO</div>
+    </div>
+
+    <div class="s3-numbers">
+      <div class="s3-block anim-ready delay-2">
+        <div class="s3-block-label">TDEE Referência</div>
+        <div class="s3-block-value">2.870</div>
+        <div class="s3-block-sub">kcal / dia • 100% do gasto</div>
+      </div>
+      <div class="s3-block primary anim-ready delay-3">
+        <div class="s3-block-label">Meta Calórica</div>
+        <div class="s3-block-value red" id="metaValue">2.240</div>
+        <div class="s3-block-sub">kcal / dia • Alvo diário prescrito</div>
+      </div>
+      <div class="s3-block anim-ready delay-4">
+        <div class="s3-block-label">Déficit Diário</div>
+        <div class="s3-block-value">630</div>
+        <div class="s3-block-sub">kcal • 22% do TDEE cortado</div>
+      </div>
+    </div>
+
+    <div class="s3-bar-container anim-ready delay-5">
+      <div class="s3-bar-labels">
+        <span class="s3-bar-label">0 kcal</span>
+        <span class="s3-bar-label" style="color:var(--red)">Meta: 2.240</span>
+        <span class="s3-bar-label">TDEE: 2.870</span>
+      </div>
+      <div class="s3-bar-outer">
+        <div class="s3-bar-meta" id="deficitBar"></div>
+      </div>
+    </div>
+
+    <div class="s3-velocity anim-ready delay-6">
+      <div class="velocity-card">
+        <div class="velocity-icon">⚡</div>
+        <div class="velocity-text">
+          <div class="velocity-label">Perda estimada / semana</div>
+          <div class="velocity-val">0.58 kg</div>
+          <div class="velocity-sub">Ritmo ideal para retenção muscular</div>
+        </div>
+      </div>
+      <div class="velocity-card">
+        <div class="velocity-icon">🎯</div>
+        <div class="velocity-text">
+          <div class="velocity-label">Gordura a eliminar</div>
+          <div class="velocity-val">9.3 kg</div>
+          <div class="velocity-sub">Em 16 semanas com protocolo atual</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 4 — MACROS -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s4">
+  <div class="s4-content">
+    <div class="macro-visual anim-ready">
+      <div class="macro-donut-wrapper">
+        <svg class="macro-donut-svg" viewBox="0 0 220 220" id="donutSvg">
+          <defs>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- BG circles -->
+          <circle cx="110" cy="110" r="88" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="18"/>
+          <!-- Fat segment -->
+          <circle cx="110" cy="110" r="88" fill="none" stroke="#FFB800" stroke-width="18"
+            stroke-dasharray="553" stroke-dashoffset="0" stroke-linecap="butt"
+            id="donutFat" style="opacity:0;transition:stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1) 0.6s, opacity 0.4s ease"/>
+          <!-- Carb segment -->
+          <circle cx="110" cy="110" r="88" fill="none" stroke="#FF6B00" stroke-width="18"
+            stroke-dasharray="553" stroke-dashoffset="0" stroke-linecap="butt"
+            id="donutCarb" style="opacity:0;transition:stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s, opacity 0.4s ease"/>
+          <!-- Protein segment -->
+          <circle cx="110" cy="110" r="88" fill="none" stroke="#E8001D" stroke-width="18"
+            stroke-dasharray="553" stroke-dashoffset="0" stroke-linecap="butt"
+            id="donutProt" style="opacity:0;transition:stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1) 0.2s, opacity 0.4s ease"
+            filter="url(#glow)"/>
+        </svg>
+        <div class="macro-center">
+          <div class="macro-center-value">2.240</div>
+          <div class="macro-center-label">kcal total</div>
+        </div>
+      </div>
+      <div class="macro-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#E8001D"></div>Proteína</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FF6B00"></div>Carboidrato</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FFB800"></div>Gordura</div>
+      </div>
+    </div>
+    <div class="macro-cards">
+      <div style="margin-bottom:8px;opacity:0;transform:translateX(20px)" class="section-eyebrow anim-ready" id="macroEyebrow">Distribuição de Macronutrientes</div>
+      <!-- Proteína -->
+      <div class="macro-card prot anim-ready delay-1">
+        <div class="macro-card-top">
+          <div class="macro-card-name" style="color:var(--red)">Proteína</div>
+          <div class="macro-card-grams" id="protGrams">224<span style="font-size:16px;color:var(--text-muted)">g</span></div>
+        </div>
+        <div class="macro-card-meta">
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Calorias</div>
+            <div class="macro-meta-value" id="protKcal">896 kcal</div>
+          </div>
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Proporção</div>
+            <div class="macro-meta-value" id="protPct">40%</div>
+          </div>
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">por kg</div>
+            <div class="macro-meta-value">2.5g/kg</div>
+          </div>
+        </div>
+        <div class="macro-slider-wrapper">
+          <input type="range" class="macro-slider prot" min="15" max="55" value="40" id="protSlider">
+          <div class="macro-slider-pct" id="protSliderPct">40%</div>
+        </div>
+      </div>
+      <!-- Carboidrato -->
+      <div class="macro-card carb anim-ready delay-2">
+        <div class="macro-card-top">
+          <div class="macro-card-name" style="color:#FF6B00">Carboidrato</div>
+          <div class="macro-card-grams" id="carbGrams">224<span style="font-size:16px;color:var(--text-muted)">g</span></div>
+        </div>
+        <div class="macro-card-meta">
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Calorias</div>
+            <div class="macro-meta-value" id="carbKcal">896 kcal</div>
+          </div>
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Proporção</div>
+            <div class="macro-meta-value" id="carbPct">40%</div>
+          </div>
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Timing</div>
+            <div class="macro-meta-value">Pré/Pós</div>
+          </div>
+        </div>
+        <div class="macro-slider-wrapper">
+          <input type="range" class="macro-slider carb" min="10" max="60" value="40" id="carbSlider">
+          <div class="macro-slider-pct" id="carbSliderPct">40%</div>
+        </div>
+      </div>
+      <!-- Gordura -->
+      <div class="macro-card fat anim-ready delay-3">
+        <div class="macro-card-top">
+          <div class="macro-card-name" style="color:#FFB800">Gordura</div>
+          <div class="macro-card-grams" id="fatGrams">55<span style="font-size:16px;color:var(--text-muted)">g</span></div>
+        </div>
+        <div class="macro-card-meta">
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Calorias</div>
+            <div class="macro-meta-value" id="fatKcal">495 kcal</div>
+          </div>
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Proporção</div>
+            <div class="macro-meta-value" id="fatPct">22%</div>
+          </div>
+          <div class="macro-meta-item">
+            <div class="macro-meta-label">Tipo</div>
+            <div class="macro-meta-value">Insaturada</div>
+          </div>
+        </div>
+        <div class="macro-slider-wrapper">
+          <input type="range" class="macro-slider fat" min="10" max="40" value="22" id="fatSlider">
+          <div class="macro-slider-pct" id="fatSliderPct">22%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 5 — PROJEÇÃO -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s5">
+  <div class="s5-content">
+    <div class="s5-header">
+      <div>
+        <div class="section-eyebrow anim-ready">Projeção Temporal</div>
+        <div class="section-title anim-ready delay-1">16 SEMANAS</div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:center;opacity:0;transform:translateY(10px)" class="anim-ready delay-2" id="chartLegend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Peso (kg)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FF6B00"></div>BF% </div>
+      </div>
+    </div>
+    <div class="s5-chart-container anim-ready delay-2" id="chartContainer">
+      <svg class="s5-chart-svg" id="projChart" viewBox="0 0 960 260" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="areaGradW" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E8001D" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#E8001D" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid lines -->
+        <line x1="60" y1="20" x2="60" y2="220" class="chart-grid-line"/>
+        <line x1="60" y1="220" x2="920" y2="220" class="chart-grid-line"/>
+        <!-- Horizontal grid -->
+        <line x1="60" y1="60" x2="920" y2="60" class="chart-grid-line"/>
+        <line x1="60" y1="100" x2="920" y2="100" class="chart-grid-line"/>
+        <line x1="60" y1="140" x2="920" y2="140" class="chart-grid-line"/>
+        <line x1="60" y1="180" x2="920" y2="180" class="chart-grid-line"/>
+        <!-- Y labels -->
+        <text x="50" y="64" class="chart-axis-label" text-anchor="end">90</text>
+        <text x="50" y="104" class="chart-axis-label" text-anchor="end">87</text>
+        <text x="50" y="144" class="chart-axis-label" text-anchor="end">84</text>
+        <text x="50" y="184" class="chart-axis-label" text-anchor="end">81</text>
+        <text x="50" y="224" class="chart-axis-label" text-anchor="end">78</text>
+        <!-- X labels -->
+        <text x="60" y="240" class="chart-axis-label" text-anchor="middle">S0</text>
+        <text x="173" y="240" class="chart-axis-label" text-anchor="middle">S2</text>
+        <text x="286" y="240" class="chart-axis-label" text-anchor="middle">S4</text>
+        <text x="399" y="240" class="chart-axis-label" text-anchor="middle">S6</text>
+        <text x="512" y="240" class="chart-axis-label" text-anchor="middle">S8</text>
+        <text x="625" y="240" class="chart-axis-label" text-anchor="middle">S10</text>
+        <text x="738" y="240" class="chart-axis-label" text-anchor="middle">S12</text>
+        <text x="851" y="240" class="chart-axis-label" text-anchor="middle">S14</text>
+        <text x="920" y="240" class="chart-axis-label" text-anchor="middle">S16</text>
+        <!-- Area fill weight -->
+        <path id="areaPathW" class="chart-area-weight" d=""/>
+        <!-- BF path -->
+        <path id="pathBF" class="chart-path chart-path-bf" d=""/>
+        <!-- Weight path -->
+        <path id="pathWeight" class="chart-path chart-path-weight" d=""/>
+        <!-- Milestones -->
+        <g id="milestones"></g>
+      </svg>
+    </div>
+    <div class="s5-cards anim-ready delay-8" id="baCards">
+      <div class="before-after-card">
+        <div class="ba-label">Início — Semana 0</div>
+        <div class="ba-stats">
+          <div class="ba-stat">
+            <div class="ba-stat-label">Peso</div>
+            <div class="ba-stat-value">90.0 kg</div>
+          </div>
+          <div class="ba-stat">
+            <div class="ba-stat-label">BF%</div>
+            <div class="ba-stat-value">22%</div>
+          </div>
+          <div class="ba-stat">
+            <div class="ba-stat-label">Massa Gorda</div>
+            <div class="ba-stat-value">19.8 kg</div>
+          </div>
+        </div>
+        <div class="ba-progress-bar">
+          <div class="ba-progress-fill" style="background:var(--text-muted);width:100%;transition:none"></div>
+        </div>
+      </div>
+      <div class="before-after-card ba-after">
+        <div class="ba-label">Projeção — Semana 16</div>
+        <div class="ba-stats">
+          <div class="ba-stat">
+            <div class="ba-stat-label">Peso</div>
+            <div class="ba-stat-value" style="color:var(--red)">80.7 kg</div>
+          </div>
+          <div class="ba-stat">
+            <div class="ba-stat-label">BF%</div>
+            <div class="ba-stat-value" style="color:var(--red)">13%</div>
+          </div>
+          <div class="ba-stat">
+            <div class="ba-stat-label">Redução</div>
+            <div class="ba-stat-value" style="color:var(--red)">-9.3 kg</div>
+          </div>
+        </div>
+        <div class="ba-progress-bar">
+          <div class="ba-progress-fill" id="baProgressFill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 6 — REFEIÇÕES -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s6">
+  <div class="s6-content">
+    <div>
+      <div class="section-eyebrow anim-ready">Plano Alimentar Diário</div>
+      <div class="section-title anim-ready delay-1">6 REFEIÇÕES / DIA</div>
+    </div>
+    <div class="meals-carousel-wrap">
+      <button class="carousel-btn" id="mealPrev">←</button>
+      <div class="meals-carousel" id="mealsCarousel">
+
+        <!-- Refeição 1 -->
+        <div class="meal-card anim-ready delay-1">
+          <div>
+            <div class="meal-time">06:30</div>
+            <div class="meal-name">Café da Manhã</div>
+          </div>
+          <div class="meal-kcal">487<span> kcal</span></div>
+          <div class="meal-macros">
+            <div class="meal-macro">
+              <div class="meal-macro-val p">42g</div>
+              <div class="meal-macro-label">Prot</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val c">48g</div>
+              <div class="meal-macro-label">Carb</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val f">12g</div>
+              <div class="meal-macro-label">Gord</div>
+            </div>
+          </div>
+          <div class="meal-bar">
+            <div class="meal-bar-p" style="flex:42"></div>
+            <div class="meal-bar-c" style="flex:48"></div>
+            <div class="meal-bar-f" style="flex:12"></div>
+          </div>
+        </div>
+
+        <!-- Refeição 2 -->
+        <div class="meal-card anim-ready delay-2">
+          <div class="meal-badge">⚡ Pré-Treino</div>
+          <div>
+            <div class="meal-time">09:45</div>
+            <div class="meal-name">Lanche Pré-Treino</div>
+          </div>
+          <div class="meal-kcal">312<span> kcal</span></div>
+          <div class="meal-macros">
+            <div class="meal-macro">
+              <div class="meal-macro-val p">28g</div>
+              <div class="meal-macro-label">Prot</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val c">38g</div>
+              <div class="meal-macro-label">Carb</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val f">5g</div>
+              <div class="meal-macro-label">Gord</div>
+            </div>
+          </div>
+          <div class="meal-bar">
+            <div class="meal-bar-p" style="flex:28"></div>
+            <div class="meal-bar-c" style="flex:38"></div>
+            <div class="meal-bar-f" style="flex:5"></div>
+          </div>
+        </div>
+
+        <!-- Refeição 3 -->
+        <div class="meal-card anim-ready delay-3">
+          <div class="meal-badge" style="background:#FF6B00">🔥 Pós-Treino</div>
+          <div>
+            <div class="meal-time">12:00</div>
+            <div class="meal-name">Almoço Recovery</div>
+          </div>
+          <div class="meal-kcal">624<span> kcal</span></div>
+          <div class="meal-macros">
+            <div class="meal-macro">
+              <div class="meal-macro-val p">58g</div>
+              <div class="meal-macro-label">Prot</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val c">64g</div>
+              <div class="meal-macro-label">Carb</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val f">14g</div>
+              <div class="meal-macro-label">Gord</div>
+            </div>
+          </div>
+          <div class="meal-bar">
+            <div class="meal-bar-p" style="flex:58"></div>
+            <div class="meal-bar-c" style="flex:64"></div>
+            <div class="meal-bar-f" style="flex:14"></div>
+          </div>
+        </div>
+
+        <!-- Refeição 4 -->
+        <div class="meal-card anim-ready delay-4">
+          <div>
+            <div class="meal-time">15:30</div>
+            <div class="meal-name">Lanche Tarde</div>
+          </div>
+          <div class="meal-kcal">280<span> kcal</span></div>
+          <div class="meal-macros">
+            <div class="meal-macro">
+              <div class="meal-macro-val p">30g</div>
+              <div class="meal-macro-label">Prot</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val c">20g</div>
+              <div class="meal-macro-label">Carb</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val f">8g</div>
+              <div class="meal-macro-label">Gord</div>
+            </div>
+          </div>
+          <div class="meal-bar">
+            <div class="meal-bar-p" style="flex:30"></div>
+            <div class="meal-bar-c" style="flex:20"></div>
+            <div class="meal-bar-f" style="flex:8"></div>
+          </div>
+        </div>
+
+        <!-- Refeição 5 -->
+        <div class="meal-card anim-ready delay-5">
+          <div>
+            <div class="meal-time">19:00</div>
+            <div class="meal-name">Jantar</div>
+          </div>
+          <div class="meal-kcal">418<span> kcal</span></div>
+          <div class="meal-macros">
+            <div class="meal-macro">
+              <div class="meal-macro-val p">48g</div>
+              <div class="meal-macro-label">Prot</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val c">32g</div>
+              <div class="meal-macro-label">Carb</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val f">10g</div>
+              <div class="meal-macro-label">Gord</div>
+            </div>
+          </div>
+          <div class="meal-bar">
+            <div class="meal-bar-p" style="flex:48"></div>
+            <div class="meal-bar-c" style="flex:32"></div>
+            <div class="meal-bar-f" style="flex:10"></div>
+          </div>
+        </div>
+
+        <!-- Refeição 6 -->
+        <div class="meal-card anim-ready delay-6">
+          <div>
+            <div class="meal-time">22:00</div>
+            <div class="meal-name">Ceia Noturna</div>
+          </div>
+          <div class="meal-kcal">119<span> kcal</span></div>
+          <div class="meal-macros">
+            <div class="meal-macro">
+              <div class="meal-macro-val p">22g</div>
+              <div class="meal-macro-label">Prot</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val c">6g</div>
+              <div class="meal-macro-label">Carb</div>
+            </div>
+            <div class="meal-macro">
+              <div class="meal-macro-val f">6g</div>
+              <div class="meal-macro-label">Gord</div>
+            </div>
+          </div>
+          <div class="meal-bar">
+            <div class="meal-bar-p" style="flex:22"></div>
+            <div class="meal-bar-c" style="flex:6"></div>
+            <div class="meal-bar-f" style="flex:6"></div>
+          </div>
+        </div>
+
+      </div>
+      <button class="carousel-btn" id="mealNext">→</button>
+    </div>
+    <!-- Total do dia -->
+    <div style="display:flex;gap:24px;padding:16px 0;border-top:1px solid var(--border);opacity:0;transform:translateY(12px)" class="anim-ready delay-7" id="mealTotals">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:0.15em;text-transform:uppercase;align-self:center">Total Diário</div>
+      <div style="display:flex;gap:28px;">
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <div style="font-family:var(--display);font-size:28px;font-weight:900;letter-spacing:-0.02em">2.240</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);letter-spacing:0.12em;text-transform:uppercase">kcal</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <div style="font-family:var(--display);font-size:28px;font-weight:900;letter-spacing:-0.02em;color:var(--red)">228g</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);letter-spacing:0.12em;text-transform:uppercase">proteína</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <div style="font-family:var(--display);font-size:28px;font-weight:900;letter-spacing:-0.02em;color:#FF6B00">208g</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);letter-spacing:0.12em;text-transform:uppercase">carboidrato</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <div style="font-family:var(--display);font-size:28px;font-weight:900;letter-spacing:-0.02em;color:#FFB800">55g</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);letter-spacing:0.12em;text-transform:uppercase">gordura</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 7 — SUPLEMENTAÇÃO -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s7">
+  <div class="s7-content">
+    <div>
+      <div class="section-eyebrow anim-ready">Protocolo de Suplementação</div>
+      <div class="section-title anim-ready delay-1">STACK PERSONALIZADO</div>
+    </div>
+    <div class="supp-tiers">
+      <!-- ALTA PRIORIDADE -->
+      <div>
+        <div class="supp-tier-label tier-high"><span class="tier-badge">ALTA PRIORIDADE</span></div>
+        <div class="supp-grid">
+          <div class="supp-item anim-ready delay-1">
+            <div class="supp-icon">💊</div>
+            <div class="supp-name">Creatina Monohidratada</div>
+            <div class="supp-dose">5g / dia</div>
+            <div class="supp-time">Qualquer horário</div>
+          </div>
+          <div class="supp-item anim-ready delay-2">
+            <div class="supp-icon">🥤</div>
+            <div class="supp-name">Whey Protein Isolado</div>
+            <div class="supp-dose">40g pós-treino</div>
+            <div class="supp-time">Imediato após treino</div>
+          </div>
+          <div class="supp-item anim-ready delay-3">
+            <div class="supp-icon">☀️</div>
+            <div class="supp-name">Vitamina D3 + K2</div>
+            <div class="supp-dose">5.000 UI / dia</div>
+            <div class="supp-time">Com refeição gordurosa</div>
+          </div>
+          <div class="supp-item anim-ready delay-4">
+            <div class="supp-icon">🐟</div>
+            <div class="supp-name">Ômega-3 EPA+DHA</div>
+            <div class="supp-dose">3g / dia</div>
+            <div class="supp-time">Almoço e jantar</div>
+          </div>
+        </div>
+      </div>
+      <!-- MÉDIA PRIORIDADE -->
+      <div>
+        <div class="supp-tier-label tier-mid"><span class="tier-badge">MÉDIA PRIORIDADE</span></div>
+        <div class="supp-grid">
+          <div class="supp-item anim-ready delay-5">
+            <div class="supp-icon">⚡</div>
+            <div class="supp-name">Cafeína Anidra</div>
+            <div class="supp-dose">200mg</div>
+            <div class="supp-time">30min pré-treino</div>
+          </div>
+          <div class="supp-item anim-ready delay-6">
+            <div class="supp-icon">🌿</div>
+            <div class="supp-name">Ashwagandha KSM-66</div>
+            <div class="supp-dose">600mg / dia</div>
+            <div class="supp-time">Noturno</div>
+          </div>
+          <div class="supp-item anim-ready delay-7">
+            <div class="supp-icon">🧲</div>
+            <div class="supp-name">Magnésio Bisglicinato</div>
+            <div class="supp-dose">400mg / noite</div>
+            <div class="supp-time">Antes de dormir</div>
+          </div>
+          <div class="supp-item anim-ready delay-8">
+            <div class="supp-icon">🫀</div>
+            <div class="supp-name">Beta-Alanina</div>
+            <div class="supp-dose">3.2g pré-treino</div>
+            <div class="supp-time">30min antes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 8 — SIMULADOR -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s8">
+  <div class="s8-content">
+    <div class="sim-left anim-ready">
+      <div>
+        <div class="section-eyebrow" style="opacity:1;transform:none">Simulador de Protocolo</div>
+        <div class="section-title" style="opacity:1;transform:none;margin-top:4px">AJUSTE EM TEMPO REAL</div>
+      </div>
+
+      <div class="sim-slider-group">
+        <div class="sim-title">Parâmetros de Treino</div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-header">
+            <div class="sim-slider-label">Dias de Treino / Semana</div>
+            <div class="sim-slider-value" id="simDaysVal">5</div>
+          </div>
+          <input type="range" class="sim-slider" min="2" max="7" value="5" id="simDays">
+        </div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-header">
+            <div class="sim-slider-label">Intensidade (%)</div>
+            <div class="sim-slider-value" id="simIntVal">85%</div>
+          </div>
+          <input type="range" class="sim-slider" min="40" max="100" value="85" id="simInt">
+        </div>
+        <div class="sim-slider-row">
+          <div class="sim-slider-header">
+            <div class="sim-slider-label">Duração média (min)</div>
+            <div class="sim-slider-value" id="simDurVal">75</div>
+          </div>
+          <input type="range" class="sim-slider" min="20" max="120" value="75" id="simDur">
+        </div>
+      </div>
+
+      <div>
+        <div class="sim-title">Objetivo</div>
+        <div class="sim-goals">
+          <div class="sim-goal-card active" data-goal="cutting" id="goalCutting">
+            <div class="sim-goal-icon">🔥</div>
+            <div class="sim-goal-name">Cutting</div>
+            <div class="sim-goal-desc">Perda máxima de gordura</div>
+          </div>
+          <div class="sim-goal-card" data-goal="recomp" id="goalRecomp">
+            <div class="sim-goal-icon">⚖️</div>
+            <div class="sim-goal-name">Recomp</div>
+            <div class="sim-goal-desc">Recomposição corporal</div>
+          </div>
+          <div class="sim-goal-card" data-goal="bulking" id="goalBulking">
+            <div class="sim-goal-icon">💪</div>
+            <div class="sim-goal-name">Bulking</div>
+            <div class="sim-goal-desc">Ganho de massa</div>
+          </div>
+          <div class="sim-goal-card" data-goal="performance" id="goalPerf">
+            <div class="sim-goal-icon">🏆</div>
+            <div class="sim-goal-name">Performance</div>
+            <div class="sim-goal-desc">Foco em potência</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-right anim-ready delay-2">
+      <div class="sim-panel">
+        <div class="sim-panel-title">// Resultados Calculados</div>
+        <div class="sim-result-row">
+          <div class="sim-result-label">TDEE Ajustado</div>
+          <div class="sim-result-val" id="simTDEE">2.870</div>
+        </div>
+        <div class="sim-result-row">
+          <div class="sim-result-label">Meta Calórica</div>
+          <div class="sim-result-val" id="simMeta">2.240</div>
+        </div>
+        <div class="sim-result-row">
+          <div class="sim-result-label">Déficit / dia</div>
+          <div class="sim-result-val" id="simDeficit">630</div>
+        </div>
+        <div class="sim-result-row">
+          <div class="sim-result-label">Proteína</div>
+          <div class="sim-result-val" id="simProt">224g</div>
+        </div>
+        <div class="sim-result-row">
+          <div class="sim-result-label">Perda / semana</div>
+          <div class="sim-result-val" id="simSpeed">0.58 kg</div>
+        </div>
+        <div class="sim-result-row">
+          <div class="sim-result-label">Duração estimada</div>
+          <div class="sim-result-val" id="simDuration">16 sem</div>
+        </div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:0.1em;line-height:1.7;padding:0 2px">
+        // Valores calculados com base em perfil de 89kg, 1.82m, 28 anos, sexo masculino.<br>
+        // Ajuste os parâmetros para simular cenários diferentes.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SEÇÃO 9 — ENCERRAMENTO -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="section" id="s9">
+  <div class="s9-content">
+    <div class="cta-card anim-ready" id="ctaCard">
+      <svg class="cta-border-svg" viewBox="0 0 640 300" fill="none">
+        <rect x="1" y="1" width="638" height="298" rx="0"
+          class="cta-border-rect"/>
+      </svg>
+      <div class="cta-badge">
+        <span>●</span> Em Breve
+      </div>
+      <div class="cta-title">
+        Monte sua<br><span>Dieta</span>
+      </div>
+      <div style="font-size:14px;color:var(--text-muted);line-height:1.6;max-width:400px;">
+        DietForge está chegando. Seja o primeiro a ter acesso ao protocolo completo, personalizado para seu perfil.
+      </div>
+      <div class="email-form">
+        <input type="email" class="email-input" placeholder="seu@email.com" id="emailInput">
+        <button class="email-btn" id="emailBtn">NOTIFICAR</button>
+      </div>
+    </div>
+
+    <div class="s9-actions anim-ready delay-3" id="s9Actions">
+      <button class="action-btn">
+        <span>↓</span> Exportar PDF
+      </button>
+      <button class="action-btn">
+        <span>⤴</span> Compartilhar Plano
+      </button>
+    </div>
+
+    <div class="s9-footer anim-ready delay-5" id="s9Footer">
+      <div class="s9-methodology">
+        Metodologia: Mifflin-St Jeor + NEAT Multiplier + EAT Estimation + TEF 10% // Macro Split: High-Protein Cutting Protocol v2.3
+      </div>
+      <div class="s9-disclaimer">
+        Este protocolo é um protótipo educacional com dados fictícios. Consulte um nutricionista esportivo certificado antes de iniciar qualquer dieta ou protocolo de suplementação.
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Section tracker
+// ═══════════════════════════════════════
+const sections = document.querySelectorAll('.section');
+const navDots = document.querySelectorAll('.nav-dot');
+const animatedSections = new Set();
+
+function updateNav(index) {
+  navDots.forEach((d, i) => d.classList.toggle('active', i === index));
+}
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+      const idx = Array.from(sections).indexOf(e.target);
+      updateNav(idx);
+      if (!animatedSections.has(idx)) {
+        animatedSections.add(idx);
+        triggerSection(idx, e.target);
+      }
+    }
+  });
+}, { threshold: 0.5 });
+
+sections.forEach(s => sectionObserver.observe(s));
+
+navDots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = parseInt(dot.dataset.section);
+    sections[idx].scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ═══════════════════════════════════════
+// NUMBER COUNTER
+// ═══════════════════════════════════════
+function countUp(el, target, duration = 900, prefix = '', suffix = '') {
+  const start = performance.now();
+  const startVal = 0;
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(startVal + (target - startVal) * ease);
+    el.textContent = prefix + current.toLocaleString('pt-BR') + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function animIn(el, delay = 0) {
+  setTimeout(() => {
+    el.classList.add('anim-in');
+  }, delay);
+}
+
+// ═══════════════════════════════════════
+// SECTION TRIGGERS
+// ═══════════════════════════════════════
+function triggerSection(idx, el) {
+  switch(idx) {
+    case 0: triggerS1(el); break;
+    case 1: triggerS2(el); break;
+    case 2: triggerS3(el); break;
+    case 3: triggerS4(el); break;
+    case 4: triggerS5(el); break;
+    case 5: triggerS6(el); break;
+    case 6: triggerS7(el); break;
+    case 7: triggerS8(el); break;
+    case 8: triggerS9(el); break;
+  }
+}
+
+// S1
+function triggerS1(el) {
+  const tag = el.querySelector('.s1-tag');
+  const name = el.querySelector('.s1-name');
+  const goal = el.querySelector('.s1-goal');
+  const stats = el.querySelectorAll('.s1-stat');
+  const prec = el.querySelector('.s1-precision');
+  const hint = el.querySelector('.scroll-hint');
+
+  setTimeout(() => { tag.classList.add('anim-in'); }, 100);
+  setTimeout(() => { name.classList.add('anim-in'); }, 250);
+  setTimeout(() => { goal.classList.add('anim-in'); }, 400);
+
+  stats.forEach((s, i) => {
+    setTimeout(() => {
+      s.classList.add('anim-in');
+      s.classList.add('animated');
+    }, 500 + i * 180);
+  });
+
+  setTimeout(() => {
+    prec.classList.add('anim-in');
+    document.getElementById('precisionFill').style.width = '94%';
+    countUp(document.getElementById('precisionText'), 94, 1200, '', '%');
+  }, 1000);
+
+  setTimeout(() => { countUp(document.getElementById('s1tdee'), 2870, 800); }, 550);
+  setTimeout(() => { countUp(document.getElementById('s1meta'), 2240, 800); }, 730);
+  setTimeout(() => { countUp(document.getElementById('s1deficit'), 630, 800); }, 910);
+
+  setTimeout(() => { hint.classList.add('anim-in'); }, 1400);
+}
+
+// S2
+function triggerS2(el) {
+  const eyebrow = el.querySelector('.section-eyebrow');
+  const title = el.querySelector('.section-title');
+  const tdeeNum = el.querySelector('.tdee-number');
+  const tdeeUnit = el.querySelector('.tdee-unit');
+  const rows = el.querySelectorAll('.receipt-row');
+  const divider = el.querySelector('.divider-line');
+  const total = el.querySelector('.receipt-total');
+
+  setTimeout(() => eyebrow.classList.add('anim-in'), 100);
+  setTimeout(() => title.classList.add('anim-in'), 220);
+  setTimeout(() => {
+    tdeeNum.classList.add('anim-in');
+    countUp(tdeeNum, 2870, 1100);
+  }, 350);
+  setTimeout(() => tdeeUnit.classList.add('anim-in'), 500);
+
+  rows.forEach((r, i) => {
+    setTimeout(() => r.classList.add('anim-in'), 300 + i * 160);
+  });
+
+  setTimeout(() => {
+    divider.classList.add('anim-in');
+    divider.classList.add('drawn');
+  }, 980);
+
+  setTimeout(() => total.classList.add('anim-in'), 1100);
+}
+
+// S3
+function triggerS3(el) {
+  const eyebrow = el.querySelector('.section-eyebrow');
+  const title = el.querySelector('.section-title');
+  const blocks = el.querySelectorAll('.s3-block');
+  const barCont = el.querySelector('.s3-bar-container');
+  const velocity = el.querySelector('.s3-velocity');
+
+  setTimeout(() => eyebrow.classList.add('anim-in'), 100);
+  setTimeout(() => title.classList.add('anim-in'), 220);
+  blocks.forEach((b, i) => setTimeout(() => b.classList.add('anim-in'), 350 + i * 150));
+  setTimeout(() => {
+    barCont.classList.add('anim-in');
+    document.getElementById('deficitBar').style.width = '78.05%';
+  }, 800);
+  setTimeout(() => velocity.classList.add('anim-in'), 1000);
+}
+
+// S4 — Macros
+function triggerS4(el) {
+  const macroVis = el.querySelector('.macro-visual');
+  const eyebrow = el.querySelector('#macroEyebrow');
+  const cards = el.querySelectorAll('.macro-card');
+
+  setTimeout(() => macroVis.classList.add('anim-in'), 100);
+  setTimeout(() => {
+    eyebrow && eyebrow.classList.add('anim-in');
+  }, 200);
+  cards.forEach((c, i) => setTimeout(() => c.classList.add('anim-in'), 350 + i * 150));
+
+  // Animate donut
+  setTimeout(() => {
+    animateDonut(40, 40, 22);
+  }, 400);
+}
+
+function animateDonut(pPct, cPct, fPct) {
+  const r = 88;
+  const circ = 2 * Math.PI * r;
+  const pArc = circ * (pPct / 100);
+  const cArc = circ * (cPct / 100);
+  const fArc = circ * (fPct / 100);
+  const gap = 4;
+
+  const protEl = document.getElementById('donutProt');
+  const carbEl = document.getElementById('donutCarb');
+  const fatEl = document.getElementById('donutFat');
+
+  // Protein: starts at 0
+  const protOffset = 0;
+  const carbOffset = -(pArc + gap);
+  const fatOffset = -(pArc + gap + cArc + gap);
+
+  [protEl, carbEl, fatEl].forEach(e => e.style.opacity = '1');
+
+  protEl.setAttribute('stroke-dasharray', `${pArc - gap} ${circ - (pArc - gap)}`);
+  protEl.setAttribute('stroke-dashoffset', `0`);
+
+  carbEl.setAttribute('stroke-dasharray', `${cArc - gap} ${circ - (cArc - gap)}`);
+  carbEl.setAttribute('stroke-dashoffset', `${carbOffset}`);
+
+  fatEl.setAttribute('stroke-dasharray', `${fArc - gap} ${circ - (fArc - gap)}`);
+  fatEl.setAttribute('stroke-dashoffset', `${fatOffset}`);
+}
+
+// S5 — Projection Chart
+function triggerS5(el) {
+  const eyebrow = el.querySelector('.section-eyebrow');
+  const title = el.querySelector('.section-title');
+  const legend = el.querySelector('#chartLegend');
+  const chartCont = el.querySelector('#chartContainer');
+  const baCards = el.querySelector('#baCards');
+
+  setTimeout(() => eyebrow.classList.add('anim-in'), 100);
+  setTimeout(() => title.classList.add('anim-in'), 220);
+  setTimeout(() => legend.classList.add('anim-in'), 350);
+
+  setTimeout(() => {
+    chartCont.classList.add('anim-in');
+    drawProjectionChart();
+  }, 450);
+
+  setTimeout(() => {
+    baCards.classList.add('anim-in');
+    document.getElementById('baProgressFill').style.width = '70%';
+  }, 2800);
+}
+
+function drawProjectionChart() {
+  // Weight data (kg) — 17 points S0-S16
+  const weightData = [90.0, 89.1, 88.2, 87.3, 86.4, 85.5, 84.6, 83.7, 82.9, 82.1, 81.4, 81.0, 80.9, 80.8, 80.7, 80.7, 80.7];
+  // BF% data
+  const bfData = [22.0, 21.4, 20.8, 20.2, 19.5, 18.9, 18.2, 17.5, 16.8, 16.1, 15.3, 14.6, 14.0, 13.6, 13.2, 13.0, 13.0];
+
+  const svgW = 960, svgH = 260;
+  const padL = 60, padR = 30, padT = 20, padB = 40;
+  const chartW = svgW - padL - padR;
+  const chartH = svgH - padT - padB;
+
+  const weeks = 16;
+  const wMin = 78, wMax = 91;
+  const bfMin = 10, bfMax = 24;
+
+  function xPos(i) { return padL + (i / weeks) * chartW; }
+  function yPosW(w) { return padT + (1 - (w - wMin) / (wMax - wMin)) * chartH; }
+  function yPosBF(b) { return padT + (1 - (b - bfMin) / (bfMax - bfMin)) * chartH; }
+
+  // Build path strings
+  let wPath = '';
+  let bPath = '';
+  let areaPath = '';
+
+  weightData.forEach((w, i) => {
+    const x = xPos(i);
+    const y = yPosW(w);
+    if (i === 0) { wPath += `M${x},${y}`; areaPath += `M${x},${padT + chartH} L${x},${y}`; }
+    else { wPath += ` L${x},${y}`; areaPath += ` L${x},${y}`; }
+  });
+  areaPath += ` L${xPos(16)},${padT + chartH} Z`;
+
+  bfData.forEach((b, i) => {
+    const x = xPos(i);
+    const y = yPosBF(b);
+    if (i === 0) bPath += `M${x},${y}`;
+    else bPath += ` L${x},${y}`;
+  });
+
+  document.getElementById('pathWeight').setAttribute('d', wPath);
+  document.getElementById('pathBF').setAttribute('d', bPath);
+  document.getElementById('areaPathW').setAttribute('d', areaPath);
+
+  // Calculate path lengths
+  const wEl = document.getElementById('pathWeight');
+  const bEl = document.getElementById('pathBF');
+  const wLen = wEl.getTotalLength();
+  const bLen = bEl.getTotalLength();
+
+  wEl.style.strokeDasharray = wLen;
+  wEl.style.strokeDashoffset = wLen;
+  bEl.style.strokeDasharray = bLen;
+  bEl.style.strokeDashoffset = bLen;
+
+  requestAnimationFrame(() => {
+    wEl.style.transition = 'stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1)';
+    bEl.style.transition = 'stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1) 0.3s';
+    wEl.style.strokeDashoffset = 0;
+    bEl.style.strokeDashoffset = 0;
+  });
+
+  // Area fade
+  setTimeout(() => {
+    document.getElementById('areaPathW').style.opacity = 1;
+  }, 1800);
+
+  // Milestones
+  const milestones = [
+    { week: 4, label: '-3.6kg', w: weightData[4] },
+    { week: 8, label: '-7.1kg', w: weightData[8] },
+    { week: 12, label: '-9.0kg', w: weightData[12] },
+    { week: 16, label: '-9.3kg', w: weightData[16] },
+  ];
+
+  const mGroup = document.getElementById('milestones');
+  milestones.forEach((m, i) => {
+    const x = xPos(m.week);
+    const y = yPosW(m.w);
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.classList.add('chart-milestone');
+    g.innerHTML = `
+      <circle cx="${x}" cy="${y}" r="5" class="milestone-circle" stroke="#E8001D"/>
+      <text x="${x}" y="${y - 12}" text-anchor="middle" class="milestone-label">${m.label}</text>
+    `;
+    mGroup.appendChild(g);
+
+    setTimeout(() => { g.style.opacity = 1; }, 600 + m.week * 120);
+  });
+}
+
+// S6 — Meals
+function triggerS6(el) {
+  const eyebrow = el.querySelector('.section-eyebrow');
+  const title = el.querySelector('.section-title');
+  const cards = el.querySelectorAll('.meal-card');
+  const totals = el.querySelector('#mealTotals');
+
+  setTimeout(() => eyebrow.classList.add('anim-in'), 100);
+  setTimeout(() => title.classList.add('anim-in'), 220);
+  cards.forEach((c, i) => setTimeout(() => c.classList.add('anim-in'), 350 + i * 100));
+  setTimeout(() => totals.classList.add('anim-in'), 950);
+}
+
+// S7 — Supplements
+function triggerS7(el) {
+  const eyebrow = el.querySelector('.section-eyebrow');
+  const title = el.querySelector('.section-title');
+  const items = el.querySelectorAll('.supp-item');
+
+  setTimeout(() => eyebrow.classList.add('anim-in'), 100);
+  setTimeout(() => title.classList.add('anim-in'), 220);
+  items.forEach((item, i) => setTimeout(() => item.classList.add('anim-in'), 350 + i * 80));
+}
+
+// S8 — Simulator
+function triggerS8(el) {
+  const simLeft = el.querySelector('.sim-left');
+  const simRight = el.querySelector('.sim-right');
+
+  setTimeout(() => simLeft.classList.add('anim-in'), 100);
+  setTimeout(() => simRight.classList.add('anim-in'), 300);
+}
+
+// S9 — Encerramento
+function triggerS9(el) {
+  const card = el.querySelector('#ctaCard');
+  const actions = el.querySelector('#s9Actions');
+  const footer = el.querySelector('#s9Footer');
+
+  setTimeout(() => card.classList.add('anim-in'), 100);
+  setTimeout(() => actions.classList.add('anim-in'), 500);
+  setTimeout(() => footer.classList.add('anim-in'), 750);
+}
+
+// ═══════════════════════════════════════
+// MACRO SLIDERS
+// ═══════════════════════════════════════
+const TOTAL_KCAL = 2240;
+
+function updateMacros() {
+  const pPct = parseInt(document.getElementById('protSlider').value);
+  const cPct = parseInt(document.getElementById('carbSlider').value);
+  const fPct = parseInt(document.getElementById('fatSlider').value);
+
+  const total = pPct + cPct + fPct;
+
+  const pKcal = Math.round(TOTAL_KCAL * pPct / total);
+  const cKcal = Math.round(TOTAL_KCAL * cPct / total);
+  const fKcal = TOTAL_KCAL - pKcal - cKcal;
+
+  const pG = Math.round(pKcal / 4);
+  const cG = Math.round(cKcal / 4);
+  const fG = Math.round(fKcal / 9);
+
+  const pPctReal = Math.round(pPct / total * 100);
+  const cPctReal = Math.round(cPct / total * 100);
+  const fPctReal = 100 - pPctReal - cPctReal;
+
+  document.getElementById('protGrams').innerHTML = `${pG}<span style="font-size:16px;color:var(--text-muted)">g</span>`;
+  document.getElementById('carbGrams').innerHTML = `${cG}<span style="font-size:16px;color:var(--text-muted)">g</span>`;
+  document.getElementById('fatGrams').innerHTML = `${fG}<span style="font-size:16px;color:var(--text-muted)">g</span>`;
+
+  document.getElementById('protKcal').textContent = `${pKcal} kcal`;
+  document.getElementById('carbKcal').textContent = `${cKcal} kcal`;
+  document.getElementById('fatKcal').textContent = `${fKcal} kcal`;
+
+  document.getElementById('protPct').textContent = `${pPctReal}%`;
+  document.getElementById('carbPct').textContent = `${cPctReal}%`;
+  document.getElementById('fatPct').textContent = `${fPctReal}%`;
+
+  document.getElementById('protSliderPct').textContent = `${pPctReal}%`;
+  document.getElementById('carbSliderPct').textContent = `${cPctReal}%`;
+  document.getElementById('fatSliderPct').textContent = `${fPctReal}%`;
+
+  // Update donut
+  animateDonut(pPctReal, cPctReal, fPctReal);
+}
+
+['protSlider', 'carbSlider', 'fatSlider'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateMacros);
+});
+
+// ═══════════════════════════════════════
+// SIMULATOR
+// ═══════════════════════════════════════
+const BASE_TDEE = 2870;
+const BASE_WEIGHT = 90;
+
+const goalMultipliers = {
+  cutting: { deficit: 0.22, protMult: 2.5 },
+  recomp: { deficit: 0.10, protMult: 2.2 },
+  bulking: { deficit: -0.10, protMult: 2.0 },
+  performance: { deficit: 0.05, protMult: 2.8 },
+};
+
+let currentGoal = 'cutting';
+
+function updateSimulator() {
+  const days = parseInt(document.getElementById('simDays').value);
+  const intensity = parseInt(document.getElementById('simInt').value);
+  const duration = parseInt(document.getElementById('simDur').value);
+
+  document.getElementById('simDaysVal').textContent = days;
+  document.getElementById('simIntVal').textContent = intensity + '%';
+  document.getElementById('simDurVal').textContent = duration;
+
+  // EAT calculation
+  const eatPerSession = Math.round((intensity / 100) * (duration / 60) * 400);
+  const eatWeekly = eatPerSession * days;
+  const eatDaily = Math.round(eatWeekly / 7);
+
+  const adjustedTDEE = Math.round(1820 + 364 + eatDaily + 246);
+  const gm = goalMultipliers[currentGoal];
+  const meta = Math.round(adjustedTDEE * (1 - gm.deficit));
+  const deficit = adjustedTDEE - meta;
+  const prot = Math.round(BASE_WEIGHT * gm.protMult);
+  const speed = (deficit * 7 / 7700).toFixed(2);
+  const weeks = deficit > 0 ? Math.round(9.3 / (deficit * 7 / 7700)) : '∞';
+
+  function flashUpdate(id, val) {
+    const el = document.getElementById(id);
+    el.textContent = val;
+    el.classList.add('updated');
+    setTimeout(() => el.classList.remove('updated'), 600);
+  }
+
+  flashUpdate('simTDEE', adjustedTDEE.toLocaleString('pt-BR'));
+  flashUpdate('simMeta', meta.toLocaleString('pt-BR'));
+  flashUpdate('simDeficit', deficit > 0 ? deficit.toLocaleString('pt-BR') : '+' + Math.abs(deficit).toLocaleString('pt-BR'));
+  flashUpdate('simProt', prot + 'g');
+  flashUpdate('simSpeed', deficit > 0 ? speed + ' kg' : 'Ganho');
+  flashUpdate('simDuration', weeks === '∞' ? '∞' : weeks + ' sem');
+}
+
+['simDays', 'simInt', 'simDur'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateSimulator);
+});
+
+document.querySelectorAll('.sim-goal-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.sim-goal-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    currentGoal = card.dataset.goal;
+    updateSimulator();
+  });
+});
+
+// ═══════════════════════════════════════
+// CAROUSEL
+// ═══════════════════════════════════════
+const carousel = document.getElementById('mealsCarousel');
+document.getElementById('mealPrev').addEventListener('click', () => {
+  carousel.scrollBy({ left: -276, behavior: 'smooth' });
+});
+document.getElementById('mealNext').addEventListener('click', () => {
+  carousel.scrollBy({ left: 276, behavior: 'smooth' });
+});
+
+// ═══════════════════════════════════════
+// EMAIL TOAST
+// ═══════════════════════════════════════
+document.getElementById('emailBtn').addEventListener('click', () => {
+  const input = document.getElementById('emailInput');
+  if (!input.value) { input.focus(); return; }
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  input.value = '';
+  setTimeout(() => toast.classList.remove('show'), 3500);
+});
+
+// ═══════════════════════════════════════
+// INIT — trigger S1 on load
+// ═══════════════════════════════════════
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    triggerSection(0, sections[0]);
+    animatedSections.add(0);
+  }, 300);
+});
+</script>
+</body>
+</html>

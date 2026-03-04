@@ -1,4 +1,5 @@
 ﻿import { Check } from 'lucide-react';
+import type { ReactNode } from 'react';
 
 import type { GoalOption } from '../../../../lib/types';
 import { Badge } from '../../../ui/Badge';
@@ -10,7 +11,11 @@ interface GoalOptionCardProps {
   onSelect: (id: string) => void;
 }
 
-const resolveCardIcon = (icon: string): string => {
+const resolveCardIcon = (icon: ReactNode): ReactNode => {
+  if (typeof icon !== 'string') {
+    return icon ?? '\u2728';
+  }
+
   const value = icon.trim();
   if (!value) {
     return '\u2728';

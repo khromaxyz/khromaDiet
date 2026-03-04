@@ -10,6 +10,10 @@ interface MacroState {
   fat: number;
 }
 
+interface MacroCardsProps {
+  activated: boolean;
+}
+
 const kcalPerGram: Record<MacroKey, number> = {
   protein: 4,
   carbs: 4,
@@ -27,13 +31,6 @@ const clamp = (value: number, min: number, max: number): number => {
 };
 
 const totalCalories = (macros: MacroState): number => macros.protein * 4 + macros.carbs * 4 + macros.fat * 9;
-
-const calcSliderPct = (value: number, min: number, max: number): number => {
-  if (max <= min) {
-    return 0;
-  }
-  return Math.max(0, Math.min(100, ((value - min) * 100) / (max - min)));
-};
 
 const rebalanceMacros = ({
   base,
@@ -130,7 +127,7 @@ const rebalanceMacros = ({
   };
 };
 
-export const MacroCards = () => {
+export const MacroCards = ({ activated }: MacroCardsProps) => {
   const results = useDietForgeStore((state) => state.results);
 
   const initial = useMemo<MacroState>(() => {
@@ -195,46 +192,49 @@ export const MacroCards = () => {
     );
   };
 
-  const items: Array<{ id: MacroKey; label: string; grams: number; color: string }> = [
-    { id: 'protein', label: 'Proteína', grams: macros.protein, color: 'protein' },
-    { id: 'carbs', label: 'Carboidrato', grams: macros.carbs, color: 'carbs' },
-    { id: 'fat', label: 'Gordura', grams: macros.fat, color: 'fat' },
+  const items: Array<{ id: MacroKey; label: string; grams: number; color: string; delay: string }> = [
+    { id: 'protein', label: 'Proteína', grams: macros.protein, color: 'prot', delay: 'delay-1' },
+    { id: 'carbs', label: 'Carboidrato', grams: macros.carbs, color: 'carb', delay: 'delay-2' },
+    { id: 'fat', label: 'Gordura', grams: macros.fat, color: 'fat', delay: 'delay-3' },
   ];
 
   return (
     <>
-      <div className="dash-section-header">
-        <div className="dash-section-title">Macros Diários</div>
-        <span className="dash-section-action">Sliders com reequilíbrio automático</span>
-      </div>
-      <div className="macro-cards-grid">
-        {items.map((macro) => {
-          const macroCalories = macro.grams * kcalPerGram[macro.id];
-          const caloriePct = calorieTarget > 0 ? (macroCalories * 100) / calorieTarget : 0;
-          const sliderPct = calcSliderPct(macro.grams, floors[macro.id], ceilings[macro.id]);
+      {items.map((macro) => {
+        const macroCalories = macro.grams * kcalPerGram[macro.id];
+        const caloriePct = calorieTarget > 0 ? (macroCalories * 100) / calorieTarget : 0;
 
-          return (
-            <div key={macro.id} className={`macro-card ${macro.color}`}>
-              <div className="macro-card-bg" />
-              <div className="macro-card-head">
-                <div className="macro-type-label">
-                  <span className="macro-type-dot" />
-                  {macro.label}
+        return (
+          <div key={macro.id} className={`macro-card ${macro.color} anim-ready ${macro.delay} ${activated ? 'anim-in' : ''}`}>
+            <div className="macro-card-top">
+              <div className="macro-card-name">{macro.label}</div>
+              <div className="macro-card-grams">
+                {macro.grams}
+                <span className="macro-card-grams-unit">g</span>
+              </div>
+            </div>
+
+            <div className="macro-card-meta">
+              <div className="macro-meta-item">
+                <div className="macro-meta-label">Calorias</div>
+                <div className="macro-meta-value">{macroCalories.toLocaleString('pt-BR')} kcal</div>
+              </div>
+              <div className="macro-meta-item">
+                <div className="macro-meta-label">Proporção</div>
+                <div className="macro-meta-value">{caloriePct.toFixed(1)}%</div>
+              </div>
+              <div className="macro-meta-item">
+                <div className="macro-meta-label">Faixa</div>
+                <div className="macro-meta-value">
+                  {floors[macro.id]}g - {ceilings[macro.id]}g
                 </div>
-                <span className="macro-type-percent">{caloriePct.toFixed(1)}%</span>
               </div>
-              <div className="macro-amount">
-                {macro.grams} <span className="macro-amount-unit">g</span>
-              </div>
-              <div className="macro-kcal">
-                {macroCalories.toLocaleString('pt-BR')} kcal · {caloriePct.toFixed(1)}% das calorias
-              </div>
-              <div className="macro-progress-bar">
-                <div className="macro-progress-fill" style={{ width: `${sliderPct}%` }} />
-              </div>
+            </div>
+
+            <div className="macro-slider-wrapper">
               <input
                 type="range"
-                className="range-input"
+                className={`macro-slider ${macro.color}`}
                 min={floors[macro.id]}
                 max={ceilings[macro.id]}
                 step={1}
@@ -243,21 +243,15 @@ export const MacroCards = () => {
                 aria-label={macro.label}
                 onChange={(event) => applyMacro(macro.id, Number(event.target.value))}
               />
+              <div className="macro-slider-pct">{caloriePct.toFixed(1)}%</div>
             </div>
-          );
-        })}
-      </div>
-      <div className="target-info-card">
-        <div className="target-info-row">
-          <span className="target-info-icon">=</span>
-          <p className="target-info-text">
-            Total atual:{' '}
-            <span className={pulseTotal ? 'target-info-highlight macro-total-pulse' : 'target-info-highlight'}>
-              {Math.round(totalCalories(macros))} kcal
-            </span>
-            {' · '}Meta fixa: {calorieTarget.toLocaleString('pt-BR')} kcal
-          </p>
-        </div>
+          </div>
+        );
+      })}
+
+      <div className={`macro-total-line ${pulseTotal ? 'macro-total-pulse' : ''}`}>
+        Total atual: <strong>{Math.round(totalCalories(macros)).toLocaleString('pt-BR')} kcal</strong> • Meta fixa:{' '}
+        {calorieTarget.toLocaleString('pt-BR')} kcal
       </div>
     </>
   );
