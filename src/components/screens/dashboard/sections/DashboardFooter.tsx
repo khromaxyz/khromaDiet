@@ -19,7 +19,7 @@ export const DashboardFooter = () => {
   return (
     <div className="dashboard-footer">
       <div className="footer-logo footer-logo-inline">
-        <Zap size={14} fill="var(--dash-accent, var(--accent-red))" color="var(--dash-accent, var(--accent-red))" />
+        <Zap size={14} fill="var(--dash-accent, var(--accent-primary))" color="var(--dash-accent, var(--accent-primary))" />
         DIETFORGE
       </div>
       <div className="footer-note">

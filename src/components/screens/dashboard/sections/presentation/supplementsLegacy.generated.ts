@@ -987,10 +987,10 @@ export const LEGACY_SUPPLEMENTS_HTML = `<div class="page-wrapper">
 
         <!-- Card 1: Segurança -->
         <div class="info-strip-card" role="listitem">
-          <div class="info-strip-icon" style="background:rgba(224,32,32,0.08);border:1px solid rgba(224,32,32,0.15);" aria-hidden="true">
+          <div class="info-strip-icon" style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2L17 5V10C17 14 13.5 17.5 10 18C6.5 17.5 3 14 3 10V5L10 2Z" stroke="#e02020" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M7 10l2 2 4-4" stroke="#e02020" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 2L17 5V10C17 14 13.5 17.5 10 18C6.5 17.5 3 14 3 10V5L10 2Z" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M7 10l2 2 4-4" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="info-strip-body">

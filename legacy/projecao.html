@@ -22,11 +22,11 @@
       --color-bg-glass-hover:  rgba(255,255,255,0.06);
 
       /* Accent system */
-      --color-accent:          #e63946;
+      --color-accent:          #10b981;
       --color-accent-bright:   #ff4757;
-      --color-accent-muted:    rgba(230,57,70,0.15);
-      --color-accent-glow:     rgba(230,57,70,0.35);
-      --color-accent-ultra:    rgba(230,57,70,0.08);
+      --color-accent-muted:    rgba(16,185,129,0.15);
+      --color-accent-glow:     rgba(16,185,129,0.35);
+      --color-accent-ultra:    rgba(16,185,129,0.08);
 
       /* Secondary accents */
       --color-teal:            #2dd4bf;
@@ -46,12 +46,12 @@
       --text-secondary:        #94a3b8;
       --text-tertiary:         #475569;
       --text-muted:            #334155;
-      --text-accent:           #e63946;
+      --text-accent:           #10b981;
 
       /* Border system */
       --border-subtle:         rgba(255,255,255,0.05);
       --border-default:        rgba(255,255,255,0.08);
-      --border-active:         rgba(230,57,70,0.4);
+      --border-active:         rgba(16,185,129,0.4);
       --border-teal:           rgba(45,212,191,0.3);
 
       /* Shadows */
@@ -59,7 +59,7 @@
       --shadow-md:             0 4px 20px rgba(0,0,0,0.5);
       --shadow-lg:             0 8px 40px rgba(0,0,0,0.6);
       --shadow-xl:             0 16px 64px rgba(0,0,0,0.7);
-      --shadow-accent:         0 0 40px rgba(230,57,70,0.2);
+      --shadow-accent:         0 0 40px rgba(16,185,129,0.2);
       --shadow-teal:           0 0 30px rgba(45,212,191,0.15);
 
       /* Radii */
@@ -92,7 +92,7 @@
       --transition-spring:  all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
       /* Chart data */
-      --chart-weight-color: #e63946;
+      --chart-weight-color: #10b981;
       --chart-bf-color:     #2dd4bf;
       --chart-lbm-color:    #a855f7;
     }
@@ -197,7 +197,7 @@
     }
 
     .section-title span.highlight {
-      background: linear-gradient(135deg, var(--color-accent) 0%, #ff8a95 100%);
+      background: linear-gradient(135deg, var(--color-accent) 0%, #34d399 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -345,7 +345,7 @@
     /* ============================================= */
     .chart-section {
       background:
-        radial-gradient(120% 100% at 50% -12%, rgba(230,57,70,0.11) 0%, rgba(230,57,70,0) 46%),
+        radial-gradient(120% 100% at 50% -12%, rgba(16,185,129,0.11) 0%, rgba(16,185,129,0) 46%),
         linear-gradient(180deg, rgba(19,19,36,0.98) 0%, rgba(14,14,30,0.98) 100%);
       border: 1px solid rgba(255,255,255,0.09);
       border-radius: var(--radius-xl);
@@ -360,7 +360,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 72% 52% at 50% -8%, rgba(230,57,70,0.14) 0%, rgba(230,57,70,0) 62%);
+      background: radial-gradient(ellipse 72% 52% at 50% -8%, rgba(16,185,129,0.14) 0%, rgba(16,185,129,0) 62%);
       pointer-events: none;
     }
 
@@ -482,7 +482,7 @@
       border: 1px solid var(--border-active);
       border-radius: var(--radius-lg);
       padding: var(--space-4) var(--space-5);
-      box-shadow: 0 0 0 1px rgba(230,57,70,0.1), var(--shadow-xl), 0 0 30px rgba(230,57,70,0.15);
+      box-shadow: 0 0 0 1px rgba(16,185,129,0.1), var(--shadow-xl), 0 0 30px rgba(16,185,129,0.15);
       min-width: 220px;
       z-index: 1000;
       opacity: 0;
@@ -644,7 +644,7 @@
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: 
-        radial-gradient(ellipse 80% 50% at 0% 50%, rgba(230,57,70,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 0% 50%, rgba(16,185,129,0.04) 0%, transparent 60%),
         radial-gradient(ellipse 80% 50% at 100% 50%, rgba(45,212,191,0.04) 0%, transparent 60%);
       pointer-events: none;
     }
@@ -736,7 +736,7 @@
     }
 
     .ba-metric-row.highlight-before {
-      border-left: 2px solid rgba(230,57,70,0.4);
+      border-left: 2px solid rgba(16,185,129,0.4);
     }
 
     .ba-metric-row.highlight-after {
@@ -933,7 +933,7 @@
     .milestone-dot svg { width: 16px; height: 16px; }
 
     .milestone-dot.reached {
-      background: linear-gradient(135deg, var(--color-accent-muted), rgba(230,57,70,0.08));
+      background: linear-gradient(135deg, var(--color-accent-muted), rgba(16,185,129,0.08));
       border: 1px solid var(--border-active);
     }
 
@@ -1015,7 +1015,7 @@
     .milestone-tag.red {
       background: var(--color-accent-muted);
       color: var(--color-accent-bright);
-      border: 1px solid rgba(230,57,70,0.2);
+      border: 1px solid rgba(16,185,129,0.2);
     }
 
     .milestone-tag.teal {
@@ -1266,7 +1266,7 @@
     .table-toggle-btn.active {
       background: var(--color-accent);
       color: white;
-      box-shadow: 0 2px 8px rgba(230,57,70,0.35);
+      box-shadow: 0 2px 8px rgba(16,185,129,0.35);
     }
 
     .weekly-table-scroll {
@@ -1303,7 +1303,7 @@
     .weekly-table tbody tr:last-child { border-bottom: none; }
 
     .weekly-table tbody tr:hover {
-      background: rgba(230,57,70,0.03);
+      background: rgba(16,185,129,0.03);
     }
 
     .weekly-table tbody tr.refeed-row {
@@ -1315,7 +1315,7 @@
     }
 
     .weekly-table tbody tr.current-row {
-      background: rgba(230,57,70,0.05);
+      background: rgba(16,185,129,0.05);
     }
 
     .weekly-table tbody tr td {
@@ -1566,8 +1566,8 @@
     }
 
     @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 0 15px rgba(230,57,70,0.2); }
-      50% { box-shadow: 0 0 30px rgba(230,57,70,0.4), 0 0 60px rgba(230,57,70,0.1); }
+      0%, 100% { box-shadow: 0 0 15px rgba(16,185,129,0.2); }
+      50% { box-shadow: 0 0 30px rgba(16,185,129,0.4), 0 0 60px rgba(16,185,129,0.1); }
     }
 
     @keyframes countUp { from { opacity: 0; } to { opacity: 1; } }
@@ -1635,7 +1635,7 @@
       transform: translateX(-50%);
       width: 600px;
       height: 160px;
-      background: radial-gradient(ellipse 50% 100% at 50% 0%, rgba(230,57,70,0.06) 0%, transparent 100%);
+      background: radial-gradient(ellipse 50% 100% at 50% 0%, rgba(16,185,129,0.06) 0%, transparent 100%);
       pointer-events: none;
     }
 
@@ -1646,7 +1646,7 @@
       position: absolute;
       top: 0;
       width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(230,57,70,0.6), transparent);
+      background: linear-gradient(to bottom, transparent, rgba(16,185,129,0.6), transparent);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.15s ease;
@@ -1662,7 +1662,7 @@
       align-items: center;
       justify-content: space-between;
       padding: var(--space-5) var(--space-6);
-      background: linear-gradient(135deg, rgba(230,57,70,0.08), rgba(45,212,191,0.04));
+      background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(45,212,191,0.04));
       border: 1px solid var(--border-active);
       border-radius: var(--radius-xl);
       gap: var(--space-4);
@@ -1720,13 +1720,13 @@
       cursor: pointer;
       transition: var(--transition-spring);
       letter-spacing: 0.03em;
-      box-shadow: 0 4px 20px rgba(230,57,70,0.4);
+      box-shadow: 0 4px 20px rgba(16,185,129,0.4);
       white-space: nowrap;
     }
 
     .summary-footer-cta:hover {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 30px rgba(230,57,70,0.5);
+      box-shadow: 0 8px 30px rgba(16,185,129,0.5);
     }
 
     .summary-footer-cta:active {
@@ -1784,7 +1784,7 @@
       background: var(--color-accent);
       border-color: var(--color-accent);
       color: white;
-      box-shadow: 0 2px 10px rgba(230,57,70,0.35);
+      box-shadow: 0 2px 10px rgba(16,185,129,0.35);
     }
 
     .week-pill.refeed {
@@ -1815,7 +1815,7 @@
       left: -200px;
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, rgba(230,57,70,0.025) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(16,185,129,0.025) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -1901,7 +1901,7 @@
     }
 
     .shimmer-row {
-      background: linear-gradient(90deg, transparent 25%, rgba(230,57,70,0.04) 50%, transparent 75%);
+      background: linear-gradient(90deg, transparent 25%, rgba(16,185,129,0.04) 50%, transparent 75%);
       background-size: 400px 100%;
       animation: shimmer 1.5s ease-out;
     }    /* ============================================= */
@@ -1913,11 +1913,11 @@
       --surface-3: linear-gradient(180deg, rgba(17,18,35,0.985) 0%, rgba(11,12,24,1) 100%);
       --stroke-soft: rgba(255,255,255,0.09);
       --stroke-strong: rgba(255,255,255,0.16);
-      --stroke-accent: rgba(230,57,70,0.34);
+      --stroke-accent: rgba(16,185,129,0.34);
       --elev-1: 0 12px 32px rgba(2,4,18,0.4), 0 0 0 1px rgba(255,255,255,0.02) inset;
       --elev-2: 0 18px 48px rgba(2,4,18,0.48), 0 0 0 1px rgba(255,255,255,0.03) inset;
       --elev-3: 0 28px 74px rgba(2,4,18,0.56), 0 0 0 1px rgba(255,255,255,0.035) inset;
-      --glow-red: rgba(230,57,70,0.2);
+      --glow-red: rgba(16,185,129,0.2);
       --glow-teal: rgba(45,212,191,0.16);
       --glow-purple: rgba(168,85,247,0.15);
       --font-display: 'Barlow Condensed', 'Space Grotesk', 'Inter', system-ui, sans-serif;
@@ -1988,7 +1988,7 @@
       gap: 11px;
       background:
         radial-gradient(120% 140% at 0% 0%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 42%),
-        radial-gradient(130% 85% at 95% 0%, var(--stat-accent-bg, var(--color-accent-ultra)) 0%, rgba(230,57,70,0) 48%),
+        radial-gradient(130% 85% at 95% 0%, var(--stat-accent-bg, var(--color-accent-ultra)) 0%, rgba(16,185,129,0) 48%),
         var(--surface-2);
     }
     .summary-stat:hover {
@@ -2027,7 +2027,7 @@
       margin-bottom: 38px;
       border: 1px solid var(--stroke-soft);
       background:
-        radial-gradient(125% 120% at 54% -18%, rgba(230,57,70,0.2) 0%, rgba(230,57,70,0) 45%),
+        radial-gradient(125% 120% at 54% -18%, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0) 45%),
         radial-gradient(120% 85% at 0% 100%, rgba(45,212,191,0.07) 0%, rgba(45,212,191,0) 52%),
         var(--surface-3);
       box-shadow: var(--elev-3);
@@ -2043,7 +2043,7 @@
     }
     .chart-section::after {
       background:
-        radial-gradient(ellipse 68% 56% at 50% -10%, rgba(230,57,70,0.2) 0%, rgba(230,57,70,0) 60%),
+        radial-gradient(ellipse 68% 56% at 50% -10%, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0) 60%),
         linear-gradient(90deg, rgba(12,14,30,0) 0%, rgba(255,255,255,0.01) 50%, rgba(12,14,30,0) 100%);
       opacity: 0.9;
     }
@@ -2074,7 +2074,7 @@
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 18px;
       background:
-        radial-gradient(130% 105% at 50% -16%, rgba(230,57,70,0.12) 0%, rgba(230,57,70,0) 52%),
+        radial-gradient(130% 105% at 50% -16%, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0) 52%),
         linear-gradient(180deg, rgba(17,18,35,0.95) 0%, rgba(9,10,20,0.9) 100%);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.025), inset 0 -30px 80px rgba(0,0,0,0.38);
     }
@@ -2120,11 +2120,11 @@
       box-shadow: 0 10px 24px rgba(2,4,18,0.36), inset 0 1px 0 rgba(255,255,255,0.08);
     }
     .ba-arrow-icon {
-      box-shadow: 0 8px 18px rgba(0,0,0,0.35), 0 0 24px rgba(230,57,70,0.22);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.35), 0 0 24px rgba(16,185,129,0.22);
     }
     .milestone-line {
       width: 2px;
-      background: linear-gradient(to bottom, rgba(230,57,70,0.28), rgba(255,255,255,0.08) 45%, rgba(45,212,191,0.22));
+      background: linear-gradient(to bottom, rgba(16,185,129,0.28), rgba(255,255,255,0.08) 45%, rgba(45,212,191,0.22));
       border-radius: 999px;
       margin-top: 4px;
       margin-bottom: -4px;
@@ -2138,8 +2138,8 @@
       transition: var(--transition-default);
     }
     .milestone-item:hover .milestone-content {
-      border-color: rgba(230,57,70,0.22);
-      background: linear-gradient(180deg, rgba(230,57,70,0.06) 0%, rgba(255,255,255,0.01) 100%);
+      border-color: rgba(16,185,129,0.22);
+      background: linear-gradient(180deg, rgba(16,185,129,0.06) 0%, rgba(255,255,255,0.01) 100%);
       box-shadow: 0 12px 26px rgba(2,4,18,0.32);
     }
     .milestone-week {
@@ -2178,7 +2178,7 @@
     .info-card:hover {
       border-color: rgba(255,255,255,0.14);
       background:
-        radial-gradient(140% 100% at 100% 0%, rgba(230,57,70,0.11) 0%, rgba(230,57,70,0) 48%),
+        radial-gradient(140% 100% at 100% 0%, rgba(16,185,129,0.11) 0%, rgba(16,185,129,0) 48%),
         var(--surface-2);
       box-shadow: var(--elev-2), 0 0 34px var(--glow-red);
       transform: translateY(-3px);
@@ -2201,7 +2201,7 @@
       padding-top: 18px;
       padding-bottom: 18px;
       background:
-        radial-gradient(130% 120% at 0% 0%, rgba(230,57,70,0.14) 0%, rgba(230,57,70,0) 55%),
+        radial-gradient(130% 120% at 0% 0%, rgba(16,185,129,0.14) 0%, rgba(16,185,129,0) 55%),
         linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
       border-bottom-color: rgba(255,255,255,0.08);
     }
@@ -2223,7 +2223,7 @@
       letter-spacing: 0.05em;
     }
     .table-toggle-btn.active {
-      box-shadow: 0 6px 16px rgba(230,57,70,0.34), inset 0 1px 0 rgba(255,255,255,0.18);
+      box-shadow: 0 6px 16px rgba(16,185,129,0.34), inset 0 1px 0 rgba(255,255,255,0.18);
     }
     .weekly-table thead tr th {
       background: rgba(255,255,255,0.015);
@@ -2236,7 +2236,7 @@
       background: rgba(255,255,255,0.01);
     }
     .weekly-table tbody tr:hover {
-      background: linear-gradient(90deg, rgba(230,57,70,0.1) 0%, rgba(230,57,70,0.02) 45%, rgba(45,212,191,0.06) 100%);
+      background: linear-gradient(90deg, rgba(16,185,129,0.1) 0%, rgba(16,185,129,0.02) 45%, rgba(45,212,191,0.06) 100%);
     }
     .weekly-table tbody tr td {
       font-size: 12px;
@@ -2467,7 +2467,7 @@
           <div class="legend-item active legend-weight" role="listitem"
                id="legendWeight" onclick="toggleSeries('weight')" tabindex="0"
                aria-label="S?rie Peso Corporal — clique para mostrar/ocultar">
-            <span class="legend-dot" style="background:var(--color-accent); box-shadow:0 0 8px rgba(230,57,70,0.5);" aria-hidden="true"></span>
+            <span class="legend-dot" style="background:var(--color-accent); box-shadow:0 0 8px rgba(16,185,129,0.5);" aria-hidden="true"></span>
             Peso Corporal
           </div>
           <div class="legend-item active legend-bf" role="listitem"
@@ -2607,7 +2607,7 @@
         <div class="ba-delta-grid" role="group" aria-label="Resumo das mudan?as projetadas">
 
           <div class="ba-delta-item" role="group" aria-label="Gordura eliminada: 6.55 kg">
-            <div class="ba-delta-icon" style="background:rgba(230,57,70,0.1)" aria-hidden="true">
+            <div class="ba-delta-icon" style="background:rgba(16,185,129,0.1)" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.5" aria-hidden="true">
                 <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
                 <polyline points="17 6 23 6 23 12"/>
@@ -2808,7 +2808,7 @@
               <span class="stacked-bar-label">Antes</span>
               <div class="stacked-bar-track" title="15.12 kg — 100%">
                 <div class="stacked-bar-fill"
-                     style="background: linear-gradient(90deg, #ef4444, #dc2626); width:0%"
+                     style="background: linear-gradient(90deg, #10b981, #047857); width:0%"
                      data-width="100%"
                      aria-label="Barra de gordura antes, 100%"></div>
               </div>
@@ -3309,7 +3309,7 @@
         const val = WEIGHT_MIN + (i / gridLinesY) * weightRange;
         const y = PAD.top + innerH - (i / gridLinesY) * innerH;
         ctx.font = '11px -apple-system, system-ui, sans-serif';
-        ctx.fillStyle = 'rgba(230,57,70,0.6)';
+        ctx.fillStyle = 'rgba(16,185,129,0.6)';
         ctx.textAlign = 'right';
         ctx.fillText(val.toFixed(0) + 'kg', PAD.left - 10, y + 4);
       }
@@ -3337,7 +3337,7 @@
       // ---- AXIS TITLES ----
       ctx.save();
       ctx.font = '700 10px -apple-system, system-ui, sans-serif';
-      ctx.fillStyle = 'rgba(230,57,70,0.5)';
+      ctx.fillStyle = 'rgba(16,185,129,0.5)';
       ctx.textAlign = 'center';
       ctx.translate(14, PAD.top + innerH / 2);
       ctx.rotate(-Math.PI / 2);
@@ -3440,27 +3440,27 @@
           ctx.lineTo(pts[pts.length - 1].x, PAD.top + innerH);
           ctx.closePath();
           const weightFill = ctx.createLinearGradient(0, PAD.top, 0, PAD.top + innerH);
-          weightFill.addColorStop(0, 'rgba(230,57,70,0.28)');
-          weightFill.addColorStop(0.4, 'rgba(230,57,70,0.12)');
-          weightFill.addColorStop(1, 'rgba(230,57,70,0.01)');
+          weightFill.addColorStop(0, 'rgba(16,185,129,0.28)');
+          weightFill.addColorStop(0.4, 'rgba(16,185,129,0.12)');
+          weightFill.addColorStop(1, 'rgba(16,185,129,0.01)');
           ctx.fillStyle = weightFill;
           ctx.fill();
 
           // GLOW linha (camada de glow mais larga)
           ctx.beginPath();
           drawSmoothLine(ctx, pts);
-          ctx.strokeStyle = 'rgba(230,57,70,0.2)';
+          ctx.strokeStyle = 'rgba(16,185,129,0.2)';
           ctx.lineWidth = 8;
           ctx.setLineDash([]);
           ctx.shadowBlur = 12;
-          ctx.shadowColor = 'rgba(230,57,70,0.4)';
+          ctx.shadowColor = 'rgba(16,185,129,0.4)';
           ctx.stroke();
           ctx.shadowBlur = 0;
 
           // Linha principal
           ctx.beginPath();
           drawSmoothLine(ctx, pts);
-          ctx.strokeStyle = 'rgba(230,57,70,1)';
+          ctx.strokeStyle = 'rgba(16,185,129,1)';
           ctx.lineWidth = 2.5;
           ctx.setLineDash([]);
           ctx.stroke();
@@ -3485,15 +3485,15 @@
             if (isHovered || isSelected) {
               ctx.beginPath();
               ctx.arc(xp, yp, r + 5, 0, Math.PI * 2);
-              ctx.fillStyle = 'rgba(230,57,70,0.12)';
+              ctx.fillStyle = 'rgba(16,185,129,0.12)';
               ctx.fill();
             }
 
             ctx.beginPath();
             ctx.arc(xp, yp, r, 0, Math.PI * 2);
-            ctx.fillStyle = isRefeed ? 'rgba(245,158,11,0.9)' : 'rgba(230,57,70,0.95)';
+            ctx.fillStyle = isRefeed ? 'rgba(245,158,11,0.9)' : 'rgba(16,185,129,0.95)';
             ctx.shadowBlur = isHovered ? 15 : 6;
-            ctx.shadowColor = isRefeed ? 'rgba(245,158,11,0.6)' : 'rgba(230,57,70,0.6)';
+            ctx.shadowColor = isRefeed ? 'rgba(245,158,11,0.6)' : 'rgba(16,185,129,0.6)';
             ctx.fill();
             ctx.shadowBlur = 0;
 
@@ -3582,7 +3582,7 @@
             ctx.beginPath();
             ctx.moveTo(xp, topY);
             ctx.lineTo(xp, botY);
-            ctx.strokeStyle = 'rgba(230,57,70,0.35)';
+            ctx.strokeStyle = 'rgba(16,185,129,0.35)';
             ctx.lineWidth = 1;
             ctx.setLineDash([3, 3]);
             ctx.stroke();
@@ -3591,7 +3591,7 @@
             // Etiqueta de semana na linha
             const labelTxt = d.week === 0 ? 'Início' : `Sem. ${d.week}`;
             ctx.font = '700 11px -apple-system, system-ui, sans-serif';
-            ctx.fillStyle = 'rgba(230,57,70,0.85)';
+            ctx.fillStyle = 'rgba(16,185,129,0.85)';
             ctx.textAlign = 'center';
             ctx.fillText(labelTxt, xp, PAD.top - 6);
 
@@ -3599,7 +3599,7 @@
             if (state.visibleSeries.weight) {
               const yw = yForWeight(d.weight, dims);
               ctx.font = '700 11px -apple-system, system-ui, sans-serif';
-              ctx.fillStyle = 'rgba(230,57,70,0.9)';
+              ctx.fillStyle = 'rgba(16,185,129,0.9)';
               ctx.textAlign = 'right';
               ctx.fillText(d.weight.toFixed(1), PAD.left - 6, yw + 4);
             }
@@ -3641,7 +3641,7 @@
         const startX = xForWeek(0, dims);
         const startYW = yForWeight(PROTOCOL.startWeight, dims);
         ctx.font = '700 11px -apple-system, system-ui, sans-serif';
-        ctx.fillStyle = 'rgba(230,57,70,0.7)';
+        ctx.fillStyle = 'rgba(16,185,129,0.7)';
         ctx.textAlign = 'center';
         ctx.fillText(`${PROTOCOL.startWeight}kg`, startX, startYW - 12);
       }
@@ -4040,7 +4040,7 @@
         // Delay de animação escalonada
         tr.style.animationDelay = `${idx * 25}ms`;
 
-        const deltaColor = d.delta === 0 ? '' : (d.delta > 0 ? 'color:#f87171' : 'td-loss');
+        const deltaColor = d.delta === 0 ? '' : (d.delta > 0 ? 'color:#34d399' : 'td-loss');
         const deltaText = d.delta === 0 ? '?' : `${d.delta > 0 ? '+' : ''}${d.delta.toFixed(2)} kg`;
 
         const noteContent = isRefeed

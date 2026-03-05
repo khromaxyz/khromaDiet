@@ -9,13 +9,13 @@
 
       /*  OVERRIDE: valor diferente do :root (#e8293a vs #ff2a2a) - sera unificado na fase Design System  */
 
-      --accent-primary:         #e8293a;
+      --accent-primary:         #10b981;
       /*  OVERRIDE: valor diferente do :root (#b01f2d vs rgba(255, 42, 42, 0.12)) - sera unificado na fase Design System  */
       --accent-primary-dim:     #b01f2d;
       /*  OVERRIDE: valor diferente do :root (rgba(232, 41, 58, 0.35) vs rgba(230, 57, 70, 0.3)) - sera unificado na fase Design System  */
-      --accent-red-glow:    rgba(232, 41, 58, 0.35);
+      --accent-red-glow:    rgba(16,185,129,0.35);
       /*  OVERRIDE: valor diferente do :root (rgba(232, 41, 58, 0.08) vs rgba(230, 57, 70, 0.08)) - sera unificado na fase Design System  */
-      --accent-red-subtle:  rgba(232, 41, 58, 0.08);
+      --accent-red-subtle:  rgba(16,185,129,0.08);
 
       /*  OVERRIDE: valor diferente do :root (#f7612a vs #fb923c) - sera unificado na fase Design System  */
 
@@ -116,7 +116,7 @@
       transform: translateX(-50%);
       width: 900px;
       height: 600px;
-      background: radial-gradient(ellipse at center, rgba(232,41,58,0.07) 0%, transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(16,185,129,0.07) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -162,7 +162,7 @@
       align-items: center;
       gap: var(--space-2);
       background: var(--accent-red-subtle);
-      border: 1px solid rgba(232, 41, 58, 0.25);
+      border: 1px solid rgba(16,185,129,0.25);
       border-radius: 100px;
       padding: var(--space-1-5) var(--space-3-5);
       width: fit-content;
@@ -325,7 +325,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .controls-panel .panel-inner-glow{
-      background: radial-gradient(ellipse at 10% 10%, rgba(232,41,58,0.05) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 10% 10%, rgba(16,185,129,0.05) 0%, transparent 60%);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .controls-panel-header{
@@ -351,7 +351,7 @@
       align-items: center;
       justify-content: center;
       background: var(--accent-red-subtle);
-      border: 1px solid rgba(232,41,58,0.2);
+      border: 1px solid rgba(16,185,129,0.2);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .panel-icon svg{
@@ -515,7 +515,7 @@
       background: linear-gradient(90deg, var(--accent-primary-dim) 0%, var(--accent-primary) 50%, var(--accent-red-bright) 100%);
       pointer-events: none;
       transition: width var(--transition-fast);
-      box-shadow: 0 0 12px rgba(232,41,58,0.5);
+      box-shadow: 0 0 12px rgba(16,185,129,0.5);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .slider-thumb{
@@ -527,7 +527,7 @@
       transform: translate(-50%, -50%);
       background: var(--bg-base);
       border: 2.5px solid var(--accent-primary);
-      box-shadow: 0 0 0 4px rgba(232,41,58,0.15), var(--shadow-md);
+      box-shadow: 0 0 0 4px rgba(16,185,129,0.15), var(--shadow-md);
       cursor: grab;
       transition: box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
       z-index: 2;
@@ -546,7 +546,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .slider-thumb:hover, #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .slider-thumb.active{
-      box-shadow: 0 0 0 8px rgba(232,41,58,0.2), var(--shadow-lg);
+      box-shadow: 0 0 0 8px rgba(16,185,129,0.2), var(--shadow-lg);
       border-color: var(--accent-red-bright);
       transform: translate(-50%, -50%) scale(1.15);
       cursor: grabbing;
@@ -583,7 +583,7 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(232,41,58,0.3) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, transparent 70%);
       transform: translate(-50%, -50%);
       pointer-events: none;
       transition: left var(--transition-fast);
@@ -608,7 +608,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .intensity-segment.lit{
       background: var(--accent-primary);
-      box-shadow: 0 0 6px rgba(232,41,58,0.6);
+      box-shadow: 0 0 6px rgba(16,185,129,0.6);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .intensity-segment.lit.amber{
@@ -654,7 +654,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="hard-cut"]::before{
-      background: radial-gradient(ellipse at 0% 50%, rgba(232,41,58,0.12) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 0% 50%, rgba(16,185,129,0.12) 0%, transparent 60%);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="mini-cut"]::before{
@@ -680,9 +680,9 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="hard-cut"].selected{
-      border-color: rgba(232,41,58,0.5);
-      background: rgba(232,41,58,0.06);
-      box-shadow: inset 0 0 30px rgba(232,41,58,0.05), -3px 0 0 var(--accent-primary);
+      border-color: rgba(16,185,129,0.5);
+      background: rgba(16,185,129,0.06);
+      box-shadow: inset 0 0 30px rgba(16,185,129,0.05), -3px 0 0 var(--accent-primary);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="mini-cut"].selected{
@@ -718,8 +718,8 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="hard-cut"] .objective-icon-wrap{
-      background: rgba(232,41,58,0.12);
-      border: 1px solid rgba(232,41,58,0.2);
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.2);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="mini-cut"] .objective-icon-wrap{
@@ -764,8 +764,8 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="hard-cut"] .objective-badge{
       color: var(--accent-primary);
-      background: rgba(232,41,58,0.12);
-      border: 1px solid rgba(232,41,58,0.25);
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.25);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="mini-cut"] .objective-badge{
@@ -798,7 +798,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="hard-cut"].selected .objective-check{
       background: var(--accent-primary);
-      box-shadow: 0 0 12px rgba(232,41,58,0.6);
+      box-shadow: 0 0 12px rgba(16,185,129,0.6);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .objective-option[data-obj="mini-cut"].selected .objective-check{
@@ -887,9 +887,9 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .thermo-option[data-thermo="eca"].selected{
-      border-color: rgba(232,41,58,0.4);
-      background: rgba(232,41,58,0.06);
-      box-shadow: 0 4px 24px rgba(232,41,58,0.10);
+      border-color: rgba(16,185,129,0.4);
+      background: rgba(16,185,129,0.06);
+      box-shadow: 0 4px 24px rgba(16,185,129,0.10);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .thermo-emoji{
@@ -942,7 +942,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .thermo-option[data-thermo="eca"].selected .thermo-boost{
-      background: rgba(232,41,58,0.15);
+      background: rgba(16,185,129,0.15);
       color: var(--accent-red-bright);
     }
 
@@ -993,7 +993,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .result-panel .panel-inner-glow{
-      background: radial-gradient(ellipse at 90% 0%, rgba(232,41,58,0.07) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 90% 0%, rgba(16,185,129,0.07) 0%, transparent 60%);
     }
 
     
@@ -1070,13 +1070,13 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(232,41,58,0.08) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 60%);
       pointer-events: none;
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .result-main-kpi.highlight{
-      border-color: rgba(232,41,58,0.3);
-      box-shadow: 0 0 30px rgba(232,41,58,0.08);
+      border-color: rgba(16,185,129,0.3);
+      box-shadow: 0 0 30px rgba(16,185,129,0.08);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .kpi-top-row{
@@ -1130,8 +1130,8 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .kpi-delta.negative{
       color: var(--accent-primary);
-      background: rgba(232,41,58,0.12);
-      border: 1px solid rgba(232,41,58,0.2);
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.2);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .kpi-delta.positive{
@@ -1189,7 +1189,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .calorie-bar-target.cut{
       background: linear-gradient(90deg, var(--accent-primary-dim), var(--accent-primary));
-      box-shadow: 0 0 10px rgba(232,41,58,0.4);
+      box-shadow: 0 0 10px rgba(16,185,129,0.4);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .calorie-bar-target.bulk{
@@ -1325,7 +1325,7 @@
       pointer-events: none;
     }
 
-    #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-block.extreme::before{ background: radial-gradient(ellipse at 0 50%, rgba(232,41,58,0.1), transparent 60%); border-left: 3px solid var(--accent-primary); }
+    #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-block.extreme::before{ background: radial-gradient(ellipse at 0 50%, rgba(16,185,129,0.1), transparent 60%); border-left: 3px solid var(--accent-primary); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-block.aggressive::before{ background: radial-gradient(ellipse at 0 50%, rgba(247,97,42,0.1), transparent 60%); border-left: 3px solid var(--accent-orange); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-block.moderate::before{ background: radial-gradient(ellipse at 0 50%, rgba(245,166,35,0.1), transparent 60%); border-left: 3px solid var(--accent-amber); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-block.lean::before{ background: radial-gradient(ellipse at 0 50%, rgba(46,213,115,0.1), transparent 60%); border-left: 3px solid var(--accent-green); }
@@ -1346,7 +1346,7 @@
       transform: scale(1.1) rotate(-8deg);
     }
 
-    #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-extreme .classification-icon-wrap{ background: rgba(232,41,58,0.12); }
+    #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-extreme .classification-icon-wrap{ background: rgba(16,185,129,0.12); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-aggressive .classification-icon-wrap{ background: rgba(247,97,42,0.12); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-moderate .classification-icon-wrap{ background: rgba(245,166,35,0.12); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-lean .classification-icon-wrap{ background: rgba(46,213,115,0.12); }
@@ -1449,7 +1449,7 @@
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .timeline-week-dot.filled{
       background: var(--accent-primary);
       border-color: var(--accent-primary);
-      box-shadow: 0 0 6px rgba(232,41,58,0.5);
+      box-shadow: 0 0 6px rgba(16,185,129,0.5);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .timeline-week-dot.filled.green{
@@ -1547,14 +1547,14 @@
       background: linear-gradient(135deg, var(--accent-primary-dim) 0%, var(--accent-primary) 60%, var(--accent-red-bright) 100%);
       color: #fff;
       border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 4px 20px rgba(232,41,58,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      box-shadow: 0 4px 20px rgba(16,185,129,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
       min-width: 180px;
       justify-content: center;
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .btn-apply:hover{
       background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-red-bright) 100%);
-      box-shadow: 0 6px 30px rgba(232,41,58,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+      box-shadow: 0 6px 30px rgba(16,185,129,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
       transform: translateY(-1px);
     }
 
@@ -1708,7 +1708,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .diff-down{
       color: var(--accent-primary);
-      background: rgba(232,41,58,0.10);
+      background: rgba(16,185,129,0.10);
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .diff-up{
@@ -1739,7 +1739,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .vu-bar.green{ background: var(--accent-green); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .vu-bar.amber{ background: var(--accent-amber); }
-    #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .vu-bar.red{ background: var(--accent-primary); box-shadow: 0 0 4px rgba(232,41,58,0.7); }
+    #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .vu-bar.red{ background: var(--accent-primary); box-shadow: 0 0 4px rgba(16,185,129,0.7); }
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .vu-bar.off{ background: var(--bg-elevated); }
 
     
@@ -1938,7 +1938,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .cockpit-line{
       position: absolute;
-      background: linear-gradient(90deg, transparent, rgba(232,41,58,0.3));
+      background: linear-gradient(90deg, transparent, rgba(16,185,129,0.3));
       height: 1px;
     }
 
@@ -2031,7 +2031,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .diff-row-delta.down{
-      background: rgba(232,41,58,0.1);
+      background: rgba(16,185,129,0.1);
       color: var(--accent-primary);
     }
 
@@ -2060,7 +2060,7 @@
     
     
     #screen-dashboard[data-dashboard-presentation] .simulator-section-legacy ::selection{
-      background: rgba(232,41,58,0.3);
+      background: rgba(16,185,129,0.3);
       color: var(--text-primary);
     }
 
@@ -2076,8 +2076,8 @@
     
     
     @keyframes simulator-glow-pulse{
-      0%, 100% { box-shadow: 0 0 20px rgba(232,41,58,0.2); }
-      50%       { box-shadow: 0 0 40px rgba(232,41,58,0.4); }
+      0%, 100% { box-shadow: 0 0 20px rgba(16,185,129,0.2); }
+      50%       { box-shadow: 0 0 40px rgba(16,185,129,0.4); }
     }
 
     

@@ -20,10 +20,10 @@ interface HeroParticle {
 }
 
 const HERO_PARTICLE_COLORS: readonly [string, ...string[]] = [
-  'rgba(230, 57, 70, 0.6)',
-  'rgba(230, 57, 70, 0.4)',
-  'rgba(255, 100, 120, 0.3)',
-  'rgba(200, 50, 60, 0.5)',
+  'rgba(16, 185, 129, 0.6)',
+  'rgba(16, 185, 129, 0.4)',
+  'rgba(52, 211, 153, 0.3)',
+  'rgba(4, 120, 87, 0.5)',
   'rgba(255, 255, 255, 0.15)',
   'rgba(255, 255, 255, 0.1)',
   'rgba(61, 214, 140, 0.25)',
@@ -422,7 +422,7 @@ export const WelcomeSlide = ({ activated, results, formData }: WelcomeSlideProps
               </p>
               <span className="kpi-mini-chart" aria-hidden>
                 <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="14" stroke="rgba(230,57,70,0.12)" strokeWidth="3" fill="none" />
+                  <circle cx="20" cy="20" r="14" stroke="rgba(16,185,129,0.12)" strokeWidth="3" fill="none" />
                   <circle
                     cx="20"
                     cy="20"
@@ -437,8 +437,8 @@ export const WelcomeSlide = ({ activated, results, formData }: WelcomeSlideProps
                   />
                   <defs>
                     <linearGradient id="ringGradHero" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#ff6b7a" />
-                      <stop offset="100%" stopColor="#e63946" />
+                      <stop offset="0%" stopColor="#34d399" />
+                      <stop offset="100%" stopColor="#10b981" />
                     </linearGradient>
                   </defs>
                   <text x="20" y="24" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.6)">
@@ -487,7 +487,7 @@ export const WelcomeSlide = ({ activated, results, formData }: WelcomeSlideProps
                 <svg width="56" height="28" viewBox="0 0 56 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <polyline
                     points="0,6 8,10 16,8 24,14 32,12 40,18 48,16 56,20"
-                    stroke={isDeficit ? 'rgba(61,214,140,0.5)' : 'rgba(230,57,70,0.5)'}
+                    stroke={isDeficit ? 'rgba(61,214,140,0.5)' : 'rgba(16,185,129,0.5)'}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -504,11 +504,11 @@ export const WelcomeSlide = ({ activated, results, formData }: WelcomeSlideProps
                       <stop offset="100%" stopColor="transparent" />
                     </linearGradient>
                     <linearGradient id="sparkGradSurplus" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#e63946" />
+                      <stop offset="0%" stopColor="#10b981" />
                       <stop offset="100%" stopColor="transparent" />
                     </linearGradient>
                   </defs>
-                  <circle cx="56" cy="20" r="2.5" fill={isDeficit ? '#3dd68c' : '#e63946'} opacity="0.8" />
+                  <circle cx="56" cy="20" r="2.5" fill={isDeficit ? '#3dd68c' : '#10b981'} opacity="0.8" />
                 </svg>
               </span>
             </footer>

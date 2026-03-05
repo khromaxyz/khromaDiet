@@ -13,7 +13,7 @@ export interface AvatarStyle {
 }
 
 export const AVATAR_STYLES: AvatarStyle[] = [
-  { id: 0, role: 'Guerreiro', primary: '#DC2626', secondary: '#7F1D1D' },
+  { id: 0, role: 'Guerreiro', primary: '#10b981', secondary: '#047857' },
   { id: 1, role: 'Atleta', primary: '#2563EB', secondary: '#1E3A8A' },
   { id: 2, role: 'Cientista', primary: '#7C3AED', secondary: '#4C1D95' },
   { id: 3, role: 'Explorador', primary: '#D97706', secondary: '#78350F' },

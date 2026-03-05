@@ -70,7 +70,7 @@ export const ProjectionChart = ({ data, theme = 'dark' }: ProjectionChartProps) 
         {
           label: 'Peso (kg)',
           data: sanitized.weight,
-          borderColor: '#ff2b2b',
+          borderColor: '#10b981',
           borderWidth: 2.8,
           fill: true,
           tension: 0.45,
@@ -79,17 +79,17 @@ export const ProjectionChart = ({ data, theme = 'dark' }: ProjectionChartProps) 
             const chart = context.chart;
             const { ctx, chartArea } = chart;
             if (!chartArea) {
-              return 'rgba(255,59,59,0.24)';
+              return 'rgba(16,185,129,0.24)';
             }
             const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-            gradient.addColorStop(0, 'rgba(255,59,59,0.28)');
-            gradient.addColorStop(1, 'rgba(255,59,59,0)');
+            gradient.addColorStop(0, 'rgba(16,185,129,0.28)');
+            gradient.addColorStop(1, 'rgba(16,185,129,0)');
             return gradient;
           },
           pointBackgroundColor: (ctx: ScriptableContext<'line'>) =>
-            sanitized.refeedWeeks.includes(ctx.dataIndex) ? '#22d3ee' : '#ff2b2b',
+            sanitized.refeedWeeks.includes(ctx.dataIndex) ? '#22d3ee' : '#10b981',
           pointBorderColor: (ctx: ScriptableContext<'line'>) =>
-            sanitized.refeedWeeks.includes(ctx.dataIndex) ? 'rgba(34,211,238,0.3)' : 'rgba(255,43,43,0.3)',
+            sanitized.refeedWeeks.includes(ctx.dataIndex) ? 'rgba(34,211,238,0.3)' : 'rgba(16,185,129,0.3)',
           pointBorderWidth: 2.6,
           pointRadius: 5,
           pointHoverRadius: 6,
@@ -118,7 +118,7 @@ export const ProjectionChart = ({ data, theme = 'dark' }: ProjectionChartProps) 
   const tooltipBg = isLight ? 'rgba(255,255,255,0.98)' : 'rgba(14,8,10,0.95)';
   const tooltipTitle = isLight ? 'rgba(24,24,30,0.92)' : 'rgba(240,240,248,0.9)';
   const tooltipText = isLight ? 'rgba(36,36,44,0.84)' : 'rgba(240,240,248,0.6)';
-  const tooltipBorder = isLight ? 'rgba(255,43,43,0.32)' : 'rgba(255,43,43,0.24)';
+  const tooltipBorder = isLight ? 'rgba(16,185,129,0.32)' : 'rgba(16,185,129,0.24)';
   const gridColor = isLight ? 'rgba(24,24,30,0.08)' : 'rgba(255,255,255,0.04)';
   const xTickColor = isLight ? 'rgba(28,28,36,0.62)' : 'rgba(240,240,248,0.3)';
 
@@ -232,7 +232,7 @@ export const ProjectionChart = ({ data, theme = 'dark' }: ProjectionChartProps) 
               max: weightBounds.max,
               grid: { color: gridColor, drawTicks: false },
               border: { display: false },
-              ticks: { color: '#ff2b2b', callback: (val) => `${Number(val).toFixed(1)}kg` },
+              ticks: { color: '#10b981', callback: (val) => `${Number(val).toFixed(1)}kg` },
             },
             y1: {
               position: 'right',
@@ -249,8 +249,8 @@ export const ProjectionChart = ({ data, theme = 'dark' }: ProjectionChartProps) 
       <svg className="projection-chart-overlay" viewBox={`0 0 ${overlay.width} ${overlay.height}`} aria-hidden>
         <defs>
           <linearGradient id="overlayWeightArea" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#E8001D" stopOpacity="0.16" />
-            <stop offset="100%" stopColor="#E8001D" stopOpacity="0" />
+            <stop offset="0%" stopColor="#10b981" stopOpacity="0.16" />
+            <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -293,14 +293,14 @@ export const ProjectionChart = ({ data, theme = 'dark' }: ProjectionChartProps) 
         ))}
 
         <path d={overlay.areaPath} fill="url(#overlayWeightArea)" opacity="0.9" />
-        <path d={overlay.weightPath} stroke="#E8001D" strokeWidth="1.8" fill="none" opacity="0.65" />
+        <path d={overlay.weightPath} stroke="#10b981" strokeWidth="1.8" fill="none" opacity="0.65" />
 
         {overlay.milestoneIndexes.map((index) => {
           const x = overlay.xPos(index);
           const y = overlay.yWeight(sanitized.weight[index] ?? 0);
           return (
             <g key={`milestone-${index}`}>
-              <circle cx={x} cy={y} r="4.5" className="milestone-circle" stroke="#E8001D" />
+              <circle cx={x} cy={y} r="4.5" className="milestone-circle" stroke="#10b981" />
               <text x={x} y={y - 10} textAnchor="middle" className="milestone-label">
                 S{index}
               </text>

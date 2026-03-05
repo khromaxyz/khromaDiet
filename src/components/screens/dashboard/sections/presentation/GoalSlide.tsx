@@ -285,9 +285,9 @@ export const GoalSlide = ({ activated, results, formData }: GoalSlideProps) => {
                 <svg className="radial-chart__svg" viewBox="0 0 260 260">
                   <defs>
                     <linearGradient id="deficitRadialGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#e63946" />
-                      <stop offset="50%" stopColor="#ff4d5a" />
-                      <stop offset="100%" stopColor="#ff6b76" />
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="50%" stopColor="#34d399" />
+                      <stop offset="100%" stopColor="#6ee7b7" />
                     </linearGradient>
                   </defs>
                   <circle className="radial-chart__track" cx="130" cy="130" r="110" />

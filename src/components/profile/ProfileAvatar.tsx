@@ -12,8 +12,8 @@ interface ProfileAvatarProps {
 const DEFAULT_AVATAR = {
   id: 0,
   role: 'Avatar',
-  primary: '#DC2626',
-  secondary: '#7F1D1D',
+  primary: '#10b981',
+  secondary: '#047857',
 };
 
 const getAvatarStyle = (avatarId: number) => {

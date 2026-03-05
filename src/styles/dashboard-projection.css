@@ -1,7 +1,7 @@
-/* Copiado de legacy/projecao.html com escopo para a secao de Projecao */
+﻿/* Copiado de legacy/projecao.html com escopo para a secao de Projecao */
 
 /* ============================================= */
-    /* SEÇÃO: DESIGN SYSTEM — VARIÁVEIS CSS GLOBAIS  */
+    /* SEÃ‡ÃƒO: DESIGN SYSTEM â€” VARIÃVEIS CSS GLOBAIS  */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy {
       /* Core palette */
@@ -14,11 +14,11 @@
       --color-bg-glass-hover:  rgba(255,255,255,0.06);
 
       /* Accent system */
-      --color-accent:          #e63946;
-      --color-accent-bright:   #ff4757;
-      --color-accent-muted:    rgba(230,57,70,0.15);
-      --color-accent-glow:     rgba(230,57,70,0.35);
-      --color-accent-ultra:    rgba(230,57,70,0.08);
+      --color-accent:          #10b981;
+      --color-accent-bright:   #34d399;
+      --color-accent-muted:    rgba(16,185,129,0.15);
+      --color-accent-glow:     rgba(16,185,129,0.35);
+      --color-accent-ultra:    rgba(16,185,129,0.08);
 
       /* Secondary accents */
       --color-teal:            #2dd4bf;
@@ -38,12 +38,12 @@
       --text-secondary:        #94a3b8;
       --text-tertiary:         #475569;
       --text-muted:            #334155;
-      --text-accent:           #e63946;
+      --text-accent:           #10b981;
 
       /* Border system */
       --border-subtle:         rgba(255,255,255,0.05);
       --border-default:        rgba(255,255,255,0.08);
-      --border-active:         rgba(230,57,70,0.4);
+      --border-active:         rgba(16,185,129,0.4);
       --border-teal:           rgba(45,212,191,0.3);
 
       /* Shadows */
@@ -51,7 +51,7 @@
       --shadow-md:             0 4px 20px rgba(0,0,0,0.5);
       --shadow-lg:             0 8px 40px rgba(0,0,0,0.6);
       --shadow-xl:             0 16px 64px rgba(0,0,0,0.7);
-      --shadow-accent:         0 0 40px rgba(230,57,70,0.2);
+      --shadow-accent:         0 0 40px rgba(16,185,129,0.2);
       --shadow-teal:           0 0 30px rgba(45,212,191,0.15);
 
       /* Radii */
@@ -84,13 +84,13 @@
       --transition-spring:  all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
       /* Chart data */
-      --chart-weight-color: #e63946;
+      --chart-weight-color: #10b981;
       --chart-bf-color:     #2dd4bf;
       --chart-lbm-color:    #a855f7;
     }
 
     /* ============================================= */
-    /* SEÇÃO: RESET & BASE                           */
+    /* SEÃ‡ÃƒO: RESET & BASE                           */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy {
       font-size: 16px;
@@ -109,7 +109,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: SCROLLBAR CUSTOMIZADA                  */
+    /* SEÃ‡ÃƒO: SCROLLBAR CUSTOMIZADA                  */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy::-webkit-scrollbar { width: 6px; }
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy::-webkit-scrollbar-track { background: var(--color-bg-primary); }
@@ -120,7 +120,7 @@
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy::-webkit-scrollbar-thumb:hover { background: var(--color-accent-bright); }
 
     /* ============================================= */
-    /* SEÇÃO: LAYOUT PRINCIPAL — WRAPPER DA PÁGINA   */
+    /* SEÃ‡ÃƒO: LAYOUT PRINCIPAL â€” WRAPPER DA PÃGINA   */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .page-wrapper {
       max-width: 1440px;
@@ -129,7 +129,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: SECTION HEADER — CABEÇALHO DA SEÇÃO    */
+    /* SEÃ‡ÃƒO: SECTION HEADER â€” CABEÃ‡ALHO DA SEÃ‡ÃƒO    */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .section-header {
       display: flex;
@@ -183,7 +183,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .section-title span.highlight {
-      background: linear-gradient(135deg, var(--color-accent) 0%, #ff8a95 100%);
+      background: linear-gradient(135deg, var(--color-accent) 0%, #34d399 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -205,7 +205,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: PROTOCOL BADGE                         */
+    /* SEÃ‡ÃƒO: PROTOCOL BADGE                         */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .protocol-badge {
       display: inline-flex;
@@ -238,7 +238,7 @@
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .protocol-badge-realistic svg { stroke: #22c55e; }
 
     /* ============================================= */
-    /* SEÇÃO: SUMMARY STAT STRIP — BARRA RESUMO      */
+    /* SEÃ‡ÃƒO: SUMMARY STAT STRIP â€” BARRA RESUMO      */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .summary-strip {
       display: grid;
@@ -327,11 +327,11 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: MAIN CHART CONTAINER                   */
+    /* SEÃ‡ÃƒO: MAIN CHART CONTAINER                   */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .chart-section {
       background:
-        radial-gradient(120% 100% at 50% -12%, rgba(230,57,70,0.11) 0%, rgba(230,57,70,0) 46%),
+        radial-gradient(120% 100% at 50% -12%, rgba(16,185,129,0.11) 0%, rgba(16,185,129,0) 46%),
         linear-gradient(180deg, rgba(19,19,36,0.98) 0%, rgba(14,14,30,0.98) 100%);
       border: 1px solid var(--hero-border-medium);
       border-radius: var(--radius-xl);
@@ -346,7 +346,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 72% 52% at 50% -8%, rgba(230,57,70,0.14) 0%, rgba(230,57,70,0) 62%);
+      background: radial-gradient(ellipse 72% 52% at 50% -8%, rgba(16,185,129,0.14) 0%, rgba(16,185,129,0) 62%);
       pointer-events: none;
     }
 
@@ -437,7 +437,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: CHART CANVAS WRAPPER                   */
+    /* SEÃ‡ÃƒO: CHART CANVAS WRAPPER                   */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .chart-canvas-wrapper {
       position: relative;
@@ -459,7 +459,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: CHART TOOLTIP                          */
+    /* SEÃ‡ÃƒO: CHART TOOLTIP                          */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .chart-tooltip {
       position: fixed;
@@ -468,7 +468,7 @@
       border: 1px solid var(--border-active);
       border-radius: var(--radius-lg);
       padding: var(--space-4) var(--space-5);
-      box-shadow: 0 0 0 1px rgba(230,57,70,0.1), var(--shadow-xl), 0 0 30px rgba(230,57,70,0.15);
+      box-shadow: 0 0 0 1px rgba(16,185,129,0.1), var(--shadow-xl), 0 0 30px rgba(16,185,129,0.15);
       min-width: 220px;
       z-index: 1000;
       opacity: 0;
@@ -604,7 +604,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: BOTTOM ROW — BEFORE/AFTER + MILESTONES */
+    /* SEÃ‡ÃƒO: BOTTOM ROW â€” BEFORE/AFTER + MILESTONES */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .bottom-row {
       display: grid;
@@ -614,7 +614,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: BEFORE & AFTER CARD                    */
+    /* SEÃ‡ÃƒO: BEFORE & AFTER CARD                    */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .before-after-card {
       background: var(--color-bg-card);
@@ -630,7 +630,7 @@
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: 
-        radial-gradient(ellipse 80% 50% at 0% 50%, rgba(230,57,70,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 0% 50%, rgba(16,185,129,0.04) 0%, transparent 60%),
         radial-gradient(ellipse 80% 50% at 100% 50%, rgba(45,212,191,0.04) 0%, transparent 60%);
       pointer-events: none;
     }
@@ -852,7 +852,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: MILESTONES TIMELINE CARD               */
+    /* SEÃ‡ÃƒO: MILESTONES TIMELINE CARD               */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .milestones-card {
       background: var(--color-bg-card);
@@ -1031,7 +1031,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: METABOLIC ADAPTATION & INFO ROW        */
+    /* SEÃ‡ÃƒO: METABOLIC ADAPTATION & INFO ROW        */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .info-row {
       display: grid;
@@ -1185,7 +1185,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: WEEKLY BREAKDOWN TABLE                 */
+    /* SEÃ‡ÃƒO: WEEKLY BREAKDOWN TABLE                 */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table-card {
       background: var(--color-bg-card);
@@ -1252,7 +1252,7 @@
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .table-toggle-btn.active {
       background: var(--color-accent);
       color: white;
-      box-shadow: 0 2px 8px rgba(230,57,70,0.35);
+      box-shadow: 0 2px 8px rgba(16,185,129,0.35);
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table-scroll {
@@ -1289,7 +1289,7 @@
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table tbody tr:last-child { border-bottom: none; }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table tbody tr:hover {
-      background: rgba(230,57,70,0.03);
+      background: rgba(16,185,129,0.03);
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table tbody tr.refeed-row {
@@ -1301,7 +1301,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table tbody tr.current-row {
-      background: rgba(230,57,70,0.05);
+      background: rgba(16,185,129,0.05);
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table tbody tr td {
@@ -1365,7 +1365,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: DISCLAIMER FOOTER                      */
+    /* SEÃ‡ÃƒO: DISCLAIMER FOOTER                      */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .projection-disclaimer {
       display: flex;
@@ -1404,7 +1404,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: BODY COMPOSITION VISUAL               */
+    /* SEÃ‡ÃƒO: BODY COMPOSITION VISUAL               */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .body-comp-card {
       background: var(--color-bg-card);
@@ -1518,7 +1518,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: ANIMAÇÕES DE ENTRADA                   */
+    /* SEÃ‡ÃƒO: ANIMAÃ‡Ã•ES DE ENTRADA                   */
     /* ============================================= */
     @keyframes fadeInUp {
       from {
@@ -1552,8 +1552,8 @@
     }
 
     @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 0 15px rgba(230,57,70,0.2); }
-      50% { box-shadow: 0 0 30px rgba(230,57,70,0.4), 0 0 60px rgba(230,57,70,0.1); }
+      0%, 100% { box-shadow: 0 0 15px rgba(16,185,129,0.2); }
+      50% { box-shadow: 0 0 30px rgba(16,185,129,0.4), 0 0 60px rgba(16,185,129,0.1); }
     }
 
     @keyframes countUp { from { opacity: 0; } to { opacity: 1; } }
@@ -1585,7 +1585,7 @@
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .delay-10 { animation-delay: 0.50s; }
 
     /* ============================================= */
-    /* SEÇÃO: NOISE TEXTURE OVERLAY                  */
+    /* SEÃ‡ÃƒO: NOISE TEXTURE OVERLAY                  */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .noise-overlay {
       position: fixed;
@@ -1597,7 +1597,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: BACKGROUND GRID LINES                  */
+    /* SEÃ‡ÃƒO: BACKGROUND GRID LINES                  */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .bg-grid {
       position: fixed;
@@ -1612,7 +1612,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: SCAN LINE ANIMATION (GLOW ARC)         */
+    /* SEÃ‡ÃƒO: SCAN LINE ANIMATION (GLOW ARC)         */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .section-glow-arc {
       position: absolute;
@@ -1626,13 +1626,13 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: CHART CROSSHAIR LINE                   */
+    /* SEÃ‡ÃƒO: CHART CROSSHAIR LINE                   */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .chart-crosshair {
       position: absolute;
       top: 0;
       width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(230,57,70,0.6), transparent);
+      background: linear-gradient(to bottom, transparent, rgba(16,185,129,0.6), transparent);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.15s ease;
@@ -1641,7 +1641,7 @@
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .chart-crosshair.visible { opacity: 1; }
 
     /* ============================================= */
-    /* SEÇÃO: TOTAL SUMMARY FOOTER BAR               */
+    /* SEÃ‡ÃƒO: TOTAL SUMMARY FOOTER BAR               */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .summary-footer {
       display: flex;
@@ -1702,13 +1702,13 @@
       cursor: pointer;
       transition: var(--transition-spring);
       letter-spacing: var(--tracking-em-0030);
-      box-shadow: 0 4px 20px rgba(230,57,70,0.4);
+      box-shadow: 0 4px 20px rgba(16,185,129,0.4);
       white-space: nowrap;
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .summary-footer-cta:hover {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 30px rgba(230,57,70,0.5);
+      box-shadow: 0 8px 30px rgba(16,185,129,0.5);
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .summary-footer-cta:active {
@@ -1718,7 +1718,7 @@
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .summary-footer-cta svg { width: 16px; height: 16px; flex-shrink: 0; }
 
     /* ============================================= */
-    /* SEÇÃO: CHART AREA PULSE ANNOTATION            */
+    /* SEÃ‡ÃƒO: CHART AREA PULSE ANNOTATION            */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .chart-annotation-goal {
       position: absolute;
@@ -1729,7 +1729,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: WEEK SELECTOR PILLS                    */
+    /* SEÃ‡ÃƒO: WEEK SELECTOR PILLS                    */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .week-selector-wrap {
       display: flex;
@@ -1766,7 +1766,7 @@
       background: var(--color-accent);
       border-color: var(--color-accent);
       color: white;
-      box-shadow: 0 2px 10px rgba(230,57,70,0.35);
+      box-shadow: 0 2px 10px rgba(16,185,129,0.35);
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .week-pill.refeed {
@@ -1781,7 +1781,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: GLOW RING ANIMATION                    */
+    /* SEÃ‡ÃƒO: GLOW RING ANIMATION                    */
     /* ============================================= */
     @keyframes ring-spin {
       from { transform: rotate(0deg); }
@@ -1789,7 +1789,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: SKIN — OUTER PAGE BACKGROUND DECOR     */
+    /* SEÃ‡ÃƒO: SKIN â€” OUTER PAGE BACKGROUND DECOR     */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .bg-decor-blob-1 {
       position: fixed;
@@ -1797,7 +1797,7 @@
       left: -200px;
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, rgba(230,57,70,0.025) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(16,185,129,0.025) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -1814,7 +1814,7 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: RESPONSIVE                             */
+    /* SEÃ‡ÃƒO: RESPONSIVE                             */
     /* ============================================= */
     @media (max-width: 1280px) {
       #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .summary-strip { grid-template-columns: repeat(3, 1fr); }
@@ -1847,14 +1847,14 @@
     }
 
     /* ============================================= */
-    /* SEÇÃO: SERIES TOGGLE STATE CLASSES            */
+    /* SEÃ‡ÃƒO: SERIES TOGGLE STATE CLASSES            */
     /* ============================================= */
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .series-weight-hidden .legend-weight { opacity: 0.3; }
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .series-bf-hidden .legend-bf { opacity: 0.3; }
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .series-lbm-hidden .legend-lbm { opacity: 0.3; }
 
     /* ============================================= */
-    /* SEÇÃO: GOAL REACHED CELEBRATION FLASH         */
+    /* SEÃ‡ÃƒO: GOAL REACHED CELEBRATION FLASH         */
     /* ============================================= */
     @keyframes celebrate-flash {
       0% { opacity: 0; }
@@ -1883,7 +1883,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .shimmer-row {
-      background: linear-gradient(90deg, transparent 25%, rgba(230,57,70,0.04) 50%, transparent 75%);
+      background: linear-gradient(90deg, transparent 25%, rgba(16,185,129,0.04) 50%, transparent 75%);
       background-size: 400px 100%;
       animation: shimmer 1.5s ease-out;
     }
@@ -1905,11 +1905,11 @@
   --surface-3: linear-gradient(180deg, rgba(17,18,35,0.985) 0%, rgba(11,12,24,1) 100%);
   --stroke-soft: rgba(255,255,255,0.09);
   --stroke-strong: rgba(255,255,255,0.16);
-  --stroke-accent: rgba(230,57,70,0.34);
+  --stroke-accent: rgba(16,185,129,0.34);
   --elev-1: 0 12px 32px rgba(2,4,18,0.4), 0 0 0 1px rgba(255,255,255,0.02) inset;
   --elev-2: 0 18px 48px rgba(2,4,18,0.48), 0 0 0 1px rgba(255,255,255,0.03) inset;
   --elev-3: 0 28px 74px rgba(2,4,18,0.56), 0 0 0 1px rgba(255,255,255,0.035) inset;
-  --glow-red: rgba(230,57,70,0.2);
+  --glow-red: rgba(16,185,129,0.2);
   --glow-teal: rgba(45,212,191,0.16);
   --glow-purple: rgba(168,85,247,0.15);
   --font-display: 'Barlow Condensed', 'Space Grotesk', 'Inter', system-ui, sans-serif;
@@ -1967,7 +1967,7 @@
   gap: 11px;
   background:
     radial-gradient(120% 140% at 0% 0%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 42%),
-    radial-gradient(130% 85% at 95% 0%, var(--stat-accent-bg, var(--color-accent-ultra)) 0%, rgba(230,57,70,0) 48%),
+    radial-gradient(130% 85% at 95% 0%, var(--stat-accent-bg, var(--color-accent-ultra)) 0%, rgba(16,185,129,0) 48%),
     var(--surface-2);
 }
 
@@ -2012,7 +2012,7 @@
   margin-bottom: 38px;
   border: 1px solid var(--stroke-soft);
   background:
-    radial-gradient(125% 120% at 54% -18%, var(--border-accent) 0%, rgba(230,57,70,0) 45%),
+    radial-gradient(125% 120% at 54% -18%, var(--border-accent) 0%, rgba(16,185,129,0) 45%),
     radial-gradient(120% 85% at 0% 100%, rgba(45,212,191,0.07) 0%, rgba(45,212,191,0) 52%),
     var(--surface-3);
   box-shadow: var(--elev-3);
@@ -2030,7 +2030,7 @@
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .chart-section::after {
   background:
-    radial-gradient(ellipse 68% 56% at 50% -10%, var(--border-accent) 0%, rgba(230,57,70,0) 60%),
+    radial-gradient(ellipse 68% 56% at 50% -10%, var(--border-accent) 0%, rgba(16,185,129,0) 60%),
     linear-gradient(90deg, rgba(12,14,30,0) 0%, rgba(255,255,255,0.01) 50%, rgba(12,14,30,0) 100%);
   opacity: 0.9;
 }
@@ -2066,7 +2066,7 @@
   border: 1px solid var(--border-dim);
   border-radius: 18px;
   background:
-    radial-gradient(130% 105% at 50% -16%, var(--color-accent-muted) 0%, rgba(230,57,70,0) 52%),
+    radial-gradient(130% 105% at 50% -16%, var(--color-accent-muted) 0%, rgba(16,185,129,0) 52%),
     linear-gradient(180deg, rgba(17,18,35,0.95) 0%, rgba(9,10,20,0.9) 100%);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.025), inset 0 -30px 80px rgba(0,0,0,0.38);
 }
@@ -2116,12 +2116,12 @@
 }
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .ba-arrow-icon {
-  box-shadow: 0 8px 18px rgba(0,0,0,0.35), 0 0 24px rgba(230,57,70,0.22);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35), 0 0 24px rgba(16,185,129,0.22);
 }
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .milestone-line {
   width: 2px;
-  background: linear-gradient(to bottom, rgba(230,57,70,0.28), var(--border-dim) 45%, rgba(45,212,191,0.22));
+  background: linear-gradient(to bottom, rgba(16,185,129,0.28), var(--border-dim) 45%, rgba(45,212,191,0.22));
   border-radius: 999px;
   margin-top: var(--space-1);
   margin-bottom: -4px;
@@ -2137,7 +2137,7 @@
 }
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .milestone-item:hover .milestone-content {
-  border-color: rgba(230,57,70,0.22);
+  border-color: rgba(16,185,129,0.22);
   background: linear-gradient(180deg, var(--protein-bg) 0%, rgba(255,255,255,0.01) 100%);
   box-shadow: 0 12px 26px rgba(2,4,18,0.32);
 }
@@ -2184,7 +2184,7 @@
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .info-card:hover {
   border-color: rgba(255,255,255,0.14);
   background:
-    radial-gradient(140% 100% at 100% 0%, rgba(230,57,70,0.11) 0%, rgba(230,57,70,0) 48%),
+    radial-gradient(140% 100% at 100% 0%, rgba(16,185,129,0.11) 0%, rgba(16,185,129,0) 48%),
     var(--surface-2);
   box-shadow: var(--elev-2), 0 0 34px var(--glow-red);
   transform: translateY(-3px);
@@ -2211,7 +2211,7 @@
   padding-top: var(--space-4-5);
   padding-bottom: var(--space-4-5);
   background:
-    radial-gradient(130% 120% at 0% 0%, rgba(230,57,70,0.14) 0%, rgba(230,57,70,0) 55%),
+    radial-gradient(130% 120% at 0% 0%, rgba(16,185,129,0.14) 0%, rgba(16,185,129,0) 55%),
     linear-gradient(180deg, var(--surface-1) 0%, rgba(255,255,255,0.01) 100%);
   border-bottom-color: var(--border-dim);
 }
@@ -2237,7 +2237,7 @@
 }
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .table-toggle-btn.active {
-  box-shadow: 0 6px 16px rgba(230,57,70,0.34), inset 0 1px 0 rgba(255,255,255,0.18);
+  box-shadow: 0 6px 16px rgba(16,185,129,0.34), inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table thead tr th {
@@ -2253,7 +2253,7 @@
 }
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table tbody tr:hover {
-  background: linear-gradient(90deg, var(--protein-bg-mid) 0%, rgba(230,57,70,0.02) 45%, rgba(45,212,191,0.06) 100%);
+  background: linear-gradient(90deg, var(--protein-bg-mid) 0%, rgba(16,185,129,0.02) 45%, rgba(45,212,191,0.06) 100%);
 }
 
 #screen-dashboard[data-dashboard-presentation] .projection-section-legacy .weekly-table tbody tr td {
@@ -2329,3 +2329,4 @@
     font-size: 24px;
   }
 }
+

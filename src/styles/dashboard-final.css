@@ -5,7 +5,7 @@
 
       /*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
 
-      --accent-primary:         #e63946;
+      --accent-primary:         #10b981;
 
       /*  OVERRIDE: valor diferente do :root (#f0f0f5 vs #ffffff) - sera unificado na fase Design System  */
 
@@ -120,10 +120,10 @@
 
     @keyframes final-pulseGlow {
       0%, 100% {
-        box-shadow: 0 0 24px rgba(230,57,70,0.25), 0 0 48px rgba(230,57,70,0.08);
+        box-shadow: 0 0 24px rgba(16,185,129,0.25), 0 0 48px rgba(16,185,129,0.08);
       }
       50% {
-        box-shadow: 0 0 40px rgba(230,57,70,0.45), 0 0 80px rgba(230,57,70,0.15);
+        box-shadow: 0 0 40px rgba(16,185,129,0.45), 0 0 80px rgba(16,185,129,0.15);
       }
     }
 
@@ -352,8 +352,8 @@
       height: 900px;
       background: radial-gradient(
         ellipse at center,
-        rgba(230, 57, 70, 0.07) 0%,
-        rgba(230, 57, 70, 0.03) 35%,
+        rgba(16,185,129,0.07) 0%,
+        rgba(16,185,129,0.03) 35%,
         transparent 70%
       );
       pointer-events: none;
@@ -1091,7 +1091,7 @@
       height: 2px;
     }
 
-    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .macro-block.protein::before { background: linear-gradient(90deg, var(--protein-color), #ff6b6b); }
+    #screen-dashboard[data-dashboard-presentation] .final-section-legacy .macro-block.protein::before { background: linear-gradient(90deg, var(--protein-color), #34d399); }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .macro-block.carbs::before   { background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-light)); }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .macro-block.fat::before     { background: linear-gradient(90deg, #818cf8, #a5b4fc); }
 
@@ -1125,7 +1125,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .protein .macro-block-pct {
       background: var(--color-accent-muted);
-      color: #ff6b6b;
+      color: #34d399;
     }
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .carbs .macro-block-pct {
       background: rgba(212, 168, 67, 0.12);
@@ -1145,7 +1145,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .protein .macro-block-value {
-      background: linear-gradient(135deg, #ff6b6b, var(--protein-color));
+      background: linear-gradient(135deg, #34d399, var(--protein-color));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -1190,7 +1190,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .protein .macro-bar-fill {
-      background: linear-gradient(90deg, var(--protein-color), #ff6b6b);
+      background: linear-gradient(90deg, var(--protein-color), #34d399);
       width: 25%;
       animation: final-slideInLeft 1.4s ease 1.2s both;
     }
@@ -1348,7 +1348,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-point-dot.active {
       background: var(--accent-primary);
-      box-shadow: 0 0 12px rgba(230, 57, 70, 0.5);
+      box-shadow: 0 0 12px rgba(16,185,129,0.5);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .timeline-point-dot.gold {
@@ -1702,7 +1702,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .btn-primary-cta:hover {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 32px rgba(230, 57, 70, 0.5), 0 2px 8px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 32px rgba(16,185,129,0.5), 0 2px 8px rgba(0,0,0,0.4);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .btn-primary-cta:active {
@@ -1808,7 +1808,7 @@
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .icon-wrap-pdf {
-      background: linear-gradient(135deg, rgba(230,57,70,0.15), rgba(230,57,70,0.05));
+      background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05));
       border: 1px solid var(--color-border-accent);
     }
 
@@ -2499,7 +2499,7 @@
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-btn-confirm:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+      box-shadow: 0 6px 20px rgba(16,185,129,0.4);
     }
 
     #screen-dashboard[data-dashboard-presentation] .final-section-legacy .modal-btn-confirm.share-confirm {

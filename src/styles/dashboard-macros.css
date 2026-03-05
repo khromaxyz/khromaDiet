@@ -19,7 +19,7 @@
 
             /*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
 
-            --accent-primary: #e63946;
+            --accent-primary: #10b981;
             /*  OVERRIDE: valor diferente do :root (#c0313d vs #b52d38) - sera unificado na fase Design System  */
             --accent-primary-dark: #c0313d;
 
@@ -100,7 +100,7 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background:
-                radial-gradient(ellipse 100% 70% at 50% -20%, rgba(230, 57, 70, 0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 70% at 50% -20%, rgba(16,185,129,0.07) 0%, transparent 60%),
                 radial-gradient(ellipse 60% 50% at 10% 90%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
                 radial-gradient(ellipse 60% 50% at 90% 80%, rgba(244, 162, 97, 0.04) 0%, transparent 50%),
                 radial-gradient(ellipse 40% 30% at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
@@ -138,7 +138,7 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
-            background: radial-gradient(circle, rgba(230, 57, 70, 0.035) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(16,185,129,0.035) 0%, transparent 70%);
             transform: translate(-50%, -50%);
             transition: opacity 0.4s ease;
             opacity: 0;
@@ -270,7 +270,7 @@
             height: 64px;
             border-radius: var(--radius-lg);
             background: linear-gradient(135deg, var(--color-accent-muted), rgba(244, 162, 97, 0.08));
-            border: 1px solid rgba(230, 57, 70, 0.15);
+            border: 1px solid rgba(16,185,129,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -400,7 +400,7 @@
 
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--protein:hover {
             border-color: var(--color-border-accent);
-            box-shadow: var(--shadow-xl), 0 0 60px rgba(230, 57, 70, 0.12), 0 0 120px rgba(230, 57, 70, 0.06);
+            box-shadow: var(--shadow-xl), 0 0 60px rgba(16,185,129,0.12), 0 0 120px rgba(16,185,129,0.06);
         }
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--carb:hover {
             border-color: rgba(244, 162, 97, 0.3);
@@ -493,8 +493,8 @@
 
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--protein .macro-card__emoji-wrap {
             background: linear-gradient(135deg, var(--protein-bg), var(--protein-bg-mid));
-            border: 1px solid rgba(230, 57, 70, 0.15);
-            box-shadow: 0 0 20px rgba(230, 57, 70, 0.08);
+            border: 1px solid rgba(16,185,129,0.15);
+            box-shadow: 0 0 20px rgba(16,185,129,0.08);
         }
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--carb .macro-card__emoji-wrap {
             background: linear-gradient(135deg, var(--carb-bg), var(--carb-bg-mid));
@@ -821,7 +821,7 @@
             box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
         }
 
-        #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--protein .range-gauge__marker { background: var(--protein-color-light); box-shadow: 0 0 12px var(--protein-glow-strong), 0 0 0 2px rgba(230, 57, 70, 0.2); }
+        #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--protein .range-gauge__marker { background: var(--protein-color-light); box-shadow: 0 0 12px var(--protein-glow-strong), 0 0 0 2px rgba(16,185,129,0.2); }
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--carb .range-gauge__marker { background: var(--carb-color-light); box-shadow: 0 0 12px var(--carb-glow-strong), 0 0 0 2px rgba(244, 162, 97, 0.2); }
         #screen-dashboard[data-dashboard-presentation] .macros-section-legacy .macro-card--fat .range-gauge__marker { background: var(--fat-color-light); box-shadow: 0 0 12px var(--fat-glow-strong), 0 0 0 2px rgba(139, 92, 246, 0.2); }
 

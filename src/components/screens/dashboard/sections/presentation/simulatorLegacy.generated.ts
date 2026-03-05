@@ -59,7 +59,7 @@ export const LEGACY_SIMULATOR_HTML = `<div class="page-wrapper">
         <div class="controls-panel-header">
           <div class="controls-panel-title">
             <div class="panel-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-red)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-primary)">
                 <circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
               </svg>
             </div>
@@ -291,8 +291,8 @@ export const LEGACY_SIMULATOR_HTML = `<div class="page-wrapper">
             </div>
 
             <!-- Thermo warning -->
-            <div id="thermo-warning" style="display:none; margin-top:8px; padding:10px 12px; background:rgba(232,41,58,0.07); border:1px solid rgba(232,41,58,0.2); border-radius:8px; font-size:11px; color:var(--text-secondary); line-height:1.5;">
-              ⚠️ <strong style="color:var(--accent-red)">ECA Stack</strong> é um protocolo avançado. Consulte um profissional de saúde antes de utilizar.
+            <div id="thermo-warning" style="display:none; margin-top:8px; padding:10px 12px; background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.2); border-radius:8px; font-size:11px; color:var(--text-secondary); line-height:1.5;">
+              ⚠️ <strong style="color:var(--accent-primary)">ECA Stack</strong> é um protocolo avançado. Consulte um profissional de saúde antes de utilizar.
             </div>
           </div>
 
@@ -365,12 +365,12 @@ export const LEGACY_SIMULATOR_HTML = `<div class="page-wrapper">
                 <path d="M 65 15 A 50 50 0 0 1 92 22"
                       fill="none" stroke="rgba(247,97,42,0.25)" stroke-width="10" stroke-linecap="butt"/>
                 <path d="M 92 22 A 50 50 0 0 1 115 65"
-                      fill="none" stroke="rgba(232,41,58,0.25)" stroke-width="10" stroke-linecap="butt"/>
+                      fill="none" stroke="rgba(16,185,129,0.25)" stroke-width="10" stroke-linecap="butt"/>
                 <!-- Fill arc -->
                 <path class="gauge-fill"
                       id="gauge-fill-arc"
                       d="M 15 65 A 50 50 0 0 1 115 65"
-                      stroke="var(--accent-red)"
+                      stroke="var(--accent-primary)"
                       stroke-dasharray="157"
                       stroke-dashoffset="55"/>
                 <!-- Needle -->
@@ -612,7 +612,7 @@ export const LEGACY_SIMULATOR_SCRIPT = `// =====================================
 
   // Objective multipliers vs TDEE
   const OBJECTIVE_CONFIG = {
-    'hard-cut': { name: 'Hard Cut · Cafeína', label: 'Hard Cut', deficit: -0.25, icon: '🔥', color: 'red' },
+    'hard-cut': { name: 'Hard Cut · Cafeína', label: 'Hard Cut', deficit: -0.25, icon: '🔥', color: 'green' },
     'mini-cut': { name: 'Mini Cut',           label: 'Mini Cut', deficit: -0.15, icon: '⚡', color: 'orange' },
     'lean-bulk':{ name: 'Lean Bulk',          label: 'Lean Bulk',deficit: +0.10, icon: '💪', color: 'green' },
   };
@@ -882,7 +882,7 @@ export const LEGACY_SIMULATOR_SCRIPT = `// =====================================
     } else if (deficitPct > -20) {
       arc.style.stroke = 'var(--accent-orange)';
     } else {
-      arc.style.stroke = 'var(--accent-red)';
+      arc.style.stroke = 'var(--accent-primary)';
     }
 
     // Gauge value text

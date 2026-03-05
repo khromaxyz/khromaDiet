@@ -78,6 +78,7 @@ export const LEGACY_FINAL_HTML = `<!-- =========================================
 
       <!-- Título principal -->
       <h1 class="completion-title">
+        <span id="df-final-a11y-phrase" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">Seu Plano est&#225; Pronto para A&#231;&#227;o</span>
         Seu Plano está<br />
         <span class="accent-word">Pronto para Ação</span>
       </h1>
@@ -579,7 +580,7 @@ export const LEGACY_FINAL_HTML = `<!-- =========================================
 
       <div class="insight-card animate-on-scroll delay-1" role="listitem">
         <div class="insight-icon-row">
-          <div class="insight-icon" style="background: rgba(230,57,70,0.1);" aria-hidden="true">
+          <div class="insight-icon" style="background: rgba(16,185,129,0.1);" aria-hidden="true">
             <svg viewBox="0 0 18 18" fill="none" style="color: var(--color-accent);">
               <path d="M9 2l1.9 5.8H17l-4.9 3.6 1.9 5.8L9 14l-5 3.2 1.9-5.8L1 8.8h6.1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
             </svg>

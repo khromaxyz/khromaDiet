@@ -14,17 +14,17 @@
             --bg-glass: rgba(20, 20, 24, 0.85);
 
             /* Accent — Red System */
-            --accent-primary: #e63946;
-            --accent-secondary: #ff4d5a;
-            --accent-tertiary: #ff6b76;
-            --accent-muted: rgba(230, 57, 70, 0.15);
-            --accent-glow: rgba(230, 57, 70, 0.4);
-            --accent-subtle: rgba(230, 57, 70, 0.08);
+            --accent-primary: #10b981;
+            --accent-secondary: #34d399;
+            --accent-tertiary: #34d399;
+            --accent-muted: rgba(16,185,129,0.15);
+            --accent-glow: rgba(16,185,129,0.4);
+            --accent-subtle: rgba(16,185,129,0.08);
 
             /* Macro Colors */
-            --protein-color: #e63946;
-            --protein-bg: rgba(230, 57, 70, 0.12);
-            --protein-glow: rgba(230, 57, 70, 0.3);
+            --protein-color: #10b981;
+            --protein-bg: rgba(16,185,129,0.12);
+            --protein-glow: rgba(16,185,129,0.3);
             --carb-color: #f4a261;
             --carb-bg: rgba(244, 162, 97, 0.12);
             --carb-glow: rgba(244, 162, 97, 0.3);
@@ -38,20 +38,20 @@
             --text-primary: #f0f0f2;
             --text-secondary: #a0a0aa;
             --text-tertiary: #68687a;
-            --text-accent: #e63946;
+            --text-accent: #10b981;
 
             /* Borders */
             --border-subtle: rgba(255, 255, 255, 0.04);
             --border-light: rgba(255, 255, 255, 0.07);
             --border-medium: rgba(255, 255, 255, 0.1);
-            --border-accent: rgba(230, 57, 70, 0.25);
+            --border-accent: rgba(16,185,129,0.25);
 
             /* Shadows */
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
             --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
             --shadow-xl: 0 16px 48px rgba(0,0,0,0.6);
-            --shadow-glow: 0 0 40px rgba(230, 57, 70, 0.15);
+            --shadow-glow: 0 0 40px rgba(16,185,129,0.15);
             --shadow-inner: inset 0 1px 0 rgba(255,255,255,0.03);
 
             /* Spacing */
@@ -436,7 +436,7 @@
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .total-stat--kcal {
-            background: linear-gradient(135deg, var(--accent-red-subtle), rgba(230, 57, 70, 0.02));
+            background: linear-gradient(135deg, var(--accent-primary-dim), rgba(16,185,129,0.02));
             border-color: var(--border-accent);
         }
 
@@ -707,7 +707,7 @@
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card:hover .meal-card__body {
             border-color: var(--border-medium);
             transform: translateX(4px);
-            box-shadow: var(--shadow-xl), 0 0 60px rgba(230, 57, 70, 0.05);
+            box-shadow: var(--shadow-xl), 0 0 60px rgba(16,185,129,0.05);
         }
 
         #screen-dashboard[data-dashboard-presentation] .meals-section-legacy .meal-card:hover .meal-card__body::before {

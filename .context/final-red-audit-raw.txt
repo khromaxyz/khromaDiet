@@ -1,0 +1,142 @@
+﻿Red audit raw generated: 2026-03-04T17:16:51.1395806-03:00
+## 1.1 CSS - Hex reds
+Count: 6
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-final.css:6:/*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-macros.css:20:/*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:10:/*  OVERRIDE: valor diferente do :root (#e8293a vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-supplements.css:18:/*  OVERRIDE: valor diferente do :root (#e02020 vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-supplements.css:20:/*  OVERRIDE: valor diferente do :root (#ff3333 vs #ff4d5a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\tokens.css:110:--error-color: #ef4444;
+
+## 1.1 CSS - RGBA reds
+Count: 4
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:13:/*  OVERRIDE: valor diferente do :root (#b01f2d vs rgba(255, 42, 42, 0.12)) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:15:/*  OVERRIDE: valor diferente do :root (rgba(232, 41, 58, 0.35) vs rgba(230, 57, 70, 0.3)) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:17:/*  OVERRIDE: valor diferente do :root (rgba(232, 41, 58, 0.08) vs rgba(230, 57, 70, 0.08)) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-supplements.css:22:/*  OVERRIDE: valor diferente do :root (rgba(224, 32, 32, 0.18) vs rgba(230, 57, 70, 0.35)) - sera unificado na fase Design System  */
+
+## 1.1 CSS - Legacy neon green
+Count: 0
+(no matches)
+
+## 1.1 CSS - red word in color properties
+Count: 28
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-macros.css:169:background: linear-gradient(135deg, var(--accent-red-subtle), var(--fat-bg));
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-macros.css:257:background: linear-gradient(90deg, transparent, var(--accent-red-glow), rgba(244, 162, 97, 0.3), rgba(139, 92, 246, 0.3), transparent);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-macros.css:1797:background: var(--accent-red-glow);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:2934:background: linear-gradient(135deg, rgba(20, 20, 22, 0.92) 0%, var(--accent-red-subtle) 100%);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:3132:background: var(--accent-red-subtle);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:3211:background: radial-gradient(ellipse, var(--accent-red-subtle) 0%, transparent 70%);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:4213:background: linear-gradient(135deg, var(--accent-red-subtle), var(--fat-bg));
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:4304:background: linear-gradient(90deg, transparent, var(--accent-red-glow), rgba(244, 162, 97, 0.3), rgba(139, 92, 246, 0.3), transparent);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-projection.css:922:background: linear-gradient(135deg, var(--color-accent-muted), var(--accent-red-subtle));
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-projection.css:1651:background: linear-gradient(135deg, var(--accent-red-subtle), rgba(45,212,191,0.04));
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-projection.css:1976:box-shadow: var(--elev-2), 0 0 32px var(--glow-red);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-projection.css:2189:box-shadow: var(--elev-2), 0 0 34px var(--glow-red);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:164:background: var(--accent-red-subtle);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:202:background: linear-gradient(135deg, var(--accent-red-bright) 0%, var(--accent-orange) 100%);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:353:background: var(--accent-red-subtle);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:515:background: linear-gradient(90deg, var(--accent-primary-dim) 0%, var(--accent-primary) 50%, var(--accent-red-bright) 100%);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:550:border-color: var(--accent-red-bright);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:917:#screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .thermo-option[data-thermo="eca"].selected .thermo-name{ color: var(--accent-red-bright); }
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:946:color: var(--accent-red-bright);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:1267:#screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .metric-card.type-red .metric-value{ color: var(--accent-red-bright); }
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:1374:#screen-dashboard[data-dashboard-presentation] .simulator-section-legacy .classification-extreme .classification-level-name{ color: var(--accent-red-bright); }
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:1547:background: linear-gradient(135deg, var(--accent-primary-dim) 0%, var(--accent-primary) 60%, var(--accent-red-bright) 100%);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:1556:background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-red-bright) 100%);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\screens.css:635:background: var(--accent-red-dim);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\screens.css:636:color: var(--accent-red);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\screens.css:1212:color: var(--accent-red);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\screens.css:2129:color: var(--accent-red);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\screens.css:3001:color: var(--accent-red);
+
+## 1.2 TS/TSX - Hex reds
+Count: 0
+(no matches)
+
+## 1.2 TS/TSX - RGBA reds
+Count: 0
+(no matches)
+
+## 1.2 TS/TSX - style red values
+Count: 3
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\charts\ProjectionChart.tsx:100:borderColor: '#ff6b00',
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\charts\ProjectionChart.tsx:243:ticks: { color: '#ff6b00', callback: (val) => `${Number(val).toFixed(1)}%` },
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\supplementsLegacy.generated.ts:1095:color: '#ffb830',
+
+## 1.2 TS/TSX - color variable identifiers
+Count: 0
+(no matches)
+
+## 1.2 TS/TSX - legacy neon green
+Count: 0
+(no matches)
+
+## 1.3 Generated files (.generated.ts)
+Count: 41
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\finalLegacy.generated.ts:1041:aria-describedby="modalShareDesc"
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\finalLegacy.generated.ts:1057:<p class="modal-subtitle" id="modalShareDesc">Um link único será gerado para compartilhar seu protocolo com profissionais de saúde.</p>
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:374:<span class="milestone-tag red">Dia Zero</span>
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:476:<span class="body-comp-item-change down" aria-label="Redução de 10.1%">↓ 10.1%</span>
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:506:<span class="body-comp-item-change down" aria-label="Redução de 43.4%">↓ 43.4%</span>
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:651:<span class="milestone-tag red" style="font-size:10px">Anti-Catab?lico</span>
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:863:hoveredWeek: null,
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1178:const isHovered = state.hoveredWeek === d.week;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1185:const r = isHovered || isSelected ? 6 : (isRefeed ? 5 : 3.5);
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1187:if (isHovered || isSelected) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1197:ctx.shadowBlur = isHovered ? 15 : 6;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1205:ctx.strokeStyle = isHovered ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.5)';
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1213:const r = isHovered || isSelected ? 5 : 3;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1215:if (isHovered || isSelected) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1225:ctx.shadowBlur = isHovered ? 12 : 4;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1232:ctx.strokeStyle = isHovered ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1238:if (state.visibleSeries.lbm && (isHovered || isSelected || i % 4 === 0)) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1240:const r = isHovered || isSelected ? 4 : 2.5;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1280:if (isHovered) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1473:if (state.hoveredWeek !== closestWeek) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1474:state.hoveredWeek = closestWeek;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1480:if (state.hoveredWeek !== null) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1481:state.hoveredWeek = null;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1489:state.hoveredWeek = null;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1495:if (state.hoveredWeek !== null) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1496:state.selectedWeek = state.selectedWeek === state.hoveredWeek ? null : state.hoveredWeek;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1525:if (closestWeek !== null && state.hoveredWeek !== closestWeek) {
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1526:state.hoveredWeek = closestWeek;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1534:state.hoveredWeek = null;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1679:state.hoveredWeek = week;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:1690:state.hoveredWeek = null;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\projectionLegacy.generated.ts:2032:state.hoveredWeek = null;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\simulatorLegacy.generated.ts:407:<div class="metric-card type-red">
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\simulatorLegacy.generated.ts:840:const futureDate = new Date();
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\simulatorLegacy.generated.ts:841:futureDate.setDate(futureDate.getDate() + (r.weeksToGoal * 7));
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\simulatorLegacy.generated.ts:843:document.getElementById('deadline-date').textContent = \`Previsão: ~\${monthNames[futureDate.getMonth()]} \${futureDate.getFullYear()}\`;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\supplementsLegacy.generated.ts:1156:{ text: '<strong>Anti-inflamatório sistêmico:</strong> EPA compete com ácido araquidônico, reduzindo produção de eicosanoides pró-inflamatórios.' },
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\supplementsLegacy.generated.ts:1157:{ text: '<strong>Saúde cardiovascular:</strong> reduz triglicerídeos em 15–30% em doses de 2–4g/dia. Melhora função endotelial.' },
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\supplementsLegacy.generated.ts:1159:{ text: '<strong>Recuperação muscular acelerada:</strong> reduz DOMS (dor muscular de início tardio) e marcadores inflamatórios pós-treino.' },
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\supplementsLegacy.generated.ts:1182:{ text: '<strong>Melhora qualidade do sono:</strong> ativa receptores GABA (neuroinibição), reduz cortisol noturno e diminui latência do sono.' },
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\screens\dashboard\sections\presentation\supplementsLegacy.generated.ts:1183:{ text: '<strong>Redução de câimbras e espasmos:</strong> regula contração muscular — particularmente útil para atletas treinando com alta frequência.' },
+
+## 1.4 SVG inline in TSX
+Count: 0
+(no matches)
+
+## 1.4 SVG files
+Count: 0
+(no matches)
+
+## 1.5 Catch-all #[fF][fF]xxxx (filtered first 50)
+Count: 13
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\charts\ProjectionChart.tsx:100:borderColor: '#ff6b00',
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\charts\ProjectionChart.tsx:107:sanitized.refeedWeeks.includes(ctx.dataIndex) ? '#22d3ee' : '#ff6b00',
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\components\charts\ProjectionChart.tsx:243:ticks: { color: '#ff6b00', callback: (val) => `${Number(val).toFixed(1)}%` },
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-final.css:6:/*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-macros.css:20:/*  OVERRIDE: valor diferente do :root (#e63946 vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:1622:--tdee-color-neat: #ff9f0a;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:5995:background: #ff6b00;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:6398:background: #ff6b00;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-presentation.css:6469:color: #ff9f5c;
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-simulator.css:10:/*  OVERRIDE: valor diferente do :root (#e8293a vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-supplements.css:18:/*  OVERRIDE: valor diferente do :root (#e02020 vs #ff2a2a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\dashboard-supplements.css:20:/*  OVERRIDE: valor diferente do :root (#ff3333 vs #ff4d5a) - sera unificado na fase Design System  */
+C:\Users\Pichau\Documents\khromaDiet - Copia\src\styles\tokens.css:104:--tdee-color-neat: #ff9f0a;
+
