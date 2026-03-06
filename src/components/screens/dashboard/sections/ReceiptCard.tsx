@@ -46,6 +46,7 @@ export const ReceiptCard = ({
     <DataCard
       data-testid="final-receipt-card"
       glow="emerald"
+      hoverable
       className={cn('dashboard-final-receipt p-[var(--space-6)]', className)}
       {...props}
     >

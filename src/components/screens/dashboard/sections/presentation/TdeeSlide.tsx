@@ -21,9 +21,12 @@ import type { CalculationResults, FormData } from '@/lib/types';
 
 import {
   CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardBarTransition,
   dashboardContainerVariants,
   dashboardItemVariants,
+  dashboardMicroItemVariants,
   dashboardPanelVariants,
+  dashboardStaggerGroupVariants,
   formatKcal,
   formatPct,
 } from './shared';
@@ -81,6 +84,12 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
   const tefValue = Math.round(results.breakdown.tef);
 
   const tdeeAnimated = useCountUp(tdeeFinalRounded, activated, 1100);
+  const bmrAnimated = useCountUp(bmrValue, activated, 950);
+  const neatAnimated = useCountUp(neatValue, activated, 950);
+  const eatAnimated = useCountUp(eatValue, activated, 950);
+  const cardioAnimated = useCountUp(cardioValue, activated, 950);
+  const tefAnimated = useCountUp(tefValue, activated, 950);
+  const trainingSessionsAnimated = useCountUp(formData.trainingSessions, activated, 900);
 
   const components: TdeeComponent[] = [
     {
@@ -146,6 +155,14 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
   ];
 
   const componentsSum = components.reduce((sum, component) => sum + component.value, 0);
+  const animatedComponentValues = {
+    bmr: bmrAnimated,
+    neat: neatAnimated,
+    eat: eatAnimated,
+    cardio: cardioAnimated,
+    tef: tefAnimated,
+  } as const;
+
   const additiveSteps = components.reduce<
     Array<{
       id: string;
@@ -189,7 +206,7 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
       >
         <motion.div variants={dashboardItemVariants}>
           <SectionHeader
-            eyebrow="02 — TDEE BREAKDOWN"
+            eyebrow="02 - TDEE BREAKDOWN"
             title={<span id="dfp-heading-tdee">De onde vem seu gasto energetico</span>}
             subtitle="Basal, movimento, treino, cardio e efeito termico reunidos na mesma leitura. O TDEE final deixa de ser caixa-preta."
             action={
@@ -235,88 +252,97 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
               </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+            <motion.div className="grid gap-3 sm:grid-cols-2" variants={dashboardStaggerGroupVariants}>
+              <motion.div
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                   Base metabolica
                 </div>
                 <div className="font-mono text-[28px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
-                  {formatKcal(results.bmr.bmr)}
+                  {formatKcal(bmrAnimated)}
                   <span className="ml-1 text-xs text-[var(--text-muted)]">kcal</span>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                   Atividade diaria
                 </div>
                 <div className="font-mono text-[28px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
-                  {formatKcal(neatValue)}
+                  {formatKcal(neatAnimated)}
                   <span className="ml-1 text-xs text-[var(--text-muted)]">kcal</span>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                   Treino da semana
                 </div>
                 <div className="font-mono text-[28px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
-                  {formData.trainingSessions}x
+                  {trainingSessionsAnimated}x
                   <span className="ml-1 text-xs text-[var(--text-muted)]">sess/sem</span>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                   Cardio
                 </div>
                 <div className="font-mono text-[16px] font-semibold tracking-[-0.6px] text-[var(--text-primary)]">
                   {resolveCardioMethod(formData)}
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </DataCard>
         </motion.div>
 
         <motion.div
           className="grid gap-4 md:grid-cols-2 xl:grid-cols-5"
-          variants={dashboardItemVariants}
+          variants={dashboardStaggerGroupVariants}
         >
           {components.map((component) => {
             const Icon = component.icon;
 
             return (
-              <DataCard
-                key={component.id}
-                glow={component.glow}
-                hoverable
-                className="p-[var(--space-5)]"
-              >
-                <div className="mb-4 flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                      {component.shortLabel}
+              <motion.div key={component.id} variants={dashboardMicroItemVariants}>
+                <DataCard glow={component.glow} hoverable className="p-[var(--space-5)]">
+                  <div className="mb-4 flex items-start justify-between gap-3">
+                    <div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                        {component.shortLabel}
+                      </div>
+                      <div className="mt-1 text-sm font-medium text-[var(--text-primary)]">
+                        {component.title}
+                      </div>
                     </div>
-                    <div className="mt-1 text-sm font-medium text-[var(--text-primary)]">
-                      {component.title}
+
+                    <div className="rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] p-2 text-[var(--text-secondary)]">
+                      <Icon className="h-4 w-4" />
                     </div>
                   </div>
 
-                  <div className="rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] p-2 text-[var(--text-secondary)]">
-                    <Icon className="h-4 w-4" />
-                  </div>
-                </div>
-
-                <StatBlock
-                  value={component.value}
-                  unit="kcal"
-                  label={component.title}
-                  sublabel={component.description}
-                  size="sm"
-                  color={component.color}
-                  className={CARDLESS_STAT_BLOCK_CLASSNAME}
-                />
-              </DataCard>
+                  <StatBlock
+                    value={animatedComponentValues[component.id]}
+                    unit="kcal"
+                    label={component.title}
+                    sublabel={component.description}
+                    size="sm"
+                    color={component.color}
+                    className={CARDLESS_STAT_BLOCK_CLASSNAME}
+                  />
+                </DataCard>
+              </motion.div>
             );
           })}
         </motion.div>
@@ -339,24 +365,32 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
                   </div>
                 </div>
 
-                <div className="space-y-5">
+                <motion.div className="space-y-5" variants={dashboardStaggerGroupVariants}>
                   <div className="flex h-5 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
-                    {components.map((component) => (
-                      <div
+                    {components.map((component, index) => (
+                      <motion.div
                         key={component.id}
-                        style={{
-                          width: `${componentsSum > 0 ? (component.value / componentsSum) * 100 : 0}%`,
-                          backgroundColor: component.railColor,
+                        initial={false}
+                        animate={{
+                          width: activated
+                            ? `${componentsSum > 0 ? (component.value / componentsSum) * 100 : 0}%`
+                            : '0%',
                         }}
+                        transition={{
+                          ...dashboardBarTransition,
+                          delay: index * 0.05,
+                        }}
+                        style={{ backgroundColor: component.railColor }}
                       />
                     ))}
                   </div>
 
-                  <div className="space-y-3">
+                  <motion.div className="space-y-3" variants={dashboardStaggerGroupVariants}>
                     {components.map((component) => (
-                      <div
+                      <motion.div
                         key={component.id}
                         className="flex items-center justify-between gap-4 text-sm"
+                        variants={dashboardMicroItemVariants}
                       >
                         <div className="flex items-center gap-3">
                           <span
@@ -371,10 +405,10 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
                           )}
                           % · {formatKcal(component.value)} kcal
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
 
               <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-5)]">
@@ -388,15 +422,19 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  {additiveSteps.map((step) => {
+                <motion.div className="space-y-4" variants={dashboardStaggerGroupVariants}>
+                  {additiveSteps.map((step, index) => {
                     const previousWidth =
                       results.tdeeFinal > 0 ? (step.previous / results.tdeeFinal) * 100 : 0;
                     const cumulativeWidth =
                       results.tdeeFinal > 0 ? (step.cumulative / results.tdeeFinal) * 100 : 0;
 
                     return (
-                      <div key={step.id} className="space-y-2">
+                      <motion.div
+                        key={step.id}
+                        className="space-y-2"
+                        variants={dashboardMicroItemVariants}
+                      >
                         <div className="flex items-center justify-between gap-4 text-sm">
                           <div className="text-[var(--text-secondary)]">
                             <span className="font-medium text-[var(--text-primary)]">
@@ -410,24 +448,36 @@ export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
                         </div>
 
                         <div className="relative h-3 overflow-hidden rounded-full bg-[var(--bg-active)]">
-                          <div
+                          <motion.div
                             className="bg-[var(--text-ghost)]/50 absolute inset-y-0 left-0 rounded-full"
-                            style={{ width: `${previousWidth}%` }}
+                            initial={false}
+                            animate={{ width: activated ? `${previousWidth}%` : '0%' }}
+                            transition={{
+                              ...dashboardBarTransition,
+                              delay: index * 0.05,
+                            }}
                           />
-                          <div
+                          <motion.div
                             className="absolute inset-y-0 rounded-full"
+                            initial={false}
+                            animate={{
+                              left: activated ? `${previousWidth}%` : '0%',
+                              width: activated ? `${Math.max(cumulativeWidth - previousWidth, 0)}%` : '0%',
+                            }}
+                            transition={{
+                              ...dashboardBarTransition,
+                              delay: index * 0.05,
+                            }}
                             style={{
-                              left: `${previousWidth}%`,
-                              width: `${Math.max(cumulativeWidth - previousWidth, 0)}%`,
                               backgroundColor: step.color,
                               boxShadow: `0 0 24px ${step.color}`,
                             }}
                           />
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
-                </div>
+                </motion.div>
               </div>
             </div>
           </ChartContainer>

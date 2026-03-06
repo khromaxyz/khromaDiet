@@ -79,12 +79,15 @@ body::after {
 
 #root {
   min-height: 100vh;
+  background-color: var(--bg-abyss);
 }
 
 #app {
   position: relative;
   min-height: 100vh;
   z-index: 1;
+  background-color: var(--bg-abyss);
+  isolation: isolate;
 }
 
 .screen {

@@ -13,7 +13,9 @@ import {
   CARDLESS_STAT_BLOCK_CLASSNAME,
   dashboardContainerVariants,
   dashboardItemVariants,
+  dashboardMicroItemVariants,
   dashboardPanelVariants,
+  dashboardStaggerGroupVariants,
   formatKcal,
   formatKg,
   formatPct,
@@ -426,8 +428,9 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
           </ChartContainer>
         </motion.div>
 
-        <motion.div className="grid gap-4 xl:grid-cols-4" variants={dashboardItemVariants}>
-          <DataCard hoverable className="p-[var(--space-5)]">
+        <motion.div className="grid gap-4 xl:grid-cols-4" variants={dashboardStaggerGroupVariants}>
+          <motion.div variants={dashboardMicroItemVariants}>
+            <DataCard hoverable className="p-[var(--space-5)]">
             <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
               <Target className="h-4 w-4 text-[var(--emerald-400)]" />
               Peso atual
@@ -441,9 +444,11 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
               color="default"
               className={CARDLESS_STAT_BLOCK_CLASSNAME}
             />
-          </DataCard>
+            </DataCard>
+          </motion.div>
 
-          <DataCard hoverable glow="emerald" className="p-[var(--space-5)]">
+          <motion.div variants={dashboardMicroItemVariants}>
+            <DataCard hoverable glow="emerald" className="p-[var(--space-5)]">
             <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
               <TrendingDown className="h-4 w-4 text-[var(--emerald-400)]" />
               Peso final
@@ -457,9 +462,11 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
               color="emerald"
               className={CARDLESS_STAT_BLOCK_CLASSNAME}
             />
-          </DataCard>
+            </DataCard>
+          </motion.div>
 
-          <DataCard hoverable glow="gold" className="p-[var(--space-5)]">
+          <motion.div variants={dashboardMicroItemVariants}>
+            <DataCard hoverable glow="gold" className="p-[var(--space-5)]">
             <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
               <Sparkles className="h-4 w-4 text-[var(--gold-400)]" />
               Velocidade
@@ -473,9 +480,11 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
               color="gold"
               className={CARDLESS_STAT_BLOCK_CLASSNAME}
             />
-          </DataCard>
+            </DataCard>
+          </motion.div>
 
-          <DataCard hoverable className="p-[var(--space-5)]">
+          <motion.div variants={dashboardMicroItemVariants}>
+            <DataCard hoverable className="p-[var(--space-5)]">
             <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
               <Clock3 className="h-4 w-4 text-[var(--blue-400)]" />
               Horizonte
@@ -489,7 +498,8 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
               color="blue"
               className={CARDLESS_STAT_BLOCK_CLASSNAME}
             />
-          </DataCard>
+            </DataCard>
+          </motion.div>
         </motion.div>
 
         <motion.div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]" variants={dashboardPanelVariants}>
@@ -555,16 +565,22 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
               </div>
             </div>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+            <motion.div className="mt-5 grid gap-3 sm:grid-cols-3" variants={dashboardStaggerGroupVariants}>
+              <motion.div
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Peso</div>
                 <div className="mt-2 font-mono text-[22px] font-semibold tracking-[-1px] text-[var(--emerald-400)]">
                   -{formatDecimal(projectionState.totalLossKg, 1)}
                   <span className="ml-1 text-xs text-[var(--text-secondary)]">kg</span>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Gordura</div>
                 <div className="mt-2 font-mono text-[22px] font-semibold tracking-[-1px] text-[var(--gold-400)]">
                   {projectionState.currentFatMass !== null && projectionState.projectedFatMass !== null
@@ -572,9 +588,12 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
                     : '--'}
                   <span className="ml-1 text-xs text-[var(--text-secondary)]">kg</span>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Massa magra</div>
                 <div className="mt-2 font-mono text-[22px] font-semibold tracking-[-1px] text-[var(--blue-400)]">
                   {projectionState.currentLeanMass !== null && projectionState.projectedLeanMass !== null
@@ -582,8 +601,8 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
                     : '--'}
                   <span className="ml-1 text-xs text-[var(--text-secondary)]">kg</span>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </DataCard>
 
           <DataCard data-testid="projection-timeline" hoverable className="p-[var(--space-6)]">
@@ -596,9 +615,13 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
               </div>
             </div>
 
-            <div className="space-y-4">
+            <motion.div className="space-y-4" variants={dashboardStaggerGroupVariants}>
               {projectionState.checkpointWeeks.map((point, index) => (
-                <div key={`${point.week}-${timelineCopy[index]?.title}`} className="flex gap-4">
+                <motion.div
+                  key={`${point.week}-${timelineCopy[index]?.title}`}
+                  className="flex gap-4"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="flex flex-col items-center">
                     <div
                       className={cn(
@@ -629,9 +652,9 @@ export const ProjectionSlide = ({ activated, results, formData, onGoToGoalStep }
                       {timelineCopy[index]?.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </DataCard>
         </motion.div>
       </motion.div>

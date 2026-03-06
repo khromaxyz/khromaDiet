@@ -19,9 +19,12 @@ import type { CalculationResults, FormData } from '@/lib/types';
 
 import {
   CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardBarTransition,
   dashboardContainerVariants,
   dashboardItemVariants,
+  dashboardMicroItemVariants,
   dashboardPanelVariants,
+  dashboardStaggerGroupVariants,
   formatKcal,
   formatKg,
   formatPct,
@@ -80,8 +83,7 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
     results.projection?.milestones.at(-1)?.weightKg ??
     null;
   const currentWeight = formData.weightKg;
-  const remainingWeight =
-    projectedWeight !== null ? Math.abs(currentWeight - projectedWeight) : null;
+  const remainingWeight = projectedWeight !== null ? Math.abs(currentWeight - projectedWeight) : null;
   const isDeficit = results.dailyDelta >= 0;
   const precisionPct = Math.round(results.precision.precisionPct);
   const activityKcal = Math.max(Math.round(results.tdeeFinal - results.bmr.bmr), 0);
@@ -92,6 +94,11 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
   const dailyDelta = useCountUp(Math.round(Math.abs(results.dailyDelta)), activated, 900);
   const projectedWeeks = useCountUp(projectedWeek ?? 0, activated, 900);
   const weeklyRate = useCountUp(weeklyRateTarget, activated, 900) / 10;
+  const animatedCurrentWeight = useCountUp(Math.round(currentWeight * 10), activated, 900) / 10;
+  const animatedTargetWeight = useCountUp(Math.round((projectedWeight ?? 0) * 10), activated, 900) / 10;
+  const animatedRemainingWeight = useCountUp(Math.round((remainingWeight ?? 0) * 10), activated, 900) / 10;
+  const animatedPrecision = useCountUp(precisionPct, activated, 900);
+  const animatedBmr = useCountUp(Math.round(results.bmr.bmr), activated, 900);
 
   const status = getPlanStatus(results.projection?.classification ?? null);
   const macroChips = [
@@ -102,6 +109,8 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
       color: 'var(--emerald-400)',
       background: 'var(--emerald-glow-subtle)',
       border: 'var(--border-emerald)',
+      pct: results.macros.proteinPct,
+      tone: 'var(--emerald-500)',
     },
     {
       id: 'carbs',
@@ -110,6 +119,8 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
       color: 'var(--blue-400)',
       background: 'var(--blue-glow-subtle)',
       border: 'var(--border-blue)',
+      pct: results.macros.carbsPct,
+      tone: 'var(--blue-500)',
     },
     {
       id: 'fat',
@@ -118,6 +129,8 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
       color: 'var(--gold-400)',
       background: 'var(--gold-glow-subtle)',
       border: 'var(--border-gold)',
+      pct: results.macros.fatPct,
+      tone: 'var(--gold-500)',
     },
   ];
 
@@ -154,18 +167,11 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
       label: 'Prazo',
       value: projectedWeek ? projectedWeeks : '--',
       unit: projectedWeek ? 'sem' : undefined,
-      sublabel:
-        projectedWeight !== null ? `Alvo ${formatKg(projectedWeight)} kg` : 'Revisar timeline',
+      sublabel: projectedWeight !== null ? `Alvo ${formatKg(projectedWeight)} kg` : 'Revisar timeline',
       icon: Clock3,
       color: 'emerald' as const,
     },
   ];
-
-  const title = (
-    <span id="dfp-heading-welcome" className="block">
-      {profileName}
-    </span>
-  );
 
   return (
     <SectionShell
@@ -180,8 +186,12 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
       >
         <motion.div variants={dashboardItemVariants}>
           <SectionHeader
-            eyebrow="01 — WELCOME"
-            title={title}
+            eyebrow="01 - WELCOME"
+            title={
+              <span id="dfp-heading-welcome" className="block">
+                {profileName}
+              </span>
+            }
             subtitle="Leitura consolidada do protocolo: gasto, alvo calorico, ritmo e distribuicao de macros alinhados no mesmo plano."
             action={
               <div className="flex flex-wrap items-center justify-start gap-2 lg:justify-end">
@@ -206,42 +216,38 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
           />
         </motion.div>
 
-        <motion.div
-          className="grid gap-4 md:grid-cols-2 xl:grid-cols-4"
-          variants={dashboardItemVariants}
-        >
+        <motion.div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4" variants={dashboardStaggerGroupVariants}>
           {kpis.map((item) => {
             const Icon = item.icon;
 
             return (
-              <DataCard key={item.id} glow="emerald" hoverable className="p-[var(--space-5)]">
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
-                    <Icon className="h-4 w-4 text-[var(--emerald-400)]" />
-                    {item.label}
-                  </span>
-                </div>
+              <motion.div key={item.id} variants={dashboardMicroItemVariants}>
+                <DataCard glow="emerald" hoverable className="p-[var(--space-5)]">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
+                      <Icon className="h-4 w-4 text-[var(--emerald-400)]" />
+                      {item.label}
+                    </span>
+                  </div>
 
-                <StatBlock
-                  value={item.value}
-                  unit={item.unit}
-                  label={item.label}
-                  sublabel={item.sublabel}
-                  size="md"
-                  color={item.color}
-                  align="start"
-                  className={CARDLESS_STAT_BLOCK_CLASSNAME}
-                />
-              </DataCard>
+                  <StatBlock
+                    value={item.value}
+                    unit={item.unit}
+                    label={item.label}
+                    sublabel={item.sublabel}
+                    size="md"
+                    color={item.color}
+                    align="start"
+                    className={CARDLESS_STAT_BLOCK_CLASSNAME}
+                  />
+                </DataCard>
+              </motion.div>
             );
           })}
         </motion.div>
 
         <motion.div variants={dashboardPanelVariants}>
-          <DataCard
-            hoverable
-            className="grid gap-6 p-[var(--space-6)] xl:grid-cols-[1.15fr_0.85fr]"
-          >
+          <DataCard hoverable className="grid gap-6 p-[var(--space-6)] xl:grid-cols-[1.15fr_0.85fr]">
             <div className="space-y-5">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
@@ -251,73 +257,80 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
 
                 <div className="max-w-[42rem] text-[15px] leading-[1.7] text-[var(--text-secondary)]">
                   {profileName} roda com manutencao em{' '}
-                  <span className="text-[var(--text-primary)]">
-                    {formatKcal(results.tdeeFinal)} kcal
-                  </span>
-                  , meta em{' '}
-                  <span className="text-[var(--text-primary)]">
-                    {formatKcal(results.goalCalories)} kcal
-                  </span>{' '}
-                  e uma taxa semanal estimada de{' '}
-                  <span className="text-[var(--text-primary)]">
-                    {formatPct(Math.abs(results.weeklyRateKg), 1)} kg
-                  </span>
-                  .
+                  <span className="text-[var(--text-primary)]">{formatKcal(results.tdeeFinal)} kcal</span>,
+                  meta em <span className="text-[var(--text-primary)]">{formatKcal(results.goalCalories)} kcal</span> e
+                  uma taxa semanal estimada de{' '}
+                  <span className="text-[var(--text-primary)]">{formatPct(Math.abs(results.weeklyRateKg), 1)} kg</span>.
                 </div>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div className="grid gap-4 md:grid-cols-3" variants={dashboardStaggerGroupVariants}>
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-3 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     Peso atual
                   </div>
                   <div className="font-mono text-[32px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
-                    {formatKg(currentWeight)}
+                    {formatKg(animatedCurrentWeight)}
                     <span className="ml-1 text-sm text-[var(--text-muted)]">kg</span>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-3 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     Alvo
                   </div>
                   <div className="font-mono text-[32px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
-                    {projectedWeight !== null ? formatKg(projectedWeight) : '--'}
+                    {projectedWeight !== null ? formatKg(animatedTargetWeight) : '--'}
                     <span className="ml-1 text-sm text-[var(--text-muted)]">kg</span>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-3 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     Distancia
                   </div>
                   <div className="font-mono text-[32px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
-                    {remainingWeight !== null ? formatKg(remainingWeight) : '--'}
+                    {remainingWeight !== null ? formatKg(animatedRemainingWeight) : '--'}
                     <span className="ml-1 text-sm text-[var(--text-muted)]">kg</span>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="bg-[var(--bg-surface)]/65 rounded-[var(--radius-lg)] border border-[var(--border-subtle)] p-[var(--space-4)]">
+              <motion.div className="grid gap-3 sm:grid-cols-2" variants={dashboardStaggerGroupVariants}>
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)]/65 p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     Precisao do modelo
                   </div>
                   <div className="font-mono text-[24px] font-semibold tracking-[-1px] text-[var(--emerald-400)] [text-shadow:var(--text-glow-emerald-stat)]">
-                    {precisionPct}%
+                    {animatedPrecision}%
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-[var(--bg-surface)]/65 rounded-[var(--radius-lg)] border border-[var(--border-subtle)] p-[var(--space-4)]">
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)]/65 p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     Gasto basal
                   </div>
                   <div className="font-mono text-[24px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
-                    {formatKcal(results.bmr.bmr)}
+                    {formatKcal(animatedBmr)}
                     <span className="ml-1 text-xs text-[var(--text-muted)]">kcal</span>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
 
             <div className="space-y-5">
@@ -337,10 +350,11 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <motion.div className="flex flex-wrap gap-2" variants={dashboardStaggerGroupVariants}>
                   {macroChips.map((chip) => (
-                    <span
+                    <motion.span
                       key={chip.id}
+                      variants={dashboardMicroItemVariants}
                       className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium"
                       style={{
                         color: chip.color,
@@ -352,35 +366,13 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
                         {chip.label}
                       </span>
                       <span className="font-mono text-[13px] font-semibold">{chip.value}</span>
-                    </span>
+                    </motion.span>
                   ))}
-                </div>
+                </motion.div>
 
-                <div className="mt-5 space-y-4">
-                  {[
-                    {
-                      id: 'protein',
-                      label: 'Proteina',
-                      pct: results.macros.proteinPct,
-                      value: `${Math.round(results.macros.proteinG)}g`,
-                      tone: 'var(--emerald-500)',
-                    },
-                    {
-                      id: 'carbs',
-                      label: 'Carbo',
-                      pct: results.macros.carbsPct,
-                      value: `${Math.round(results.macros.carbsG)}g`,
-                      tone: 'var(--blue-500)',
-                    },
-                    {
-                      id: 'fat',
-                      label: 'Gordura',
-                      pct: results.macros.fatPct,
-                      value: `${Math.round(results.macros.fatG)}g`,
-                      tone: 'var(--gold-500)',
-                    },
-                  ].map((item) => (
-                    <div key={item.id} className="space-y-2">
+                <motion.div className="mt-5 space-y-4" variants={dashboardStaggerGroupVariants}>
+                  {macroChips.map((item) => (
+                    <motion.div key={item.id} className="space-y-2" variants={dashboardMicroItemVariants}>
                       <div className="flex items-center justify-between gap-3 text-sm">
                         <span className="text-[var(--text-secondary)]">{item.label}</span>
                         <span className="font-mono text-[var(--text-primary)]">
@@ -388,22 +380,27 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
                         </span>
                       </div>
                       <div className="h-2 overflow-hidden rounded-full bg-[var(--bg-active)]">
-                        <div
+                        <motion.div
                           className="h-full rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: activated ? `${Math.max(6, Math.min(100, item.pct))}%` : '0%' }}
+                          transition={dashboardBarTransition}
                           style={{
-                            width: `${Math.max(6, Math.min(100, item.pct))}%`,
                             backgroundColor: item.tone,
                             boxShadow: `0 0 20px ${item.tone}`,
                           }}
                         />
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div className="grid gap-3 sm:grid-cols-2" variants={dashboardStaggerGroupVariants}>
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-1 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     <Scale className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
                     Ritmo semanal
@@ -412,9 +409,12 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
                     {formatPct(weeklyRate, 1)}
                     <span className="ml-1 text-xs text-[var(--text-muted)]">kg/sem</span>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-1 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     <Sparkles className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
                     Horizonte
@@ -423,8 +423,8 @@ export const WelcomeSlide = ({ activated, results, formData, profileMeta }: Welc
                     {projectedWeek ? projectedWeeks : '--'}
                     <span className="ml-1 text-xs text-[var(--text-muted)]">sem</span>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </DataCard>
         </motion.div>

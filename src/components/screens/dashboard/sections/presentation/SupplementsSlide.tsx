@@ -10,7 +10,9 @@ import {
   CARDLESS_STAT_BLOCK_CLASSNAME,
   dashboardContainerVariants,
   dashboardItemVariants,
+  dashboardMicroItemVariants,
   dashboardPanelVariants,
+  dashboardStaggerGroupVariants,
 } from './shared';
 
 interface SupplementsSlideProps {
@@ -38,18 +40,22 @@ const PRIORITY_META: Record<
   }
 > = {
   Alta: {
-    badgeClassName: 'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
-    dividerClassName: 'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
+    badgeClassName:
+      'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
+    dividerClassName:
+      'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
     glow: 'emerald',
   },
   Media: {
     badgeClassName: 'border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]',
-    dividerClassName: 'border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]',
+    dividerClassName:
+      'border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]',
     glow: 'gold',
   },
   Baixa: {
     badgeClassName: 'border-[var(--border-default)] bg-[var(--bg-deep)] text-[var(--text-secondary)]',
-    dividerClassName: 'border-[var(--border-default)] bg-[var(--bg-deep)] text-[var(--text-secondary)]',
+    dividerClassName:
+      'border-[var(--border-default)] bg-[var(--bg-deep)] text-[var(--text-secondary)]',
     glow: 'none',
   },
 };
@@ -63,22 +69,26 @@ const LEGACY_METADATA_ALIASES: Record<string, string> = {
 const LEGACY_METADATA: Record<string, SupplementPresentationMeta> = {
   creatina: {
     category: 'Forca · Recuperacao · Performance',
-    rationale: 'Saturacao muscular previsivel e melhora consistente de desempenho em treino resistido.',
+    rationale:
+      'Saturacao muscular previsivel e melhora consistente de desempenho em treino resistido.',
     evidence: 'Evidencia nivel A',
   },
   vitd: {
     category: 'Imunidade · Hormonal · Osseo',
-    rationale: 'Base para suporte hormonal e osseo, especialmente quando a exposicao solar e baixa.',
+    rationale:
+      'Base para suporte hormonal e osseo, especialmente quando a exposicao solar e baixa.',
     evidence: 'Recomendada para checagem laboratorial',
   },
   whey: {
     category: 'Sintese Proteica · Hipertrofia',
-    rationale: 'Fecha a meta proteica diaria com absorcao rapida quando a dieta solida nao cobre o alvo.',
+    rationale:
+      'Fecha a meta proteica diaria com absorcao rapida quando a dieta solida nao cobre o alvo.',
     evidence: 'Condicional a meta proteica diaria',
   },
   omega: {
     category: 'Cardiovascular · Anti-inflamatorio',
-    rationale: 'Apoia modulacao inflamatoria e recuperacao quando o protocolo pede maior consistencia.',
+    rationale:
+      'Apoia modulacao inflamatoria e recuperacao quando o protocolo pede maior consistencia.',
     evidence: 'Melhor com refeicoes principais',
   },
   mag: {
@@ -93,12 +103,14 @@ const LEGACY_METADATA: Record<string, SupplementPresentationMeta> = {
   },
   zma: {
     category: 'Sono · Recuperacao',
-    rationale: 'Suporte secundario para recuperacao quando o corte e o volume de treino apertam o descanso.',
+    rationale:
+      'Suporte secundario para recuperacao quando o corte e o volume de treino apertam o descanso.',
     evidence: 'Baixa prioridade e uso situacional',
   },
   b12: {
     category: 'Micronutrientes · Dieta Plant-Based',
-    rationale: 'Cobertura basica para dietas estritamente vegetais com baixa disponibilidade natural de B12.',
+    rationale:
+      'Cobertura basica para dietas estritamente vegetais com baixa disponibilidade natural de B12.',
     evidence: 'Alta prioridade em dieta plant-based',
   },
 };
@@ -111,7 +123,9 @@ const normalizePriority = (priority: SupplementPriority): PriorityKey => {
   return priority as PriorityKey;
 };
 
-const getPresentationMeta = (supplement: CalculationResults['supplements'][number]): SupplementPresentationMeta => {
+const getPresentationMeta = (
+  supplement: CalculationResults['supplements'][number],
+): SupplementPresentationMeta => {
   const metadataKey = LEGACY_METADATA_ALIASES[supplement.id] ?? supplement.id;
   const metadata = LEGACY_METADATA[metadataKey];
 
@@ -134,7 +148,9 @@ export const SupplementsSlide = ({ activated, results }: SupplementsSlideProps) 
   const groupedSupplements = useMemo(() => {
     return PRIORITY_ORDER.map((priority) => ({
       priority,
-      items: supplements.filter((supplement) => normalizePriority(supplement.priority) === priority),
+      items: supplements.filter(
+        (supplement) => normalizePriority(supplement.priority) === priority,
+      ),
     })).filter((group) => group.items.length > 0);
   }, [supplements]);
 
@@ -169,7 +185,8 @@ export const SupplementsSlide = ({ activated, results }: SupplementsSlideProps) 
                   Nenhum suplemento foi priorizado neste calculo
                 </div>
                 <p className="max-w-[38rem] text-[15px] leading-[1.7] text-[var(--text-secondary)]">
-                  O painel de suplementacao aparece quando o motor encontra itens com prioridade operacional para o protocolo atual.
+                  O painel de suplementacao aparece quando o motor encontra itens com prioridade
+                  operacional para o protocolo atual.
                 </p>
               </div>
             </DataCard>
@@ -235,76 +252,93 @@ export const SupplementsSlide = ({ activated, results }: SupplementsSlideProps) 
                 <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,var(--border-default),transparent)]" />
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-3">
+              <motion.div className="grid gap-4 xl:grid-cols-3" variants={dashboardStaggerGroupVariants}>
                 {group.items.map((supplement) => {
                   const metadata = getPresentationMeta(supplement);
 
                   return (
-                    <DataCard
-                      key={supplement.id}
-                      data-testid="supplement-card"
-                      hoverable
-                      glow={priorityMeta.glow}
-                      className="p-[var(--space-5)]"
-                    >
-                      <div className="flex h-full flex-col gap-5">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex min-w-0 items-start gap-3">
-                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] text-[22px] shadow-[var(--shadow-inner-deep)]">
-                              <span aria-hidden>{supplement.icon}</span>
-                            </div>
-                            <div className="min-w-0">
-                              <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                                {metadata.category}
+                    <motion.div key={supplement.id} variants={dashboardMicroItemVariants}>
+                      <DataCard
+                        data-testid="supplement-card"
+                        hoverable
+                        glow={priorityMeta.glow}
+                        className="p-[var(--space-5)]"
+                      >
+                        <div className="flex h-full flex-col gap-5">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex min-w-0 items-start gap-3">
+                              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] text-[22px] shadow-[var(--shadow-inner-deep)]">
+                                <span aria-hidden>{supplement.icon}</span>
                               </div>
-                              <div className="mt-1 text-[22px] font-semibold leading-[1.2] tracking-[-0.8px] text-[var(--text-primary)]">
-                                {supplement.name}
+                              <div className="min-w-0">
+                                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                                  {metadata.category}
+                                </div>
+                                <div className="mt-1 text-[22px] font-semibold leading-[1.2] tracking-[-0.8px] text-[var(--text-primary)]">
+                                  {supplement.name}
+                                </div>
                               </div>
                             </div>
+
+                            <span
+                              className={cn(
+                                'inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]',
+                                priorityMeta.badgeClassName,
+                              )}
+                            >
+                              <span className="h-1.5 w-1.5 rounded-full bg-current shadow-[0_0_12px_currentColor]" />
+                              {getPriorityLabel(group.priority)}
+                            </span>
                           </div>
 
-                          <span
-                            className={cn(
-                              'inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]',
-                              priorityMeta.badgeClassName,
-                            )}
-                          >
-                            <span className="h-1.5 w-1.5 rounded-full bg-current shadow-[0_0_12px_currentColor]" />
-                            {getPriorityLabel(group.priority)}
-                          </span>
+                          <StatBlock
+                            value={supplement.dose}
+                            label="Dose sugerida"
+                            sublabel={metadata.evidence}
+                            size="sm"
+                            color={
+                              priorityMeta.glow === 'gold'
+                                ? 'gold'
+                                : priorityMeta.glow === 'emerald'
+                                  ? 'emerald'
+                                  : 'default'
+                            }
+                            className={CARDLESS_STAT_BLOCK_CLASSNAME}
+                          />
+
+                          <motion.div className="grid gap-3 sm:grid-cols-2" variants={dashboardStaggerGroupVariants}>
+                            <motion.div
+                              className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                              variants={dashboardMicroItemVariants}
+                            >
+                              <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                                <TimerReset className="h-3.5 w-3.5 text-[var(--gold-400)]" />
+                                Timing
+                              </div>
+                              <p className="text-sm leading-[1.7] text-[var(--text-secondary)]">
+                                {supplement.timing}
+                              </p>
+                            </motion.div>
+
+                            <motion.div
+                              className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                              variants={dashboardMicroItemVariants}
+                            >
+                              <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                                <Sparkles className="h-3.5 w-3.5 text-[var(--blue-400)]" />
+                                Justificativa
+                              </div>
+                              <p className="text-sm leading-[1.7] text-[var(--text-secondary)]">
+                                {metadata.rationale}
+                              </p>
+                            </motion.div>
+                          </motion.div>
                         </div>
-
-                        <StatBlock
-                          value={supplement.dose}
-                          label="Dose sugerida"
-                          sublabel={metadata.evidence}
-                          size="sm"
-                          color={priorityMeta.glow === 'gold' ? 'gold' : priorityMeta.glow === 'emerald' ? 'emerald' : 'default'}
-                          className={CARDLESS_STAT_BLOCK_CLASSNAME}
-                        />
-
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
-                            <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                              <TimerReset className="h-3.5 w-3.5 text-[var(--gold-400)]" />
-                              Timing
-                            </div>
-                            <p className="text-sm leading-[1.7] text-[var(--text-secondary)]">{supplement.timing}</p>
-                          </div>
-
-                          <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
-                            <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                              <Sparkles className="h-3.5 w-3.5 text-[var(--blue-400)]" />
-                              Justificativa
-                            </div>
-                            <p className="text-sm leading-[1.7] text-[var(--text-secondary)]">{metadata.rationale}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </DataCard>
+                      </DataCard>
+                    </motion.div>
                   );
                 })}
-              </div>
+              </motion.div>
             </motion.div>
           );
         })}

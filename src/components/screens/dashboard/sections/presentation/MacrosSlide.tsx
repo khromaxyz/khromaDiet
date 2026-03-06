@@ -7,9 +7,12 @@ import type { CalculationResults } from '@/lib/types';
 
 import {
   CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardBarTransition,
   dashboardContainerVariants,
   dashboardItemVariants,
+  dashboardMicroItemVariants,
   dashboardPanelVariants,
+  dashboardStaggerGroupVariants,
   formatKcal,
   formatPct,
 } from './shared';
@@ -112,7 +115,7 @@ export const MacrosSlide = ({ results, activated }: MacrosSlideProps) => {
       >
         <motion.div variants={dashboardItemVariants}>
           <SectionHeader
-            eyebrow="04 — MACRONUTRIENTS"
+            eyebrow="04 - MACRONUTRIENTS"
             title={<span id="dfp-heading-macros">Distribuicao calorica por macro</span>}
             subtitle="Proteina, carboidrato e gordura aparecem como cards da mesma familia visual, com faixa recomendada, participacao calorica e validacao final da soma."
             action={
@@ -171,25 +174,31 @@ export const MacrosSlide = ({ results, activated }: MacrosSlideProps) => {
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <motion.div className="space-y-4" variants={dashboardStaggerGroupVariants}>
                 <div className="flex h-5 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
-                  {macroItems.map((macro) => (
-                    <div
+                  {macroItems.map((macro, index) => (
+                    <motion.div
                       key={macro.id}
-                      style={{
-                        width: `${Math.max(6, macro.percentage)}%`,
-                        backgroundColor: macro.railColor,
+                      initial={false}
+                      animate={{
+                        width: activated ? `${Math.max(6, macro.percentage)}%` : '0%',
                       }}
+                      transition={{
+                        ...dashboardBarTransition,
+                        delay: index * 0.05,
+                      }}
+                      style={{ backgroundColor: macro.railColor }}
                     />
                   ))}
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-3">
+                <motion.div className="grid gap-3 sm:grid-cols-3" variants={dashboardStaggerGroupVariants}>
                   {macroItems.map((macro) => (
-                    <div
+                    <motion.div
                       key={macro.id}
                       className="rounded-[var(--radius-lg)] border p-[var(--space-4)]"
                       style={{ borderColor: macro.border, backgroundColor: macro.background }}
+                      variants={dashboardMicroItemVariants}
                     >
                       <div
                         className="text-[11px] font-semibold uppercase tracking-[2px]"
@@ -203,79 +212,85 @@ export const MacrosSlide = ({ results, activated }: MacrosSlideProps) => {
                       <div className="mt-1 text-sm text-[var(--text-secondary)]">
                         {formatKcal(macro.calories)} kcal
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </DataCard>
         </motion.div>
 
-        <motion.div className="grid gap-4 xl:grid-cols-3" variants={dashboardItemVariants}>
+        <motion.div className="grid gap-4 xl:grid-cols-3" variants={dashboardStaggerGroupVariants}>
           {macroItems.map((macro) => {
             const rangeSpan = Math.max(macro.ceiling - macro.floor, 1);
             const fillPct = clamp(((macro.value - macro.floor) / rangeSpan) * 100, 0, 100);
 
             return (
-              <DataCard key={macro.id} glow={macro.glow} hoverable className="p-[var(--space-5)]">
-                <div className="mb-4 flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                      {macro.label}
+              <motion.div key={macro.id} variants={dashboardMicroItemVariants}>
+                <DataCard glow={macro.glow} hoverable className="p-[var(--space-5)]">
+                  <div className="mb-4 flex items-start justify-between gap-3">
+                    <div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                        {macro.label}
+                      </div>
+                      <div className="mt-1 text-sm text-[var(--text-secondary)]">
+                        {formatPct(macro.percentage)}% do total · {formatKcal(macro.calories)} kcal
+                      </div>
                     </div>
-                    <div className="mt-1 text-sm text-[var(--text-secondary)]">
-                      {formatPct(macro.percentage)}% do total · {formatKcal(macro.calories)} kcal
-                    </div>
-                  </div>
 
-                  <span
-                    className="inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]"
-                    style={{
-                      color: macro.railColor,
-                      borderColor: macro.border,
-                      backgroundColor: macro.background,
-                    }}
-                  >
-                    {macro.floor} - {macro.ceiling}g
-                  </span>
-                </div>
-
-                <StatBlock
-                  value={animatedValues[macro.id]}
-                  unit="g"
-                  label={macro.label}
-                  sublabel={`Faixa recomendada ${macro.floor}g a ${macro.ceiling}g`}
-                  size="lg"
-                  color={macro.statColor}
-                  className={CARDLESS_STAT_BLOCK_CLASSNAME}
-                />
-
-                <div className="mt-6 space-y-3">
-                  <div className="flex items-center justify-between gap-3 text-sm">
-                    <span className="text-[var(--text-secondary)]">Posicao na faixa</span>
-                    <span className="font-mono text-[var(--text-primary)]">
-                      {formatPct(fillPct)}%
+                    <span
+                      className="inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]"
+                      style={{
+                        color: macro.railColor,
+                        borderColor: macro.border,
+                        backgroundColor: macro.background,
+                      }}
+                    >
+                      {macro.floor} - {macro.ceiling}g
                     </span>
                   </div>
 
-                  <div className="relative h-3 overflow-hidden rounded-full bg-[var(--bg-active)]">
-                    <div
-                      className="absolute inset-y-0 left-0 rounded-full"
-                      style={{
-                        width: `${Math.max(5, fillPct)}%`,
-                        backgroundColor: macro.railColor,
-                        boxShadow: `0 0 28px ${macro.railColor}`,
-                      }}
-                    />
-                  </div>
+                  <StatBlock
+                    value={animatedValues[macro.id]}
+                    unit="g"
+                    label={macro.label}
+                    sublabel={`Faixa recomendada ${macro.floor}g a ${macro.ceiling}g`}
+                    size="lg"
+                    color={macro.statColor}
+                    className={CARDLESS_STAT_BLOCK_CLASSNAME}
+                  />
 
-                  <div className="flex items-center justify-between gap-4 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                    <span>Min {macro.floor}g</span>
-                    <span>Atual {macro.value}g</span>
-                    <span>Max {macro.ceiling}g</span>
+                  <div className="mt-6 space-y-3">
+                    <div className="flex items-center justify-between gap-3 text-sm">
+                      <span className="text-[var(--text-secondary)]">Posicao na faixa</span>
+                      <span className="font-mono text-[var(--text-primary)]">
+                        {formatPct(fillPct)}%
+                      </span>
+                    </div>
+
+                    <div className="relative h-3 overflow-hidden rounded-full bg-[var(--bg-active)]">
+                      <motion.div
+                        className="absolute inset-y-0 left-0 rounded-full"
+                        initial={false}
+                        animate={{
+                          width: activated ? `${Math.max(5, fillPct)}%` : '0%',
+                        }}
+                        transition={dashboardBarTransition}
+                        style={{
+                          backgroundColor: macro.railColor,
+                          boxShadow: `0 0 28px ${macro.railColor}`,
+                        }}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                      <span>Min {macro.floor}g</span>
+                      <span>Atual {macro.value}g</span>
+                      <span>Max {macro.ceiling}g</span>
+                    </div>
                   </div>
-                </div>
-              </DataCard>
+                </DataCard>
+              </motion.div>
             );
           })}
         </motion.div>
@@ -298,9 +313,12 @@ export const MacrosSlide = ({ results, activated }: MacrosSlideProps) => {
               </span>
             </div>
 
-            <div className="grid gap-4 xl:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1.1fr] xl:items-center">
+            <motion.div
+              className="grid gap-4 xl:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1.1fr] xl:items-center"
+              variants={dashboardStaggerGroupVariants}
+            >
               {macroItems.map((macro, index) => (
-                <div key={macro.id} className="contents">
+                <motion.div key={macro.id} className="contents" variants={dashboardMicroItemVariants}>
                   <div
                     className="rounded-[var(--radius-lg)] border p-[var(--space-4)]"
                     style={{ borderColor: macro.border, backgroundColor: macro.background }}
@@ -312,7 +330,7 @@ export const MacrosSlide = ({ results, activated }: MacrosSlideProps) => {
                       {macro.label}
                     </div>
                     <div className="mt-2 font-mono text-[20px] font-semibold tracking-[-0.8px] text-[var(--text-primary)]">
-                      {macro.value}g
+                      {animatedValues[macro.id]}g
                     </div>
                     <div className="mt-1 text-sm text-[var(--text-secondary)]">
                       {formatKcal(macro.calories)} kcal
@@ -324,26 +342,29 @@ export const MacrosSlide = ({ results, activated }: MacrosSlideProps) => {
                       +
                     </div>
                   ) : null}
-                </div>
+                </motion.div>
               ))}
 
               <div className="hidden text-center font-mono text-[24px] text-[var(--text-muted)] xl:block">
                 =
               </div>
 
-              <div className="rounded-[var(--radius-xl)] border border-[var(--border-emerald)] bg-[linear-gradient(135deg,var(--emerald-glow-subtle),transparent)] p-[var(--space-5)]">
+              <motion.div
+                className="rounded-[var(--radius-xl)] border border-[var(--border-emerald)] bg-[linear-gradient(135deg,var(--emerald-glow-subtle),transparent)] p-[var(--space-5)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--emerald-400)]">
                   Resultado
                 </div>
                 <div className="mt-2 font-mono text-[32px] font-semibold tracking-[-1.5px] text-[var(--emerald-400)] [text-shadow:var(--text-glow-emerald-stat)]">
-                  {formatKcal(totalCalories)}
+                  {formatKcal(totalCaloriesAnimated)}
                   <span className="ml-1 text-sm text-[var(--text-secondary)]">kcal</span>
                 </div>
                 <div className="mt-2 text-sm text-[var(--text-secondary)]">
                   Meta final fechada para o protocolo diario.
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </DataCard>
         </motion.div>
       </motion.div>

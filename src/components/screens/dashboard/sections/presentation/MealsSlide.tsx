@@ -10,9 +10,12 @@ import { cn } from '@/lib/utils';
 
 import {
   CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardBarTransition,
   dashboardContainerVariants,
   dashboardItemVariants,
+  dashboardMicroItemVariants,
   dashboardPanelVariants,
+  dashboardStaggerGroupVariants,
   formatKcal,
   formatPct,
 } from './shared';
@@ -175,7 +178,8 @@ const getMealBadge = (tag: CalculationResults['macros']['meals'][number]['tag'])
   if (tag === 'post') {
     return {
       label: 'Pos-Treino',
-      className: 'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
+      className:
+        'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
     };
   }
 
@@ -208,7 +212,8 @@ export const MealsSlide = ({ activated, results, formData }: MealsSlideProps) =>
     const segments = getMacroSegments(aggregate.proteinG, aggregate.carbsG, aggregate.fatG);
     const targetCalories = results.macros.calories;
     const deltaCalories = aggregate.kcal - targetCalories;
-    const completionPct = targetCalories > 0 ? Math.round((aggregate.kcal / targetCalories) * 100) : 0;
+    const completionPct =
+      targetCalories > 0 ? Math.round((aggregate.kcal / targetCalories) * 100) : 0;
 
     return {
       ...aggregate,
@@ -254,7 +259,10 @@ export const MealsSlide = ({ activated, results, formData }: MealsSlideProps) =>
                   {displayMeals.length} refeicoes
                 </span>
                 {usingFallbackMeals ? (
-                  <Badge variant="outline" className="border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]">
+                  <Badge
+                    variant="outline"
+                    className="border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]"
+                  >
                     Dados de exemplo
                   </Badge>
                 ) : null}
@@ -277,7 +285,12 @@ export const MealsSlide = ({ activated, results, formData }: MealsSlideProps) =>
         </motion.div>
 
         <motion.div variants={dashboardPanelVariants}>
-          <DataCard data-testid="meals-total-card" hoverable glow="emerald" className="grid gap-6 p-[var(--space-6)] xl:grid-cols-[1.05fr_0.95fr]">
+          <DataCard
+            data-testid="meals-total-card"
+            hoverable
+            glow="emerald"
+            className="grid gap-6 p-[var(--space-6)] xl:grid-cols-[1.05fr_0.95fr]"
+          >
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
                 <Target className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
@@ -295,8 +308,9 @@ export const MealsSlide = ({ activated, results, formData }: MealsSlideProps) =>
               />
 
               <p className="max-w-[38rem] text-[15px] leading-[1.7] text-[var(--text-secondary)]">
-                O dia fecha em {formatKcal(totals.kcal)} kcal distribuidas por {displayMeals.length} janelas de refeicao.
-                A barra ao lado mostra o split calorico de proteina, carboidrato e gordura no mesmo material das secoes anteriores.
+                O dia fecha em {formatKcal(totals.kcal)} kcal distribuidas por {displayMeals.length}{' '}
+                janelas de refeicao. A barra ao lado mostra o split calorico de proteina,
+                carboidrato e gordura no mesmo material das secoes anteriores.
               </p>
             </div>
 
@@ -317,36 +331,72 @@ export const MealsSlide = ({ activated, results, formData }: MealsSlideProps) =>
               </div>
 
               <div className="flex h-4 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
-                <div style={{ width: `${Math.max(8, totals.proteinPct)}%` }} className="bg-[var(--emerald-500)]" />
-                <div style={{ width: `${Math.max(8, totals.carbsPct)}%` }} className="bg-[var(--blue-500)]" />
-                <div style={{ width: `${Math.max(8, totals.fatPct)}%` }} className="bg-[var(--gold-500)]" />
+                <motion.div
+                  initial={false}
+                  animate={{ width: activated ? `${Math.max(8, totals.proteinPct)}%` : '0%' }}
+                  transition={dashboardBarTransition}
+                  className="bg-[var(--emerald-500)]"
+                />
+                <motion.div
+                  initial={false}
+                  animate={{ width: activated ? `${Math.max(8, totals.carbsPct)}%` : '0%' }}
+                  transition={{ ...dashboardBarTransition, delay: 0.05 }}
+                  className="bg-[var(--blue-500)]"
+                />
+                <motion.div
+                  initial={false}
+                  animate={{ width: activated ? `${Math.max(8, totals.fatPct)}%` : '0%' }}
+                  transition={{ ...dashboardBarTransition, delay: 0.1 }}
+                  className="bg-[var(--gold-500)]"
+                />
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] p-[var(--space-4)]">
-                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--emerald-400)]">Proteina</div>
+              <motion.div className="mt-4 grid gap-3 sm:grid-cols-3" variants={dashboardStaggerGroupVariants}>
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
+                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--emerald-400)]">
+                    Proteina
+                  </div>
                   <div className="mt-2 font-mono text-[22px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
                     {formatGram(totalProteinAnimated)}g
                   </div>
-                  <div className="mt-1 text-sm text-[var(--text-secondary)]">Meta {formatGram(results.macros.proteinG)}g</div>
-                </div>
+                  <div className="mt-1 text-sm text-[var(--text-secondary)]">
+                    Meta {formatGram(results.macros.proteinG)}g
+                  </div>
+                </motion.div>
 
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-blue)] bg-[var(--blue-glow-subtle)] p-[var(--space-4)]">
-                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--blue-400)]">Carboidrato</div>
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-blue)] bg-[var(--blue-glow-subtle)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
+                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--blue-400)]">
+                    Carboidrato
+                  </div>
                   <div className="mt-2 font-mono text-[22px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
                     {formatGram(totalCarbsAnimated)}g
                   </div>
-                  <div className="mt-1 text-sm text-[var(--text-secondary)]">Meta {formatGram(results.macros.carbsG)}g</div>
-                </div>
+                  <div className="mt-1 text-sm text-[var(--text-secondary)]">
+                    Meta {formatGram(results.macros.carbsG)}g
+                  </div>
+                </motion.div>
 
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] p-[var(--space-4)]">
-                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--gold-400)]">Gordura</div>
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
+                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--gold-400)]">
+                    Gordura
+                  </div>
                   <div className="mt-2 font-mono text-[22px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
                     {formatGram(totalFatAnimated)}g
                   </div>
-                  <div className="mt-1 text-sm text-[var(--text-secondary)]">Meta {formatGram(results.macros.fatG)}g</div>
-                </div>
-              </div>
+                  <div className="mt-1 text-sm text-[var(--text-secondary)]">
+                    Meta {formatGram(results.macros.fatG)}g
+                  </div>
+                </motion.div>
+              </motion.div>
             </div>
           </DataCard>
         </motion.div>
@@ -363,86 +413,115 @@ export const MealsSlide = ({ activated, results, formData }: MealsSlideProps) =>
                   Nao foi possivel montar as refeicoes deste protocolo
                 </div>
                 <p className="max-w-[38rem] text-[15px] leading-[1.7] text-[var(--text-secondary)]">
-                  O slide permanece visivel mesmo quando os dados de refeicao nao fecham corretamente.
+                  O slide permanece visivel mesmo quando os dados de refeicao nao fecham
+                  corretamente.
                 </p>
               </div>
             </DataCard>
           </motion.div>
         ) : null}
 
-        <motion.div className="grid gap-4 xl:grid-cols-2" variants={dashboardItemVariants}>
+        <motion.div className="grid gap-4 xl:grid-cols-2" variants={dashboardStaggerGroupVariants}>
           {displayMeals.map((meal, index) => {
             const segments = getMacroSegments(meal.proteinG, meal.carbsG, meal.fatG);
             const badge = getMealBadge(meal.tag);
 
             return (
-              <DataCard
-                key={meal.id}
-                data-testid="meal-card"
-                hoverable
-                glow={getMealGlow(meal.tag)}
-                className="p-[var(--space-5)]"
-              >
-                <div className="mb-5 flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                      {meal.number}
+              <motion.div key={meal.id} variants={dashboardMicroItemVariants}>
+                <DataCard
+                  data-testid="meal-card"
+                  hoverable
+                  glow={getMealGlow(meal.tag)}
+                  className="p-[var(--space-5)]"
+                >
+                  <div className="mb-5 flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                        {meal.number}
+                      </div>
+                      <div className="mt-1 text-[22px] font-semibold leading-[1.2] tracking-[-0.8px] text-[var(--text-primary)]">
+                        {getMealTitle(meal, index, displayMeals.length)}
+                      </div>
+                      <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] uppercase tracking-[2px] text-[var(--text-secondary)]">
+                        <Clock3 className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
+                        {meal.time}
+                      </div>
                     </div>
-                    <div className="mt-1 text-[22px] font-semibold leading-[1.2] tracking-[-0.8px] text-[var(--text-primary)]">
-                      {getMealTitle(meal, index, displayMeals.length)}
-                    </div>
-                    <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] uppercase tracking-[2px] text-[var(--text-secondary)]">
-                      <Clock3 className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
-                      {meal.time}
+
+                    <div className="flex shrink-0 flex-col items-end gap-2 text-right">
+                      <div className="font-mono text-[30px] font-semibold tracking-[-1.5px] text-[var(--text-primary)]">
+                        {formatKcal(meal.kcal)}
+                        <span className="ml-1 text-xs text-[var(--text-muted)]">kcal</span>
+                      </div>
+                      {badge ? (
+                        <span
+                          className={cn(
+                            'inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]',
+                            badge.className,
+                          )}
+                        >
+                          <span className="h-1.5 w-1.5 rounded-full bg-current shadow-[0_0_12px_currentColor]" />
+                          {badge.label}
+                        </span>
+                      ) : null}
                     </div>
                   </div>
 
-                  <div className="flex shrink-0 flex-col items-end gap-2 text-right">
-                    <div className="font-mono text-[30px] font-semibold tracking-[-1.5px] text-[var(--text-primary)]">
-                      {formatKcal(meal.kcal)}
-                      <span className="ml-1 text-xs text-[var(--text-muted)]">kcal</span>
-                    </div>
-                    {badge ? (
-                      <span
-                        className={cn(
-                          'inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]',
-                          badge.className,
-                        )}
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-current shadow-[0_0_12px_currentColor]" />
-                        {badge.label}
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    <StatBlock
+                      value={meal.proteinG}
+                      unit="g"
+                      label="Proteina"
+                      size="sm"
+                      color="emerald"
+                    />
+                    <StatBlock
+                      value={meal.carbsG}
+                      unit="g"
+                      label="Carboidrato"
+                      size="sm"
+                      color="blue"
+                    />
+                    <StatBlock value={meal.fatG} unit="g" label="Gordura" size="sm" color="gold" />
+                  </div>
+
+                  <div className="mt-5">
+                    <div className="mb-3 flex items-center justify-between gap-3 text-sm">
+                      <span className="text-[var(--text-secondary)]">Proporcao calorica</span>
+                      <span className="font-mono text-[var(--text-primary)]">
+                        {formatPct(Math.round((meal.kcal / Math.max(totals.kcal, 1)) * 100))}% do dia
                       </span>
-                    ) : null}
-                  </div>
-                </div>
+                    </div>
 
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <StatBlock value={meal.proteinG} unit="g" label="Proteina" size="sm" color="emerald" />
-                  <StatBlock value={meal.carbsG} unit="g" label="Carboidrato" size="sm" color="blue" />
-                  <StatBlock value={meal.fatG} unit="g" label="Gordura" size="sm" color="gold" />
-                </div>
+                    <div className="flex h-3 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
+                      <motion.div
+                        initial={false}
+                        animate={{ width: activated ? `${Math.max(8, segments.proteinPct)}%` : '0%' }}
+                        transition={dashboardBarTransition}
+                        className="bg-[var(--emerald-500)]"
+                      />
+                      <motion.div
+                        initial={false}
+                        animate={{ width: activated ? `${Math.max(8, segments.carbsPct)}%` : '0%' }}
+                        transition={{ ...dashboardBarTransition, delay: 0.04 }}
+                        className="bg-[var(--blue-500)]"
+                      />
+                      <motion.div
+                        initial={false}
+                        animate={{ width: activated ? `${Math.max(8, segments.fatPct)}%` : '0%' }}
+                        transition={{ ...dashboardBarTransition, delay: 0.08 }}
+                        className="bg-[var(--gold-500)]"
+                      />
+                    </div>
 
-                <div className="mt-5">
-                  <div className="mb-3 flex items-center justify-between gap-3 text-sm">
-                    <span className="text-[var(--text-secondary)]">Proporcao calorica</span>
-                    <span className="font-mono text-[var(--text-primary)]">
-                      {formatPct(Math.round((meal.kcal / Math.max(totals.kcal, 1)) * 100))}% do dia
-                    </span>
+                    <div className="mt-3 flex items-center justify-between gap-2 text-[10px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                      <span>P {formatPct(segments.proteinPct)}%</span>
+                      <span>C {formatPct(segments.carbsPct)}%</span>
+                      <span>G {formatPct(segments.fatPct)}%</span>
+                    </div>
                   </div>
-
-                  <div className="flex h-3 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
-                    <div style={{ width: `${Math.max(8, segments.proteinPct)}%` }} className="bg-[var(--emerald-500)]" />
-                    <div style={{ width: `${Math.max(8, segments.carbsPct)}%` }} className="bg-[var(--blue-500)]" />
-                    <div style={{ width: `${Math.max(8, segments.fatPct)}%` }} className="bg-[var(--gold-500)]" />
-                  </div>
-
-                  <div className="mt-3 flex items-center justify-between gap-2 text-[10px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
-                    <span>P {formatPct(segments.proteinPct)}%</span>
-                    <span>C {formatPct(segments.carbsPct)}%</span>
-                    <span>G {formatPct(segments.fatPct)}%</span>
-                  </div>
-                </div>
-              </DataCard>
+                </DataCard>
+              </motion.div>
             );
           })}
         </motion.div>
@@ -464,16 +543,22 @@ export const MealsSlide = ({ activated, results, formData }: MealsSlideProps) =>
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] uppercase tracking-[2px] text-[var(--text-secondary)]">
+              <motion.div className="flex flex-wrap items-center gap-2" variants={dashboardStaggerGroupVariants}>
+                <motion.span
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] uppercase tracking-[2px] text-[var(--text-secondary)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <Activity className="h-3.5 w-3.5 text-[var(--blue-400)]" />
                   {formatKcal(totals.kcal)} kcal no prato
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] uppercase tracking-[2px] text-[var(--text-secondary)]">
+                </motion.span>
+                <motion.span
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] uppercase tracking-[2px] text-[var(--text-secondary)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <Flame className="h-3.5 w-3.5 text-[var(--gold-400)]" />
                   {formatGram(totals.proteinG + totals.carbsG + totals.fatG)}g de macros
-                </span>
-              </div>
+                </motion.span>
+              </motion.div>
             </div>
           </DataCard>
         </motion.div>

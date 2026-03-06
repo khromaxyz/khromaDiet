@@ -1,6 +1,11 @@
-import type { Variants } from 'framer-motion';
+import type { Transition, Variants } from 'framer-motion';
 
 export const DASHBOARD_EASE = [0.16, 1, 0.3, 1] as const;
+
+export const dashboardBarTransition: Transition = {
+  duration: 0.82,
+  ease: DASHBOARD_EASE,
+};
 
 export const dashboardContainerVariants: Variants = {
   hidden: { opacity: 1 },
@@ -13,6 +18,17 @@ export const dashboardContainerVariants: Variants = {
   },
 };
 
+export const dashboardStaggerGroupVariants: Variants = {
+  hidden: { opacity: 1 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.03,
+    },
+  },
+};
+
 export const dashboardItemVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: {
@@ -20,6 +36,18 @@ export const dashboardItemVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.72,
+      ease: DASHBOARD_EASE,
+    },
+  },
+};
+
+export const dashboardMicroItemVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.58,
       ease: DASHBOARD_EASE,
     },
   },

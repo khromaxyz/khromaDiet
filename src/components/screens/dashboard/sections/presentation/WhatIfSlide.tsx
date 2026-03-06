@@ -1,18 +1,30 @@
 import { motion } from 'framer-motion';
-import { Activity, Flame, RefreshCcw, Sparkles, Target, TrendingDown, Zap } from 'lucide-react';
+import {
+  Activity,
+  Flame,
+  RefreshCcw,
+  Sparkles,
+  Target,
+  TrendingDown,
+  Zap,
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import { DataCard, SectionHeader, SectionShell, StatBlock } from '@/components/design-system';
 import { Button } from '@/components/ui/primitives/button';
 import { Slider } from '@/components/ui/primitives/slider';
+import { useCountUp } from '@/hooks/useCountUp';
 import type { CalculationResults, FormData, GoalType, ThermogenicOption } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 import {
   CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardBarTransition,
   dashboardContainerVariants,
   dashboardItemVariants,
+  dashboardMicroItemVariants,
   dashboardPanelVariants,
+  dashboardStaggerGroupVariants,
   formatKcal,
   formatKg,
 } from './shared';
@@ -173,14 +185,22 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
   const preview = useMemo(() => {
     const baseActivityMultiplier = ACTIVITY_MULTIPLIERS[formData.activityLevel];
     const selectedActivityMultiplier = ACTIVITY_MULTIPLIERS[scenario.activityLevel];
-    const activityDelta = Math.round((selectedActivityMultiplier - baseActivityMultiplier) * results.bmr.bmr);
+    const activityDelta = Math.round(
+      (selectedActivityMultiplier - baseActivityMultiplier) * results.bmr.bmr,
+    );
     const cardioBase = formData.cardioMinutesPerDay ?? 20;
-    const cardioDelta = Math.round((scenario.cardioMinutesPerDay - cardioBase) * CARDIO_KCAL_PER_MIN);
+    const cardioDelta = Math.round(
+      (scenario.cardioMinutesPerDay - cardioBase) * CARDIO_KCAL_PER_MIN,
+    );
     const workoutDelta = Math.round(
       ((scenario.trainingSessions - formData.trainingSessions) * WORKOUT_BONUS_PER_SESSION) / 7,
     );
-    const thermoDelta = THERMO_BONUS[scenario.thermogenic] - THERMO_BONUS[formData.thermogenic];
-    const newTdee = Math.max(1200, Math.round(results.tdeeFinal + activityDelta + cardioDelta + workoutDelta + thermoDelta));
+    const thermoDelta =
+      THERMO_BONUS[scenario.thermogenic] - THERMO_BONUS[formData.thermogenic];
+    const newTdee = Math.max(
+      1200,
+      Math.round(results.tdeeFinal + activityDelta + cardioDelta + workoutDelta + thermoDelta),
+    );
 
     const goalConfig = GOAL_CONFIG[scenario.goal];
     const targetCalories = Math.max(1200, Math.round(newTdee * goalConfig.calorieMultiplier));
@@ -200,13 +220,18 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
 
     if (scenario.goal === 'lean_bulk') {
       const targetFatMass = currentFatMass + 3;
-      weeksToGoal = weeklyRateKg > 0 ? Math.max(1, Math.round((targetFatMass - currentFatMass) / weeklyRateKg)) : 0;
-      projectedWeightKg = formData.weightKg + Math.max(0, weeklyRateKg) * Math.max(weeksToGoal, 8);
+      weeksToGoal =
+        weeklyRateKg > 0
+          ? Math.max(1, Math.round((targetFatMass - currentFatMass) / weeklyRateKg))
+          : 0;
+      projectedWeightKg =
+        formData.weightKg + Math.max(0, weeklyRateKg) * Math.max(weeksToGoal, 8);
     } else {
       const goalWeight = leanMass / (1 - baselineGoalFatPct / 100);
       const targetFatMass = goalWeight * (baselineGoalFatPct / 100);
       const kgToLose = Math.max(0, currentFatMass - targetFatMass);
-      weeksToGoal = weeklyRateKg < 0 ? Math.max(1, Math.round(kgToLose / Math.abs(weeklyRateKg))) : 999;
+      weeksToGoal =
+        weeklyRateKg < 0 ? Math.max(1, Math.round(kgToLose / Math.abs(weeklyRateKg))) : 999;
       projectedWeightKg = goalWeight;
     }
 
@@ -224,6 +249,15 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
       segments: getMacroSegments(proteinG, carbsG, fatG),
     };
   }, [baselineGoalFatPct, formData, results, scenario]);
+
+  const animatedNewTdee = useCountUp(preview.newTdee, activated, 900);
+  const animatedTargetCalories = useCountUp(preview.targetCalories, activated, 900);
+  const animatedDailyDelta = useCountUp(Math.abs(preview.dailyDelta), activated, 900);
+  const animatedWeeklyRate = useCountUp(Math.round(Math.abs(preview.weeklyRateKg) * 100), activated, 900) / 100;
+  const animatedProtein = useCountUp(preview.proteinG, activated, 850);
+  const animatedCarbs = useCountUp(preview.carbsG, activated, 850);
+  const animatedFat = useCountUp(preview.fatG, activated, 850);
+  const animatedWeeks = useCountUp(preview.weeksToGoal >= 999 ? 0 : preview.weeksToGoal, activated, 900);
 
   const resetScenario = () => setScenario(getInitialScenario(formData));
 
@@ -283,7 +317,10 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
           />
         </motion.div>
 
-        <motion.div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]" variants={dashboardPanelVariants}>
+        <motion.div
+          className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]"
+          variants={dashboardPanelVariants}
+        >
           <DataCard data-testid="whatif-controls-card" hoverable className="p-[var(--space-6)]">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
               <div>
@@ -301,14 +338,20 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
               </Button>
             </div>
 
-            <div className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+            <motion.div className="space-y-6" variants={dashboardStaggerGroupVariants}>
+              <motion.div className="grid gap-4 md:grid-cols-2" variants={dashboardStaggerGroupVariants}>
+                <motion.div
+                  className="rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                       Treinos por semana
                     </div>
-                    <span data-testid="whatif-training-value" className="font-mono text-[var(--text-primary)]">
+                    <span
+                      data-testid="whatif-training-value"
+                      className="font-mono text-[var(--text-primary)]"
+                    >
                       {scenario.trainingSessions}x
                     </span>
                   </div>
@@ -317,17 +360,28 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
                     min={1}
                     max={7}
                     step={1}
-                    onValueChange={(value) => setScenario((current) => ({ ...current, trainingSessions: value[0] ?? 1 }))}
+                    onValueChange={(value) =>
+                      setScenario((current) => ({
+                        ...current,
+                        trainingSessions: value[0] ?? 1,
+                      }))
+                    }
                     aria-label="Treinos por semana"
                   />
-                </div>
+                </motion.div>
 
-                <div className="rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <motion.div
+                  className="rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                       Cardio diario
                     </div>
-                    <span data-testid="whatif-cardio-value" className="font-mono text-[var(--text-primary)]">
+                    <span
+                      data-testid="whatif-cardio-value"
+                      className="font-mono text-[var(--text-primary)]"
+                    >
                       {scenario.cardioMinutesPerDay} min
                     </span>
                   </div>
@@ -337,15 +391,20 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
                     max={60}
                     step={5}
                     onValueChange={(value) =>
-                      setScenario((current) => ({ ...current, cardioMinutesPerDay: value[0] ?? 0 }))
+                      setScenario((current) => ({
+                        ...current,
+                        cardioMinutesPerDay: value[0] ?? 0,
+                      }))
                     }
                     aria-label="Cardio diario"
                   />
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              <div className="space-y-3">
-                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Objetivo</div>
+              <motion.div className="space-y-3" variants={dashboardMicroItemVariants}>
+                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Objetivo
+                </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   {GOAL_OPTIONS.map((option) => {
                     const Icon = option.icon;
@@ -368,10 +427,12 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
                     );
                   })}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="space-y-3">
-                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Nivel de atividade</div>
+              <motion.div className="space-y-3" variants={dashboardMicroItemVariants}>
+                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Nivel de atividade
+                </div>
                 <div className="grid gap-2 md:grid-cols-5">
                   {ACTIVITY_OPTIONS.map((option) => {
                     const selected = scenario.activityLevel === option.id;
@@ -383,17 +444,21 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
                         size="sm"
                         variant={selected ? 'secondary' : 'outline'}
                         className="justify-center rounded-full"
-                        onClick={() => setScenario((current) => ({ ...current, activityLevel: option.id }))}
+                        onClick={() =>
+                          setScenario((current) => ({ ...current, activityLevel: option.id }))
+                        }
                       >
                         {option.label}
                       </Button>
                     );
                   })}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="space-y-3">
-                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Termogenico</div>
+              <motion.div className="space-y-3" variants={dashboardMicroItemVariants}>
+                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Termogenico
+                </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   {THERMO_OPTIONS.map((option) => {
                     const selected = scenario.thermogenic === option.id;
@@ -404,18 +469,25 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
                         type="button"
                         variant={selected ? 'default' : 'outline'}
                         className="rounded-[var(--radius-lg)]"
-                        onClick={() => setScenario((current) => ({ ...current, thermogenic: option.id }))}
+                        onClick={() =>
+                          setScenario((current) => ({ ...current, thermogenic: option.id }))
+                        }
                       >
                         {option.label}
                       </Button>
                     );
                   })}
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </DataCard>
 
-          <DataCard data-testid="whatif-results-card" hoverable glow={tone} className="p-[var(--space-6)]">
+          <DataCard
+            data-testid="whatif-results-card"
+            hoverable
+            glow={tone}
+            className="p-[var(--space-6)]"
+          >
             <div className="mb-5">
               <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                 Resultado simulado
@@ -425,41 +497,45 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
               </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              <StatBlock
-                value={formatKcal(preview.newTdee)}
-                unit="kcal"
-                label="Novo TDEE"
-                size="sm"
-                color="blue"
-              />
-              <StatBlock
-                value={formatKcal(preview.targetCalories)}
-                unit="kcal"
-                label="Meta calorica"
-                size="sm"
-                color={tone === 'gold' ? 'gold' : tone === 'emerald' ? 'emerald' : 'blue'}
-              />
-              <StatBlock
-                value={Math.abs(preview.dailyDelta)}
-                unit="kcal"
-                label={preview.dailyDelta < 0 ? 'Deficit diario' : 'Superavit diario'}
-                size="sm"
-                color={tone === 'gold' ? 'gold' : tone === 'emerald' ? 'emerald' : 'blue'}
-              />
-              <StatBlock
-                value={Math.abs(preview.weeklyRateKg).toFixed(2)}
-                unit="kg/sem"
-                label="Ritmo estimado"
-                size="sm"
-                color="emerald"
-              />
-            </div>
+            <motion.div className="grid gap-3 sm:grid-cols-2" variants={dashboardStaggerGroupVariants}>
+              <motion.div variants={dashboardMicroItemVariants}>
+                <StatBlock value={animatedNewTdee} unit="kcal" label="Novo TDEE" size="sm" color="blue" />
+              </motion.div>
+              <motion.div variants={dashboardMicroItemVariants}>
+                <StatBlock
+                  value={animatedTargetCalories}
+                  unit="kcal"
+                  label="Meta calorica"
+                  size="sm"
+                  color={tone === 'gold' ? 'gold' : tone === 'emerald' ? 'emerald' : 'blue'}
+                />
+              </motion.div>
+              <motion.div variants={dashboardMicroItemVariants}>
+                <StatBlock
+                  value={animatedDailyDelta}
+                  unit="kcal"
+                  label={preview.dailyDelta < 0 ? 'Deficit diario' : 'Superavit diario'}
+                  size="sm"
+                  color={tone === 'gold' ? 'gold' : tone === 'emerald' ? 'emerald' : 'blue'}
+                />
+              </motion.div>
+              <motion.div variants={dashboardMicroItemVariants}>
+                <StatBlock
+                  value={animatedWeeklyRate.toFixed(2)}
+                  unit="kg/sem"
+                  label="Ritmo estimado"
+                  size="sm"
+                  color="emerald"
+                />
+              </motion.div>
+            </motion.div>
 
             <div className="mt-5 rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-5)] shadow-[var(--shadow-inner-deep)]">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Split de macros</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                    Split de macros
+                  </div>
                   <div className="mt-1 text-sm text-[var(--text-secondary)]">
                     Distribuicao simplificada para o objetivo selecionado.
                   </div>
@@ -470,60 +546,96 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
               </div>
 
               <div className="flex h-4 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
-                <div style={{ width: `${Math.max(8, preview.segments.proteinPct)}%` }} className="bg-[var(--emerald-500)]" />
-                <div style={{ width: `${Math.max(8, preview.segments.carbsPct)}%` }} className="bg-[var(--blue-500)]" />
-                <div style={{ width: `${Math.max(8, preview.segments.fatPct)}%` }} className="bg-[var(--gold-500)]" />
+                <motion.div
+                  initial={false}
+                  animate={{ width: activated ? `${Math.max(8, preview.segments.proteinPct)}%` : '0%' }}
+                  transition={dashboardBarTransition}
+                  className="bg-[var(--emerald-500)]"
+                />
+                <motion.div
+                  initial={false}
+                  animate={{ width: activated ? `${Math.max(8, preview.segments.carbsPct)}%` : '0%' }}
+                  transition={{ ...dashboardBarTransition, delay: 0.05 }}
+                  className="bg-[var(--blue-500)]"
+                />
+                <motion.div
+                  initial={false}
+                  animate={{ width: activated ? `${Math.max(8, preview.segments.fatPct)}%` : '0%' }}
+                  transition={{ ...dashboardBarTransition, delay: 0.1 }}
+                  className="bg-[var(--gold-500)]"
+                />
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                <StatBlock value={preview.proteinG} unit="g" label="Proteina" size="sm" color="emerald" />
-                <StatBlock value={preview.carbsG} unit="g" label="Carboidrato" size="sm" color="blue" />
-                <StatBlock value={preview.fatG} unit="g" label="Gordura" size="sm" color="gold" />
-              </div>
+              <motion.div className="mt-4 grid gap-3 sm:grid-cols-3" variants={dashboardStaggerGroupVariants}>
+                <motion.div variants={dashboardMicroItemVariants}>
+                  <StatBlock value={animatedProtein} unit="g" label="Proteina" size="sm" color="emerald" />
+                </motion.div>
+                <motion.div variants={dashboardMicroItemVariants}>
+                  <StatBlock value={animatedCarbs} unit="g" label="Carboidrato" size="sm" color="blue" />
+                </motion.div>
+                <motion.div variants={dashboardMicroItemVariants}>
+                  <StatBlock value={animatedFat} unit="g" label="Gordura" size="sm" color="gold" />
+                </motion.div>
+              </motion.div>
             </div>
           </DataCard>
         </motion.div>
 
-        <motion.div className="grid gap-4 xl:grid-cols-[1fr_0.95fr]" variants={dashboardPanelVariants}>
+        <motion.div
+          className="grid gap-4 xl:grid-cols-[1fr_0.95fr]"
+          variants={dashboardPanelVariants}
+        >
           <DataCard data-testid="whatif-comparison-card" hoverable className="p-[var(--space-6)]">
             <div className="mb-5">
-              <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Antes vs simulacao</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                Antes vs simulacao
+              </div>
               <div className="mt-1 text-sm text-[var(--text-secondary)]">
                 Comparativo direto entre o estado atual do plano e o cenario local.
               </div>
             </div>
 
-            <div className="space-y-3">
+            <motion.div className="space-y-3" variants={dashboardStaggerGroupVariants}>
               {comparisonRows.map((row) => (
-                <div
+                <motion.div
                   key={row.label}
                   className="grid grid-cols-[88px_1fr_auto_1fr] items-center gap-3 rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] px-[var(--space-4)] py-[var(--space-3)]"
+                  variants={dashboardMicroItemVariants}
                 >
-                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">{row.label}</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                    {row.label}
+                  </div>
                   <div className="font-mono text-sm text-[var(--text-secondary)]">{row.baseline}</div>
                   <TrendingDown className="h-4 w-4 text-[var(--text-muted)]" />
-                  <div className="text-right font-mono text-sm text-[var(--text-primary)]">{row.scenario}</div>
-                </div>
+                  <div className="text-right font-mono text-sm text-[var(--text-primary)]">
+                    {row.scenario}
+                  </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </DataCard>
 
           <DataCard hoverable className="p-[var(--space-6)]">
             <div className="mb-5">
-              <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">Leitura do cenario</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                Leitura do cenario
+              </div>
               <div className="mt-1 text-sm text-[var(--text-secondary)]">
                 Resumo rapido do impacto operacional do ajuste.
               </div>
             </div>
 
-            <div className="grid gap-4">
-              <div className="rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-5)] shadow-[var(--shadow-inner-deep)]">
+            <motion.div className="grid gap-4" variants={dashboardStaggerGroupVariants}>
+              <motion.div
+                className="rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-5)] shadow-[var(--shadow-inner-deep)]"
+                variants={dashboardMicroItemVariants}
+              >
                 <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                   <Activity className="h-3.5 w-3.5 text-[var(--blue-400)]" />
                   Horizonte
                 </div>
                 <StatBlock
-                  value={preview.weeksToGoal >= 999 ? '--' : preview.weeksToGoal}
+                  value={preview.weeksToGoal >= 999 ? '--' : animatedWeeks}
                   unit={preview.weeksToGoal >= 999 ? '' : 'sem'}
                   label="Prazo estimado"
                   sublabel={
@@ -535,20 +647,27 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
                   color="default"
                   className={CARDLESS_STAT_BLOCK_CLASSNAME}
                 />
-              </div>
+              </motion.div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+              <motion.div className="grid gap-3 sm:grid-cols-2" variants={dashboardStaggerGroupVariants}>
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     <Flame className="h-3.5 w-3.5 text-[var(--gold-400)]" />
                     Objetivo
                   </div>
                   <div className="text-sm leading-[1.7] text-[var(--text-secondary)]">
-                    {preview.goalConfig.label} com {scenario.trainingSessions} treinos/sem e {scenario.cardioMinutesPerDay} min de cardio.
+                    {preview.goalConfig.label} com {scenario.trainingSessions} treinos/sem e{' '}
+                    {scenario.cardioMinutesPerDay} min de cardio.
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <motion.div
+                  className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]"
+                  variants={dashboardMicroItemVariants}
+                >
                   <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
                     <Sparkles className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
                     Termogenico
@@ -558,9 +677,9 @@ export const WhatIfSlide = ({ activated, results, formData }: WhatIfSlideProps) 
                       ? 'Sem bonus adicional de termogenico.'
                       : `Bonus diario estimado de ${THERMO_BONUS[scenario.thermogenic]} kcal.`}
                   </div>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
           </DataCard>
         </motion.div>
       </motion.div>

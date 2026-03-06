@@ -3228,6 +3228,7 @@
 /* ===== React migration helper classes (replacing former inline styles) ===== */
 .screen-frame {
   min-height: 100vh;
+  background: var(--bg-abyss);
 }
 
 .hero-stat-group {
