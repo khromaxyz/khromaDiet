@@ -14,8 +14,9 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--bg-base);
+  background-color: var(--bg-abyss);
   color: var(--text-primary);
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
   cursor: auto;
@@ -25,40 +26,65 @@ body {
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.6;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
 }
 
-/* ============================================================
-   SCROLLBAR
-   ============================================================ */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 15% 10%, rgba(16, 185, 129, 0.03) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 500px at 85% 20%, rgba(59, 130, 246, 0.02) 0%, transparent 70%),
+    radial-gradient(ellipse 700px 700px at 50% 60%, rgba(245, 158, 11, 0.015) 0%, transparent 70%),
+    radial-gradient(ellipse 900px 400px at 30% 90%, rgba(16, 185, 129, 0.02) 0%, transparent 70%);
+}
+
+::selection {
+  background: rgba(16, 185, 129, 0.34);
+  color: var(--text-primary);
+}
+
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-800);
+  background: var(--bg-deepest);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-500);
-  border-radius: 3px;
+  background: var(--bg-overlay);
+  border: 2px solid var(--bg-deepest);
+  border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-violet);
+  background: var(--bg-hover);
 }
 
-/* ============================================================
-   APP WRAPPER & SCREEN SYSTEM
-   ============================================================ */
+#root {
+  min-height: 100vh;
+}
+
 #app {
   position: relative;
   min-height: 100vh;
+  z-index: 1;
 }
 
 .screen {
@@ -68,7 +94,9 @@ body::before {
   opacity: 0;
   transform: translateY(20px);
   pointer-events: none;
-  transition: opacity var(--transition-screen), transform var(--transition-screen);
+  transition:
+    opacity var(--transition-screen),
+    transform var(--transition-screen);
   overflow-y: auto;
 }
 

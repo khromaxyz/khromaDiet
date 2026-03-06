@@ -1,7 +1,7 @@
-﻿import { sliderTicks, trainingTypeOptions } from '../../../../lib/constants/mockForm';
+import { sliderTicks, trainingTypeOptions } from '../../../../lib/constants/mockForm';
 import type { FormStepComponentProps, TrainingType } from '../../../../lib/types';
-import { Slider } from '../../../ui/Slider';
 
+import { FormSliderField } from './FormSliderField';
 import { GoalOptionCard } from './GoalOptionCard';
 import { StepNav } from './StepNav';
 
@@ -11,32 +11,32 @@ export const TrainingStep = ({ data, onPatch, onNext, onBack, stepIndex, totalSt
       <div className="question-number">
         {String(stepIndex + 1).padStart(2, '0')} / {String(totalSteps).padStart(2, '0')} - Treino
       </div>
-      <h2 className="question-title">Como é o seu treino semanal?</h2>
-      <p className="question-description">Frequência, duração e tipo definem o EAT de treino.</p>
+      <h2 className="question-title">{'Como \u00e9 o seu treino semanal?'}</h2>
+      <p className="question-description">{'Frequ\u00eancia, dura\u00e7\u00e3o e tipo definem o EAT de treino.'}</p>
 
       <div className="slider-group">
-        <Slider
+        <FormSliderField
           id="training-frequency"
-          label="Frequência"
+          label={'Frequ\u00eancia'}
           valueLabel={`${data.trainingSessions}x/sem`}
           min={0}
           max={7}
           step={1}
           value={data.trainingSessions}
           ticks={sliderTicks.trainingFrequency}
-          onChange={(event) => onPatch({ trainingSessions: Number(event.target.value) })}
+          onValueChange={(value) => onPatch({ trainingSessions: value })}
         />
 
-        <Slider
+        <FormSliderField
           id="training-duration"
-          label="Duração média"
+          label={'Dura\u00e7\u00e3o m\u00e9dia'}
           valueLabel={`${data.trainingDurationMin} min`}
           min={20}
           max={120}
           step={5}
           value={data.trainingDurationMin}
           ticks={sliderTicks.trainingDuration}
-          onChange={(event) => onPatch({ trainingDurationMin: Number(event.target.value) })}
+          onValueChange={(value) => onPatch({ trainingDurationMin: value })}
         />
       </div>
 
@@ -57,7 +57,7 @@ export const TrainingStep = ({ data, onPatch, onNext, onBack, stepIndex, totalSt
         ))}
       </div>
 
-      <div className="training-scroll-hint">Se estiver no celular, deslize para ver todos os cards de treino.</div>
+      <div className="training-scroll-hint">{'Se estiver no celular, deslize para ver todos os cards de treino.'}</div>
 
       <StepNav onBack={onBack} onNext={onNext} />
     </div>

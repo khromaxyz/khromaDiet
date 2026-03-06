@@ -1,6 +1,6 @@
-﻿import { ArrowLeft, ArrowRight, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Zap } from 'lucide-react';
 
-import { Button } from '../../../ui/Button';
+import { Button } from '@/components/ui/primitives/button';
 
 interface StepNavProps {
   onBack: () => void;
@@ -11,24 +11,21 @@ interface StepNavProps {
 export const StepNav = ({ onBack, onNext, submit = false }: StepNavProps) => {
   return (
     <div className="form-nav">
-      <Button
-        variant="form-back"
-        onClick={onBack}
-        leftIcon={<ArrowLeft size={14} strokeWidth={2.5} />}
-        aria-label="Voltar"
-      >
+      <Button variant="ghost" className="form-nav-button form-nav-button-back" onClick={onBack} aria-label="Voltar">
+        <ArrowLeft size={14} strokeWidth={2.5} />
         Voltar
       </Button>
+
       <Button
-        variant={submit ? 'submit' : 'form-next'}
+        variant="default"
+        className="form-nav-button form-nav-button-next"
         onClick={onNext}
-        rightIcon={submit ? undefined : <ArrowRight size={14} strokeWidth={2.5} />}
-        leftIcon={submit ? <Zap size={14} strokeWidth={2.5} /> : undefined}
-        aria-label={submit ? 'Gerar meu plano' : 'Próximo'}
+        aria-label={submit ? 'Gerar meu plano' : 'Pr\u00f3ximo'}
       >
-        {submit ? 'Gerar meu plano' : 'Próximo'}
+        {submit ? <Zap size={14} strokeWidth={2.5} /> : null}
+        {submit ? 'Gerar meu plano' : 'Pr\u00f3ximo'}
+        {submit ? null : <ArrowRight size={14} strokeWidth={2.5} />}
       </Button>
     </div>
   );
 };
-

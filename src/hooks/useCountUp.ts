@@ -14,7 +14,7 @@ export const useCountUp = (target: number, active: boolean, duration = 1200) => 
 
     const tick = (time: number) => {
       const elapsed = time - startedAt;
-      const progress = Math.min(elapsed / duration, 1);
+      const progress = Math.min(Math.max(elapsed / duration, 0), 1);
       const eased = 1 - (1 - progress) ** 4;
       setValue(Math.round(target * eased));
       if (progress < 1) {

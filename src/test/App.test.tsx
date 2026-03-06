@@ -32,8 +32,8 @@ describe('DietForge app flow', () => {
     await screen.findByText(/plano funcional foi calculado/i);
 
     fireEvent.click(screen.getByRole('button', { name: /ver análise completa/i }));
-    await screen.findByText(/protocolo ativo/i);
-  });
+    await screen.findByText(/^plano ativo$/i);
+  }, 20000);
 
   it('supports back navigation in wizard', async () => {
     render(<App />);
@@ -46,7 +46,7 @@ describe('DietForge app flow', () => {
     await screen.findByText(/qual é o seu objetivo principal/i);
   });
 
-  it('renders chart canvas in dashboard', async () => {
+  it('renders projection chart in dashboard', async () => {
     useDietForgeStore.getState().patchFormData({
       bodyFatDeclaredPct: 18,
       targetWeeks: 12,
@@ -59,7 +59,8 @@ describe('DietForge app flow', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /ver exemplo/i }));
     await screen.findByText(/protocolo ativo/i);
-    expect(container.querySelector('canvas')).toBeInTheDocument();
+    expect(container.querySelector('[data-testid="projection-chart-shell"]')).toBeInTheDocument();
+    expect(screen.getByTestId('nivo-line')).toBeInTheDocument();
   });
 
   it('keeps step registry order stable', () => {

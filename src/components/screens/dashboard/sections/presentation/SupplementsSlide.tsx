@@ -1,389 +1,314 @@
-import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Pill, ShieldCheck, Sparkles, TimerReset } from 'lucide-react';
+import { useMemo } from 'react';
 
-import '../../../../../styles/dashboard-supplements.css';
-import { LEGACY_SUPPLEMENTS_HTML, LEGACY_SUPPLEMENTS_SCRIPT } from './supplementsLegacy.generated';
+import { DataCard, SectionHeader, SectionShell, StatBlock } from '@/components/design-system';
+import type { CalculationResults } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
-type EventMapEntry = {
-  type: string;
-  listener: EventListenerOrEventListenerObject;
-  options: AddEventListenerOptions | boolean | undefined;
-};
+import {
+  CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardContainerVariants,
+  dashboardItemVariants,
+  dashboardPanelVariants,
+} from './shared';
 
-type LegacySupplementWindowFn = (...args: any[]) => unknown;
-
-type LegacySupplementExports = {
-  openModal?: LegacySupplementWindowFn;
-  closeModal?: LegacySupplementWindowFn;
-  handleOverlayClick?: LegacySupplementWindowFn;
-};
-
-declare global {
-  interface Window {
-    openModal?: LegacySupplementWindowFn;
-    closeModal?: LegacySupplementWindowFn;
-    handleOverlayClick?: LegacySupplementWindowFn;
-  }
+interface SupplementsSlideProps {
+  activated: boolean;
+  results: CalculationResults;
 }
 
-const createFallbackObserver = (): IntersectionObserver => {
+type SupplementPriority = CalculationResults['supplements'][number]['priority'];
+type PriorityKey = 'Alta' | 'Media' | 'Baixa';
+
+interface SupplementPresentationMeta {
+  category: string;
+  rationale: string;
+  evidence: string;
+}
+
+const PRIORITY_ORDER: PriorityKey[] = ['Alta', 'Media', 'Baixa'];
+
+const PRIORITY_META: Record<
+  PriorityKey,
+  {
+    badgeClassName: string;
+    dividerClassName: string;
+    glow: 'none' | 'emerald' | 'gold';
+  }
+> = {
+  Alta: {
+    badgeClassName: 'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
+    dividerClassName: 'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
+    glow: 'emerald',
+  },
+  Media: {
+    badgeClassName: 'border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]',
+    dividerClassName: 'border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]',
+    glow: 'gold',
+  },
+  Baixa: {
+    badgeClassName: 'border-[var(--border-default)] bg-[var(--bg-deep)] text-[var(--text-secondary)]',
+    dividerClassName: 'border-[var(--border-default)] bg-[var(--bg-deep)] text-[var(--text-secondary)]',
+    glow: 'none',
+  },
+};
+
+const LEGACY_METADATA_ALIASES: Record<string, string> = {
+  creatine: 'creatina',
+  omega3: 'omega',
+  magnesium: 'mag',
+};
+
+const LEGACY_METADATA: Record<string, SupplementPresentationMeta> = {
+  creatina: {
+    category: 'Forca · Recuperacao · Performance',
+    rationale: 'Saturacao muscular previsivel e melhora consistente de desempenho em treino resistido.',
+    evidence: 'Evidencia nivel A',
+  },
+  vitd: {
+    category: 'Imunidade · Hormonal · Osseo',
+    rationale: 'Base para suporte hormonal e osseo, especialmente quando a exposicao solar e baixa.',
+    evidence: 'Recomendada para checagem laboratorial',
+  },
+  whey: {
+    category: 'Sintese Proteica · Hipertrofia',
+    rationale: 'Fecha a meta proteica diaria com absorcao rapida quando a dieta solida nao cobre o alvo.',
+    evidence: 'Condicional a meta proteica diaria',
+  },
+  omega: {
+    category: 'Cardiovascular · Anti-inflamatorio',
+    rationale: 'Apoia modulacao inflamatoria e recuperacao quando o protocolo pede maior consistencia.',
+    evidence: 'Melhor com refeicoes principais',
+  },
+  mag: {
+    category: 'Sono · Neuromuscular · Relaxamento',
+    rationale: 'Ajuda recuperacao noturna e reduz ruido de fadiga quando o volume de treino sobe.',
+    evidence: 'Mais util no bloco noturno',
+  },
+  caffeine: {
+    category: 'Performance · Foco',
+    rationale: 'Opcao tatica para elevar alerta e intensidade em sessoes-chave de treino.',
+    evidence: 'Uso opcional e dose-resposta',
+  },
+  zma: {
+    category: 'Sono · Recuperacao',
+    rationale: 'Suporte secundario para recuperacao quando o corte e o volume de treino apertam o descanso.',
+    evidence: 'Baixa prioridade e uso situacional',
+  },
+  b12: {
+    category: 'Micronutrientes · Dieta Plant-Based',
+    rationale: 'Cobertura basica para dietas estritamente vegetais com baixa disponibilidade natural de B12.',
+    evidence: 'Alta prioridade em dieta plant-based',
+  },
+};
+
+const normalizePriority = (priority: SupplementPriority): PriorityKey => {
+  if (priority === 'Média') {
+    return 'Media';
+  }
+
+  return priority as PriorityKey;
+};
+
+const getPresentationMeta = (supplement: CalculationResults['supplements'][number]): SupplementPresentationMeta => {
+  const metadataKey = LEGACY_METADATA_ALIASES[supplement.id] ?? supplement.id;
+  const metadata = LEGACY_METADATA[metadataKey];
+
+  if (metadata) {
+    return metadata;
+  }
+
   return {
-    root: null,
-    rootMargin: '0px',
-    thresholds: [0],
-    disconnect() {},
-    observe() {},
-    takeRecords() {
-      return [];
-    },
-    unobserve() {},
+    category: 'Suporte do protocolo',
+    rationale: `${supplement.name} entra como complemento ${supplement.priority.toLowerCase()} com foco em consistencia de dose e timing.`,
+    evidence: `Timing sugerido: ${supplement.timing}`,
   };
 };
 
-export const SupplementsSlide = ({ isActive }: { isActive: boolean }) => {
-  const rootRef = useRef<HTMLDivElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
+const getPriorityLabel = (priority: PriorityKey) => (priority === 'Media' ? 'Media' : priority);
 
-  useEffect(() => {
-    if (!isActive) {
-      return;
-    }
+export const SupplementsSlide = ({ activated, results }: SupplementsSlideProps) => {
+  const supplements = results.supplements ?? [];
 
-    const root = rootRef.current;
-    const content = contentRef.current;
-    if (!root || !content) {
-      return;
-    }
+  const groupedSupplements = useMemo(() => {
+    return PRIORITY_ORDER.map((priority) => ({
+      priority,
+      items: supplements.filter((supplement) => normalizePriority(supplement.priority) === priority),
+    })).filter((group) => group.items.length > 0);
+  }, [supplements]);
 
-    content.innerHTML = LEGACY_SUPPLEMENTS_HTML;
+  if (groupedSupplements.length === 0) {
+    return (
+      <SectionShell
+        level="base"
+        className="pb-[var(--space-12)] pt-[calc(var(--header-height)+var(--space-8))] sm:pt-[calc(var(--header-height)+var(--space-10))]"
+      >
+        <motion.div
+          className="flex flex-col gap-8 lg:gap-10"
+          variants={dashboardContainerVariants}
+          initial={false}
+          animate={activated ? 'show' : 'hidden'}
+        >
+          <motion.div variants={dashboardItemVariants}>
+            <SectionHeader
+              eyebrow="07 - SUPLEMENTOS"
+              title={<span id="dfp-heading-supplements">Stack recomendado para este protocolo</span>}
+              subtitle="Quando o motor nao sinaliza suplementos, esta secao mostra um estado neutro em vez de herdar a UI legacy."
+            />
+          </motion.div>
 
-    const windowListeners: EventMapEntry[] = [];
-    const documentListeners: EventMapEntry[] = [];
-    const timeoutIds = new Set<number>();
-    const intervalIds = new Set<number>();
-    const rafIds = new Set<number>();
-    const observers = new Set<IntersectionObserver>();
-    const previousBodyOverflow = document.body.style.overflow;
-    let runtimeFailed = false;
-
-    const previousOpenModal = window.openModal;
-    const previousCloseModal = window.closeModal;
-    const previousHandleOverlayClick = window.handleOverlayClick;
-    let assignedOpenModal: LegacySupplementWindowFn | undefined;
-    let assignedCloseModal: LegacySupplementWindowFn | undefined;
-    let assignedHandleOverlayClick: LegacySupplementWindowFn | undefined;
-
-    const failRuntime = (label: string, error: unknown) => {
-      if (runtimeFailed) {
-        return;
-      }
-      runtimeFailed = true;
-      console.error(label, error);
-    };
-
-    const runSafely = <T extends (...args: any[]) => unknown>(label: string, fn: T): T => {
-      return ((...args: Parameters<T>) => {
-        if (runtimeFailed) {
-          return undefined;
-        }
-        try {
-          return fn(...args);
-        } catch (error) {
-          failRuntime(label, error);
-          return undefined;
-        }
-      }) as T;
-    };
-
-    const toSafeEventListener = (label: string, listener: EventListenerOrEventListenerObject): EventListener => {
-      if (typeof listener === 'function') {
-        return runSafely(label, listener as EventListener);
-      }
-      return runSafely(label, (event: Event) => listener.handleEvent.call(listener, event));
-    };
-
-    const trackSetTimeout: typeof window.setTimeout = ((handler: TimerHandler, timeout?: number, ...args: any[]) => {
-      const safeHandler =
-        typeof handler === 'function'
-          ? (runSafely('Supplements legacy runtime callback error:', handler as (...handlerArgs: any[]) => unknown) as TimerHandler)
-          : handler;
-      const id = window.setTimeout(safeHandler, timeout, ...args);
-      timeoutIds.add(id);
-      return id;
-    }) as typeof window.setTimeout;
-
-    const trackClearTimeout: typeof window.clearTimeout = ((id?: number) => {
-      if (typeof id === 'number') {
-        timeoutIds.delete(id);
-        window.clearTimeout(id);
-      }
-    }) as typeof window.clearTimeout;
-
-    const trackSetInterval: typeof window.setInterval = ((handler: TimerHandler, timeout?: number, ...args: any[]) => {
-      const safeHandler =
-        typeof handler === 'function'
-          ? (runSafely('Supplements legacy runtime callback error:', handler as (...handlerArgs: any[]) => unknown) as TimerHandler)
-          : handler;
-      const id = window.setInterval(safeHandler, timeout, ...args);
-      intervalIds.add(id);
-      return id;
-    }) as typeof window.setInterval;
-
-    const trackClearInterval: typeof window.clearInterval = ((id?: number) => {
-      if (typeof id === 'number') {
-        intervalIds.delete(id);
-        window.clearInterval(id);
-      }
-    }) as typeof window.clearInterval;
-
-    const trackRequestAnimationFrame: typeof window.requestAnimationFrame = ((callback: FrameRequestCallback) => {
-      const safeCallback = runSafely('Supplements legacy runtime callback error:', callback);
-      const id = window.requestAnimationFrame((time) => {
-        rafIds.delete(id);
-        safeCallback(time);
-      });
-      rafIds.add(id);
-      return id;
-    }) as typeof window.requestAnimationFrame;
-
-    const trackCancelAnimationFrame: typeof window.cancelAnimationFrame = ((id: number) => {
-      rafIds.delete(id);
-      window.cancelAnimationFrame(id);
-    }) as typeof window.cancelAnimationFrame;
-
-    const trackWindowAddEventListener = (
-      type: string,
-      listener: EventListenerOrEventListenerObject,
-      options?: AddEventListenerOptions | boolean,
-    ) => {
-      const wrapped = toSafeEventListener('Supplements legacy window listener error:', listener);
-      windowListeners.push({ type, listener: wrapped, options });
-      window.addEventListener(type, wrapped, options);
-    };
-
-    const trackDocumentAddEventListener = (
-      type: string,
-      listener: EventListenerOrEventListenerObject,
-      options?: AddEventListenerOptions | boolean,
-    ) => {
-      if (type === 'DOMContentLoaded') {
-        const wrapped = toSafeEventListener('Supplements legacy DOMContentLoaded handler error:', listener);
-        wrapped(new Event('DOMContentLoaded'));
-        return;
-      }
-
-      const wrapped = toSafeEventListener('Supplements legacy document listener error:', listener);
-      documentListeners.push({ type, listener: wrapped, options });
-      document.addEventListener(type, wrapped, options);
-    };
-
-    const scopedDocument = new Proxy(document, {
-      get(target, prop) {
-        if (prop === 'getElementById') {
-          return (id: string) => content.querySelector<HTMLElement>('#' + id);
-        }
-        if (prop === 'querySelector') {
-          return (selector: string) => content.querySelector(selector);
-        }
-        if (prop === 'querySelectorAll') {
-          return (selector: string) => content.querySelectorAll(selector);
-        }
-        if (prop === 'addEventListener') {
-          return trackDocumentAddEventListener;
-        }
-        if (prop === 'removeEventListener') {
-          return target.removeEventListener.bind(target);
-        }
-        if (prop === 'readyState') {
-          return 'complete';
-        }
-        if (prop === 'body') {
-          return target.body;
-        }
-
-        const value = Reflect.get(target, prop);
-        return typeof value === 'function' ? value.bind(target) : value;
-      },
-    });
-
-    const scopedWindow = new Proxy(window, {
-      get(target, prop) {
-        if (prop === 'document') {
-          return scopedDocument;
-        }
-        if (prop === 'addEventListener') {
-          return trackWindowAddEventListener;
-        }
-        if (prop === 'removeEventListener') {
-          return target.removeEventListener.bind(target);
-        }
-        if (prop === 'setTimeout') {
-          return trackSetTimeout;
-        }
-        if (prop === 'clearTimeout') {
-          return trackClearTimeout;
-        }
-        if (prop === 'setInterval') {
-          return trackSetInterval;
-        }
-        if (prop === 'clearInterval') {
-          return trackClearInterval;
-        }
-        if (prop === 'requestAnimationFrame') {
-          return trackRequestAnimationFrame;
-        }
-        if (prop === 'cancelAnimationFrame') {
-          return trackCancelAnimationFrame;
-        }
-
-        const value = Reflect.get(target, prop);
-        return typeof value === 'function' ? value.bind(target) : value;
-      },
-    });
-
-    const NativeIntersectionObserver = window.IntersectionObserver;
-
-    const TrackedIntersectionObserver: typeof window.IntersectionObserver = (function () {
-      function WrappedObserver(
-        this: IntersectionObserver,
-        callback: IntersectionObserverCallback,
-        options?: IntersectionObserverInit,
-      ) {
-        if (typeof NativeIntersectionObserver === 'function') {
-          const safeCallback = runSafely('Supplements legacy intersection observer error:', callback);
-          const observer = new NativeIntersectionObserver(safeCallback, options);
-          observers.add(observer);
-          return observer as unknown as IntersectionObserver;
-        }
-
-        const fallback = createFallbackObserver();
-        observers.add(fallback);
-        return fallback;
-      }
-
-      if (typeof NativeIntersectionObserver === 'function') {
-        WrappedObserver.prototype = NativeIntersectionObserver.prototype;
-      }
-
-      return WrappedObserver as unknown as typeof window.IntersectionObserver;
-    })();
-
-    try {
-      const runner = new Function(
-        'window',
-        'document',
-        'console',
-        'IntersectionObserver',
-        'setTimeout',
-        'clearTimeout',
-        'setInterval',
-        'clearInterval',
-        'requestAnimationFrame',
-        'cancelAnimationFrame',
-        'performance',
-        `${LEGACY_SUPPLEMENTS_SCRIPT}\nreturn {\n  openModal: typeof openModal === 'function' ? openModal : undefined,\n  closeModal: typeof closeModal === 'function' ? closeModal : undefined,\n  handleOverlayClick: typeof handleOverlayClick === 'function' ? handleOverlayClick : undefined\n};`,
-      ) as (
-        windowArg: Window,
-        documentArg: Document,
-        consoleArg: Console,
-        intersectionObserverArg: typeof window.IntersectionObserver,
-        setTimeoutArg: typeof window.setTimeout,
-        clearTimeoutArg: typeof window.clearTimeout,
-        setIntervalArg: typeof window.setInterval,
-        clearIntervalArg: typeof window.clearInterval,
-        requestAnimationFrameArg: typeof window.requestAnimationFrame,
-        cancelAnimationFrameArg: typeof window.cancelAnimationFrame,
-        performanceArg: Performance,
-      ) => LegacySupplementExports;
-
-      const exports = runner(
-        scopedWindow as unknown as Window,
-        scopedDocument as unknown as Document,
-        console,
-        TrackedIntersectionObserver,
-        trackSetTimeout,
-        trackClearTimeout,
-        trackSetInterval,
-        trackClearInterval,
-        trackRequestAnimationFrame,
-        trackCancelAnimationFrame,
-        performance,
-      );
-
-      if (typeof exports.openModal === 'function') {
-        assignedOpenModal = runSafely('Supplements legacy openModal error:', exports.openModal);
-        window.openModal = assignedOpenModal;
-      }
-
-      if (typeof exports.closeModal === 'function') {
-        assignedCloseModal = runSafely('Supplements legacy closeModal error:', exports.closeModal);
-        window.closeModal = assignedCloseModal;
-      }
-
-      if (typeof exports.handleOverlayClick === 'function') {
-        assignedHandleOverlayClick = runSafely('Supplements legacy handleOverlayClick error:', exports.handleOverlayClick);
-        window.handleOverlayClick = assignedHandleOverlayClick;
-      }
-    } catch (error) {
-      failRuntime('Supplements legacy script execution error:', error);
-    }
-
-    return () => {
-      windowListeners.forEach(({ type, listener, options }) => {
-        window.removeEventListener(type, listener, options);
-      });
-
-      documentListeners.forEach(({ type, listener, options }) => {
-        document.removeEventListener(type, listener, options);
-      });
-
-      observers.forEach((observer) => {
-        observer.disconnect();
-      });
-
-      timeoutIds.forEach((id) => {
-        window.clearTimeout(id);
-      });
-
-      intervalIds.forEach((id) => {
-        window.clearInterval(id);
-      });
-
-      rafIds.forEach((id) => {
-        window.cancelAnimationFrame(id);
-      });
-
-      if (window.openModal === assignedOpenModal) {
-        if (previousOpenModal) {
-          window.openModal = previousOpenModal;
-        } else {
-          delete window.openModal;
-        }
-      }
-
-      if (window.closeModal === assignedCloseModal) {
-        if (previousCloseModal) {
-          window.closeModal = previousCloseModal;
-        } else {
-          delete window.closeModal;
-        }
-      }
-
-      if (window.handleOverlayClick === assignedHandleOverlayClick) {
-        if (previousHandleOverlayClick) {
-          window.handleOverlayClick = previousHandleOverlayClick;
-        } else {
-          delete window.handleOverlayClick;
-        }
-      }
-
-      document.body.style.overflow = previousBodyOverflow;
-      content.innerHTML = '';
-    };
-  }, [isActive]);
+          <motion.div variants={dashboardPanelVariants}>
+            <DataCard hoverable className="p-[var(--space-6)]">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
+                  <Pill className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
+                  Sem stack ativo
+                </div>
+                <div className="text-[24px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
+                  Nenhum suplemento foi priorizado neste calculo
+                </div>
+                <p className="max-w-[38rem] text-[15px] leading-[1.7] text-[var(--text-secondary)]">
+                  O painel de suplementacao aparece quando o motor encontra itens com prioridade operacional para o protocolo atual.
+                </p>
+              </div>
+            </DataCard>
+          </motion.div>
+        </motion.div>
+      </SectionShell>
+    );
+  }
 
   return (
-    <div ref={rootRef} id="dfp-heading-supplements" className="supplements-section-legacy" aria-label={'Stack de Suplementa\u00e7\u00e3o'}>
-      <div ref={contentRef} dangerouslySetInnerHTML={{ __html: LEGACY_SUPPLEMENTS_HTML }} />
-    </div>
+    <SectionShell
+      level="base"
+      className="pb-[var(--space-12)] pt-[calc(var(--header-height)+var(--space-8))] sm:pt-[calc(var(--header-height)+var(--space-10))]"
+    >
+      <motion.div
+        className="flex flex-col gap-8 lg:gap-10"
+        variants={dashboardContainerVariants}
+        initial={false}
+        animate={activated ? 'show' : 'hidden'}
+      >
+        <motion.div variants={dashboardItemVariants}>
+          <SectionHeader
+            eyebrow="07 - SUPLEMENTOS"
+            title={<span id="dfp-heading-supplements">Stack recomendado para este protocolo</span>}
+            subtitle="Os itens entram ordenados por prioridade operacional, com dose, timing e a justificativa curta herdada da logica do protocolo."
+            action={
+              <div className="flex flex-wrap items-center justify-start gap-2 lg:justify-end">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
+                  <Pill className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
+                  {supplements.length} itens
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
+                  <ShieldCheck className="h-3.5 w-3.5 text-[var(--blue-400)]" />
+                  Priorizacao por perfil
+                </span>
+              </div>
+            }
+          />
+        </motion.div>
+
+        {groupedSupplements.map((group) => {
+          const priorityMeta = PRIORITY_META[group.priority];
+
+          return (
+            <motion.div
+              key={group.priority}
+              data-testid="supplement-priority-group"
+              className="flex flex-col gap-4"
+              variants={dashboardPanelVariants}
+            >
+              <div className="flex items-center gap-3">
+                <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,var(--border-default),transparent)]" />
+                <span
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]',
+                    priorityMeta.dividerClassName,
+                  )}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-current shadow-[0_0_12px_currentColor]" />
+                  Prioridade {getPriorityLabel(group.priority)}
+                  <span className="text-[var(--text-muted)]">{group.items.length}</span>
+                </span>
+                <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,var(--border-default),transparent)]" />
+              </div>
+
+              <div className="grid gap-4 xl:grid-cols-3">
+                {group.items.map((supplement) => {
+                  const metadata = getPresentationMeta(supplement);
+
+                  return (
+                    <DataCard
+                      key={supplement.id}
+                      data-testid="supplement-card"
+                      hoverable
+                      glow={priorityMeta.glow}
+                      className="p-[var(--space-5)]"
+                    >
+                      <div className="flex h-full flex-col gap-5">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex min-w-0 items-start gap-3">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] text-[22px] shadow-[var(--shadow-inner-deep)]">
+                              <span aria-hidden>{supplement.icon}</span>
+                            </div>
+                            <div className="min-w-0">
+                              <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                                {metadata.category}
+                              </div>
+                              <div className="mt-1 text-[22px] font-semibold leading-[1.2] tracking-[-0.8px] text-[var(--text-primary)]">
+                                {supplement.name}
+                              </div>
+                            </div>
+                          </div>
+
+                          <span
+                            className={cn(
+                              'inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px]',
+                              priorityMeta.badgeClassName,
+                            )}
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-current shadow-[0_0_12px_currentColor]" />
+                            {getPriorityLabel(group.priority)}
+                          </span>
+                        </div>
+
+                        <StatBlock
+                          value={supplement.dose}
+                          label="Dose sugerida"
+                          sublabel={metadata.evidence}
+                          size="sm"
+                          color={priorityMeta.glow === 'gold' ? 'gold' : priorityMeta.glow === 'emerald' ? 'emerald' : 'default'}
+                          className={CARDLESS_STAT_BLOCK_CLASSNAME}
+                        />
+
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                            <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                              <TimerReset className="h-3.5 w-3.5 text-[var(--gold-400)]" />
+                              Timing
+                            </div>
+                            <p className="text-sm leading-[1.7] text-[var(--text-secondary)]">{supplement.timing}</p>
+                          </div>
+
+                          <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                            <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                              <Sparkles className="h-3.5 w-3.5 text-[var(--blue-400)]" />
+                              Justificativa
+                            </div>
+                            <p className="text-sm leading-[1.7] text-[var(--text-secondary)]">{metadata.rationale}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </DataCard>
+                  );
+                })}
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    </SectionShell>
   );
 };

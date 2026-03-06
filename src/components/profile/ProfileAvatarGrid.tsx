@@ -1,4 +1,5 @@
-﻿import { AVATAR_STYLES } from '../../lib/profiles/constants';
+import { cn } from '@/lib/utils';
+import { AVATAR_STYLES } from '../../lib/profiles/constants';
 
 import { ProfileAvatar } from './ProfileAvatar';
 
@@ -18,13 +19,14 @@ export const ProfileAvatarGrid = ({
   ariaLabel = 'Selecionar avatar',
 }: ProfileAvatarGridProps) => {
   return (
-    <div className={className ?? 'df-avatar-grid'} role="group" aria-label={ariaLabel}>
+    <div className={cn('df-avatar-grid', className)} role="group" aria-label={ariaLabel}>
       {AVATAR_STYLES.map((avatar) => (
         <button
           key={avatar.id}
           type="button"
-          className={avatar.id === selectedId ? 'df-avatar-choice is-selected' : 'df-avatar-choice'}
+          className={cn('df-avatar-choice', avatar.id === selectedId && 'is-selected')}
           aria-label={`Avatar ${avatar.role}`}
+          aria-pressed={avatar.id === selectedId}
           onClick={() => onSelect(avatar.id)}
         >
           <ProfileAvatar avatarId={avatar.id} size={size} title={avatar.role} />

@@ -11,6 +11,10 @@ vi.mock('react-chartjs-2', () => ({
   Line: () => createElement('canvas', { 'data-testid': 'projection-chart' }),
 }));
 
+vi.mock('@nivo/line', () => ({
+  ResponsiveLine: () => createElement('svg', { 'data-testid': 'nivo-line' }),
+}));
+
 if (!window.matchMedia) {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,

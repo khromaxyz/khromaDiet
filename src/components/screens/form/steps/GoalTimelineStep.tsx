@@ -1,12 +1,12 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { goalModeOptions, sliderTicks } from '../../../../lib/constants/mockForm';
 import { derivePrecisionPresence, runPipeline } from '../../../../lib/engine/runPipeline';
 import { renormalizeWeights } from '../../../../lib/engine/renormalizeWeights';
 import type { FormStepComponentProps, GoalMetricMode } from '../../../../lib/types';
 import { NumberField } from '../../../ui/NumberField';
-import { Slider } from '../../../ui/Slider';
 
+import { FormSliderField } from './FormSliderField';
 import { GoalOptionCard } from './GoalOptionCard';
 import { StepNav } from './StepNav';
 
@@ -47,7 +47,7 @@ const getClassificationLabel = (classification: 'realista' | 'agressivo' | 'invi
   if (classification === 'agressivo') {
     return 'AGRESSIVO';
   }
-  return 'INVIÁVEL';
+  return 'INVIAVEL';
 };
 
 export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, totalSteps, issues }: FormStepComponentProps) => {
@@ -113,9 +113,7 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
       })
     : null;
 
-  const weeklyRateKg = previewProjection
-    ? Math.abs((previewProjection.actualDailyDelta * 7) / 7700)
-    : null;
+  const weeklyRateKg = previewProjection ? Math.abs((previewProjection.actualDailyDelta * 7) / 7700) : null;
 
   const diagnosticTone = previewProjection?.classification ?? 'realista';
 
@@ -139,12 +137,12 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
   return (
     <div className="question-sub-panel active" id="qpanel-goal-timeline">
       <div className="question-number">
-        {String(stepIndex + 1).padStart(2, '0')} / {String(totalSteps).padStart(2, '0')} - Meta e prazo
+        {String(stepIndex + 1).padStart(2, '0')} / {String(totalSteps).padStart(2, '0')} - {'Meta e prazo'}
       </div>
       <h2 className="question-title">
-        Defina sua meta quantitativa <span className="optional-badge">Opcional</span>
+        {'Defina sua meta quantitativa'} <span className="optional-badge">Opcional</span>
       </h2>
-      <p className="question-description">Escolha um único modo de meta e o prazo em semanas.</p>
+      <p className="question-description">{'Escolha um \u00fanico modo de meta e o prazo em semanas.'}</p>
 
       {isCutOrBulk ? (
         <>
@@ -154,7 +152,7 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
                 key={mode.id}
                 option={{
                   id: mode.id,
-                  icon: mode.id === 'weight' ? '⚖️' : mode.id === 'bf' ? '🎯' : '🧈',
+                  icon: mode.id === 'weight' ? '\u2696\uFE0F' : mode.id === 'bf' ? '\u{1F3AF}' : '\u{1F4A7}',
                   title: mode.title,
                   description: mode.description,
                 }}
@@ -213,7 +211,7 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
           </div>
 
           <div className="slider-group">
-            <Slider
+            <FormSliderField
               id="target-weeks"
               label="Prazo desejado"
               valueLabel={`${data.targetWeeks ?? 12} semanas`}
@@ -222,7 +220,7 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
               step={1}
               value={data.targetWeeks ?? 12}
               ticks={sliderTicks.targetWeeks}
-              onChange={(event) => onPatch({ targetWeeks: Number(event.target.value) })}
+              onValueChange={(value) => onPatch({ targetWeeks: value })}
             />
           </div>
 
@@ -237,32 +235,32 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
                 .join(' ')}
             >
               <div className="goal-timeline-diagnostic-heading">
-                <span className="goal-timeline-diagnostic-heading-text">● ANÁLISE DO PRAZO</span>
+                <span className="goal-timeline-diagnostic-heading-text">{'An\u00e1lise do prazo'}</span>
               </div>
 
               <div className="goal-timeline-diagnostic-row">
-                <span className="goal-timeline-diagnostic-label">Classificação</span>
+                <span className="goal-timeline-diagnostic-label">{'Classifica\u00e7\u00e3o'}</span>
                 <strong className="goal-timeline-diagnostic-value goal-timeline-diagnostic-classification">
-                  ● {getClassificationLabel(previewProjection.classification)}
+                  {getClassificationLabel(previewProjection.classification)}
                 </strong>
               </div>
 
               <div className="goal-timeline-diagnostic-row">
-                <span className="goal-timeline-diagnostic-label">Déficit necessário</span>
+                <span className="goal-timeline-diagnostic-label">{'D\u00e9ficit necess\u00e1rio'}</span>
                 <strong className="goal-timeline-diagnostic-value">
                   {Math.abs(previewProjection.requiredDailyDelta).toFixed(0)} kcal/dia
                 </strong>
               </div>
 
               <div className="goal-timeline-diagnostic-row">
-                <span className="goal-timeline-diagnostic-label">Perda estimada</span>
+                <span className="goal-timeline-diagnostic-label">{'Perda estimada'}</span>
                 <strong className="goal-timeline-diagnostic-value">~{weeklyRateKg?.toFixed(2) ?? '0.00'} kg/semana</strong>
               </div>
 
               <div className="goal-timeline-diagnostic-divider" />
 
               <div className="goal-timeline-diagnostic-viability-row">
-                <span className="goal-timeline-diagnostic-viability-label">VIABILIDADE</span>
+                <span className="goal-timeline-diagnostic-viability-label">Viabilidade</span>
                 <strong className="goal-timeline-diagnostic-viability-pct">{viability}%</strong>
               </div>
 
@@ -274,11 +272,11 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
               </div>
 
               {previewProjection.classification === 'inviavel' && previewProjection.weeksMin ? (
-                <div className="goal-timeline-diagnostic-warning">Prazo mínimo sugerido: {previewProjection.weeksMin} semanas</div>
+                <div className="goal-timeline-diagnostic-warning">{'Prazo m\u00ednimo sugerido:'} {previewProjection.weeksMin} semanas</div>
               ) : null}
 
               {previewProjection.warningTargetWeightIncludesLbm ? (
-                <div className="goal-timeline-diagnostic-note">Meta por peso pode incluir variação de massa magra.</div>
+                <div className="goal-timeline-diagnostic-note">{'Meta por peso pode incluir varia\u00e7\u00e3o de massa magra.'}</div>
               ) : null}
             </div>
           ) : null}
@@ -297,7 +295,7 @@ export const GoalTimelineStep = ({ data, onPatch, onNext, onBack, stepIndex, tot
           <div className="target-info-row">
             <span className="target-info-icon">i</span>
             <p className="target-info-text">
-              Para manutenção/recomposição, esta etapa é opcional e a projeção não será exibida no dashboard.
+              {'Para manuten\u00e7\u00e3o/recomposi\u00e7\u00e3o, esta etapa \u00e9 opcional e a proje\u00e7\u00e3o n\u00e3o ser\u00e1 exibida no dashboard.'}
             </p>
           </div>
         </div>

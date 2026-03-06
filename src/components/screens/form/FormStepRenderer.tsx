@@ -1,5 +1,6 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
+import { DataCard } from '@/components/design-system';
 import type { FormStepDefinition, FormStepComponentProps } from '../../../lib/types';
 
 interface FormStepRendererProps {
@@ -18,14 +19,16 @@ export const FormStepRenderer = ({ activeStep, steps, stepProps }: FormStepRende
 
   return (
     <div className="question-panel">
-      <motion.div
-        key={definition.id}
-        initial={{ opacity: 0, x: 24 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
-      >
-        <StepComponent {...stepProps} stepIndex={activeStep - 1} totalSteps={steps.length} />
-      </motion.div>
+      <DataCard glow="emerald" className="form-step-shell p-[var(--space-6)] sm:p-[var(--space-7)]">
+        <motion.div
+          key={definition.id}
+          initial={{ opacity: 0, x: 32, scale: 0.985 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <StepComponent {...stepProps} stepIndex={activeStep - 1} totalSteps={steps.length} />
+        </motion.div>
+      </DataCard>
     </div>
   );
 };

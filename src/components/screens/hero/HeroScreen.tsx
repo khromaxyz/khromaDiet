@@ -1,48 +1,114 @@
-import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
-import { Button } from '../../ui/Button';
-import { heroCopy } from '../../../lib/constants/copy';
+import { SectionShell } from '@/components/design-system';
+import { Button } from '@/components/ui/primitives/button';
+import { heroCopy } from '@/lib/constants/copy';
+import type { ScreenId } from '@/lib/types';
+
 import { HeroStats } from './HeroStats';
-import type { ScreenId } from '../../../lib/types';
 
 interface HeroScreenProps {
   onNavigate: (screen: ScreenId) => void;
   onOpenExample: () => void;
 }
 
+const HERO_EASE = [0.16, 1, 0.3, 1] as const;
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.08,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.72,
+      ease: HERO_EASE,
+    },
+  },
+};
+
+const panelVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.985 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.9,
+      ease: HERO_EASE,
+    },
+  },
+};
+
 export const HeroScreen = ({ onNavigate, onOpenExample }: HeroScreenProps) => {
   return (
-    <section className="screen active" id="screen-hero">
-      <div className="hero-grid-overlay" />
+    <SectionShell
+      id="screen-hero"
+      level="abyss"
+      className="screen active flex min-h-screen items-center py-[var(--space-24)] sm:py-[var(--space-28)]"
+    >
+      <motion.div
+        className="hero-screen__content"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
+        <div className="hero-screen__copy">
+          <motion.div className="hero-screen__badge" variants={itemVariants}>
+            <span className="hero-screen__badge-dot" aria-hidden />
+            <span>{heroCopy.badge}</span>
+          </motion.div>
 
-      <div className="hero-content">
-        <div className="hero-badge">{heroCopy.badge}</div>
+          <motion.h1 className="hero-screen__headline" variants={itemVariants}>
+            <span className="hero-screen__headline-line hero-screen__headline-line--base">
+              {heroCopy.titleLine1}
+            </span>
+            <span className="hero-screen__headline-line hero-screen__headline-line--accent">
+              {heroCopy.titleLine2}
+            </span>
+          </motion.h1>
 
-        <h1 className="hero-headline">
-          <span className="line-1">{heroCopy.titleLine1}</span>
-          <span className="line-2">{heroCopy.titleLine2}</span>
-        </h1>
+          <motion.p className="hero-screen__subheadline" variants={itemVariants}>
+            {heroCopy.subtitle}
+          </motion.p>
 
-        <p className="hero-subheadline">{heroCopy.subtitle}</p>
+          <motion.div className="hero-screen__cta-group" variants={itemVariants}>
+            <Button
+              variant="default"
+              size="lg"
+              className="hero-screen__cta hero-screen__cta--primary"
+              onClick={() => onNavigate('form')}
+            >
+              {heroCopy.primaryCta}
+              <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+            </Button>
 
-        <div className="hero-cta-group">
-          <Button
-            variant="primary"
-            onClick={() => onNavigate('form')}
-            rightIcon={<ArrowRight size={16} strokeWidth={2.5} />}
-          >
-            Calcular minha dieta
-          </Button>
-          <Button variant="secondary" onClick={onOpenExample}>
-            Ver exemplo
-          </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="hero-screen__cta hero-screen__cta--secondary"
+              onClick={onOpenExample}
+            >
+              {heroCopy.secondaryCta}
+            </Button>
+          </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <motion.div className="hero-screen__panel-wrap" variants={panelVariants}>
           <HeroStats />
         </motion.div>
-      </div>
-    </section>
+      </motion.div>
+    </SectionShell>
   );
 };

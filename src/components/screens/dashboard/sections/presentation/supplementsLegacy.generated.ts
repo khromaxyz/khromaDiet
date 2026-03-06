@@ -1,5 +1,6 @@
 /* eslint-disable */
 /**
+ * @deprecated Legacy supplements payload retained temporarily for cleanup verification only.
  * Auto-generated from legacy/suplementos.html
  * Generated at: 2026-03-03T00:06:15.653Z
  */

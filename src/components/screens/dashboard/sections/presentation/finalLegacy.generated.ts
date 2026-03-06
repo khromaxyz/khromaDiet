@@ -2,6 +2,7 @@
 /**
  * Auto-generated from legacy/encerramento.html
  * Generated at: 2026-03-03T01:54:56.206Z
+ * @deprecated Final slide now renders from React. Keep only as a legacy reference until removal.
  */
 
 export const LEGACY_FINAL_HTML = `<!-- =========================================== -->

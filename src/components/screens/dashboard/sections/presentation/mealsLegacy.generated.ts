@@ -1263,3 +1263,4 @@ export const LEGACY_MEALS_SCRIPT = `// =========================================
                 console.error('Erro no Intersection Observer:', error);
             }
         }`;
+/* @deprecated Legacy meals payload kept temporarily for the final cleanup pass. */

@@ -311,3 +311,4 @@ export const ProjectionChart = ({ data, theme = 'dark' }: ProjectionChartProps) 
     </div>
   );
 };
+/* @deprecated Legacy Chart.js projection chart retained temporarily for non-presentation cleanup. */

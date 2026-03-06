@@ -1,3 +1,32 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --background: var(--bg-abyss);
+    --foreground: var(--text-primary);
+    --card: var(--bg-card);
+    --card-foreground: var(--text-primary);
+    --popover: var(--bg-overlay);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--emerald-500);
+    --primary-foreground: #ffffff;
+    --secondary: var(--gold-500);
+    --secondary-foreground: #1a1a1a;
+    --muted: var(--bg-elevated);
+    --muted-foreground: var(--text-secondary);
+    --accent-foreground: var(--text-primary);
+    --destructive: var(--red-500);
+    --destructive-foreground: #ffffff;
+    --input: var(--border-default);
+    --ring: var(--emerald-500);
+    --radius: var(--radius-md);
+    --chart-1: var(--emerald-500);
+    --chart-2: var(--gold-500);
+    --chart-3: var(--blue-500);
+    --chart-4: var(--text-secondary);
+    --chart-5: var(--text-muted);
+  }
+}

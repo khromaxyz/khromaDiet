@@ -85,7 +85,7 @@ export const ProfileSettingsPanel = ({
       <ProfileAvatarGrid
         selectedId={profile.avatarId}
         onSelect={(avatarId) => onChangeAvatar(profile.id, avatarId)}
-        className="df-avatar-grid df-avatar-grid-settings"
+        className="df-avatar-grid-settings"
         size={42}
         ariaLabel="Escolher avatar do perfil"
       />

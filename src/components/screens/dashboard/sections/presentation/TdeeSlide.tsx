@@ -1,10 +1,32 @@
-﻿import type { CSSProperties, ReactNode } from 'react';
+import { motion } from 'framer-motion';
+import { Activity, Dumbbell, Flame, Footprints, Sparkles } from 'lucide-react';
 
-import { useCountUp } from '../../../../../hooks/useCountUp';
-import { ACTIVITY_LEVEL_LABELS, CARDIO_MODALITY_LABELS, TRAINING_TYPE_LABELS } from '../../../../../lib/constants/labels';
-import type { CalculationResults, FormData } from '../../../../../lib/types';
+import {
+  ChartContainer,
+  DataCard,
+  SectionHeader,
+  SectionShell,
+  StatBlock,
+  type ChartLegendItem,
+  type DataCardGlow,
+  type StatColor,
+} from '@/components/design-system';
+import { useCountUp } from '@/hooks/useCountUp';
+import {
+  ACTIVITY_LEVEL_LABELS,
+  CARDIO_MODALITY_LABELS,
+  TRAINING_TYPE_LABELS,
+} from '@/lib/constants/labels';
+import type { CalculationResults, FormData } from '@/lib/types';
 
-const formatKcal = (value: number): string => value.toLocaleString('pt-BR');
+import {
+  CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardContainerVariants,
+  dashboardItemVariants,
+  dashboardPanelVariants,
+  formatKcal,
+  formatPct,
+} from './shared';
 
 const BMR_METHOD_LABELS = {
   mifflin: 'Mifflin-St Jeor',
@@ -13,25 +35,23 @@ const BMR_METHOD_LABELS = {
   henry: 'Henry',
 } as const;
 
-type TdeeComponentId = 'bmr' | 'neat' | 'eat' | 'cardio' | 'tef';
-type TdeePrefix = '' | '+';
-
-interface TdeeComponent {
-  id: TdeeComponentId;
-  abbr: string;
-  name: string;
-  method: string;
-  value: number;
-  prefix: TdeePrefix;
-  color: string;
-  colorDim: string;
-  icon: ReactNode;
-}
-
 interface TdeeSlideProps {
   activated: boolean;
   results: CalculationResults;
   formData: FormData;
+}
+
+interface TdeeComponent {
+  id: 'bmr' | 'neat' | 'eat' | 'cardio' | 'tef';
+  shortLabel: string;
+  title: string;
+  description: string;
+  value: number;
+  color: StatColor;
+  glow: DataCardGlow;
+  railColor: string;
+  legend: ChartLegendItem;
+  icon: typeof Flame;
 }
 
 const resolveCardioMethod = (formData: FormData): string => {
@@ -50,336 +70,369 @@ const resolveCardioMethod = (formData: FormData): string => {
   return `${steps} passos + ${minutes} min · ${modality}`;
 };
 
-const getComponentIcon = (id: TdeeComponentId): ReactNode => {
-  if (id === 'bmr') {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M12 12c2-2.96 0-7-1-8 0 3.038-1.773 4.741-3 6-1.226 1.26-2 3.24-2 5a6 6 0 0 0 12 0c0-1.532-1.056-3.94-2-5-1.786 3-2.791 3-4 2z" />
-      </svg>
-    );
-  }
-
-  if (id === 'neat') {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-      </svg>
-    );
-  }
-
-  if (id === 'eat') {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M14.4 14.4L9.6 9.6" />
-        <path d="M18.657 21.485a2 2 0 0 1-2.829 0l-1.414-1.414a2 2 0 0 1 0-2.828l3.535-3.536a2 2 0 0 1 2.829 0l1.414 1.414a2 2 0 0 1 0 2.829l-3.535 3.535z" />
-        <path d="M5.343 2.515a2 2 0 0 1 2.829 0l1.414 1.414a2 2 0 0 1 0 2.828L6.05 10.293a2 2 0 0 1-2.829 0L1.808 8.88a2 2 0 0 1 0-2.829l3.535-3.535z" />
-      </svg>
-    );
-  }
-
-  if (id === 'cardio') {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M9 3h6" />
-      <path d="M10 3v5.172a2 2 0 0 1-.586 1.414l-2.828 2.828A2 2 0 0 0 6 13.828V18a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4.172a2 2 0 0 0-.586-1.414l-2.828-2.828A2 2 0 0 1 14 8.172V3" />
-    </svg>
-  );
-};
-
-const formatSigned = (prefix: TdeePrefix, value: number): string => `${prefix}${formatKcal(value)}`;
-
 export const TdeeSlide = ({ activated, results, formData }: TdeeSlideProps) => {
-  const tdeeFinal = Math.round(results.tdeeFinal);
-  const tdeeAnimated = useCountUp(tdeeFinal, activated, 2200);
+  const tdeeFinalRounded = Math.round(results.tdeeFinal);
+  const bmrValue = Math.round(results.breakdown.bmr);
+  const neatValue = Math.round(results.breakdown.activityBase + results.breakdown.occupationNEAT);
+  const eatValue = Math.round(results.breakdown.eatTraining);
+  const cardioValue = Math.round(
+    results.breakdown.eatCardioStructured + results.breakdown.eatCardioStepsResidual,
+  );
+  const tefValue = Math.round(results.breakdown.tef);
 
-  const bmr = Math.round(results.breakdown.bmr);
-  const neat = Math.round(results.breakdown.activityBase + results.breakdown.occupationNEAT);
-  const eat = Math.round(results.breakdown.eatTraining);
-  const cardio = Math.round(results.breakdown.eatCardioStructured + results.breakdown.eatCardioStepsResidual);
-  const tef = Math.round(results.breakdown.tef);
+  const tdeeAnimated = useCountUp(tdeeFinalRounded, activated, 1100);
 
   const components: TdeeComponent[] = [
     {
       id: 'bmr',
-      abbr: 'BMR',
-      name: 'Taxa Metabólica Basal',
-      method: `BMR — ${BMR_METHOD_LABELS[results.bmr.method]}`,
-      value: bmr,
-      prefix: '',
-      color: 'var(--tdee-color-bmr)',
-      colorDim: 'var(--tdee-color-bmr-dim)',
-      icon: getComponentIcon('bmr'),
+      shortLabel: 'BMR',
+      title: 'Taxa basal',
+      description: BMR_METHOD_LABELS[results.bmr.method],
+      value: bmrValue,
+      color: 'emerald',
+      glow: 'emerald',
+      railColor: 'var(--emerald-500)',
+      legend: { label: 'BMR', tone: 'emerald' },
+      icon: Flame,
     },
     {
       id: 'neat',
-      abbr: 'NEAT',
-      name: 'Atividade Não-Exercício',
-      method: `NEAT — ${ACTIVITY_LEVEL_LABELS[formData.activityLevel]}`,
-      value: neat,
-      prefix: '+',
-      color: 'var(--tdee-color-neat)',
-      colorDim: 'var(--tdee-color-neat-dim)',
-      icon: getComponentIcon('neat'),
+      shortLabel: 'NEAT',
+      title: 'Movimento diario',
+      description: ACTIVITY_LEVEL_LABELS[formData.activityLevel],
+      value: neatValue,
+      color: 'gold',
+      glow: 'gold',
+      railColor: 'var(--gold-500)',
+      legend: { label: 'NEAT', tone: 'gold' },
+      icon: Footprints,
     },
     {
       id: 'eat',
-      abbr: 'EAT',
-      name: 'Atividade de Treino',
-      method: `EAT — ${formData.trainingSessions}x/sem · ${formData.trainingDurationMin}min · ${TRAINING_TYPE_LABELS[formData.trainingType]}`,
-      value: eat,
-      prefix: '+',
-      color: 'var(--tdee-color-eat)',
-      colorDim: 'var(--tdee-color-eat-dim)',
-      icon: getComponentIcon('eat'),
+      shortLabel: 'EAT',
+      title: 'Treino',
+      description: `${formData.trainingSessions}x/sem · ${formData.trainingDurationMin}min · ${TRAINING_TYPE_LABELS[formData.trainingType]}`,
+      value: eatValue,
+      color: 'blue',
+      glow: 'blue',
+      railColor: 'var(--blue-500)',
+      legend: { label: 'Treino', tone: 'blue' },
+      icon: Dumbbell,
     },
     {
       id: 'cardio',
-      abbr: 'CARDIO',
-      name: 'Cardio / Passos',
-      method: `EAT — ${resolveCardioMethod(formData)}`,
-      value: cardio,
-      prefix: '+',
-      color: 'var(--tdee-color-cardio)',
-      colorDim: 'var(--tdee-color-cardio-dim)',
-      icon: getComponentIcon('cardio'),
+      shortLabel: 'Cardio',
+      title: 'Cardio e passos',
+      description: resolveCardioMethod(formData),
+      value: cardioValue,
+      color: 'default',
+      glow: 'none',
+      railColor: 'var(--emerald-300)',
+      legend: { label: 'Cardio', tone: 'emerald', style: 'soft' },
+      icon: Activity,
     },
     {
       id: 'tef',
-      abbr: 'TEF',
-      name: 'Efeito Térmico dos Alimentos',
-      method: 'TEF — proteína/carb/gordura',
-      value: tef,
-      prefix: '+',
-      color: 'var(--tdee-color-tef)',
-      colorDim: 'var(--tdee-color-tef-dim)',
-      icon: getComponentIcon('tef'),
+      shortLabel: 'TEF',
+      title: 'Efeito termico',
+      description: 'Proteina, carbo e gordura',
+      value: tefValue,
+      color: 'default',
+      glow: 'none',
+      railColor: 'var(--text-secondary)',
+      legend: { label: 'TEF', tone: 'muted', style: 'dashed' },
+      icon: Sparkles,
     },
   ];
 
   const componentsSum = components.reduce((sum, component) => sum + component.value, 0);
-  const maxComponentValue = Math.max(...components.map((component) => component.value), 1);
-  const waterfallMax = Math.max(tdeeFinal, ...components.map((component) => component.value), 1);
+  const additiveSteps = components.reduce<
+    Array<{
+      id: string;
+      title: string;
+      delta: number;
+      cumulative: number;
+      previous: number;
+      color: string;
+      shortLabel: string;
+    }>
+  >((acc, component) => {
+    const previous = acc.at(-1)?.cumulative ?? 0;
+    const cumulative = previous + component.value;
+
+    acc.push({
+      id: component.id,
+      title: component.title,
+      delta: component.value,
+      cumulative,
+      previous,
+      color: component.railColor,
+      shortLabel: component.shortLabel,
+    });
+
+    return acc;
+  }, []);
+
+  const dedupApplied =
+    results.breakdown.eatCardioStepsResidual > 0 || results.breakdown.eatCardioStructured > 0;
 
   return (
-    <section className={`tdee-section ${activated ? 'is-visible' : ''}`} id="dfp-heading-tdee">
-      <div className="tdee-bg-line" aria-hidden />
-      <div className="tdee-bg-grid" aria-hidden />
-      <div className="tdee-bg-glow" aria-hidden />
-      <div className="tdee-bg-noise" aria-hidden />
+    <SectionShell
+      level="deep"
+      className="pb-[var(--space-12)] pt-[calc(var(--header-height)+var(--space-8))] sm:pt-[calc(var(--header-height)+var(--space-10))]"
+    >
+      <motion.div
+        className="flex flex-col gap-8 lg:gap-10"
+        variants={dashboardContainerVariants}
+        initial={false}
+        animate={activated ? 'show' : 'hidden'}
+      >
+        <motion.div variants={dashboardItemVariants}>
+          <SectionHeader
+            eyebrow="02 — TDEE BREAKDOWN"
+            title={<span id="dfp-heading-tdee">De onde vem seu gasto energetico</span>}
+            subtitle="Basal, movimento, treino, cardio e efeito termico reunidos na mesma leitura. O TDEE final deixa de ser caixa-preta."
+            action={
+              <div className="flex flex-wrap items-center justify-start gap-2 lg:justify-end">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--emerald-400)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--emerald-400)] shadow-[0_0_12px_rgba(16,185,129,0.5)]" />
+                  {BMR_METHOD_LABELS[results.bmr.method]}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 text-xs text-[var(--text-secondary)]">
+                  <Sparkles className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
+                  {dedupApplied ? 'Cardio deduplicado' : 'Sem sobreposicao'}
+                </span>
+              </div>
+            }
+          />
+        </motion.div>
 
-      <div className="tdee-container">
-        <header className="tdee-header">
-          <div className="tdee-eyebrow">
-            <span className="tdee-eyebrow-dot" aria-hidden />
-            Gasto Energético Total
-          </div>
+        <motion.div variants={dashboardPanelVariants}>
+          <DataCard
+            glow="emerald"
+            hoverable
+            className="grid gap-6 p-[var(--space-6)] xl:grid-cols-[1fr_0.9fr]"
+          >
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--emerald-400)]">
+                <Activity className="h-3.5 w-3.5" />
+                TDEE final
+              </div>
 
-          <p className="tdee-title">De onde vêm suas</p>
+              <StatBlock
+                value={tdeeAnimated}
+                unit="kcal"
+                label="Total diario"
+                sublabel="Leitura final apos basal, movimento, treino, cardio e efeito termico."
+                size="lg"
+                color="emerald"
+                className={CARDLESS_STAT_BLOCK_CLASSNAME}
+              />
 
-          <div className="tdee-number-row">
-            <span className="tdee-big-number">{formatKcal(tdeeAnimated)}</span>
-            <span className="tdee-unit">
-              kcal<span>/dia</span>
-            </span>
-          </div>
+              <p className="max-w-[42rem] text-[15px] leading-[1.7] text-[var(--text-secondary)]">
+                Seu protocolo soma a base metabolica com o contexto real de atividade. Cada bloco
+                abaixo explica de onde o gasto foi puxado antes de fechar a manutencao diaria.
+              </p>
+            </div>
 
-          <p className="tdee-subtitle">
-            Decomposição completa do Total Daily Energy Expenditure — cada componente que constrói seu gasto
-            calórico diário
-          </p>
-        </header>
-
-        <div className="composition-section" aria-label="Composição proporcional do gasto energético diário">
-          <div className="composition-bar" role="img" aria-label="Barra empilhada da composição do TDEE">
-            {components.map((component, index) => {
-              const percent = componentsSum > 0 ? (component.value / componentsSum) * 100 : 0;
-
-              return (
-                <div
-                  key={component.id}
-                  className="comp-segment"
-                  style={{
-                    flex: component.value,
-                    backgroundColor: component.color,
-                    animationDelay: `${0.9 + index * 0.12}s`,
-                  }}
-                  title={`${component.name}: ${formatKcal(component.value)} kcal (${percent.toFixed(1)}%)`}
-                />
-              );
-            })}
-          </div>
-
-          <div className="composition-legend" aria-label="Percentuais da composição do TDEE">
-            {components.map((component, index) => {
-              const percent = componentsSum > 0 ? (component.value / componentsSum) * 100 : 0;
-              return (
-                <div
-                  key={component.id}
-                  className="comp-legend-item"
-                  style={{
-                    color: component.color,
-                    flex: component.value,
-                    animationDelay: `${1.6 + index * 0.08}s`,
-                  }}
-                >
-                  {percent.toFixed(1)}%
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Base metabolica
                 </div>
-              );
-            })}
-          </div>
-
-          <div className="composition-components-legend" aria-label="Legenda de componentes da composição do TDEE">
-            {components.map((component, index) => {
-              const percent = componentsSum > 0 ? (component.value / componentsSum) * 100 : 0;
-              return (
-                <div
-                  key={`legend-${component.id}`}
-                  className="composition-component-item"
-                  style={
-                    {
-                      '--component-color': component.color,
-                      animationDelay: `${1.72 + index * 0.08}s`,
-                    } as CSSProperties
-                  }
-                >
-                  <span className="composition-component-dot" aria-hidden />
-                  <span className="composition-component-name">{component.abbr}</span>
-                  <span className="composition-component-pct">{percent.toFixed(1)}%</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="components-list" aria-label="Detalhamento dos componentes do TDEE">
-          {components.map((component, index) => {
-            const componentPercent = componentsSum > 0 ? (component.value / componentsSum) * 100 : 0;
-            const barPercent = (component.value / maxComponentValue) * 100;
-
-            return (
-              <article
-                key={component.id}
-                className="component-card"
-                style={
-                  {
-                    '--card-color': component.color,
-                    '--card-color-dim': component.colorDim,
-                    animationDelay: `${1.1 + index * 0.1}s`,
-                  } as CSSProperties
-                }
-              >
-                <div className="card-top">
-                  <div className="card-icon-wrap">{component.icon}</div>
-
-                  <div className="card-text">
-                    <div className="card-name">{component.name}</div>
-                    <span className="card-method">{component.method}</span>
-                  </div>
-
-                  <div className="card-value-block">
-                    <span className="card-kcal">{formatSigned(component.prefix, component.value)}</span>
-                    <span className="card-kcal-label">kcal</span>
-                  </div>
-                </div>
-
-                <div className="card-bar-row">
-                  <div className="card-bar-track">
-                    <div
-                      className="card-bar-fill"
-                      style={
-                        {
-                          width: `${barPercent}%`,
-                          backgroundColor: component.color,
-                          animationDelay: `${1.4 + index * 0.12}s`,
-                        } as CSSProperties
-                      }
-                    />
-                  </div>
-                  <span className="card-pct" style={{ color: component.color }}>
-                    {componentPercent.toFixed(1)}%
-                  </span>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        <section className="waterfall-section" aria-label="Decomposição empilhada do TDEE em gráfico waterfall">
-          <div className="waterfall-header">
-            <span className="waterfall-title">Decomposição empilhada — Waterfall</span>
-            <span className="waterfall-hint">em kcal/dia</span>
-          </div>
-
-          <div className="waterfall-chart">
-            {components.map((component, index) => {
-              const heightPct = (component.value / waterfallMax) * 100;
-
-              return (
-                <div key={component.id} className="waterfall-step">
-                  <div className="wf-col">
-                    <div className="wf-bar-wrap">
-                      <div
-                        className="wf-bar"
-                        style={
-                          {
-                            '--wf-color': component.color,
-                            '--wf-color-dim': component.colorDim,
-                            height: `${heightPct}%`,
-                            animationDelay: `${0.7 + index * 0.18}s`,
-                          } as CSSProperties
-                        }
-                      >
-                        <span className="wf-val">{formatSigned(component.prefix, component.value)}</span>
-                      </div>
-                    </div>
-                    <span className="wf-label">{component.abbr}</span>
-                  </div>
-
-                  {index < components.length - 1 ? <span className="wf-connector">+</span> : null}
-                </div>
-              );
-            })}
-
-            <span className="wf-connector wf-connector-equals">=</span>
-
-            <div className="wf-col total-col">
-              <div className="wf-bar-wrap">
-                <div
-                  className="wf-bar wf-total"
-                  style={{
-                    height: '100%',
-                    animationDelay: `${0.7 + components.length * 0.18 + 0.15}s`,
-                  }}
-                >
-                  <span className="wf-val">{formatKcal(tdeeFinal)}</span>
+                <div className="font-mono text-[28px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
+                  {formatKcal(results.bmr.bmr)}
+                  <span className="ml-1 text-xs text-[var(--text-muted)]">kcal</span>
                 </div>
               </div>
-              <span className="wf-label wf-total-label">TDEE</span>
-            </div>
-          </div>
-        </section>
 
-        <div className="tdee-total">
-          <div className="total-divider" />
-          <div className="total-content">
-            <div className="total-left">
-              <span className="total-label">Resultado total</span>
-              <span className="total-desc">Soma de BMR + NEAT + EAT + Cardio + TEF</span>
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Atividade diaria
+                </div>
+                <div className="font-mono text-[28px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
+                  {formatKcal(neatValue)}
+                  <span className="ml-1 text-xs text-[var(--text-muted)]">kcal</span>
+                </div>
+              </div>
+
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Treino da semana
+                </div>
+                <div className="font-mono text-[28px] font-semibold tracking-[-1px] text-[var(--text-primary)]">
+                  {formData.trainingSessions}x
+                  <span className="ml-1 text-xs text-[var(--text-muted)]">sess/sem</span>
+                </div>
+              </div>
+
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <div className="mb-1 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Cardio
+                </div>
+                <div className="font-mono text-[16px] font-semibold tracking-[-0.6px] text-[var(--text-primary)]">
+                  {resolveCardioMethod(formData)}
+                </div>
+              </div>
             </div>
-            <div className="total-right">
-              <span className="total-value">{formatKcal(tdeeAnimated)}</span>
-              <span className="total-unit">kcal/dia</span>
+          </DataCard>
+        </motion.div>
+
+        <motion.div
+          className="grid gap-4 md:grid-cols-2 xl:grid-cols-5"
+          variants={dashboardItemVariants}
+        >
+          {components.map((component) => {
+            const Icon = component.icon;
+
+            return (
+              <DataCard
+                key={component.id}
+                glow={component.glow}
+                hoverable
+                className="p-[var(--space-5)]"
+              >
+                <div className="mb-4 flex items-start justify-between gap-3">
+                  <div>
+                    <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                      {component.shortLabel}
+                    </div>
+                    <div className="mt-1 text-sm font-medium text-[var(--text-primary)]">
+                      {component.title}
+                    </div>
+                  </div>
+
+                  <div className="rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] p-2 text-[var(--text-secondary)]">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                </div>
+
+                <StatBlock
+                  value={component.value}
+                  unit="kcal"
+                  label={component.title}
+                  sublabel={component.description}
+                  size="sm"
+                  color={component.color}
+                  className={CARDLESS_STAT_BLOCK_CLASSNAME}
+                />
+              </DataCard>
+            );
+          })}
+        </motion.div>
+
+        <motion.div variants={dashboardPanelVariants}>
+          <ChartContainer
+            title="Composicao do gasto"
+            subtitle="Percentual de cada componente e trilha cumulativa ate o TDEE final."
+            legend={components.map((component) => component.legend)}
+            height={360}
+          >
+            <div className="grid h-full gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="flex h-full flex-col justify-between rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-5)]">
+                <div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                    Barra empilhada
+                  </div>
+                  <div className="mt-2 text-sm text-[var(--text-secondary)]">
+                    Participacao percentual de cada fonte dentro do total.
+                  </div>
+                </div>
+
+                <div className="space-y-5">
+                  <div className="flex h-5 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
+                    {components.map((component) => (
+                      <div
+                        key={component.id}
+                        style={{
+                          width: `${componentsSum > 0 ? (component.value / componentsSum) * 100 : 0}%`,
+                          backgroundColor: component.railColor,
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="space-y-3">
+                    {components.map((component) => (
+                      <div
+                        key={component.id}
+                        className="flex items-center justify-between gap-4 text-sm"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span
+                            className="h-2.5 w-2.5 rounded-full"
+                            style={{ backgroundColor: component.railColor }}
+                          />
+                          <span className="text-[var(--text-secondary)]">{component.title}</span>
+                        </div>
+                        <div className="font-mono text-[var(--text-primary)]">
+                          {formatPct(
+                            componentsSum > 0 ? (component.value / componentsSum) * 100 : 0,
+                          )}
+                          % · {formatKcal(component.value)} kcal
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-5)]">
+                <div className="mb-4">
+                  <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                    Trilho aditivo
+                  </div>
+                  <div className="mt-2 text-sm text-[var(--text-secondary)]">
+                    Cada linha mostra a soma progressiva ate fechar {formatKcal(results.tdeeFinal)}{' '}
+                    kcal.
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {additiveSteps.map((step) => {
+                    const previousWidth =
+                      results.tdeeFinal > 0 ? (step.previous / results.tdeeFinal) * 100 : 0;
+                    const cumulativeWidth =
+                      results.tdeeFinal > 0 ? (step.cumulative / results.tdeeFinal) * 100 : 0;
+
+                    return (
+                      <div key={step.id} className="space-y-2">
+                        <div className="flex items-center justify-between gap-4 text-sm">
+                          <div className="text-[var(--text-secondary)]">
+                            <span className="font-medium text-[var(--text-primary)]">
+                              {step.shortLabel}
+                            </span>{' '}
+                            · {step.title}
+                          </div>
+                          <div className="font-mono text-[var(--text-primary)]">
+                            +{formatKcal(step.delta)} · {formatKcal(step.cumulative)} kcal
+                          </div>
+                        </div>
+
+                        <div className="relative h-3 overflow-hidden rounded-full bg-[var(--bg-active)]">
+                          <div
+                            className="bg-[var(--text-ghost)]/50 absolute inset-y-0 left-0 rounded-full"
+                            style={{ width: `${previousWidth}%` }}
+                          />
+                          <div
+                            className="absolute inset-y-0 rounded-full"
+                            style={{
+                              left: `${previousWidth}%`,
+                              width: `${Math.max(cumulativeWidth - previousWidth, 0)}%`,
+                              backgroundColor: step.color,
+                              boxShadow: `0 0 24px ${step.color}`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
+          </ChartContainer>
+        </motion.div>
+      </motion.div>
+    </SectionShell>
   );
 };

@@ -2035,3 +2035,4 @@ export const LEGACY_PROJECTION_SCRIPT = `'use strict';
         }
       }
     });`;
+/* @deprecated Legacy projection payload kept temporarily for the final cleanup pass. */

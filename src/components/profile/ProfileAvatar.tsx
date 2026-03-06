@@ -1,4 +1,4 @@
-﻿import type { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { AVATAR_STYLES } from '../../lib/profiles/constants';
 
@@ -109,7 +109,15 @@ export const ProfileAvatar = ({ avatarId, size = 48, className, title }: Profile
       role="img"
       aria-label={title ?? avatar.role}
     >
-      <rect x="2" y="2" width="44" height="44" rx="22" fill="rgba(9,9,11,0.92)" stroke="rgba(255,255,255,0.16)" />
+      <defs>
+        <linearGradient id={`avatar-bg-${avatar.id}`} x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+          <stop stopColor="rgba(255,255,255,0.08)" />
+          <stop offset="1" stopColor="rgba(255,255,255,0.02)" />
+        </linearGradient>
+      </defs>
+
+      <rect x="2" y="2" width="44" height="44" rx="22" fill="rgba(12,13,15,0.96)" stroke="rgba(255,255,255,0.1)" />
+      <rect x="3" y="3" width="42" height="42" rx="21" fill={`url(#avatar-bg-${avatar.id})`} />
       <circle cx="24" cy="18" r="9" fill={avatar.primary} />
       <path d="M11 40 C13.4 30.5 19.2 27 24 27 C28.8 27 34.6 30.5 37 40" fill={avatar.secondary} />
       {renderAccessory(avatar.id, avatar.primary, avatar.secondary)}

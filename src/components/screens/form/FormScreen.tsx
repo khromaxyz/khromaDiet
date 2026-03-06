@@ -1,8 +1,8 @@
-﻿import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
+import { DataCard } from '@/components/design-system';
 import { formSteps } from '../../../lib/constants/steps';
 import type { FormData, FormPatch, ValidationIssue } from '../../../lib/types';
-import { ProgressBar } from '../../ui/ProgressBar';
 
 import { FormHeader } from './FormHeader';
 import { FormStepRenderer } from './FormStepRenderer';
@@ -134,10 +134,16 @@ export const FormScreen = ({
 
   return (
     <section className="screen active" id="screen-form">
-      <FormHeader currentStep={step} totalSteps={totalSteps} precisionPct={precisionPct} profileTrigger={profileTrigger} />
-      <ProgressBar value={stepProgressPct} />
+      <FormHeader
+        currentStep={step}
+        totalSteps={totalSteps}
+        precisionPct={precisionPct}
+        progressPct={stepProgressPct}
+        profileTrigger={profileTrigger}
+      />
+
       <div className="form-body">
-        <div>
+        <div className="form-body-content">
           {blockingIssues.length > 0 ? (
             <div className="target-info-card">
               {blockingIssues.map((issue) => (
@@ -150,9 +156,9 @@ export const FormScreen = ({
           ) : null}
 
           {showIntro ? (
-            <div className="form-intro-card" role="status" aria-live="polite">
-              <p className="form-intro-text">Responda com honestidade. Cada detalhe melhora sua precisão.</p>
-            </div>
+            <DataCard className="form-intro-card" glow="emerald" role="status" aria-live="polite">
+              <p className="form-intro-text">{'Responda com honestidade. Cada detalhe melhora sua precis\u00e3o.'}</p>
+            </DataCard>
           ) : (
             <FormStepRenderer
               activeStep={step}

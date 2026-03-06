@@ -6,10 +6,12 @@ import { ScreenNavPill } from './components/layout/ScreenNavPill';
 import { ProfileCreationScreen } from './components/profile/ProfileCreationScreen';
 import { ProfileDrawer } from './components/profile/ProfileDrawer';
 import { ProfileTriggerButton } from './components/profile/ProfileTriggerButton';
+import { DesignSystemPreview } from './components/screens/DesignSystemPreview';
 import { DashboardScreen } from './components/screens/dashboard/DashboardScreen';
 import { FormScreen } from './components/screens/form/FormScreen';
 import { HeroScreen } from './components/screens/hero/HeroScreen';
 import { SummaryScreen } from './components/screens/summary/SummaryScreen';
+import { Toaster } from './components/ui/primitives/sonner';
 import { formSteps } from './lib/constants/steps';
 import { buildProfileSummary } from './lib/profiles/summary';
 import {
@@ -94,7 +96,7 @@ const createProfileSnapshot = (args: {
   };
 };
 
-function App() {
+function AppFlow() {
   const currentScreen = useDietForgeStore((state) => state.currentScreen);
   const currentStep = useDietForgeStore((state) => state.currentStep);
   const formData = useDietForgeStore((state) => state.formData);
@@ -548,6 +550,28 @@ function App() {
       />
 
       {toastMessage ? <div className="df-profile-toast">{toastMessage}</div> : null}
+    </>
+  );
+}
+
+function App() {
+  const isDesignSystemPreview =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('preview') === 'design-system';
+
+  if (isDesignSystemPreview) {
+    return (
+      <>
+        <DesignSystemPreview />
+        <Toaster />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <AppFlow />
+      <Toaster />
     </>
   );
 }

@@ -1,4 +1,4 @@
-﻿import {
+import {
   cardioIntensityOptions,
   cardioModalityOptions,
   cardioModeOptions,
@@ -6,8 +6,8 @@
 } from '../../../../lib/constants/mockForm';
 import type { CardioIntensity, CardioModality, CardioMode, FormStepComponentProps } from '../../../../lib/types';
 import { NumberField } from '../../../ui/NumberField';
-import { Slider } from '../../../ui/Slider';
 
+import { FormSliderField } from './FormSliderField';
 import { GoalOptionCard } from './GoalOptionCard';
 import { StepNav } from './StepNav';
 
@@ -28,7 +28,7 @@ const formatSteps = (value: number): string => new Intl.NumberFormat('pt-BR').fo
 
 const getStepsIntensity = (steps: number): { label: string; tone: 'sedentary' | 'active' | 'very-active' } => {
   if (steps < 6000) {
-    return { label: 'Sedentário', tone: 'sedentary' };
+    return { label: 'Sedent\u00e1rio', tone: 'sedentary' };
   }
   if (steps <= 9500) {
     return { label: 'Ativo', tone: 'active' };
@@ -47,9 +47,9 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
         {String(stepIndex + 1).padStart(2, '0')} / {String(totalSteps).padStart(2, '0')} - Cardio
       </div>
       <h2 className="question-title">
-        Cardio e passos <span className="optional-badge">Opcional</span>
+        {'Cardio e passos'} <span className="optional-badge">Opcional</span>
       </h2>
-      <p className="question-description">Você pode usar passos, cardio estruturado ou ambos com deduplicação automática.</p>
+      <p className="question-description">{'Voc\u00ea pode usar passos, cardio estruturado ou ambos com deduplica\u00e7\u00e3o autom\u00e1tica.'}</p>
 
       <div className="goal-cards-grid goal-cards-grid-3">
         {cardioModeOptions.map((option) => (
@@ -78,7 +78,7 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
             max={STEPS_BENCH_MAX}
             step={STEPS_STEP}
             unit="passos"
-            unitBadge={{ label: 'MÉDIA', active: true }}
+            unitBadge={{ label: 'MEDIA', active: true }}
             valueFormatter={formatSteps}
             showStepper={false}
             keyboardStep={{ base: STEPS_STEP, fast: STEPS_STEP * 2 }}
@@ -87,13 +87,13 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
                 <span className={`steps-intensity-badge steps-intensity-badge-${stepsIntensity.tone}`}>
                   {stepsIntensity.label}
                 </span>
-                <p className="steps-input-hint">↑↓ Use as setas ou clique</p>
+                <p className="steps-input-hint">Use as setas ou clique</p>
               </div>
             }
             benchmarkSlot={
               <div className="steps-instrument-stack">
                 <div className="steps-slider-block">
-                  <Slider
+                  <FormSliderField
                     id="steps-per-day-slider"
                     label="Ajuste no slider"
                     valueLabel={`${formatSteps(stepsValue)} passos`}
@@ -102,7 +102,7 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
                     step={STEPS_STEP}
                     value={stepsValue}
                     ticks={stepsSliderTicks}
-                    onChange={(event) => onPatch({ stepsPerDay: normalizeStepsValue(Number(event.target.value)) })}
+                    onValueChange={(value) => onPatch({ stepsPerDay: normalizeStepsValue(value) })}
                   />
                 </div>
               </div>
@@ -120,7 +120,7 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
       {(data.cardioMode === 'structured' || data.cardioMode === 'both') && (
         <>
           <div className="slider-group">
-            <Slider
+            <FormSliderField
               id="cardio-minutes"
               label="Cardio estruturado"
               valueLabel={`${data.cardioMinutesPerDay ?? 20} min/dia`}
@@ -129,7 +129,7 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
               step={5}
               value={data.cardioMinutesPerDay ?? 20}
               ticks={sliderTicks.cardioMinutes}
-              onChange={(event) => onPatch({ cardioMinutesPerDay: Number(event.target.value) })}
+              onValueChange={(value) => onPatch({ cardioMinutesPerDay: value })}
             />
           </div>
 
@@ -139,7 +139,7 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
                 key={option.id}
                 option={{
                   id: option.id,
-                  icon: '🏃',
+                  icon: '\u{1F3C3}',
                   title: option.title,
                   description: 'Modalidade selecionada',
                 }}
@@ -155,9 +155,9 @@ export const CardioStep = ({ data, onPatch, onNext, onBack, stepIndex, totalStep
                 key={option.id}
                 option={{
                   id: option.id,
-                  icon: option.id === 'low' ? '🟢' : option.id === 'moderate' ? '🟡' : '🔴',
+                  icon: option.id === 'low' ? '\u{1F7E2}' : option.id === 'moderate' ? '\u{1F7E1}' : '\u{1F534}',
                   title: option.title,
-                  description: 'Nível de esforço',
+                  description: 'N\u00edvel de esfor\u00e7o',
                   badge: { label: option.badge, tone: 'orange' },
                 }}
                 selected={data.cardioIntensity === option.id}

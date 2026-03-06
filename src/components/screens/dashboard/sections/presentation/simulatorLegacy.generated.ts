@@ -1,5 +1,6 @@
 /* eslint-disable */
 /**
+ * @deprecated Legacy simulator payload retained temporarily for cleanup verification only.
  * Auto-generated from legacy/simulador.html
  * Generated at: 2026-03-03T01:13:31.182Z
  */

@@ -1,46 +1,63 @@
-﻿import { Zap } from 'lucide-react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
-import { useDietForgeStore } from '../../../../store/useDietForgeStore';
+import { Badge } from '@/components/ui/primitives/badge';
+import { cn } from '@/lib/utils';
 
-export const DashboardFooter = () => {
-  const results = useDietForgeStore((state) => state.results);
-  const methodLabel =
-    results?.bmrMethod === 'cunningham'
-      ? 'Cunningham'
-      : results?.bmrMethod === 'katch_mcardle'
-        ? 'Katch-McArdle'
-        : results?.bmrMethod === 'henry'
-          ? 'Henry'
-          : 'Mifflin-St Jeor';
+export interface DashboardFooterProps extends HTMLAttributes<HTMLElement> {
+  planLabel: ReactNode;
+  generatedAtLabel: ReactNode;
+  methodLabel: ReactNode;
+  profileName?: ReactNode;
+  classificationLabel?: ReactNode;
+  versionLabel?: ReactNode;
+  disclaimer?: ReactNode;
+  brandLabel?: ReactNode;
+}
 
-  const now = new Date();
-  const dateLabel = now.toLocaleDateString('pt-BR');
-
+export const DashboardFooter = ({
+  planLabel,
+  generatedAtLabel,
+  methodLabel,
+  profileName,
+  classificationLabel,
+  versionLabel = 'DietForge dashboard v9',
+  disclaimer = 'Uso educacional. Consulte nutricionista para acompanhamento clinico.',
+  brandLabel = 'DietForge',
+  className,
+  ...props
+}: DashboardFooterProps) => {
   return (
-    <div className="dashboard-footer">
-      <div className="footer-logo footer-logo-inline">
-        <Zap size={14} fill="var(--dash-accent, var(--accent-primary))" color="var(--dash-accent, var(--accent-primary))" />
-        DIETFORGE
+    <footer
+      data-testid="final-footer"
+      className={cn('dashboard-final-footer rounded-[var(--radius-xl)] border border-[var(--border-default)]', className)}
+      {...props}
+    >
+      <div className="dashboard-final-footer__top">
+        <div>
+          <div className="dashboard-final-footer__brand">{brandLabel}</div>
+          <div className="dashboard-final-footer__version">{versionLabel}</div>
+        </div>
+
+        <div className="dashboard-final-footer__chips">
+          <Badge variant="outline">{planLabel}</Badge>
+          <Badge variant="outline">{generatedAtLabel}</Badge>
+          <Badge variant="outline">{methodLabel}</Badge>
+          {profileName ? <Badge variant="outline">{profileName}</Badge> : null}
+          {classificationLabel ? (
+            <Badge
+              variant="outline"
+              className="border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]"
+            >
+              {classificationLabel}
+            </Badge>
+          ) : null}
+        </div>
       </div>
-      <div className="footer-note">
-        Plano gerado com BMR {methodLabel}, ajuste NEAT/EAT/TEF e modificadores dinâmicos em {dateLabel}.
+
+      <div className="dashboard-final-footer__copy">
+        <p>Plano consolidado com TDEE, meta calorica, macros e prazo prontos para consulta rapida.</p>
+        <p>{disclaimer}</p>
       </div>
-      <div className="footer-disclaimer-wrap">
-        <div className="footer-disclaimer">Uso educacional. Consulte nutricionista para acompanhamento clínico.</div>
-        <details className="footer-docs-disclosure">
-          <summary>Ver documentação técnica</summary>
-          <div className="footer-docs-content">
-            <p>
-              BMR por Mifflin-St Jeor ou Katch-McArdle quando BF% disponível. TDEE = BMR + atividade + EAT treino + EAT
-              cardio + TEF.
-            </p>
-            <p>
-              Meta calórica deriva do objetivo (cut/bulk), com piso de segurança e validações. Projeção semanal aplica
-              adaptação metabólica gradual e classificação de viabilidade.
-            </p>
-          </div>
-        </details>
-      </div>
-    </div>
+    </footer>
   );
 };

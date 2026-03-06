@@ -1484,3 +1484,4 @@
 #screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='meals']::before {
   content: none;
 }
+/* @deprecated Meals legacy stylesheet retained temporarily for the final cleanup pass. */

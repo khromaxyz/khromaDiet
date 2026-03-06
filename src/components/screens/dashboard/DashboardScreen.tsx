@@ -118,6 +118,18 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
   const [visitedSectionIds, setVisitedSectionIds] = useState<Set<DashboardSectionId>>(() => new Set(['welcome']));
   const [activatedSectionIds, setActivatedSectionIds] = useState<Set<DashboardSectionId>>(() => new Set(['welcome']));
 
+  const markSectionActivated = useCallback((sectionId: DashboardSectionId) => {
+    setActivatedSectionIds((previous) => {
+      if (previous.has(sectionId)) {
+        return previous;
+      }
+
+      const next = new Set(previous);
+      next.add(sectionId);
+      return next;
+    });
+  }, []);
+
   useEffect(() => {
     activeSectionRef.current = activeSectionId;
   }, [activeSectionId]);
@@ -187,10 +199,11 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
         return;
       }
 
+      markSectionActivated(targetId);
       sectionRefs.current[targetId]?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
       setActiveSectionId((current) => (current === targetId ? current : targetId));
     },
-    [reducedMotion, sectionIds],
+    [markSectionActivated, reducedMotion, sectionIds],
   );
 
   useEffect(() => {
@@ -232,15 +245,8 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
 
           ratiosRef.current[rawId] = entry.intersectionRatio;
 
-          if (entry.intersectionRatio >= 0.5) {
-            setActivatedSectionIds((previous) => {
-              if (previous.has(rawId)) {
-                return previous;
-              }
-              const next = new Set(previous);
-              next.add(rawId);
-              return next;
-            });
+          if (entry.isIntersecting && entry.intersectionRatio > 0) {
+            markSectionActivated(rawId);
           }
         });
 
@@ -249,7 +255,7 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
 
         sectionIds.forEach((id) => {
           const ratio = ratiosRef.current[id] ?? 0;
-          if (ratio >= 0.5 && ratio > maxRatio) {
+          if (ratio > 0.05 && ratio > maxRatio) {
             maxRatio = ratio;
             nextActive = id;
           }
@@ -261,7 +267,7 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
       },
       {
         root,
-        threshold: 0.5,
+        threshold: [0, 0.05, 0.15, 0.3, 0.5, 0.75],
       },
     );
 
@@ -273,7 +279,7 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
     });
 
     return () => observer.disconnect();
-  }, [sectionIdsKey, sectionIds]);
+  }, [markSectionActivated, sectionIdsKey, sectionIds]);
 
   useEffect(() => {
     setVisitedSectionIds((previous) => {
@@ -336,15 +342,30 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
       case 'macros':
         return <MacrosSlide results={results} activated={activatedSectionIds.has('macros')} />;
       case 'projection':
-        return <ProjectionSlide onGoToGoalStep={handleGoToGoalStep} />;
+        return (
+          <ProjectionSlide
+            activated={activatedSectionIds.has('projection')}
+            results={results}
+            formData={formData}
+            onGoToGoalStep={handleGoToGoalStep}
+          />
+        );
       case 'meals':
-        return <MealsSlide isActive={activeSectionId === 'meals'} />;
+        return <MealsSlide activated={activatedSectionIds.has('meals')} results={results} formData={formData} />;
       case 'supplements':
-        return <SupplementsSlide isActive={activeSectionId === 'supplements'} />;
+        return <SupplementsSlide activated={activatedSectionIds.has('supplements')} results={results} />;
       case 'whatif':
-        return <WhatIfSlide isActive={activeSectionId === 'whatif'} />;
+        return <WhatIfSlide activated={activatedSectionIds.has('whatif')} results={results} formData={formData} />;
       case 'final':
-        return <FinalSlide isActive={activeSectionId === 'final'} />;
+        return (
+          <FinalSlide
+            activated={activatedSectionIds.has('final')}
+            isActive={activeSectionId === 'final'}
+            results={results}
+            formData={formData}
+            profileMeta={activeProfileMeta}
+          />
+        );
       default:
         return null;
     }

@@ -1,12 +1,19 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Activity, Clock3, Sparkles, Target, TrendingDown, TrendingUp } from 'lucide-react';
 
-import { useCountUp } from '../../../../../hooks/useCountUp';
-import { GOAL_LABELS } from '../../../../../lib/constants/labels';
-import type { CalculationResults, FormData } from '../../../../../lib/types';
+import { DataCard, SectionHeader, SectionShell, StatBlock } from '@/components/design-system';
+import { useCountUp } from '@/hooks/useCountUp';
+import { GOAL_LABELS } from '@/lib/constants/labels';
+import type { CalculationResults, FormData } from '@/lib/types';
 
-const formatKcal = (value: number): string => value.toLocaleString('pt-BR');
-
-const CIRCUMFERENCE = 2 * Math.PI * 110; // r=110, C≈691.15
+import {
+  CARDLESS_STAT_BLOCK_CLASSNAME,
+  dashboardContainerVariants,
+  dashboardItemVariants,
+  dashboardPanelVariants,
+  formatKcal,
+  formatPct,
+} from './shared';
 
 interface GoalSlideProps {
   activated: boolean;
@@ -14,494 +21,266 @@ interface GoalSlideProps {
   formData: FormData;
 }
 
-const getClassificationLabel = (classification: string | undefined): string => {
-  switch (classification) {
-    case 'realista':
-      return 'Realista';
-    case 'agressivo':
-      return 'Agressivo';
-    case 'inviavel':
-      return 'Inviável';
-    default:
-      return 'Realista';
-  }
-};
-
-const getClassificationIndex = (classification: string | undefined): number => {
-  switch (classification) {
-    case 'inviavel':
-      return 0;
-    case 'agressivo':
-      return 1;
-    default:
-      return 3; // realista
-  }
-};
+const CLASSIFICATION_META = {
+  realista: {
+    label: 'Realista',
+    glow: 'emerald',
+    className:
+      'border-[var(--border-emerald)] bg-[var(--emerald-glow-subtle)] text-[var(--emerald-400)]',
+  },
+  agressivo: {
+    label: 'Agressivo',
+    glow: 'gold',
+    className: 'border-[var(--border-gold)] bg-[var(--gold-glow-subtle)] text-[var(--gold-400)]',
+  },
+  inviavel: {
+    label: 'Inviavel',
+    glow: 'none',
+    className: 'border-[var(--red-glow)] bg-[var(--red-glow)] text-[var(--red-400)]',
+  },
+} as const;
 
 export const GoalSlide = ({ activated, results, formData }: GoalSlideProps) => {
-  const tdee = useCountUp(results.tdeeFinal, activated, 900);
-  const goal = useCountUp(results.goalCalories, activated, 900);
-  const deficit = useCountUp(Math.abs(results.dailyDelta), activated, 900);
-
   const isDeficit = results.dailyDelta >= 0;
-  const deficitPct = results.tdeeFinal > 0 ? Math.abs(results.goalDeltaPct) : 15;
-  const metaPct = results.tdeeFinal > 0
-    ? Math.max(0, Math.min(100, (results.goalCalories * 100) / results.tdeeFinal))
-    : 85;
-
-  const weeklyDeficit = Math.abs(results.dailyDelta) * 7;
-  const fatEquivalentKg = (weeklyDeficit / 7700).toFixed(2);
-
-  const totalWeeks = results.projection?.milestones?.at(-1)?.week ?? formData.targetWeeks ?? 16;
+  const goalLabel = GOAL_LABELS[formData.goal];
   const classification = results.projection?.classification ?? 'realista';
-  const classificationLabel = getClassificationLabel(classification);
-  const classificationIdx = getClassificationIndex(classification);
+  const classificationMeta = CLASSIFICATION_META[classification];
+  const totalWeeks = results.projection?.milestones.at(-1)?.week ?? formData.targetWeeks ?? 16;
+  const weeklyDeficit = Math.round(Math.abs(results.dailyDelta) * 7);
+  const weeklyEquivalentKg = weeklyDeficit / 7700;
+  const maintenancePct = 100;
+  const goalPct =
+    results.tdeeFinal > 0
+      ? Math.max(8, Math.min(100, (results.goalCalories / results.tdeeFinal) * 100))
+      : 100;
+  const deltaPct = Math.max(4, Math.min(100, Math.abs(results.goalDeltaPct)));
+  const rateAnimated =
+    useCountUp(Math.round(Math.abs(results.weeklyRateKg) * 100), activated, 900) / 100;
 
-  // Radial chart animation
-  const [chartAnimated, setChartAnimated] = useState(false);
-  const chartRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!activated) return;
-    const timer = setTimeout(() => setChartAnimated(true), 600);
-    return () => clearTimeout(timer);
-  }, [activated]);
-
-  // Progress bars animation
-  const [barsAnimated, setBarsAnimated] = useState(false);
-  useEffect(() => {
-    if (!activated) return;
-    const timer = setTimeout(() => setBarsAnimated(true), 1200);
-    return () => clearTimeout(timer);
-  }, [activated]);
-
-  // Radial chart values
-  const progressDash = chartAnimated ? (metaPct / 100) * CIRCUMFERENCE : 0;
-  const deficitDash = chartAnimated ? (deficitPct / 100) * CIRCUMFERENCE : 0;
-
-  // Bar widths based on rate
-  const ritmoBarWidth = Math.min(100, (results.weeklyRateKg / 1.0) * 100);
-  const prazoBarWidth = Math.min(100, Math.max(10, (Number(totalWeeks) / 24) * 100));
-
-  const strategyName = isDeficit ? 'Mini Cut' : 'Lean Bulk';
+  const maintenance = useCountUp(Math.round(results.tdeeFinal), activated, 900);
+  const adjustment = useCountUp(Math.round(Math.abs(results.dailyDelta)), activated, 900);
+  const goal = useCountUp(Math.round(results.goalCalories), activated, 900);
+  const projectedWeeks = useCountUp(totalWeeks, activated, 900);
+  const weeklyKcal = useCountUp(weeklyDeficit, activated, 900);
 
   return (
-    <div className="deficit-section" id="dfp-heading-goal">
-      {/* Decorative Grid */}
-      <div className="deficit-section__bg-grid" aria-hidden="true" />
-
-      {/* Section Header */}
-      <header className="deficit-section__header">
-        <div className="deficit-section__eyebrow">
-          <span>Protocolo Calórico</span>
-        </div>
-        <h2 className="deficit-section__title">Meta &amp; Déficit</h2>
-        <p className="deficit-section__subtitle">
-          Seu gasto energético traduzido em estratégia. O déficit calculado que transforma
-          dados metabólicos em resultado previsível.
-        </p>
-      </header>
-
-      {/* Deficit Type Strip */}
-      <div className="deficit-type-strip" role="status" aria-label="Tipo de déficit aplicado">
-        <div className="deficit-type-strip__dot" aria-hidden="true" />
-        <span className="deficit-type-strip__text">
-          Estratégia: <strong>{strategyName}</strong>
-        </span>
-        <div className="deficit-type-strip__separator" aria-hidden="true" />
-        <span className="deficit-type-strip__text">
-          Déficit de <strong>{results.goalDeltaPct >= 0 ? '-' : '+'}{Math.abs(results.goalDeltaPct).toFixed(0)}%</strong> vs TDEE
-        </span>
-        <div className="deficit-type-strip__separator" aria-hidden="true" />
-        <span className="deficit-type-strip__text">
-          Protocolo <strong>Ativo</strong>
-        </span>
-      </div>
-
-      {/* Pipeline: TDEE → Déficit → Meta */}
-      <div className="deficit-pipeline" role="region" aria-label="Pipeline de cálculo calórico">
-        {/* Node 1: TDEE */}
-        <div className="pipeline-node pipeline-node--tdee">
-          <div className="pipeline-node__header">
-            <div className="pipeline-node__icon pipeline-node__icon--tdee">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-              </svg>
-            </div>
-            <div>
-              <div className="pipeline-node__label">TDEE Referência</div>
-              <div className="pipeline-node__sublabel">Gasto energético total</div>
-            </div>
-          </div>
-          <div className="pipeline-node__value-block">
-            <div className="pipeline-node__value">
-              <span>{formatKcal(tdee)}</span>
-              <span className="pipeline-node__unit">kcal/dia</span>
-            </div>
-            <div className="pipeline-node__descriptor">
-              Energia que seu corpo consome em 24h considerando todos os componentes metabólicos
-            </div>
-          </div>
-          <div className="pipeline-node__tag pipeline-node__tag--info">
-            <span className="pipeline-node__tag-dot" />
-            Calculado via Harris-Benedict + FA
-          </div>
-        </div>
-
-        {/* Connector 1: Subtraction */}
-        <div className="pipeline-connector" aria-hidden="true">
-          <div className="pipeline-connector__line">
-            <div className="pipeline-connector__arrow pipeline-connector__arrow--subtract">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-            </div>
-          </div>
-          <div className="pipeline-connector__label">{Math.abs(results.goalDeltaPct).toFixed(0)}% off</div>
-        </div>
-
-        {/* Node 2: Déficit */}
-        <div className="pipeline-node pipeline-node--deficit">
-          <div className="pipeline-node__header">
-            <div className="pipeline-node__icon pipeline-node__icon--deficit">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                <polyline points="17 6 23 6 23 12" />
-              </svg>
-            </div>
-            <div>
-              <div className="pipeline-node__label">Déficit Aplicado</div>
-              <div className="pipeline-node__sublabel">Calorias removidas/dia</div>
-            </div>
-          </div>
-          <div className="pipeline-node__value-block">
-            <div className="pipeline-node__value pipeline-node__value--deficit">
-              <span>-{formatKcal(deficit)}</span>
-              <span className="pipeline-node__unit">kcal/dia</span>
-            </div>
-            <div className="pipeline-node__descriptor">
-              Redução estratégica de {Math.abs(results.goalDeltaPct).toFixed(0)}% sobre o TDEE — zona de corte moderada e sustentável
-            </div>
-          </div>
-          <div className="pipeline-node__tag pipeline-node__tag--accent">
-            <span className="pipeline-node__tag-dot" />
-            {strategyName} — {GOAL_LABELS[formData.goal] ?? 'Moderado'}
-          </div>
-        </div>
-
-        {/* Connector 2: Result */}
-        <div className="pipeline-connector" aria-hidden="true">
-          <div className="pipeline-connector__line">
-            <div className="pipeline-connector__arrow pipeline-connector__arrow--result">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </div>
-          </div>
-          <div className="pipeline-connector__label">Resultado</div>
-        </div>
-
-        {/* Node 3: Meta */}
-        <div className="pipeline-node pipeline-node--meta">
-          <div className="pipeline-node__header">
-            <div className="pipeline-node__icon pipeline-node__icon--meta">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-              </svg>
-            </div>
-            <div>
-              <div className="pipeline-node__label">Meta Calórica</div>
-              <div className="pipeline-node__sublabel">Ingestão diária alvo</div>
-            </div>
-          </div>
-          <div className="pipeline-node__value-block">
-            <div className="pipeline-node__value pipeline-node__value--meta">
-              <span>{formatKcal(goal)}</span>
-              <span className="pipeline-node__unit">kcal/dia</span>
-            </div>
-            <div className="pipeline-node__descriptor">
-              Quantidade exata que você deve consumir diariamente para atingir seu objetivo de forma e performance
-            </div>
-          </div>
-          <div className="pipeline-node__tag pipeline-node__tag--success">
-            <span className="pipeline-node__tag-dot" />
-            Meta definida e ativa
-          </div>
-        </div>
-      </div>
-
-      {/* Radial Chart Visualization */}
-      <div className="deficit-visual" role="img" aria-label={`Visualização proporcional: ${metaPct.toFixed(0)}% do TDEE é consumido, ${deficitPct.toFixed(0)}% é o déficit`}>
-        <div className="deficit-visual__container">
-          <div className="deficit-visual__inner">
-
-            {/* Left: Legend */}
-            <div className="deficit-visual__legend">
-              <div className="deficit-legend-item">
-                <div className="deficit-legend-item__marker deficit-legend-item__marker--meta">
-                  {metaPct.toFixed(0)}%
-                </div>
-                <div className="deficit-legend-item__info">
-                  <div className="deficit-legend-item__label">Meta Calórica</div>
-                  <div className="deficit-legend-item__value">
-                    {formatKcal(results.goalCalories)} <span>kcal</span>
-                  </div>
-                  <div className="deficit-legend-item__percent">
-                    {metaPct.toFixed(0)}% do TDEE → Ingestão alvo
-                  </div>
-                </div>
-              </div>
-              <div className="deficit-legend-item">
-                <div className="deficit-legend-item__marker deficit-legend-item__marker--deficit">
-                  {deficitPct.toFixed(0)}%
-                </div>
-                <div className="deficit-legend-item__info">
-                  <div className="deficit-legend-item__label">Zona de Déficit</div>
-                  <div className="deficit-legend-item__value">
-                    {formatKcal(Math.abs(results.dailyDelta))} <span>kcal</span>
-                  </div>
-                  <div className="deficit-legend-item__percent">
-                    {deficitPct.toFixed(0)}% do TDEE → Calorias cortadas
-                  </div>
-                </div>
-              </div>
-              <div className="deficit-legend-item">
-                <div className="deficit-legend-item__marker deficit-legend-item__marker--tdee">∑</div>
-                <div className="deficit-legend-item__info">
-                  <div className="deficit-legend-item__label">TDEE Total (100%)</div>
-                  <div className="deficit-legend-item__value">
-                    {formatKcal(results.tdeeFinal)} <span>kcal</span>
-                  </div>
-                  <div className="deficit-legend-item__percent">Gasto energético referência</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Center: Radial Chart */}
-            <div className="deficit-visual__chart" ref={chartRef}>
-              <div className="radial-chart">
-                <svg className="radial-chart__svg" viewBox="0 0 260 260">
-                  <defs>
-                    <linearGradient id="deficitRadialGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#10b981" />
-                      <stop offset="50%" stopColor="#34d399" />
-                      <stop offset="100%" stopColor="#6ee7b7" />
-                    </linearGradient>
-                  </defs>
-                  <circle className="radial-chart__track" cx="130" cy="130" r="110" />
-                  <circle
-                    className="radial-chart__deficit-zone"
-                    cx="130" cy="130" r="110"
-                    strokeDasharray={`${deficitDash.toFixed(1)} ${CIRCUMFERENCE.toFixed(1)}`}
-                    strokeDashoffset="0"
-                  />
-                  <circle
-                    className="radial-chart__progress"
-                    cx="130" cy="130" r="110"
-                    strokeDasharray={`${progressDash.toFixed(1)} ${CIRCUMFERENCE.toFixed(1)}`}
-                  />
-                </svg>
-
-                {/* Center Content */}
-                <div className="radial-chart__center">
-                  <div className="radial-chart__center-label">Sua Meta</div>
-                  <div className="radial-chart__center-value">{formatKcal(goal)}</div>
-                  <div className="radial-chart__center-unit">kcal / dia</div>
-                  <div className="radial-chart__center-sub">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                    -{formatKcal(Math.abs(results.dailyDelta))} kcal do TDEE
-                  </div>
-                </div>
-
-                {/* Badge */}
-                <div
-                  className={`radial-chart__badge${chartAnimated ? ' animate' : ''}`}
-                  aria-label={`${metaPct.toFixed(0)}% do TDEE`}
+    <SectionShell
+      level="base"
+      className="pb-[var(--space-12)] pt-[calc(var(--header-height)+var(--space-8))] sm:pt-[calc(var(--header-height)+var(--space-10))]"
+    >
+      <motion.div
+        className="flex flex-col gap-8 lg:gap-10"
+        variants={dashboardContainerVariants}
+        initial={false}
+        animate={activated ? 'show' : 'hidden'}
+      >
+        <motion.div variants={dashboardItemVariants}>
+          <SectionHeader
+            eyebrow="03 — GOAL PROTOCOL"
+            title={<span id="dfp-heading-goal">Meta calorica com ajuste explicito</span>}
+            subtitle="Manutencao, ajuste diario e alvo final aparecem no mesmo eixo. O plano deixa claro o que foi retirado ou acrescentado para chegar na meta."
+            action={
+              <div className="flex flex-wrap items-center justify-start gap-2 lg:justify-end">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-deep)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-secondary)]">
+                  <Sparkles className="h-3.5 w-3.5 text-[var(--emerald-400)]" />
+                  {goalLabel}
+                </span>
+                <span
+                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[2px] ${classificationMeta.className}`}
                 >
-                  {metaPct.toFixed(0)}%
+                  <span className="h-1.5 w-1.5 rounded-full bg-current shadow-[0_0_12px_currentColor]" />
+                  {classificationMeta.label}
+                </span>
+              </div>
+            }
+          />
+        </motion.div>
+
+        <motion.div className="grid gap-4 xl:grid-cols-3" variants={dashboardItemVariants}>
+          <DataCard hoverable className="p-[var(--space-5)]">
+            <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+              <Activity className="h-4 w-4 text-[var(--emerald-400)]" />
+              Manutencao
+            </div>
+            <StatBlock
+              value={maintenance}
+              unit="kcal"
+              label="TDEE de referencia"
+              sublabel="Ponto de partida para calibrar o protocolo."
+              size="md"
+              color="emerald"
+              className={CARDLESS_STAT_BLOCK_CLASSNAME}
+            />
+          </DataCard>
+
+          <DataCard hoverable glow={classificationMeta.glow} className="p-[var(--space-5)]">
+            <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+              {isDeficit ? (
+                <TrendingDown className="h-4 w-4 text-[var(--gold-400)]" />
+              ) : (
+                <TrendingUp className="h-4 w-4 text-[var(--gold-400)]" />
+              )}
+              Ajuste diario
+            </div>
+            <StatBlock
+              value={adjustment}
+              unit="kcal"
+              label={isDeficit ? 'Deficit aplicado' : 'Superavit aplicado'}
+              sublabel={`${isDeficit ? '-' : '+'}${formatPct(Math.abs(results.goalDeltaPct))}% vs manutencao`}
+              size="md"
+              color="gold"
+              className={CARDLESS_STAT_BLOCK_CLASSNAME}
+            />
+          </DataCard>
+
+          <DataCard hoverable glow="emerald" className="p-[var(--space-5)]">
+            <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+              <Target className="h-4 w-4 text-[var(--emerald-400)]" />
+              Meta final
+            </div>
+            <StatBlock
+              value={goal}
+              unit="kcal"
+              label="Ingestao alvo"
+              sublabel="Calorias que o plano pede todos os dias."
+              size="md"
+              color="emerald"
+              className={CARDLESS_STAT_BLOCK_CLASSNAME}
+            />
+          </DataCard>
+        </motion.div>
+
+        <motion.div variants={dashboardPanelVariants}>
+          <DataCard
+            glow={classificationMeta.glow}
+            hoverable
+            className="grid gap-6 p-[var(--space-6)] xl:grid-cols-[1.05fr_0.95fr]"
+          >
+            <div className="space-y-4">
+              <div>
+                <div className="text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Rail de comparacao
+                </div>
+                <div className="mt-2 max-w-[38rem] text-[15px] leading-[1.7] text-[var(--text-secondary)]">
+                  A manutencao fica no topo da trilha e a meta mostra exatamente quanto do TDEE
+                  continua no prato. O restante representa o ajuste diario do protocolo.
+                </div>
+              </div>
+
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-5)]">
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <div className="text-sm text-[var(--text-secondary)]">
+                    Meta como percentual da manutencao
+                  </div>
+                  <div className="font-mono text-[var(--text-primary)]">
+                    {formatPct(goalPct)}% · {formatKcal(results.goalCalories)} kcal
+                  </div>
+                </div>
+
+                <div className="relative h-4 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--bg-active)]">
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full bg-[var(--emerald-500)] shadow-[0_0_28px_rgba(16,185,129,0.35)]"
+                    style={{ width: `${goalPct}%` }}
+                  />
+                  <div
+                    className="bg-[var(--gold-500)]/70 absolute inset-y-0 rounded-full"
+                    style={{
+                      left: `${goalPct}%`,
+                      width: `${Math.max(maintenancePct - goalPct, 0)}%`,
+                    }}
+                  />
+                </div>
+
+                <div className="mt-3 flex items-center justify-between gap-4 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  <span>0</span>
+                  <span>Meta {formatPct(goalPct)}%</span>
+                  <span>Manutencao 100%</span>
                 </div>
               </div>
             </div>
 
-            {/* Right: Equation */}
-            <div className="deficit-visual__equation">
-              <div className="equation-row">
-                <div className="equation-row__operator equation-row__operator--base">∑</div>
-                <div className="equation-row__content">
-                  <div className="equation-row__name">TDEE Referência</div>
-                  <div className="equation-row__number equation-row__number--base">
-                    {formatKcal(results.tdeeFinal)} kcal
-                  </div>
+            <div className="grid gap-4 sm:grid-cols-3 xl:grid-cols-1">
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <div className="mb-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Formula do plano
+                </div>
+                <div className="font-mono text-[20px] font-semibold tracking-[-0.8px] text-[var(--text-primary)]">
+                  {formatKcal(results.tdeeFinal)} - {formatKcal(Math.abs(results.dailyDelta))} ={' '}
+                  {formatKcal(results.goalCalories)}
                 </div>
               </div>
 
-              <div className="equation-row">
-                <div className="equation-row__operator equation-row__operator--minus">−</div>
-                <div className="equation-row__content">
-                  <div className="equation-row__name">
-                    Déficit {Math.abs(results.goalDeltaPct).toFixed(0)}% ({strategyName})
-                  </div>
-                  <div className="equation-row__number equation-row__number--minus">
-                    {formatKcal(Math.abs(results.dailyDelta))} kcal
-                  </div>
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <div className="mb-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Direcao do ajuste
+                </div>
+                <div className="text-sm leading-[1.7] text-[var(--text-secondary)]">
+                  {isDeficit
+                    ? 'Ajuste em corte moderado para reduzir gordura mantendo aderencia e performance.'
+                    : 'Ajuste em superavit controlado para empurrar ganho sem perder controle do plano.'}
                 </div>
               </div>
 
-              <div className="equation-divider" />
-
-              <div className="equation-row">
-                <div className="equation-row__operator equation-row__operator--equals">=</div>
-                <div className="equation-row__content">
-                  <div className="equation-row__name">Meta Calórica Diária</div>
-                  <div className="equation-row__number equation-row__number--result">
-                    {formatKcal(results.goalCalories)} kcal
-                  </div>
+              <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-deep)] p-[var(--space-4)]">
+                <div className="mb-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+                  Classificacao
                 </div>
-              </div>
-
-              {/* Weekly deficit box */}
-              <div className="deficit-weekly-box">
-                <div className="deficit-weekly-box__header">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="16" x2="12" y2="12" />
-                    <line x1="12" y1="8" x2="12.01" y2="8" />
-                  </svg>
-                  <span className="deficit-weekly-box__label">Déficit Semanal</span>
-                </div>
-                <div className="deficit-weekly-box__value">
-                  -{formatKcal(Math.round(weeklyDeficit))} <span>kcal/semana</span>
-                </div>
-                <div className="deficit-weekly-box__sub">
-                  ≈ {fatEquivalentKg} kg de gordura equivalente
+                <div className="text-sm leading-[1.7] text-[var(--text-secondary)]">
+                  {classificationMeta.label} · {formatPct(deltaPct)}% de ajuste sobre a manutencao.
                 </div>
               </div>
             </div>
+          </DataCard>
+        </motion.div>
 
-          </div>
-        </div>
-      </div>
-
-      {/* Result Cards */}
-      <div className="deficit-results" role="region" aria-label="Resultados projetados do déficit calórico">
-
-        {/* Ritmo Estimado */}
-        <div className="result-card result-card--ritmo">
-          <div className="result-card__icon result-card__icon--ritmo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-            </svg>
-          </div>
-          <div className="result-card__label">Ritmo Estimado de Perda</div>
-          <div className="result-card__value result-card__value--ritmo">
-            ~{results.weeklyRateKg.toFixed(2)} <span className="result-card__value-unit">kg/sem</span>
-          </div>
-          <div className="result-card__desc">
-            Ritmo de perda consistente e sustentável, otimizado para preservação de massa muscular e aderência ao protocolo.
-          </div>
-          <div className="result-card__bar">
-            <div
-              className="result-card__bar-fill result-card__bar-fill--ritmo"
-              style={{ width: barsAnimated ? `${ritmoBarWidth.toFixed(0)}%` : '0%' }}
+        <motion.div className="grid gap-4 xl:grid-cols-3" variants={dashboardItemVariants}>
+          <DataCard hoverable className="p-[var(--space-5)]">
+            <div className="mb-4 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+              Deficit semanal
+            </div>
+            <StatBlock
+              value={weeklyKcal}
+              unit="kcal"
+              label="Corte acumulado"
+              sublabel={`≈ ${formatPct(weeklyEquivalentKg, 2)} kg equivalentes por semana`}
+              size="sm"
+              color="default"
+              className={CARDLESS_STAT_BLOCK_CLASSNAME}
             />
-          </div>
-          <div className="result-card__bar-label">
-            <span>0 kg/sem</span>
-            <span>Agressivo →</span>
-            <span>1.0 kg/sem</span>
-          </div>
-        </div>
+          </DataCard>
 
-        {/* Prazo Projetado */}
-        <div className="result-card result-card--prazo">
-          <div className="result-card__icon result-card__icon--prazo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-              <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
-            </svg>
-          </div>
-          <div className="result-card__label">Prazo Projetado</div>
-          <div className="result-card__value result-card__value--prazo">
-            {totalWeeks} <span className="result-card__value-unit">semanas</span>
-          </div>
-          <div className="result-card__desc">
-            Aproximadamente {Math.ceil(Number(totalWeeks) / 4)} meses para atingir o objetivo proposto, com margem para ajustes adaptativos.
-          </div>
-          <div className="result-card__bar">
-            <div
-              className="result-card__bar-fill result-card__bar-fill--prazo"
-              style={{ width: barsAnimated ? `${prazoBarWidth.toFixed(0)}%` : '0%' }}
+          <DataCard hoverable glow="emerald" className="p-[var(--space-5)]">
+            <div className="mb-4 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+              Ritmo estimado
+            </div>
+            <StatBlock
+              value={formatPct(rateAnimated, 2)}
+              unit="kg/sem"
+              label="Velocidade do protocolo"
+              sublabel="Estimativa semanal projetada pela curva atual."
+              size="sm"
+              color="emerald"
+              className={CARDLESS_STAT_BLOCK_CLASSNAME}
             />
-          </div>
-          <div className="result-card__bar-label">
-            <span>4 sem</span>
-            <span>Moderado</span>
-            <span>24 sem</span>
-          </div>
-        </div>
+          </DataCard>
 
-        {/* Classificação */}
-        <div className="result-card result-card--class">
-          <div className="result-card__icon result-card__icon--class">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-          </div>
-          <div className="result-card__label">Classificação do Plano</div>
-
-          <div className="classification-badge">
-            <svg className="classification-badge__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span className="classification-badge__text">{classificationLabel}</span>
-          </div>
-
-          <div className="result-card__value result-card__value--class">
-            {classificationLabel}
-          </div>
-          <div className="result-card__desc">
-            Déficit de {Math.abs(results.goalDeltaPct).toFixed(0)}% está na zona ideal para resultados
-            sustentáveis. Alta probabilidade de aderência e manutenção de performance.
-          </div>
-
-          {/* Classification Scale */}
-          <div className="classification-scale">
-            {[0, 1, 2, 3, 4].map((i) => {
-              let segmentClass = 'classification-scale__segment';
-              if (i === classificationIdx) segmentClass += ' classification-scale__segment--active';
-              else if (i < 2) segmentClass += ' classification-scale__segment--danger';
-              else if (i === 2) segmentClass += ' classification-scale__segment--warning';
-
-              return (
-                <div key={i} className={segmentClass} style={i === classificationIdx ? { position: 'relative' } : undefined}>
-                  {i === classificationIdx && (
-                    <div className={`classification-scale__pointer${chartAnimated ? ' animate' : ''}`}>
-                      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                        <path d="M12 18l-6-6h12l-6 6z" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          <div className="classification-scale__labels">
-            <span>Extremo</span>
-            <span>Agressivo</span>
-            <span>Moderado</span>
-            <span>Realista</span>
-            <span>Conservador</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+          <DataCard hoverable className="p-[var(--space-5)]">
+            <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[2px] text-[var(--text-muted)]">
+              <Clock3 className="h-4 w-4 text-[var(--emerald-400)]" />
+              Prazo projetado
+            </div>
+            <StatBlock
+              value={projectedWeeks}
+              unit="sem"
+              label="Horizonte"
+              sublabel={`Aproximadamente ${Math.max(1, Math.ceil(totalWeeks / 4))} meses para completar o alvo.`}
+              size="sm"
+              color="default"
+              className={CARDLESS_STAT_BLOCK_CLASSNAME}
+            />
+          </DataCard>
+        </motion.div>
+      </motion.div>
+    </SectionShell>
   );
 };

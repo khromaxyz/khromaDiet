@@ -5,6 +5,7 @@ import App from './App';
 import './styles/index.css';
 import './styles/tokens.css';
 import './styles/base.css';
+import './styles/atmosphere.css';
 import './styles/animations.css';
 import './styles/screens.css';
 import './styles/dashboard-presentation.css';
