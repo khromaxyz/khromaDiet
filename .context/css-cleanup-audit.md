@@ -1,0 +1,2049 @@
+# CSS Cleanup Audit
+
+Gerado em 2026-03-06T22:51:21.684Z.
+
+## Metodologia
+
+- Base principal: seletores unicos normalizados por arquivo.
+- Escopo de runtime: `src/**/*.ts` e `src/**/*.tsx`, excluindo `src/test/**`.
+- Regras dentro de `@keyframes` foram excluidas da contagem.
+- Um seletor foi marcado como `USADO` quando todos os hooks estaticos relevantes apareceram no runtime: `.classe`, `#id`, `[data-flag]`, `[data-flag='valor']`.
+- Para seletores compostos, as dependencias listadas mostram os arquivos que sustentam os hooks encontrados; isso e uma prova estatica de referencia, nao de arvore DOM completa.
+- Caso especial: o seletor global `body` foi mantido como `USADO` por corresponder ao elemento global do documento.
+
+## Tabela Resumo
+
+| Arquivo | Seletores totais | Usados | Mortos | % morto |
+| --- | ---: | ---: | ---: | ---: |
+| `src/styles/screens.css` | 1035 | 340 | 695 | 67.1% |
+| `src/styles/dashboard-presentation.css` | 897 | 60 | 837 | 93.3% |
+| `src/styles/dashboard-final.css` | 20 | 20 | 0 | 0.0% |
+
+## Status de Imports e Arquivos Auxiliares
+
+- `src/styles/screens.css` importado por `src/main.tsx`.
+- `src/styles/dashboard-presentation.css` importado por `src/main.tsx`.
+- `src/styles/dashboard-final.css` importado por `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx` apesar do comentario `@deprecated`.
+- `src/styles/atmosphere.css` importado por `src/main.tsx`; estado: comment-only; tamanho: 162 bytes.
+- `src/styles/animations.css` importado por `src/main.tsx`; estado: empty; tamanho: 0 bytes.
+
+## Recomendacao
+
+- `src/styles/screens.css`: podar.
+- `src/styles/dashboard-presentation.css`: podar.
+- `src/styles/dashboard-final.css`: manter.
+- `src/styles/atmosphere.css`: deletar.
+- `src/styles/animations.css`: deletar.
+
+## src/styles/screens.css
+
+- Seletores totais: 1035
+- Usados: 340
+- Mortos: 695
+- Percentual morto: 67.1%
+- Recomendacao: podar
+
+### Seletores USADOS
+
+- `#screen-hero` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero::before` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero::after` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__content` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__copy` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__copy::before` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__badge` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__badge-dot` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__mini-badge-dot` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__headline` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__headline-line` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__headline-line--base` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__headline-line--accent` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__subheadline` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__cta-group` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__cta` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__cta--primary` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__cta--primary:hover` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__cta--secondary` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__cta--secondary:hover` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__panel-wrap` -> `src/components/screens/hero/HeroScreen.tsx`
+- `#screen-hero .hero-screen__panel` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__panel-header` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__brand` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__brand-chip` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__brand-copy` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__brand-name` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__brand-sub` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__panel-tags` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__mini-badge` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__mini-badge--live` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__mini-badge--neutral` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__stats-grid` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__stat` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__signal-strip` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__signal-label` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-hero .hero-screen__signal-value` -> `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/hero/HeroStats.tsx`
+- `#screen-form` -> `src/components/screens/form/FormScreen.tsx`
+- `.form-header` -> `src/components/screens/form/FormHeader.tsx`
+- `.form-logo` -> `src/components/screens/form/FormHeader.tsx`
+- `.form-body` -> `src/components/screens/form/FormScreen.tsx`
+- `.question-panel` -> `src/components/screens/form/FormStepRenderer.tsx`
+- `.question-panel:has(.training-step-panel)` -> `src/components/screens/form/FormStepRenderer.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.form-intro-card` -> `src/components/screens/form/FormScreen.tsx`
+- `.form-intro-text` -> `src/components/screens/form/FormScreen.tsx`
+- `.question-number` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.question-number::before` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.question-title` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.question-description` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.optional-badge` -> `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/ui/NumberField.tsx`
+- `.goal-cards-grid` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.goal-card-check` -> `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `.goal-card-check svg` -> `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `.goal-card-icon` -> `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `.goal-card-title` -> `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `.goal-card-desc` -> `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `.slider-group` -> `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.number-inputs-grid` -> `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`
+- `.number-input-label` -> `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `.number-input-label-icon` -> `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `.number-input-label::before` -> `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `.number-input-wrapper` -> `src/components/ui/NumberField.tsx`
+- `.number-input-unit` -> `src/components/ui/NumberField.tsx`
+- `.form-nav` -> `src/components/screens/form/steps/StepNav.tsx`
+- `.question-sub-panel` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.question-sub-panel.active` -> `src/components/profile/ProfileCreationScreen.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`, `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `.summary-cta-group` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-dashboard` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `.screen-nav-pill` -> `src/components/layout/ScreenNavPill.tsx`
+- `.nav-pill-dot` -> `src/components/layout/ScreenNavPill.tsx`
+- `.nav-pill-dot.active` -> `src/components/layout/ScreenNavPill.tsx`, `src/components/profile/ProfileCreationScreen.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`, `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `.nav-pill-dot:hover` -> `src/components/layout/ScreenNavPill.tsx`
+- `.screen-frame` -> `src/App.tsx`
+- `.form-logo-inline` -> `src/components/screens/form/FormHeader.tsx`
+- `.goal-cards-grid-2` -> `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`
+- `.goal-cards-grid-3` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.goal-cards-grid-4` -> `src/components/screens/form/steps/HormonesStep.tsx`
+- `.number-inputs-grid-3` -> `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `.target-info-card` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `.target-info-row` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `.target-info-icon` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `.target-info-text` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `.target-info-highlight` -> `src/components/screens/form/steps/BodyFatStep.tsx`
+- `.bf-photo-grid` -> `src/components/screens/form/steps/BodyFatStep.tsx`
+- `.bf-photo-card` -> `src/components/screens/form/steps/BodyFatStep.tsx`
+- `.bf-photo-card:hover` -> `src/components/screens/form/steps/BodyFatStep.tsx`
+- `.bf-photo-card.selected` -> `src/components/screens/form/steps/BodyFatStep.tsx`
+- `.bf-photo-label` -> `src/components/screens/form/steps/BodyFatStep.tsx`
+- `.bf-photo-value` -> `src/components/screens/form/steps/BodyFatStep.tsx`
+- `.training-step-panel .slider-group` -> `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.training-step-panel .goal-cards-grid` -> `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `.training-scroll-hint` -> `src/components/screens/form/steps/TrainingStep.tsx`
+- `body` -> `<document body>`
+- `#screen-dashboard .target-info-highlight` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`
+- `#screen-dashboard .target-info-card` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-dashboard .nav-pill-dot.active` -> `src/components/layout/ScreenNavPill.tsx`, `src/components/profile/ProfileCreationScreen.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`, `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `body.dashboard-active` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard .btn-dash-cta` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/ProjectionSlide.tsx`
+- `#screen-dashboard .btn-dash-cta:hover` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/ProjectionSlide.tsx`
+- `#screen-form::before` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form::after` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form > *` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header::after` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header-main` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header-side` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-logo` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-logo-bolt` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-step-badge` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-step-badge-label` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-step-badge-current` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-step-badge-sep` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-step-badge-total` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-history-btn` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-history-btn:hover` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .question-title` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .question-description` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .question-number` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .question-number::before` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .optional-badge` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .form-intro-card` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .goal-card-check` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-form .goal-card-check-selected` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-form .goal-card-check svg` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-form .goal-card-icon` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-form .goal-card-title` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-form .goal-card-desc` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-form .number-input-top` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-label` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-label-dot` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-label-icon` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-label-text` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-unit-badge` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form button.number-input-unit-badge` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form button.number-input-unit-badge:hover` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-unit-badge-active` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-main` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-main-with-stepper` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-wrapper` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-main-with-stepper .number-input-wrapper` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-value-stack` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-value-display` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .height-dual-input::selection` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .height-dual-input::-moz-selection` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .number-input-unit` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-stepper` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-main-with-stepper .number-input-stepper-left` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-main-with-stepper .number-input-stepper-right` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-stepper-btn` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-stepper-btn:hover` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-edit-indicator` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-footer` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-context` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .number-input-context-focus-only` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .number-input-context-warning` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .number-input-classification` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .number-input-benchmark` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/NumberField.tsx`
+- `#screen-form .steps-value-meta` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/CardioStep.tsx`
+- `#screen-form .steps-input-hint` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/CardioStep.tsx`
+- `#screen-form .steps-instrument-stack` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/CardioStep.tsx`
+- `#screen-form .steps-slider-block` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/CardioStep.tsx`
+- `#screen-form .hormones-dose-grid` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`
+- `#screen-form .hormones-dose-grid > :last-child:nth-child(odd)` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`
+- `#screen-form .height-dual-main` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .height-dual-field` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .height-dual-unit` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .height-dual-input` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .height-dual-input::-webkit-outer-spin-button` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .height-dual-input::-webkit-inner-spin-button` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .goal-timeline-diagnostic-heading` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-heading-text` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-row` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-label` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-value` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-divider` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-classification` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-viability-row` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-viability-label` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-viability-pct` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-bar-row` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-bar-track` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-bar-fill` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-scale` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-warning` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .goal-timeline-diagnostic-note` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `.screen-nav-pill-form` -> `src/components/layout/ScreenNavPill.tsx`
+- `.screen-nav-pill-form .nav-pill-dot` -> `src/components/layout/ScreenNavPill.tsx`
+- `.screen-nav-pill-form .nav-pill-dot-active` -> `src/components/layout/ScreenNavPill.tsx`
+- `.screen-nav-pill-form .nav-pill-dot-past` -> `src/components/layout/ScreenNavPill.tsx`
+- `.screen-nav-pill-form .nav-pill-dot-future` -> `src/components/layout/ScreenNavPill.tsx`
+- `.screen-nav-pill-screen .nav-pill-dot` -> `src/components/layout/ScreenNavPill.tsx`
+- `.screen-nav-pill-screen .nav-pill-dot-screen-active` -> `src/components/layout/ScreenNavPill.tsx`
+- `#screen-form button` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form [role='button']` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form input[type='number']` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form textarea` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .goal-cards-grid-3` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .goal-cards-grid-4` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`
+- `#screen-form .goal-cards-grid-2` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`
+- `#screen-form .number-inputs-grid-3` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`
+- `#screen-form .form-nav` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/StepNav.tsx`
+- `.df-profile-trigger` -> `src/components/profile/ProfileTriggerButton.tsx`
+- `.df-profile-trigger:hover` -> `src/components/profile/ProfileTriggerButton.tsx`
+- `.df-profile-trigger-fallback` -> `src/components/profile/ProfileTriggerButton.tsx`
+- `.df-storage-warning` -> `src/App.tsx`
+- `.df-draft-resume-banner` -> `src/App.tsx`
+- `.df-draft-resume-banner p` -> `src/App.tsx`
+- `.df-draft-resume-actions` -> `src/App.tsx`
+- `.df-draft-resume-actions button` -> `src/App.tsx`
+- `.df-draft-resume-actions button:hover` -> `src/App.tsx`
+- `#screen-profile-create` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `.df-avatar-grid` -> `src/components/profile/ProfileAvatarGrid.tsx`
+- `.df-avatar-grid-create` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `.df-avatar-choice` -> `src/components/profile/ProfileAvatarGrid.tsx`
+- `.df-avatar-choice:hover` -> `src/components/profile/ProfileAvatarGrid.tsx`
+- `.df-avatar-choice.is-selected` -> `src/components/profile/ProfileAvatarGrid.tsx`
+- `.df-profile-drawer-backdrop` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-track` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-track.is-settings` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-page` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-header` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-header h3` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-header p` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-close` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-new-btn` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-cards` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-top` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-info` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-name` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-meta` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-date` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-active` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-chips` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-chips span` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-actions` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-load` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-settings` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-card-load:disabled` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-empty` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-settings-empty` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-drawer-settings-page` -> `src/components/profile/ProfileDrawer.tsx`
+- `.df-profile-settings-panel` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-back` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-title` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-label` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-input-wrap` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-input` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-input:focus` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-avatar-grid-settings` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-actions` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-action` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-status` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-settings-danger` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-delete-trigger` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-delete-confirm` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-delete-confirm p` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-delete-actions` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-delete-cancel` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-delete-confirm-btn` -> `src/components/profile/ProfileSettingsPanel.tsx`
+- `.df-profile-toast` -> `src/App.tsx`
+- `#screen-form .form-header-surface` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header-top` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header-progress` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header-progress-track` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-header-progress-track > div` -> `src/components/screens/form/FormHeader.tsx`, `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-body` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .form-body-content` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .question-panel` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/FormStepRenderer.tsx`
+- `#screen-form .form-step-shell` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/FormStepRenderer.tsx`
+- `#screen-form .question-sub-panel` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .goal-cards-grid` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .slider-group` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-form .number-inputs-grid` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`
+- `#screen-form .form-intro-text` -> `src/components/screens/form/FormScreen.tsx`
+- `#screen-form .target-info-card` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-form .target-info-icon` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-form .target-info-text` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-form .goal-card-icon.form-option-card-icon` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-form .form-slider-field` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-header` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-label` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-caption` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-stat` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-control` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-ticks` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-tick` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-slider-tick.is-active` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-form .form-nav-button` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/StepNav.tsx`
+- `#screen-form .form-nav-button-back` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/StepNav.tsx`
+- `#screen-form .form-nav-button-next` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/StepNav.tsx`
+- `#screen-form .height-dual-field:focus-within` -> `src/components/screens/form/FormScreen.tsx`, `src/components/ui/HeightDualInput.tsx`
+- `#screen-form .training-scroll-hint` -> `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-summary .summary-shell` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-profile-create .profile-create-shell` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-summary .summary-header` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-profile-create .profile-create-header` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-summary .summary-metrics-grid` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-card` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-card-primary` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-card-macros` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-card-kicker` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-stat-block` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-stat-block:hover` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-stat-block-primary` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-macro-grid` -> `src/components/screens/summary/SummaryMetrics.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-cta-group` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-cta` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-cta-primary` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-summary .summary-cta-secondary` -> `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-profile-create .profile-create-layout` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-main` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-card` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-kicker` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-kicker-dot` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-field` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-field-top` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-label` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-counter` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-input` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-input:focus-visible` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-limit-warning` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-limit-warning-row` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-limit-confirm` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-actions` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-action` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-action-back` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-create-action-save` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-head` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-avatar` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-copy` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-name` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-meta` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-stats` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-stats > *` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-chip-row` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-chip-row span` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `#screen-profile-create .profile-preview-placeholder` -> `src/components/profile/ProfileCreationScreen.tsx`
+- `.df-avatar-grid-settings .df-avatar-choice` -> `src/components/profile/ProfileAvatarGrid.tsx`, `src/components/profile/ProfileSettingsPanel.tsx`
+
+### Seletores MORTOS
+
+- `.hero-grid-overlay` (faltando: `.hero-grid-overlay`)
+- `.hero-content` (faltando: `.hero-content`)
+- `.hero-badge` (faltando: `.hero-badge`)
+- `.hero-badge-dot` (faltando: `.hero-badge-dot`)
+- `.hero-headline` (faltando: `.hero-headline`)
+- `.hero-headline .line-1` (faltando: `.hero-headline`, `.line-1`)
+- `.hero-headline .line-2` (faltando: `.hero-headline`, `.line-2`)
+- `.hero-subheadline` (faltando: `.hero-subheadline`)
+- `.hero-cta-group` (faltando: `.hero-cta-group`)
+- `.btn-primary` (faltando: `.btn-primary`)
+- `.btn-primary::before` (faltando: `.btn-primary`)
+- `.btn-primary:hover` (faltando: `.btn-primary`)
+- `.btn-primary:hover::before` (faltando: `.btn-primary`)
+- `.btn-primary:active` (faltando: `.btn-primary`)
+- `.btn-secondary` (faltando: `.btn-secondary`)
+- `.btn-secondary:hover` (faltando: `.btn-secondary`)
+- `.hero-stats` (faltando: `.hero-stats`)
+- `.hero-stat` (faltando: `.hero-stat`)
+- `.hero-stat-number` (faltando: `.hero-stat-number`)
+- `.hero-stat-label` (faltando: `.hero-stat-label`)
+- `.hero-stat-divider` (faltando: `.hero-stat-divider`)
+- `#screen-hero .hero-screen__signal-item` (faltando: `.hero-screen__signal-item`)
+- `#screen-hero .hero-screen__signal-item--emerald` (faltando: `.hero-screen__signal-item--emerald`)
+- `#screen-hero .hero-screen__signal-item--gold` (faltando: `.hero-screen__signal-item--gold`)
+- `#screen-hero .hero-screen__signal-item--blue` (faltando: `.hero-screen__signal-item--blue`)
+- `#screen-hero .hero-screen__signal-item--emerald .hero-screen__signal-label` (faltando: `.hero-screen__signal-item--emerald`)
+- `#screen-hero .hero-screen__signal-item--gold .hero-screen__signal-label` (faltando: `.hero-screen__signal-item--gold`)
+- `#screen-hero .hero-screen__signal-item--blue .hero-screen__signal-label` (faltando: `.hero-screen__signal-item--blue`)
+- `.form-step-indicator` (faltando: `.form-step-indicator`)
+- `.form-step-indicator span` (faltando: `.form-step-indicator`)
+- `.progress-bar-wrapper` (faltando: `.progress-bar-wrapper`)
+- `.progress-bar-fill` (faltando: `.progress-bar-fill`)
+- `.progress-bar-fill.progress-bar-empty::after` (faltando: `.progress-bar-fill`, `.progress-bar-empty`)
+- `.progress-bar-fill.progress-bar-fill-red` (faltando: `.progress-bar-fill`, `.progress-bar-fill-red`)
+- `.progress-bar-fill.progress-bar-fill-yellow` (faltando: `.progress-bar-fill`, `.progress-bar-fill-yellow`)
+- `.progress-bar-fill.progress-bar-fill-green` (faltando: `.progress-bar-fill`, `.progress-bar-fill-green`)
+- `.progress-bar-fill.progress-bar-fill-pulse` (faltando: `.progress-bar-fill`, `.progress-bar-fill-pulse`)
+- `.progress-bar-fill::after` (faltando: `.progress-bar-fill`)
+- `.progress-bar-fill.progress-bar-fill-red::after` (faltando: `.progress-bar-fill`, `.progress-bar-fill-red`)
+- `.progress-bar-fill.progress-bar-fill-yellow::after` (faltando: `.progress-bar-fill`, `.progress-bar-fill-yellow`)
+- `.goal-card` (faltando: `.goal-card`)
+- `.goal-card::before` (faltando: `.goal-card`)
+- `.goal-card:hover` (faltando: `.goal-card`)
+- `.goal-card:hover::before` (faltando: `.goal-card`)
+- `.goal-card.selected` (faltando: `.goal-card`)
+- `.goal-card.selected::before` (faltando: `.goal-card`)
+- `.goal-card.goal-card-accent-red::before` (faltando: `.goal-card`, `.goal-card-accent-red`)
+- `.goal-card.goal-card-accent-orange::before` (faltando: `.goal-card`, `.goal-card-accent-orange`)
+- `.goal-card.goal-card-accent-violet::before` (faltando: `.goal-card`, `.goal-card-accent-violet`)
+- `.goal-card.goal-card-accent-blue::before` (faltando: `.goal-card`, `.goal-card-accent-blue`)
+- `.goal-card.goal-card-accent-green::before` (faltando: `.goal-card`, `.goal-card-accent-green`)
+- `.goal-card.goal-card-accent-lime::before` (faltando: `.goal-card`, `.goal-card-accent-lime`)
+- `.goal-card-badge` (faltando: `.goal-card-badge`)
+- `.badge-red` (faltando: `.badge-red`)
+- `.badge-orange` (faltando: `.badge-orange`)
+- `.badge-violet` (faltando: `.badge-violet`)
+- `.badge-green` (faltando: `.badge-green`)
+- `.badge-cyan` (faltando: `.badge-cyan`)
+- `.badge-lime` (faltando: `.badge-lime`)
+- `.badge-amber` (faltando: `.badge-amber`)
+- `.slider-item` (faltando: `.slider-item`)
+- `.slider-label-row` (faltando: `.slider-label-row`)
+- `.slider-label` (faltando: `.slider-label`)
+- `.slider-value-display` (faltando: `.slider-value-display`)
+- `.slider-track` (faltando: `.slider-track`)
+- `.slider-fill` (faltando: `.slider-fill`)
+- `.range-input` (faltando: `.range-input`)
+- `.slider-track + .range-input` (faltando: `.slider-track`, `.range-input`)
+- `.range-input::-webkit-slider-runnable-track` (faltando: `.range-input`)
+- `.range-input::-moz-range-track` (faltando: `.range-input`)
+- `.range-input::-moz-range-progress` (faltando: `.range-input`)
+- `.range-input:active` (faltando: `.range-input`)
+- `.range-input::-webkit-slider-thumb` (faltando: `.range-input`)
+- `.range-input:active::-webkit-slider-thumb` (faltando: `.range-input`)
+- `.range-input:hover::-webkit-slider-thumb` (faltando: `.range-input`)
+- `.range-input:focus-visible::-webkit-slider-thumb` (faltando: `.range-input`)
+- `.range-input::-moz-range-thumb` (faltando: `.range-input`)
+- `.range-input:active::-moz-range-thumb` (faltando: `.range-input`)
+- `.range-input:hover::-moz-range-thumb` (faltando: `.range-input`)
+- `.range-input:focus-visible::-moz-range-thumb` (faltando: `.range-input`)
+- `.slider-ticks` (faltando: `.slider-ticks`)
+- `.slider-tick` (faltando: `.slider-tick`)
+- `.number-input-group` (faltando: `.number-input-group`)
+- `.number-input-group::before` (faltando: `.number-input-group`)
+- `.number-input-group:hover` (faltando: `.number-input-group`)
+- `.number-input-group:hover::before` (faltando: `.number-input-group`)
+- `.number-input-group:focus-within` (faltando: `.number-input-group`)
+- `.number-input-group:focus-within::before` (faltando: `.number-input-group`)
+- `.number-input-group.number-input-group-warning` (faltando: `.number-input-group`, `.number-input-group-warning`)
+- `.number-input-field` (faltando: `.number-input-field`)
+- `.number-input-field:focus-visible` (faltando: `.number-input-field`)
+- `.number-input-field::-webkit-outer-spin-button` (faltando: `.number-input-field`)
+- `.number-input-field::-webkit-inner-spin-button` (faltando: `.number-input-field`)
+- `.number-input-hint` (faltando: `.number-input-hint`)
+- `.btn-form-back` (faltando: `.btn-form-back`)
+- `.btn-form-back:hover` (faltando: `.btn-form-back`)
+- `.btn-form-next` (faltando: `.btn-form-next`)
+- `.btn-form-next:hover` (faltando: `.btn-form-next`)
+- `.btn-form-submit` (faltando: `.btn-form-submit`)
+- `.btn-form-submit:hover` (faltando: `.btn-form-submit`)
+- `.summary-bg-gradient` (faltando: `.summary-bg-gradient`)
+- `.summary-grid-lines` (faltando: `.summary-grid-lines`)
+- `.summary-content` (faltando: `.summary-content`)
+- `.summary-label` (faltando: `.summary-label`)
+- `.summary-label-line` (faltando: `.summary-label-line`)
+- `.summary-title` (faltando: `.summary-title`)
+- `.summary-subtitle` (faltando: `.summary-subtitle`)
+- `.summary-metrics-row` (faltando: `.summary-metrics-row`)
+- `.summary-metric-divider` (faltando: `.summary-metric-divider`)
+- `.summary-metric` (faltando: `.summary-metric`)
+- `.summary-metric-label` (faltando: `.summary-metric-label`)
+- `.summary-metric-value` (faltando: `.summary-metric-value`)
+- `.summary-metric-value.tdee-val` (faltando: `.summary-metric-value`, `.tdee-val`)
+- `.summary-metric-value.meta-val` (faltando: `.summary-metric-value`, `.meta-val`)
+- `.summary-metric-value.deficit-val` (faltando: `.summary-metric-value`, `.deficit-val`)
+- `.summary-metric-unit` (faltando: `.summary-metric-unit`)
+- `.btn-summary-full` (faltando: `.btn-summary-full`)
+- `.btn-summary-full::before` (faltando: `.btn-summary-full`)
+- `.btn-summary-full:hover` (faltando: `.btn-summary-full`)
+- `.btn-summary-full:hover::before` (faltando: `.btn-summary-full`)
+- `.summary-mini-stats` (faltando: `.summary-mini-stats`)
+- `.summary-mini-stat` (faltando: `.summary-mini-stat`)
+- `.summary-mini-stat-dot` (faltando: `.summary-mini-stat-dot`)
+- `.dashboard-header` (faltando: `.dashboard-header`)
+- `.dashboard-logo-area` (faltando: `.dashboard-logo-area`)
+- `.dashboard-logo` (faltando: `.dashboard-logo`)
+- `.dashboard-header-badge` (faltando: `.dashboard-header-badge`)
+- `.dashboard-header-actions` (faltando: `.dashboard-header-actions`)
+- `.btn-icon` (faltando: `.btn-icon`)
+- `.btn-icon:hover` (faltando: `.btn-icon`)
+- `.btn-export` (faltando: `.btn-export`)
+- `.btn-export:hover` (faltando: `.btn-export`)
+- `.btn-restart` (faltando: `.btn-restart`)
+- `.btn-restart:hover` (faltando: `.btn-restart`)
+- `.dashboard-body` (faltando: `.dashboard-body`)
+- `.dash-section-header` (faltando: `.dash-section-header`)
+- `.dash-section-title` (faltando: `.dash-section-title`)
+- `.dash-section-title::before` (faltando: `.dash-section-title`)
+- `.dash-section-action` (faltando: `.dash-section-action`)
+- `.dash-section-action:hover` (faltando: `.dash-section-action`)
+- `.receipt-card` (faltando: `.receipt-card`)
+- `.receipt-card::before` (faltando: `.receipt-card`)
+- `.receipt-row` (faltando: `.receipt-row`)
+- `.receipt-row:last-child` (faltando: `.receipt-row`)
+- `.receipt-row.total-row` (faltando: `.receipt-row`, `.total-row`)
+- `.receipt-row.meta-row` (faltando: `.receipt-row`, `.meta-row`)
+- `.receipt-label` (faltando: `.receipt-label`)
+- `.receipt-label strong` (faltando: `.receipt-label`)
+- `.receipt-value` (faltando: `.receipt-value`)
+- `.receipt-value.positive` (faltando: `.receipt-value`, `.positive`)
+- `.receipt-value.total-val` (faltando: `.receipt-value`, `.total-val`)
+- `.receipt-value.meta-val-color` (faltando: `.receipt-value`, `.meta-val-color`)
+- `.receipt-tag` (faltando: `.receipt-tag`)
+- `.receipt-divider-line` (faltando: `.receipt-divider-line`)
+- `.receipt-row-typing` (faltando: `.receipt-row-typing`)
+- `.receipt-cursor` (faltando: `.receipt-cursor`)
+- `.receipt-cursor::after` (faltando: `.receipt-cursor`)
+- `.macro-cards-grid` (faltando: `.macro-cards-grid`)
+- `.macro-card` (faltando: `.macro-card`)
+- `.macro-card:hover` (faltando: `.macro-card`)
+- `.macro-card.protein` (faltando: `.macro-card`, `.protein`)
+- `.macro-card.carbs` (faltando: `.macro-card`, `.carbs`)
+- `.macro-card.fat` (faltando: `.macro-card`, `.fat`)
+- `.macro-card.protein:hover` (faltando: `.macro-card`, `.protein`)
+- `.macro-card.carbs:hover` (faltando: `.macro-card`, `.carbs`)
+- `.macro-card.fat:hover` (faltando: `.macro-card`, `.fat`)
+- `.macro-card-bg` (faltando: `.macro-card-bg`)
+- `.macro-card-head` (faltando: `.macro-card-head`)
+- `.protein .macro-card-bg` (faltando: `.protein`, `.macro-card-bg`)
+- `.carbs .macro-card-bg` (faltando: `.carbs`, `.macro-card-bg`)
+- `.fat .macro-card-bg` (faltando: `.fat`, `.macro-card-bg`)
+- `.macro-type-label` (faltando: `.macro-type-label`)
+- `.macro-type-percent` (faltando: `.macro-type-percent`)
+- `.macro-type-dot` (faltando: `.macro-type-dot`)
+- `.protein .macro-type-label` (faltando: `.protein`, `.macro-type-label`)
+- `.protein .macro-type-dot` (faltando: `.protein`, `.macro-type-dot`)
+- `.carbs .macro-type-label` (faltando: `.carbs`, `.macro-type-label`)
+- `.carbs .macro-type-dot` (faltando: `.carbs`, `.macro-type-dot`)
+- `.fat .macro-type-label` (faltando: `.fat`, `.macro-type-label`)
+- `.fat .macro-type-dot` (faltando: `.fat`, `.macro-type-dot`)
+- `.protein .macro-type-percent` (faltando: `.protein`, `.macro-type-percent`)
+- `.carbs .macro-type-percent` (faltando: `.carbs`, `.macro-type-percent`)
+- `.fat .macro-type-percent` (faltando: `.fat`, `.macro-type-percent`)
+- `.macro-amount` (faltando: `.macro-amount`)
+- `.macro-amount-unit` (faltando: `.macro-amount-unit`)
+- `.macro-kcal` (faltando: `.macro-kcal`)
+- `.macro-progress-bar` (faltando: `.macro-progress-bar`)
+- `.macro-card .range-input` (faltando: `.macro-card`, `.range-input`)
+- `.macro-progress-fill` (faltando: `.macro-progress-fill`)
+- `.protein .macro-progress-fill` (faltando: `.protein`, `.macro-progress-fill`)
+- `.carbs .macro-progress-fill` (faltando: `.carbs`, `.macro-progress-fill`)
+- `.fat .macro-progress-fill` (faltando: `.fat`, `.macro-progress-fill`)
+- `.macro-total-pulse` (faltando: `.macro-total-pulse`)
+- `.dashboard-main-grid` (faltando: `.dashboard-main-grid`)
+- `.chart-card` (faltando: `.chart-card`)
+- `.chart-card::before` (faltando: `.chart-card`)
+- `.chart-header` (faltando: `.chart-header`)
+- `.chart-title` (faltando: `.chart-title`)
+- `.chart-subtitle` (faltando: `.chart-subtitle`)
+- `.projection-estimated-pill` (faltando: `.projection-estimated-pill`)
+- `.projection-empty-card` (faltando: `.projection-empty-card`)
+- `.projection-empty-actions` (faltando: `.projection-empty-actions`)
+- `.chart-legend` (faltando: `.chart-legend`)
+- `.chart-legend-item` (faltando: `.chart-legend-item`)
+- `.legend-line` (faltando: `.legend-line`)
+- `.chart-wrapper` (faltando: `.chart-wrapper`)
+- `.before-after-card` (faltando: `.before-after-card`)
+- `.before-after-row` (faltando: `.before-after-row`)
+- `.ba-side` (faltando: `.ba-side`)
+- `.ba-side-label` (faltando: `.ba-side-label`)
+- `.ba-side-label.after-label` (faltando: `.ba-side-label`, `.after-label`)
+- `.ba-metric` (faltando: `.ba-metric`)
+- `.ba-metric-value` (faltando: `.ba-metric-value`)
+- `.ba-metric-value.after-val` (faltando: `.ba-metric-value`, `.after-val`)
+- `.ba-metric-label` (faltando: `.ba-metric-label`)
+- `.ba-arrow` (faltando: `.ba-arrow`)
+- `.ba-weeks` (faltando: `.ba-weeks`)
+- `.speed-card` (faltando: `.speed-card`)
+- `.speed-card:hover` (faltando: `.speed-card`)
+- `.speed-card::after` (faltando: `.speed-card`)
+- `.speed-label` (faltando: `.speed-label`)
+- `.speed-main` (faltando: `.speed-main`)
+- `.speed-main .highlight` (faltando: `.speed-main`, `.highlight`)
+- `.speed-sub` (faltando: `.speed-sub`)
+- `.supps-grid` (faltando: `.supps-grid`)
+- `.supp-card` (faltando: `.supp-card`)
+- `.supp-card:hover` (faltando: `.supp-card`)
+- `.supp-priority` (faltando: `.supp-priority`)
+- `.priority-badge` (faltando: `.priority-badge`)
+- `.priority-high` (faltando: `.priority-high`)
+- `.priority-medium` (faltando: `.priority-medium`)
+- `.priority-low` (faltando: `.priority-low`)
+- `.supp-icon` (faltando: `.supp-icon`)
+- `.supp-card:hover .supp-icon` (faltando: `.supp-card`, `.supp-icon`)
+- `.supp-name` (faltando: `.supp-name`)
+- `.supp-dose` (faltando: `.supp-dose`)
+- `.supp-timing` (faltando: `.supp-timing`)
+- `.whatif-card` (faltando: `.whatif-card`)
+- `.whatif-card::before` (faltando: `.whatif-card`)
+- `.whatif-card.aurora-border::after` (faltando: `.whatif-card`, `.aurora-border`)
+- `.whatif-inner-grid` (faltando: `.whatif-inner-grid`)
+- `.whatif-sliders` (faltando: `.whatif-sliders`)
+- `.whatif-slider-item` (faltando: `.whatif-slider-item`)
+- `.whatif-slider-label-row` (faltando: `.whatif-slider-label-row`)
+- `.whatif-slider-label` (faltando: `.whatif-slider-label`)
+- `.whatif-slider-value` (faltando: `.whatif-slider-value`)
+- `.whatif-preview` (faltando: `.whatif-preview`)
+- `.whatif-preview-title` (faltando: `.whatif-preview-title`)
+- `.whatif-result-row` (faltando: `.whatif-result-row`)
+- `.whatif-result-row:last-child` (faltando: `.whatif-result-row`)
+- `.whatif-result-label` (faltando: `.whatif-result-label`)
+- `.whatif-result-value.changed` (faltando: `.whatif-result-value`, `.changed`)
+- `.whatif-result-diff` (faltando: `.whatif-result-diff`)
+- `.whatif-pulse-dot` (faltando: `.whatif-pulse-dot`)
+- `.meals-grid` (faltando: `.meals-grid`)
+- `.meal-card` (faltando: `.meal-card`)
+- `.meal-card:hover` (faltando: `.meal-card`)
+- `.meal-card.pre-treino` (faltando: `.meal-card`, `.pre-treino`)
+- `.meal-card.pre-treino::before` (faltando: `.meal-card`, `.pre-treino`)
+- `.meal-card.pos-treino` (faltando: `.meal-card`, `.pos-treino`)
+- `.meal-card.pos-treino::before` (faltando: `.meal-card`, `.pos-treino`)
+- `.meal-header` (faltando: `.meal-header`)
+- `.meal-number` (faltando: `.meal-number`)
+- `.meal-name` (faltando: `.meal-name`)
+- `.meal-time-badge` (faltando: `.meal-time-badge`)
+- `.meal-kcal` (faltando: `.meal-kcal`)
+- `.meal-kcal-unit` (faltando: `.meal-kcal-unit`)
+- `.meal-macros` (faltando: `.meal-macros`)
+- `.meal-macro` (faltando: `.meal-macro`)
+- `.meal-macro-val` (faltando: `.meal-macro-val`)
+- `.meal-macro-label` (faltando: `.meal-macro-label`)
+- `.meal-macro.prot .meal-macro-val` (faltando: `.meal-macro`, `.prot`, `.meal-macro-val`)
+- `.meal-macro.carb .meal-macro-val` (faltando: `.meal-macro`, `.carb`, `.meal-macro-val`)
+- `.meal-macro.fat-m .meal-macro-val` (faltando: `.meal-macro`, `.fat-m`, `.meal-macro-val`)
+- `.meal-tag` (faltando: `.meal-tag`)
+- `.meal-composition-bar` (faltando: `.meal-composition-bar`)
+- `.meal-composition-seg` (faltando: `.meal-composition-seg`)
+- `.meal-composition-prot` (faltando: `.meal-composition-prot`)
+- `.meal-composition-carb` (faltando: `.meal-composition-carb`)
+- `.meal-composition-fat` (faltando: `.meal-composition-fat`)
+- `.kpi-strip` (faltando: `.kpi-strip`)
+- `.kpi-card` (faltando: `.kpi-card`)
+- `.kpi-card:hover` (faltando: `.kpi-card`)
+- `.kpi-card-label` (faltando: `.kpi-card-label`)
+- `.kpi-card-value` (faltando: `.kpi-card-value`)
+- `.kpi-card-sub` (faltando: `.kpi-card-sub`)
+- `.kpi-card-trend` (faltando: `.kpi-card-trend`)
+- `.anim-stagger>*` (faltando: `.anim-stagger`)
+- `.anim-counter` (faltando: `.anim-counter`)
+- `.glow-lime:hover` (faltando: `.glow-lime`)
+- `.glow-violet:hover` (faltando: `.glow-violet`)
+- `.profile-strip` (faltando: `.profile-strip`)
+- `.profile-avatar` (faltando: `.profile-avatar`)
+- `.profile-info` (faltando: `.profile-info`)
+- `.profile-name` (faltando: `.profile-name`)
+- `.profile-meta` (faltando: `.profile-meta`)
+- `.profile-tags` (faltando: `.profile-tags`)
+- `.profile-tag` (faltando: `.profile-tag`)
+- `.section-divider` (faltando: `.section-divider`)
+- `.section-divider-line` (faltando: `.section-divider-line`)
+- `.theme-toggle` (faltando: `.theme-toggle`)
+- `.theme-toggle:hover` (faltando: `.theme-toggle`)
+- `.dash-two-col` (faltando: `.dash-two-col`)
+- `.dash-three-col` (faltando: `.dash-three-col`)
+- `.dashboard-footer` (faltando: `.dashboard-footer`)
+- `.footer-logo` (faltando: `.footer-logo`)
+- `.footer-note` (faltando: `.footer-note`)
+- `.footer-disclaimer` (faltando: `.footer-disclaimer`)
+- `.hero-stat-group` (faltando: `.hero-stat-group`)
+- `.profile-step-block` (faltando: `.profile-step-block`)
+- `.profile-step-block-lg` (faltando: `.profile-step-block-lg`)
+- `.profile-step-label` (faltando: `.profile-step-label`)
+- `.review-card` (faltando: `.review-card`)
+- `.review-grid` (faltando: `.review-grid`)
+- `.review-item` (faltando: `.review-item`)
+- `.review-item-label` (faltando: `.review-item-label`)
+- `.review-item-title` (faltando: `.review-item-title`)
+- `.review-item-sub` (faltando: `.review-item-sub`)
+- `.review-item-sub.accent-orange` (faltando: `.review-item-sub`, `.accent-orange`)
+- `.summary-label-line-right` (faltando: `.summary-label-line-right`)
+- `.summary-metric-group` (faltando: `.summary-metric-group`)
+- `.dot-violet` (faltando: `.dot-violet`)
+- `.dot-cyan` (faltando: `.dot-cyan`)
+- `.dot-lime` (faltando: `.dot-lime`)
+- `.dot-orange` (faltando: `.dot-orange`)
+- `.kpi-tone-lime .kpi-card-value` (faltando: `.kpi-tone-lime`, `.kpi-card-value`)
+- `.kpi-tone-red .kpi-card-value` (faltando: `.kpi-tone-red`, `.kpi-card-value`)
+- `.kpi-tone-cyan .kpi-card-value` (faltando: `.kpi-tone-cyan`, `.kpi-card-value`)
+- `.receipt-tag-total` (faltando: `.receipt-tag-total`)
+- `.receipt-tag-meta` (faltando: `.receipt-tag-meta`)
+- `.legend-line-lime` (faltando: `.legend-line-lime`)
+- `.legend-line-violet` (faltando: `.legend-line-violet`)
+- `.legend-line-orange` (faltando: `.legend-line-orange`)
+- `.before-after-header` (faltando: `.before-after-header`)
+- `.before-after-badge` (faltando: `.before-after-badge`)
+- `.speed-stack` (faltando: `.speed-stack`)
+- `.speed-strong` (faltando: `.speed-strong`)
+- `.speed-card-cyan` (faltando: `.speed-card-cyan`)
+- `.speed-label-cyan` (faltando: `.speed-label-cyan`)
+- `.speed-highlight-cyan` (faltando: `.speed-highlight-cyan`)
+- `.whatif-beta-badge` (faltando: `.whatif-beta-badge`)
+- `.whatif-result-row-last` (faltando: `.whatif-result-row-last`)
+- `.refeed-badge` (faltando: `.refeed-badge`)
+- `.refeed-card-wrapper` (faltando: `.refeed-card-wrapper`)
+- `.refeed-grid` (faltando: `.refeed-grid`)
+- `.refeed-item` (faltando: `.refeed-item`)
+- `.refeed-item-title` (faltando: `.refeed-item-title`)
+- `.refeed-item-value` (faltando: `.refeed-item-value`)
+- `.refeed-item-subtitle` (faltando: `.refeed-item-subtitle`)
+- `.refeed-info-box` (faltando: `.refeed-info-box`)
+- `.refeed-info-text` (faltando: `.refeed-info-text`)
+- `.refeed-strong` (faltando: `.refeed-strong`)
+- `.footer-logo-inline` (faltando: `.footer-logo-inline`)
+- `.bf-photo-silhouette` (faltando: `.bf-photo-silhouette`)
+- `.bf-photo-level-1` (faltando: `.bf-photo-level-1`)
+- `.bf-photo-level-2` (faltando: `.bf-photo-level-2`)
+- `.bf-photo-level-3` (faltando: `.bf-photo-level-3`)
+- `.bf-photo-level-4` (faltando: `.bf-photo-level-4`)
+- `.bf-photo-level-5` (faltando: `.bf-photo-level-5`)
+- `.training-step-panel .goal-card` (faltando: `.goal-card`)
+- `.kpi-card-primary` (faltando: `.kpi-card-primary`)
+- `.kpi-card-primary .kpi-card-value` (faltando: `.kpi-card-primary`, `.kpi-card-value`)
+- `.kpi-card-delta` (faltando: `.kpi-card-delta`)
+- `.kpi-card-empty` (faltando: `.kpi-card-empty`)
+- `.kpi-card-empty-main` (faltando: `.kpi-card-empty-main`)
+- `.btn-kpi-cta` (faltando: `.btn-kpi-cta`)
+- `.btn-kpi-cta:hover` (faltando: `.btn-kpi-cta`)
+- `.supps-priority-block` (faltando: `.supps-priority-block`)
+- `.supps-priority-block-secondary .supp-card` (faltando: `.supps-priority-block-secondary`, `.supp-card`)
+- `.supps-priority-label` (faltando: `.supps-priority-label`)
+- `.supps-grid-high` (faltando: `.supps-grid-high`)
+- `.supps-grid-secondary` (faltando: `.supps-grid-secondary`)
+- `.summary-mini-stat-val-protein` (faltando: `.summary-mini-stat-val-protein`)
+- `.summary-mini-stat-val-carb` (faltando: `.summary-mini-stat-val-carb`)
+- `.summary-mini-stat-val-fat` (faltando: `.summary-mini-stat-val-fat`)
+- `#screen-dashboard .dashboard-header` (faltando: `.dashboard-header`)
+- `#screen-dashboard .dashboard-header-top` (faltando: `.dashboard-header-top`)
+- `#screen-dashboard .dashboard-header-sub` (faltando: `.dashboard-header-sub`)
+- `#screen-dashboard .dashboard-header-sub-divider` (faltando: `.dashboard-header-sub-divider`)
+- `#screen-dashboard .dashboard-logo` (faltando: `.dashboard-logo`)
+- `#screen-dashboard .dashboard-header-badge` (faltando: `.dashboard-header-badge`)
+- `#screen-dashboard .btn-export` (faltando: `.btn-export`)
+- `#screen-dashboard .btn-export:hover` (faltando: `.btn-export`)
+- `#screen-dashboard .dashboard-body` (faltando: `.dashboard-body`)
+- `#screen-dashboard .dashboard-body > div` (faltando: `.dashboard-body`)
+- `#screen-dashboard .dashboard-body > div:last-child` (faltando: `.dashboard-body`)
+- `#screen-dashboard .dash-section-title::before` (faltando: `.dash-section-title`)
+- `#screen-dashboard .dash-section-title` (faltando: `.dash-section-title`)
+- `#screen-dashboard .dash-section-action` (faltando: `.dash-section-action`)
+- `#screen-dashboard .dash-section-action:hover` (faltando: `.dash-section-action`)
+- `#screen-dashboard .dash-title-with-icon` (faltando: `.dash-title-with-icon`)
+- `#screen-dashboard .profile-strip` (faltando: `.profile-strip`)
+- `#screen-dashboard .profile-avatar` (faltando: `.profile-avatar`)
+- `#screen-dashboard .profile-avatar::after` (faltando: `.profile-avatar`)
+- `#screen-dashboard .profile-meta` (faltando: `.profile-meta`)
+- `#screen-dashboard .profile-tags` (faltando: `.profile-tags`)
+- `#screen-dashboard .profile-tag` (faltando: `.profile-tag`)
+- `#screen-dashboard .profile-tag.badge-red` (faltando: `.profile-tag`, `.badge-red`)
+- `#screen-dashboard .profile-tag.badge-cyan` (faltando: `.profile-tag`, `.badge-cyan`)
+- `#screen-dashboard .profile-tag.badge-orange` (faltando: `.profile-tag`, `.badge-orange`)
+- `#screen-dashboard .profile-tag.badge-violet` (faltando: `.profile-tag`, `.badge-violet`)
+- `#screen-dashboard .profile-tag.badge-green` (faltando: `.profile-tag`, `.badge-green`)
+- `#screen-dashboard .profile-tag.badge-amber` (faltando: `.profile-tag`, `.badge-amber`)
+- `#screen-dashboard .kpi-strip` (faltando: `.kpi-strip`)
+- `#screen-dashboard .kpi-area-40` (faltando: `.kpi-area-40`)
+- `#screen-dashboard .kpi-area-30` (faltando: `.kpi-area-30`)
+- `#screen-dashboard .kpi-card` (faltando: `.kpi-card`)
+- `#screen-dashboard .kpi-card:hover` (faltando: `.kpi-card`)
+- `#screen-dashboard .kpi-card-value` (faltando: `.kpi-card-value`)
+- `#screen-dashboard .kpi-card-label` (faltando: `.kpi-card-label`)
+- `#screen-dashboard .kpi-card-sub` (faltando: `.kpi-card-sub`)
+- `#screen-dashboard .kpi-card-context` (faltando: `.kpi-card-context`)
+- `#screen-dashboard .kpi-area-40 .kpi-card-value` (faltando: `.kpi-area-40`, `.kpi-card-value`)
+- `#screen-dashboard .kpi-watermark` (faltando: `.kpi-watermark`)
+- `#screen-dashboard .kpi-watermark svg` (faltando: `.kpi-watermark`)
+- `#screen-dashboard .kpi-card-trend` (faltando: `.kpi-card-trend`)
+- `#screen-dashboard .kpi-tone-red .kpi-card-value` (faltando: `.kpi-tone-red`, `.kpi-card-value`)
+- `#screen-dashboard .kpi-tone-green .kpi-card-value` (faltando: `.kpi-tone-green`, `.kpi-card-value`)
+- `#screen-dashboard .kpi-card-timeline` (faltando: `.kpi-card-timeline`)
+- `#screen-dashboard .kpi-card-timeline .kpi-card-value` (faltando: `.kpi-card-timeline`, `.kpi-card-value`)
+- `#screen-dashboard .kpi-timeline` (faltando: `.kpi-timeline`)
+- `#screen-dashboard .kpi-timeline-track` (faltando: `.kpi-timeline-track`)
+- `#screen-dashboard .kpi-timeline-static .kpi-timeline-stops` (faltando: `.kpi-timeline-static`, `.kpi-timeline-stops`)
+- `#screen-dashboard .kpi-timeline-static .kpi-timeline-stop` (faltando: `.kpi-timeline-static`, `.kpi-timeline-stop`)
+- `#screen-dashboard .kpi-timeline-label` (faltando: `.kpi-timeline-label`)
+- `#screen-dashboard .kpi-timeline-stop-dot` (faltando: `.kpi-timeline-stop-dot`)
+- `#screen-dashboard .kpi-card-timeline-empty` (faltando: `.kpi-card-timeline-empty`)
+- `#screen-dashboard .btn-kpi-cta` (faltando: `.btn-kpi-cta`)
+- `#screen-dashboard .btn-kpi-cta:hover` (faltando: `.btn-kpi-cta`)
+- `#screen-dashboard .macro-card` (faltando: `.macro-card`)
+- `#screen-dashboard .macro-card-head` (faltando: `.macro-card-head`)
+- `#screen-dashboard .macro-amount` (faltando: `.macro-amount`)
+- `#screen-dashboard .macro-kcal` (faltando: `.macro-kcal`)
+- `#screen-dashboard .macro-type-percent` (faltando: `.macro-type-percent`)
+- `#screen-dashboard .protein .macro-type-percent` (faltando: `.protein`, `.macro-type-percent`)
+- `#screen-dashboard .carbs .macro-type-percent` (faltando: `.carbs`, `.macro-type-percent`)
+- `#screen-dashboard .fat .macro-type-percent` (faltando: `.fat`, `.macro-type-percent`)
+- `#screen-dashboard .macro-progress-bar` (faltando: `.macro-progress-bar`)
+- `#screen-dashboard .macro-total-pulse` (faltando: `.macro-total-pulse`)
+- `#screen-dashboard .receipt-card` (faltando: `.receipt-card`)
+- `#screen-dashboard .receipt-card::before` (faltando: `.receipt-card`)
+- `#screen-dashboard .receipt-row-enter` (faltando: `.receipt-row-enter`)
+- `#screen-dashboard .receipt-divider-line` (faltando: `.receipt-divider-line`)
+- `#screen-dashboard .receipt-divider-animated::after` (faltando: `.receipt-divider-animated`)
+- `#screen-dashboard .receipt-tag` (faltando: `.receipt-tag`)
+- `#screen-dashboard .receipt-tag-tone-bmr` (faltando: `.receipt-tag-tone-bmr`)
+- `#screen-dashboard .receipt-tag-tone-activity` (faltando: `.receipt-tag-tone-activity`)
+- `#screen-dashboard .receipt-tag-tone-train` (faltando: `.receipt-tag-tone-train`)
+- `#screen-dashboard .receipt-tag-tone-cardio` (faltando: `.receipt-tag-tone-cardio`)
+- `#screen-dashboard .receipt-tag-tone-tef` (faltando: `.receipt-tag-tone-tef`)
+- `#screen-dashboard .receipt-tag-tone-mods` (faltando: `.receipt-tag-tone-mods`)
+- `#screen-dashboard .receipt-tag-total` (faltando: `.receipt-tag-total`)
+- `#screen-dashboard .receipt-value-total` (faltando: `.receipt-value-total`)
+- `#screen-dashboard .receipt-value.total-val` (faltando: `.receipt-value`, `.total-val`)
+- `#screen-dashboard .receipt-value-goal` (faltando: `.receipt-value-goal`)
+- `#screen-dashboard .chart-card` (faltando: `.chart-card`)
+- `#screen-dashboard .before-after-card` (faltando: `.before-after-card`)
+- `#screen-dashboard .speed-card` (faltando: `.speed-card`)
+- `#screen-dashboard .whatif-card` (faltando: `.whatif-card`)
+- `#screen-dashboard .meal-card` (faltando: `.meal-card`)
+- `#screen-dashboard .refeed-item` (faltando: `.refeed-item`)
+- `#screen-dashboard .supp-card` (faltando: `.supp-card`)
+- `#screen-dashboard .chart-card::before` (faltando: `.chart-card`)
+- `#screen-dashboard .legend-line-red` (faltando: `.legend-line-red`)
+- `#screen-dashboard .legend-line-cyan` (faltando: `.legend-line-cyan`)
+- `#screen-dashboard .before-after-badge` (faltando: `.before-after-badge`)
+- `#screen-dashboard .ba-side-label.after-label` (faltando: `.ba-side-label`, `.after-label`)
+- `#screen-dashboard .ba-metric-value.after-val` (faltando: `.ba-metric-value`, `.after-val`)
+- `#screen-dashboard .speed-main-premium` (faltando: `.speed-main-premium`)
+- `#screen-dashboard .speed-main .highlight` (faltando: `.speed-main`, `.highlight`)
+- `#screen-dashboard .speed-main` (faltando: `.speed-main`)
+- `#screen-dashboard .speed-direction` (faltando: `.speed-direction`)
+- `#screen-dashboard .speed-direction-arrow` (faltando: `.speed-direction-arrow`)
+- `#screen-dashboard .speed-direction-cut` (faltando: `.speed-direction-cut`)
+- `#screen-dashboard .speed-direction-bulk` (faltando: `.speed-direction-bulk`)
+- `#screen-dashboard .supps-priority-label` (faltando: `.supps-priority-label`)
+- `#screen-dashboard .supps-grid-uniform` (faltando: `.supps-grid-uniform`)
+- `#screen-dashboard .supp-icon` (faltando: `.supp-icon`)
+- `#screen-dashboard .supp-dose` (faltando: `.supp-dose`)
+- `#screen-dashboard .supp-timing` (faltando: `.supp-timing`)
+- `#screen-dashboard .priority-high` (faltando: `.priority-high`)
+- `#screen-dashboard .priority-medium` (faltando: `.priority-medium`)
+- `#screen-dashboard .priority-low` (faltando: `.priority-low`)
+- `#screen-dashboard .whatif-card-zone` (faltando: `.whatif-card-zone`)
+- `#screen-dashboard .whatif-card.aurora-border::after` (faltando: `.whatif-card`, `.aurora-border`)
+- `#screen-dashboard .whatif-preview-live` (faltando: `.whatif-preview-live`)
+- `#screen-dashboard .whatif-preview-live::after` (faltando: `.whatif-preview-live`)
+- `#screen-dashboard .whatif-result-value.delta-positive` (faltando: `.whatif-result-value`, `.delta-positive`)
+- `#screen-dashboard .whatif-result-diff.delta-positive` (faltando: `.whatif-result-diff`, `.delta-positive`)
+- `#screen-dashboard .whatif-result-value.delta-negative` (faltando: `.whatif-result-value`, `.delta-negative`)
+- `#screen-dashboard .whatif-result-diff.delta-negative` (faltando: `.whatif-result-diff`, `.delta-negative`)
+- `#screen-dashboard .whatif-delta-flash` (faltando: `.whatif-delta-flash`)
+- `#screen-dashboard .meal-card::before` (faltando: `.meal-card`)
+- `#screen-dashboard .meal-card.pre-treino` (faltando: `.meal-card`, `.pre-treino`)
+- `#screen-dashboard .meal-card.pos-treino` (faltando: `.meal-card`, `.pos-treino`)
+- `#screen-dashboard .meal-card.pre-treino::after` (faltando: `.meal-card`, `.pre-treino`)
+- `#screen-dashboard .meal-card.pos-treino::after` (faltando: `.meal-card`, `.pos-treino`)
+- `#screen-dashboard .meal-time-badge` (faltando: `.meal-time-badge`)
+- `#screen-dashboard .meal-tag.badge-yellow` (faltando: `.meal-tag`, `.badge-yellow`)
+- `#screen-dashboard .meal-tag.badge-green` (faltando: `.meal-tag`, `.badge-green`)
+- `#screen-dashboard .refeed-badge` (faltando: `.refeed-badge`)
+- `#screen-dashboard .refeed-grid` (faltando: `.refeed-grid`)
+- `#screen-dashboard .refeed-item-value` (faltando: `.refeed-item-value`)
+- `#screen-dashboard .refeed-item-macros` (faltando: `.refeed-item-macros`)
+- `#screen-dashboard .refeed-info-box` (faltando: `.refeed-info-box`)
+- `#screen-dashboard .refeed-lamp` (faltando: `.refeed-lamp`)
+- `#screen-dashboard .footer-logo` (faltando: `.footer-logo`)
+- `#screen-dashboard .theme-toggle:hover` (faltando: `.theme-toggle`)
+- `#screen-dashboard .glow-red:hover` (faltando: `.glow-red`)
+- `#screen-dashboard .range-input` (faltando: `.range-input`)
+- `#screen-dashboard .macro-card.protein .range-input` (faltando: `.macro-card`, `.protein`, `.range-input`)
+- `#screen-dashboard .macro-card.carbs .range-input` (faltando: `.macro-card`, `.carbs`, `.range-input`)
+- `#screen-dashboard .macro-card.fat .range-input` (faltando: `.macro-card`, `.fat`, `.range-input`)
+- `#screen-dashboard .slider-fill` (faltando: `.slider-fill`)
+- `.badge-yellow` (faltando: `.badge-yellow`)
+- `#screen-dashboard .macro-cards-grid` (faltando: `.macro-cards-grid`)
+- `#screen-dashboard .meals-grid` (faltando: `.meals-grid`)
+- `#screen-dashboard .supps-grid` (faltando: `.supps-grid`)
+- `#screen-dashboard .dash-two-col` (faltando: `.dash-two-col`)
+- `#screen-dashboard .receipt-label` (faltando: `.receipt-label`)
+- `#screen-dashboard .macro-type-label` (faltando: `.macro-type-label`)
+- `#screen-dashboard .whatif-slider-value` (faltando: `.whatif-slider-value`)
+- `#screen-dashboard .whatif-preview-title` (faltando: `.whatif-preview-title`)
+- `#screen-dashboard .whatif-result-value` (faltando: `.whatif-result-value`)
+- `#screen-dashboard .whatif-result-diff` (faltando: `.whatif-result-diff`)
+- `#screen-dashboard .meal-number` (faltando: `.meal-number`)
+- `#screen-dashboard .meal-macro-val` (faltando: `.meal-macro-val`)
+- `#screen-dashboard .footer-docs-disclosure summary` (faltando: `.footer-docs-disclosure`)
+- `#screen-dashboard[data-theme='light']` (faltando: `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard[data-theme='light'] .dashboard-header` (faltando: `.dashboard-header`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard[data-theme='light'] .dashboard-header-badge` (faltando: `.dashboard-header-badge`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard .icon-tooltip` (faltando: `.icon-tooltip`)
+- `#screen-dashboard .icon-tooltip::after` (faltando: `.icon-tooltip`)
+- `#screen-dashboard[data-theme='light'] .icon-tooltip::after` (faltando: `.icon-tooltip`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard .icon-tooltip:hover::after` (faltando: `.icon-tooltip`)
+- `#screen-dashboard .icon-tooltip:focus-visible::after` (faltando: `.icon-tooltip`)
+- `#screen-dashboard .dashboard-header-sub-item` (faltando: `.dashboard-header-sub-item`)
+- `#screen-dashboard .dashboard-header-sub-state` (faltando: `.dashboard-header-sub-state`)
+- `#screen-dashboard[data-theme='light'] .dash-section-title` (faltando: `.dash-section-title`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard .dashboard-mode-toggle` (faltando: `.dashboard-mode-toggle`)
+- `#screen-dashboard[data-theme='light'] .dashboard-mode-toggle` (faltando: `.dashboard-mode-toggle`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard .dashboard-mode-thumb` (faltando: `.dashboard-mode-thumb`)
+- `#screen-dashboard .dashboard-mode-toggle.technical .dashboard-mode-thumb` (faltando: `.dashboard-mode-toggle`, `.technical`, `.dashboard-mode-thumb`)
+- `#screen-dashboard .dashboard-mode-btn` (faltando: `.dashboard-mode-btn`)
+- `#screen-dashboard .dashboard-mode-btn.active` (faltando: `.dashboard-mode-btn`)
+- `#screen-dashboard[data-theme='light'] .dashboard-mode-btn.active` (faltando: `.dashboard-mode-btn`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard .goal-card.selected` (faltando: `.goal-card`)
+- `#screen-dashboard .whatif-card-zone .goal-card` (faltando: `.whatif-card-zone`, `.goal-card`)
+- `#screen-dashboard .whatif-card-zone .goal-card-icon` (faltando: `.whatif-card-zone`)
+- `#screen-dashboard .whatif-card-zone .goal-card-title` (faltando: `.whatif-card-zone`)
+- `#screen-dashboard .whatif-pulse-dot` (faltando: `.whatif-pulse-dot`)
+- `#screen-dashboard[data-theme='light'] .kpi-watermark svg` (faltando: `.kpi-watermark`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-dashboard .supp-name` (faltando: `.supp-name`)
+- `#screen-dashboard .dashboard-footer` (faltando: `.dashboard-footer`)
+- `#screen-dashboard .dashboard-footer::before` (faltando: `.dashboard-footer`)
+- `#screen-dashboard .footer-note` (faltando: `.footer-note`)
+- `#screen-dashboard .footer-disclaimer-wrap` (faltando: `.footer-disclaimer-wrap`)
+- `#screen-dashboard .footer-docs-disclosure` (faltando: `.footer-docs-disclosure`)
+- `#screen-dashboard .footer-docs-disclosure summary::-webkit-details-marker` (faltando: `.footer-docs-disclosure`)
+- `#screen-dashboard .footer-docs-content` (faltando: `.footer-docs-content`)
+- `#screen-dashboard[data-theme='light'] .footer-docs-content` (faltando: `.footer-docs-content`, `[data-theme]`, `[data-theme='light']`)
+- `#screen-form .form-precision-badge` (faltando: `.form-precision-badge`)
+- `#screen-form .form-precision-badge strong` (faltando: `.form-precision-badge`)
+- `#screen-form .form-precision-badge-low` (faltando: `.form-precision-badge-low`)
+- `#screen-form .form-precision-badge-high` (faltando: `.form-precision-badge-high`)
+- `#screen-form .progress-bar-wrapper` (faltando: `.progress-bar-wrapper`)
+- `#screen-form .progress-bar-fill` (faltando: `.progress-bar-fill`)
+- `#screen-form .progress-bar-fill.progress-bar-empty::after` (faltando: `.progress-bar-fill`, `.progress-bar-empty`)
+- `#screen-form .progress-bar-fill::after` (faltando: `.progress-bar-fill`)
+- `#screen-form .goal-card` (faltando: `.goal-card`)
+- `#screen-form .goal-card::before` (faltando: `.goal-card`)
+- `#screen-form .goal-card:hover` (faltando: `.goal-card`)
+- `#screen-form .goal-card.selected` (faltando: `.goal-card`)
+- `#screen-form .goal-card-badge` (faltando: `.goal-card-badge`)
+- `#screen-form .goal-card-badge.badge-red` (faltando: `.goal-card-badge`, `.badge-red`)
+- `#screen-form .goal-card-badge.badge-orange` (faltando: `.goal-card-badge`, `.badge-orange`)
+- `#screen-form .goal-card-badge.badge-violet` (faltando: `.goal-card-badge`, `.badge-violet`)
+- `#screen-form .goal-card-badge.badge-cyan` (faltando: `.goal-card-badge`, `.badge-cyan`)
+- `#screen-form .goal-card-badge.badge-lime` (faltando: `.goal-card-badge`, `.badge-lime`)
+- `#screen-form .goal-card-badge.badge-green` (faltando: `.goal-card-badge`, `.badge-green`)
+- `#screen-form .number-input-group` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group-enter` (faltando: `.number-input-group-enter`)
+- `#screen-form .number-input-group:hover` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group-focused` (faltando: `.number-input-group-focused`)
+- `#screen-form .number-input-group:focus-within` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group-warning` (faltando: `.number-input-group-warning`)
+- `#screen-form .number-input-group-shake` (faltando: `.number-input-group-shake`)
+- `#screen-form .number-input-group-saved .number-input-label-dot` (faltando: `.number-input-group-saved`)
+- `#screen-form .number-input-field` (faltando: `.number-input-field`)
+- `#screen-form .number-input-field-formatted` (faltando: `.number-input-field-formatted`)
+- `#screen-form .number-input-field::-webkit-outer-spin-button` (faltando: `.number-input-field`)
+- `#screen-form .number-input-field::-webkit-inner-spin-button` (faltando: `.number-input-field`)
+- `#screen-form .number-input-field:focus-visible` (faltando: `.number-input-field`)
+- `#screen-form .number-input-field::selection` (faltando: `.number-input-field`)
+- `#screen-form .number-input-field::-moz-selection` (faltando: `.number-input-field`)
+- `#screen-form .number-input-group:hover .number-input-stepper` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group:focus-within .number-input-stepper` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group:hover .number-input-edit-indicator` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group:focus-within .number-input-edit-indicator` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group-focused .number-input-context-focus-only` (faltando: `.number-input-group-focused`)
+- `#screen-form .number-input-group:focus-within .number-input-context-focus-only` (faltando: `.number-input-group`)
+- `#screen-form .input-bf-classification` (faltando: `.input-bf-classification`)
+- `#screen-form .input-bf-classification-critical` (faltando: `.input-bf-classification-critical`)
+- `#screen-form .input-bf-classification-athletic` (faltando: `.input-bf-classification-athletic`)
+- `#screen-form .input-bf-classification-fit` (faltando: `.input-bf-classification-fit`)
+- `#screen-form .input-bf-classification-average` (faltando: `.input-bf-classification-average`)
+- `#screen-form .input-bf-classification-above` (faltando: `.input-bf-classification-above`)
+- `#screen-form .number-input-group:has(.steps-instrument-stack)` (faltando: `.number-input-group`)
+- `#screen-form .number-input-group:has(.steps-instrument-stack) .number-input-footer` (faltando: `.number-input-group`)
+- `#screen-form .steps-intensity-badge` (faltando: `.steps-intensity-badge`)
+- `#screen-form .steps-intensity-badge-sedentary` (faltando: `.steps-intensity-badge-sedentary`)
+- `#screen-form .steps-intensity-badge-active` (faltando: `.steps-intensity-badge-active`)
+- `#screen-form .steps-intensity-badge-very-active` (faltando: `.steps-intensity-badge-very-active`)
+- `#screen-form .number-input-group:focus-within .steps-input-hint` (faltando: `.number-input-group`)
+- `#screen-form .steps-slider-block .slider-item` (faltando: `.slider-item`)
+- `#screen-form .steps-slider-block .slider-label-row` (faltando: `.slider-label-row`)
+- `#screen-form .steps-slider-block .slider-label` (faltando: `.slider-label`)
+- `#screen-form .steps-slider-block .slider-value-display` (faltando: `.slider-value-display`)
+- `#screen-form .hormones-dose-grid .number-input-group` (faltando: `.number-input-group`)
+- `#screen-form .hormones-dose-grid .number-input-field` (faltando: `.number-input-field`)
+- `#screen-form .goal-timeline-diagnostic` (faltando: `.goal-timeline-diagnostic`)
+- `#screen-form .goal-timeline-diagnostic-realista` (faltando: `.goal-timeline-diagnostic-realista`)
+- `#screen-form .goal-timeline-diagnostic-agressivo` (faltando: `.goal-timeline-diagnostic-agressivo`)
+- `#screen-form .goal-timeline-diagnostic-inviavel` (faltando: `.goal-timeline-diagnostic-inviavel`)
+- `#screen-form .goal-timeline-diagnostic-title` (faltando: `.goal-timeline-diagnostic-title`)
+- `#screen-form .goal-timeline-diagnostic-realista .goal-timeline-diagnostic-classification` (faltando: `.goal-timeline-diagnostic-realista`)
+- `#screen-form .goal-timeline-diagnostic-agressivo .goal-timeline-diagnostic-classification` (faltando: `.goal-timeline-diagnostic-agressivo`)
+- `#screen-form .goal-timeline-diagnostic-inviavel .goal-timeline-diagnostic-classification` (faltando: `.goal-timeline-diagnostic-inviavel`)
+- `#screen-form .goal-timeline-diagnostic-viability` (faltando: `.goal-timeline-diagnostic-viability`)
+- `#screen-form .goal-timeline-diagnostic-viability span` (faltando: `.goal-timeline-diagnostic-viability`)
+- `#screen-form .goal-timeline-diagnostic-agressivo .goal-timeline-diagnostic-bar-fill` (faltando: `.goal-timeline-diagnostic-agressivo`)
+- `#screen-form .goal-timeline-diagnostic-inviavel .goal-timeline-diagnostic-bar-fill` (faltando: `.goal-timeline-diagnostic-inviavel`)
+- `#screen-form .goal-timeline-diagnostic-refresh .goal-timeline-diagnostic-value` (faltando: `.goal-timeline-diagnostic-refresh`)
+- `#screen-form .goal-timeline-diagnostic-refresh .goal-timeline-diagnostic-viability-pct` (faltando: `.goal-timeline-diagnostic-refresh`)
+- `#screen-form .slider-track` (faltando: `.slider-track`)
+- `#screen-form .slider-fill` (faltando: `.slider-fill`)
+- `#screen-form .slider-value-display` (faltando: `.slider-value-display`)
+- `#screen-form .range-input` (faltando: `.range-input`)
+- `#screen-form .range-input:active` (faltando: `.range-input`)
+- `#screen-form .range-input::-webkit-slider-thumb` (faltando: `.range-input`)
+- `#screen-form .range-input:hover::-webkit-slider-thumb` (faltando: `.range-input`)
+- `#screen-form .range-input:active::-webkit-slider-thumb` (faltando: `.range-input`)
+- `#screen-form .range-input::-moz-range-thumb` (faltando: `.range-input`)
+- `#screen-form .range-input:hover::-moz-range-thumb` (faltando: `.range-input`)
+- `#screen-form .range-input:active::-moz-range-thumb` (faltando: `.range-input`)
+- `#screen-form .slider-tick` (faltando: `.slider-tick`)
+- `#screen-form .slider-tick-active` (faltando: `.slider-tick-active`)
+- `#screen-form .btn-form-next` (faltando: `.btn-form-next`)
+- `#screen-form .btn-form-submit` (faltando: `.btn-form-submit`)
+- `#screen-form .btn-form-next:hover` (faltando: `.btn-form-next`)
+- `#screen-form .btn-form-submit:hover` (faltando: `.btn-form-submit`)
+- `#screen-form .btn-form-next:active` (faltando: `.btn-form-next`)
+- `#screen-form .btn-form-submit:active` (faltando: `.btn-form-submit`)
+- `#screen-form .btn-form-back` (faltando: `.btn-form-back`)
+- `#screen-form .btn-form-back:hover` (faltando: `.btn-form-back`)
+- `.df-profile-create-bg` (faltando: `.df-profile-create-bg`)
+- `.df-profile-create-shell` (faltando: `.df-profile-create-shell`)
+- `.df-profile-create-kicker` (faltando: `.df-profile-create-kicker`)
+- `.df-profile-create-title` (faltando: `.df-profile-create-title`)
+- `.df-profile-create-subtitle` (faltando: `.df-profile-create-subtitle`)
+- `.df-profile-name-field` (faltando: `.df-profile-name-field`)
+- `.df-profile-name-top` (faltando: `.df-profile-name-top`)
+- `.df-profile-name-label` (faltando: `.df-profile-name-label`)
+- `.df-profile-name-counter` (faltando: `.df-profile-name-counter`)
+- `.df-profile-name-input` (faltando: `.df-profile-name-input`)
+- `.df-profile-name-input:focus` (faltando: `.df-profile-name-input`)
+- `.df-profile-preview-card` (faltando: `.df-profile-preview-card`)
+- `.df-profile-preview-head` (faltando: `.df-profile-preview-head`)
+- `.df-profile-preview-name` (faltando: `.df-profile-preview-name`)
+- `.df-profile-preview-meta` (faltando: `.df-profile-preview-meta`)
+- `.df-profile-preview-chips` (faltando: `.df-profile-preview-chips`)
+- `.df-profile-preview-chips span` (faltando: `.df-profile-preview-chips`)
+- `.df-profile-preview-placeholder` (faltando: `.df-profile-preview-placeholder`)
+- `.df-profile-limit-warning` (faltando: `.df-profile-limit-warning`)
+- `.df-profile-limit-confirm` (faltando: `.df-profile-limit-confirm`)
+- `.df-profile-create-actions` (faltando: `.df-profile-create-actions`)
+- `.df-profile-back-link` (faltando: `.df-profile-back-link`)
+- `.df-profile-save-btn` (faltando: `.df-profile-save-btn`)
+- `.df-profile-save-btn:hover` (faltando: `.df-profile-save-btn`)
+- `.df-profile-card` (faltando: `.df-profile-card`)
+- `.df-profile-card.is-active` (faltando: `.df-profile-card`)
+- `.df-profile-card-cut .df-profile-card-avatar` (faltando: `.df-profile-card-cut`)
+- `.df-profile-card-bulk .df-profile-card-avatar` (faltando: `.df-profile-card-bulk`)
+- `.df-profile-card-maintenance .df-profile-card-avatar` (faltando: `.df-profile-card-maintenance`)
+- `#screen-form .goal-card.form-option-card` (faltando: `.goal-card`, `.form-option-card`)
+- `#screen-form .goal-card.form-option-card:hover` (faltando: `.goal-card`, `.form-option-card`)
+- `#screen-form .goal-card.form-option-card.selected` (faltando: `.goal-card`, `.form-option-card`)
+- `#screen-form .goal-card.selected .goal-card-icon.form-option-card-icon` (faltando: `.goal-card`)
+- `#screen-form .goal-card-accent-red .goal-card-icon.form-option-card-icon` (faltando: `.goal-card-accent-red`)
+- `#screen-form .goal-card-accent-orange .goal-card-icon.form-option-card-icon` (faltando: `.goal-card-accent-orange`)
+- `#screen-form .goal-card-accent-violet .goal-card-icon.form-option-card-icon` (faltando: `.goal-card-accent-violet`)
+- `#screen-form .goal-card-accent-blue .goal-card-icon.form-option-card-icon` (faltando: `.goal-card-accent-blue`)
+- `#screen-form .goal-card-accent-cyan .goal-card-icon.form-option-card-icon` (faltando: `.goal-card-accent-cyan`)
+- `#screen-form .goal-card-accent-green .goal-card-icon.form-option-card-icon` (faltando: `.goal-card-accent-green`)
+- `#screen-form .goal-card-accent-lime .goal-card-icon.form-option-card-icon` (faltando: `.goal-card-accent-lime`)
+
+## src/styles/dashboard-presentation.css
+
+- Seletores totais: 897
+- Usados: 60
+- Mortos: 837
+- Percentual morto: 93.3%
+- Recomendacao: podar
+
+### Seletores USADOS
+
+- `#screen-dashboard[data-dashboard-presentation]` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] *` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-shell` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide::before` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide-inner` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide-inner > section` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] #topbar` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .logo` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .logo::before` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .logo-accent` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .logo-main` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .logo:hover` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-section-pill` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-section-index` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-section-separator` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-section-label` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-right` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-mode` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-btn` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-btn svg` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-mode:hover` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-btn:hover` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-mode:focus-visible` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-btn:focus-visible` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger:hover` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger:focus-visible` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .df-profile-trigger` -> `src/components/profile/ProfileTriggerButton.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .df-profile-trigger:hover` -> `src/components/profile/ProfileTriggerButton.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .df-profile-trigger:focus-visible` -> `src/components/profile/ProfileTriggerButton.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .df-profile-trigger .df-profile-trigger-fallback` -> `src/components/profile/ProfileTriggerButton.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] #sidenav` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot:focus-visible` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot:hover` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot-label` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-pip` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-pip::after` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot:hover .nav-dot-label` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot:focus-visible .nav-dot-label` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot.active .nav-dot-label` -> `src/components/profile/ProfileCreationScreen.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`, `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot.visited .nav-dot-label` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot.active .nav-pip` -> `src/components/profile/ProfileCreationScreen.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`, `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .nav-dot.active .nav-pip::after` -> `src/components/profile/ProfileCreationScreen.tsx`, `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`, `src/components/screens/hero/HeroScreen.tsx`, `src/components/screens/summary/SummaryScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-mobile-progress` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-mobile-dot` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-mobile-dot.is-active` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/steps/FormSliderField.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dfp-loading` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .target-info-card` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .target-info-row` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .target-info-icon` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .target-info-text` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/FormScreen.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .target-info-highlight` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .btn-dash-cta` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/ProjectionSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .goal-cards-grid` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/MealsStep.tsx`, `src/components/screens/form/steps/OccupationStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .goal-cards-grid-3` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/steps/ActivityStep.tsx`, `src/components/screens/form/steps/BasicsStep.tsx`, `src/components/screens/form/steps/BodyFatStep.tsx`, `src/components/screens/form/steps/CardioStep.tsx`, `src/components/screens/form/steps/DietHistoryStep.tsx`, `src/components/screens/form/steps/GoalStep.tsx`, `src/components/screens/form/steps/GoalTimelineStep.tsx`, `src/components/screens/form/steps/HealthStep.tsx`, `src/components/screens/form/steps/HormonesStep.tsx`, `src/components/screens/form/steps/SexStep.tsx`, `src/components/screens/form/steps/ThermogenicsStep.tsx`, `src/components/screens/form/steps/TrainingStep.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .goal-card-title` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/steps/GoalOptionCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .form-nav` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/form/steps/StepNav.tsx`
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] *` -> `src/components/screens/dashboard/DashboardScreen.tsx`
+
+### Seletores MORTOS
+
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome']` (faltando: `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .dfp-slide-inner` (faltando: `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='macros'] .dfp-slide-inner` (faltando: `[data-section-id='macros']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome']::before` (faltando: `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-toast` (faltando: `.dfp-toast`)
+- `#screen-dashboard[data-dashboard-presentation] .anim-ready` (faltando: `.anim-ready`)
+- `#screen-dashboard[data-dashboard-presentation] .anim-ready.anim-in` (faltando: `.anim-ready`, `.anim-in`)
+- `#screen-dashboard[data-dashboard-presentation] .delay-1` (faltando: `.delay-1`)
+- `#screen-dashboard[data-dashboard-presentation] .delay-2` (faltando: `.delay-2`)
+- `#screen-dashboard[data-dashboard-presentation] .delay-3` (faltando: `.delay-3`)
+- `#screen-dashboard[data-dashboard-presentation] .delay-4` (faltando: `.delay-4`)
+- `#screen-dashboard[data-dashboard-presentation] .delay-5` (faltando: `.delay-5`)
+- `#screen-dashboard[data-dashboard-presentation] .delay-6` (faltando: `.delay-6`)
+- `#screen-dashboard[data-dashboard-presentation] .delay-7` (faltando: `.delay-7`)
+- `#screen-dashboard[data-dashboard-presentation] .section-eyebrow` (faltando: `.section-eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .section-title` (faltando: `.section-title`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content` (faltando: `.s1-content`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-bg-base` (faltando: `.hero-bg-base`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-bg-noise` (faltando: `.hero-bg-noise`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-bg-grid` (faltando: `.hero-bg-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-glow-top` (faltando: `.hero-glow-top`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-glow-left` (faltando: `.hero-glow-left`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-glow-right` (faltando: `.hero-glow-right`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-line-accent` (faltando: `.hero-line-accent`)
+- `#screen-dashboard[data-dashboard-presentation] .particles-container` (faltando: `.particles-container`)
+- `#screen-dashboard[data-dashboard-presentation] .particle` (faltando: `.particle`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-content` (faltando: `.hero-content`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge` (faltando: `.protocol-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge:hover` (faltando: `.protocol-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge.is-pulsing` (faltando: `.protocol-badge`, `.is-pulsing`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge-icon` (faltando: `.protocol-badge-icon`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge-label` (faltando: `.protocol-badge-label`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge-duration` (faltando: `.protocol-badge-duration`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge-sep` (faltando: `.protocol-badge-sep`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge-name` (faltando: `.protocol-badge-name`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-badge-duration::before` (faltando: `.protocol-badge-duration`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-headline-wrapper` (faltando: `.hero-headline-wrapper`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-eyebrow` (faltando: `.hero-eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-eyebrow::before` (faltando: `.hero-eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-eyebrow::after` (faltando: `.hero-eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-title` (faltando: `.hero-title`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-title-line1` (faltando: `.hero-title-line1`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-title-accent` (faltando: `.hero-title-accent`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-title::after` (faltando: `.hero-title`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-subtitle` (faltando: `.hero-subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-subtitle strong` (faltando: `.hero-subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .confidence-strip` (faltando: `.confidence-strip`)
+- `#screen-dashboard[data-dashboard-presentation] .confidence-label` (faltando: `.confidence-label`)
+- `#screen-dashboard[data-dashboard-presentation] .confidence-desc` (faltando: `.confidence-desc`)
+- `#screen-dashboard[data-dashboard-presentation] .confidence-bar-track` (faltando: `.confidence-bar-track`)
+- `#screen-dashboard[data-dashboard-presentation] .confidence-bar-fill` (faltando: `.confidence-bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .confidence-value` (faltando: `.confidence-value`)
+- `#screen-dashboard[data-dashboard-presentation] .confidence-sep` (faltando: `.confidence-sep`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-grid` (faltando: `.kpi-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card` (faltando: `.kpi-card`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card:hover` (faltando: `.kpi-card`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card::before` (faltando: `.kpi-card`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--tdee` (faltando: `.kpi-card--tdee`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--tdee:hover` (faltando: `.kpi-card--tdee`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--meta` (faltando: `.kpi-card--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--meta:hover` (faltando: `.kpi-card--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit` (faltando: `.kpi-card--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit:hover` (faltando: `.kpi-card--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--surplus` (faltando: `.kpi-card--surplus`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-corner` (faltando: `.kpi-card-corner`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-corner::before` (faltando: `.kpi-card-corner`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--meta .kpi-card-corner::before` (faltando: `.kpi-card--meta`, `.kpi-card-corner`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit .kpi-card-corner::before` (faltando: `.kpi-card--deficit`, `.kpi-card-corner`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-glow` (faltando: `.kpi-card-glow`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--tdee .kpi-card-glow` (faltando: `.kpi-card--tdee`, `.kpi-card-glow`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--meta .kpi-card-glow` (faltando: `.kpi-card--meta`, `.kpi-card-glow`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit .kpi-card-glow` (faltando: `.kpi-card--deficit`, `.kpi-card-glow`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card:hover .kpi-card-glow` (faltando: `.kpi-card`, `.kpi-card-glow`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-header` (faltando: `.kpi-card-header`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-icon-wrap` (faltando: `.kpi-card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-icon-wrap::after` (faltando: `.kpi-card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--tdee .kpi-card-icon-wrap` (faltando: `.kpi-card--tdee`, `.kpi-card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--meta .kpi-card-icon-wrap` (faltando: `.kpi-card--meta`, `.kpi-card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit .kpi-card-icon-wrap` (faltando: `.kpi-card--deficit`, `.kpi-card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-icon-wrap svg` (faltando: `.kpi-card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-status` (faltando: `.kpi-card-status`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-status--neutral` (faltando: `.kpi-card-status--neutral`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-status-dot` (faltando: `.kpi-card-status-dot`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-status--primary` (faltando: `.kpi-card-status--primary`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-status--positive` (faltando: `.kpi-card-status--positive`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-body` (faltando: `.kpi-card-body`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-value` (faltando: `.kpi-card-value`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-number` (faltando: `.kpi-card-number`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--meta .kpi-card-number` (faltando: `.kpi-card--meta`, `.kpi-card-number`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit .kpi-card-number` (faltando: `.kpi-card--deficit`, `.kpi-card-number`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit .kpi-card-sign` (faltando: `.kpi-card--deficit`, `.kpi-card-sign`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--surplus .kpi-card-number` (faltando: `.kpi-card--surplus`, `.kpi-card-number`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--surplus .kpi-card-sign` (faltando: `.kpi-card--surplus`, `.kpi-card-sign`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-unit` (faltando: `.kpi-card-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-sign` (faltando: `.kpi-card-sign`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-label` (faltando: `.kpi-card-label`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--meta .kpi-card-label` (faltando: `.kpi-card--meta`, `.kpi-card-label`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card--deficit .kpi-card-label` (faltando: `.kpi-card--deficit`, `.kpi-card-label`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-footer` (faltando: `.kpi-card-footer`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-meta-text` (faltando: `.kpi-card-meta-text`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-card-meta-text strong` (faltando: `.kpi-card-meta-text`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-mini-chart` (faltando: `.kpi-mini-chart`)
+- `#screen-dashboard[data-dashboard-presentation] .kpi-mini-chart svg` (faltando: `.kpi-mini-chart`)
+- `#screen-dashboard[data-dashboard-presentation] .protocol-detail-row` (faltando: `.protocol-detail-row`)
+- `#screen-dashboard[data-dashboard-presentation] .proto-tag` (faltando: `.proto-tag`)
+- `#screen-dashboard[data-dashboard-presentation] .proto-tag svg` (faltando: `.proto-tag`)
+- `#screen-dashboard[data-dashboard-presentation] .proto-tag:hover` (faltando: `.proto-tag`)
+- `#screen-dashboard[data-dashboard-presentation] .proto-tag--highlight` (faltando: `.proto-tag--highlight`)
+- `#screen-dashboard[data-dashboard-presentation] .proto-tag--highlight:hover` (faltando: `.proto-tag--highlight`)
+- `#screen-dashboard[data-dashboard-presentation] .proto-tag--highlight svg` (faltando: `.proto-tag--highlight`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-footer-strip` (faltando: `.hero-footer-strip`)
+- `#screen-dashboard[data-dashboard-presentation] .footer-stat` (faltando: `.footer-stat`)
+- `#screen-dashboard[data-dashboard-presentation] .footer-stat-value` (faltando: `.footer-stat-value`)
+- `#screen-dashboard[data-dashboard-presentation] .footer-stat-label` (faltando: `.footer-stat-label`)
+- `#screen-dashboard[data-dashboard-presentation] .footer-divider` (faltando: `.footer-divider`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-cta` (faltando: `.hero-scroll-cta`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-label` (faltando: `.hero-scroll-label`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-mouse` (faltando: `.hero-scroll-mouse`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-wheel` (faltando: `.hero-scroll-wheel`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-cta:hover` (faltando: `.hero-scroll-cta`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-cta:focus-visible` (faltando: `.hero-scroll-cta`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-cta:hover .hero-scroll-mouse` (faltando: `.hero-scroll-cta`, `.hero-scroll-mouse`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-cta:focus-visible .hero-scroll-mouse` (faltando: `.hero-scroll-cta`, `.hero-scroll-mouse`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-cta:hover .hero-scroll-wheel` (faltando: `.hero-scroll-cta`, `.hero-scroll-wheel`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-scroll-cta:focus-visible .hero-scroll-wheel` (faltando: `.hero-scroll-cta`, `.hero-scroll-wheel`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-seq` (faltando: `.hero-seq`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-card` (faltando: `.hero-card`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-seq-1` (faltando: `.s1-content`, `.hero-seq-1`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-seq-2` (faltando: `.s1-content`, `.hero-seq-2`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-seq-3` (faltando: `.s1-content`, `.hero-seq-3`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-card-1` (faltando: `.s1-content`, `.hero-card-1`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-card-2` (faltando: `.s1-content`, `.hero-card-2`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-card-3` (faltando: `.s1-content`, `.hero-card-3`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-seq-5` (faltando: `.s1-content`, `.hero-seq-5`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-seq-6` (faltando: `.s1-content`, `.hero-seq-6`)
+- `#screen-dashboard[data-dashboard-presentation] .s1-content.is-active .hero-seq-7` (faltando: `.s1-content`, `.hero-seq-7`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='tdee'] .dfp-slide-inner` (faltando: `[data-section-id='tdee']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='tdee']::before` (faltando: `[data-section-id='tdee']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='tdee']` (faltando: `[data-section-id='tdee']`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section` (faltando: `.tdee-section`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-bg-line` (faltando: `.tdee-bg-line`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-bg-grid` (faltando: `.tdee-bg-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-bg-glow` (faltando: `.tdee-bg-glow`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-bg-noise` (faltando: `.tdee-bg-noise`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-container` (faltando: `.tdee-container`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-header` (faltando: `.tdee-header`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-eyebrow` (faltando: `.tdee-eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-eyebrow-dot` (faltando: `.tdee-eyebrow-dot`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-title` (faltando: `.tdee-title`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-number-row` (faltando: `.tdee-number-row`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-big-number` (faltando: `.tdee-big-number`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-unit` (faltando: `.tdee-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-unit span` (faltando: `.tdee-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-subtitle` (faltando: `.tdee-subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-section` (faltando: `.composition-section`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-bar` (faltando: `.composition-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .comp-segment` (faltando: `.comp-segment`)
+- `#screen-dashboard[data-dashboard-presentation] .comp-segment:first-child` (faltando: `.comp-segment`)
+- `#screen-dashboard[data-dashboard-presentation] .comp-segment:last-child` (faltando: `.comp-segment`)
+- `#screen-dashboard[data-dashboard-presentation] .comp-segment::after` (faltando: `.comp-segment`)
+- `#screen-dashboard[data-dashboard-presentation] .comp-segment:hover` (faltando: `.comp-segment`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-legend` (faltando: `.composition-legend`)
+- `#screen-dashboard[data-dashboard-presentation] .comp-legend-item` (faltando: `.comp-legend-item`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-components-legend` (faltando: `.composition-components-legend`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-component-item` (faltando: `.composition-component-item`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-component-dot` (faltando: `.composition-component-dot`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-component-name` (faltando: `.composition-component-name`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-component-pct` (faltando: `.composition-component-pct`)
+- `#screen-dashboard[data-dashboard-presentation] .components-list` (faltando: `.components-list`)
+- `#screen-dashboard[data-dashboard-presentation] .component-card` (faltando: `.component-card`)
+- `#screen-dashboard[data-dashboard-presentation] .component-card::before` (faltando: `.component-card`)
+- `#screen-dashboard[data-dashboard-presentation] .component-card:hover` (faltando: `.component-card`)
+- `#screen-dashboard[data-dashboard-presentation] .component-card:hover::before` (faltando: `.component-card`)
+- `#screen-dashboard[data-dashboard-presentation] .card-top` (faltando: `.card-top`)
+- `#screen-dashboard[data-dashboard-presentation] .card-icon-wrap` (faltando: `.card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .card-icon-wrap svg` (faltando: `.card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .component-card:hover .card-icon-wrap` (faltando: `.component-card`, `.card-icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .card-text` (faltando: `.card-text`)
+- `#screen-dashboard[data-dashboard-presentation] .card-name` (faltando: `.card-name`)
+- `#screen-dashboard[data-dashboard-presentation] .card-method` (faltando: `.card-method`)
+- `#screen-dashboard[data-dashboard-presentation] .card-value-block` (faltando: `.card-value-block`)
+- `#screen-dashboard[data-dashboard-presentation] .card-kcal` (faltando: `.card-kcal`)
+- `#screen-dashboard[data-dashboard-presentation] .card-kcal-label` (faltando: `.card-kcal-label`)
+- `#screen-dashboard[data-dashboard-presentation] .card-bar-row` (faltando: `.card-bar-row`)
+- `#screen-dashboard[data-dashboard-presentation] .card-bar-track` (faltando: `.card-bar-track`)
+- `#screen-dashboard[data-dashboard-presentation] .card-bar-fill` (faltando: `.card-bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .card-bar-fill::after` (faltando: `.card-bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .card-pct` (faltando: `.card-pct`)
+- `#screen-dashboard[data-dashboard-presentation] .waterfall-section` (faltando: `.waterfall-section`)
+- `#screen-dashboard[data-dashboard-presentation] .waterfall-header` (faltando: `.waterfall-header`)
+- `#screen-dashboard[data-dashboard-presentation] .waterfall-title` (faltando: `.waterfall-title`)
+- `#screen-dashboard[data-dashboard-presentation] .waterfall-hint` (faltando: `.waterfall-hint`)
+- `#screen-dashboard[data-dashboard-presentation] .waterfall-chart` (faltando: `.waterfall-chart`)
+- `#screen-dashboard[data-dashboard-presentation] .waterfall-chart::before` (faltando: `.waterfall-chart`)
+- `#screen-dashboard[data-dashboard-presentation] .waterfall-step` (faltando: `.waterfall-step`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-col` (faltando: `.wf-col`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-bar-wrap` (faltando: `.wf-bar-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-bar` (faltando: `.wf-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-bar::after` (faltando: `.wf-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-total` (faltando: `.wf-total`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-val` (faltando: `.wf-val`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-label` (faltando: `.wf-label`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-total-label` (faltando: `.wf-total-label`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-connector` (faltando: `.wf-connector`)
+- `#screen-dashboard[data-dashboard-presentation] .wf-connector-equals` (faltando: `.wf-connector-equals`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-total` (faltando: `.tdee-total`)
+- `#screen-dashboard[data-dashboard-presentation] .total-divider` (faltando: `.total-divider`)
+- `#screen-dashboard[data-dashboard-presentation] .total-content` (faltando: `.total-content`)
+- `#screen-dashboard[data-dashboard-presentation] .total-left` (faltando: `.total-left`)
+- `#screen-dashboard[data-dashboard-presentation] .total-label` (faltando: `.total-label`)
+- `#screen-dashboard[data-dashboard-presentation] .total-desc` (faltando: `.total-desc`)
+- `#screen-dashboard[data-dashboard-presentation] .total-right` (faltando: `.total-right`)
+- `#screen-dashboard[data-dashboard-presentation] .total-value` (faltando: `.total-value`)
+- `#screen-dashboard[data-dashboard-presentation] .total-unit` (faltando: `.total-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .tdee-eyebrow` (faltando: `.tdee-section`, `.is-visible`, `.tdee-eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .tdee-title` (faltando: `.tdee-section`, `.is-visible`, `.tdee-title`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .tdee-number-row` (faltando: `.tdee-section`, `.is-visible`, `.tdee-number-row`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .tdee-subtitle` (faltando: `.tdee-section`, `.is-visible`, `.tdee-subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .composition-section` (faltando: `.tdee-section`, `.is-visible`, `.composition-section`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .comp-segment` (faltando: `.tdee-section`, `.is-visible`, `.comp-segment`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .comp-legend-item` (faltando: `.tdee-section`, `.is-visible`, `.comp-legend-item`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .composition-component-item` (faltando: `.tdee-section`, `.is-visible`, `.composition-component-item`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .component-card` (faltando: `.tdee-section`, `.is-visible`, `.component-card`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .card-bar-fill` (faltando: `.tdee-section`, `.is-visible`, `.card-bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .waterfall-section` (faltando: `.tdee-section`, `.is-visible`, `.waterfall-section`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .wf-bar` (faltando: `.tdee-section`, `.is-visible`, `.wf-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .tdee-section.is-visible .tdee-total` (faltando: `.tdee-section`, `.is-visible`, `.tdee-total`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-section` (faltando: `.deficit-section`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-section__bg-grid` (faltando: `.deficit-section__bg-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-section__header` (faltando: `.deficit-section__header`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-section__eyebrow` (faltando: `.deficit-section__eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-section__eyebrow::before` (faltando: `.deficit-section__eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-section__title` (faltando: `.deficit-section__title`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-section__subtitle` (faltando: `.deficit-section__subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] [data-activated='true'] .deficit-section__eyebrow` (faltando: `.deficit-section__eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation] [data-activated='true'] .deficit-section__title` (faltando: `.deficit-section__title`)
+- `#screen-dashboard[data-dashboard-presentation] [data-activated='true'] .deficit-section__subtitle` (faltando: `.deficit-section__subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-type-strip` (faltando: `.deficit-type-strip`)
+- `#screen-dashboard[data-dashboard-presentation] [data-activated='true'] .deficit-type-strip` (faltando: `.deficit-type-strip`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-type-strip__dot` (faltando: `.deficit-type-strip__dot`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-type-strip__text` (faltando: `.deficit-type-strip__text`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-type-strip__text strong` (faltando: `.deficit-type-strip__text`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-type-strip__separator` (faltando: `.deficit-type-strip__separator`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-pipeline` (faltando: `.deficit-pipeline`)
+- `#screen-dashboard[data-dashboard-presentation] [data-activated='true'] .deficit-pipeline` (faltando: `.deficit-pipeline`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node` (faltando: `.pipeline-node`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node::before` (faltando: `.pipeline-node`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node:hover` (faltando: `.pipeline-node`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node:hover::before` (faltando: `.pipeline-node`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--tdee` (faltando: `.pipeline-node--tdee`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--tdee::before` (faltando: `.pipeline-node--tdee`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--tdee:hover` (faltando: `.pipeline-node--tdee`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--deficit` (faltando: `.pipeline-node--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--deficit::before` (faltando: `.pipeline-node--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--deficit:hover` (faltando: `.pipeline-node--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--meta` (faltando: `.pipeline-node--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--meta::before` (faltando: `.pipeline-node--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node--meta:hover` (faltando: `.pipeline-node--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__header` (faltando: `.pipeline-node__header`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__icon` (faltando: `.pipeline-node__icon`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__icon--tdee` (faltando: `.pipeline-node__icon--tdee`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__icon--deficit` (faltando: `.pipeline-node__icon--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__icon--meta` (faltando: `.pipeline-node__icon--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__icon svg` (faltando: `.pipeline-node__icon`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__label` (faltando: `.pipeline-node__label`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__sublabel` (faltando: `.pipeline-node__sublabel`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__value-block` (faltando: `.pipeline-node__value-block`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__value` (faltando: `.pipeline-node__value`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__value--deficit` (faltando: `.pipeline-node__value--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__value--meta` (faltando: `.pipeline-node__value--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__unit` (faltando: `.pipeline-node__unit`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__descriptor` (faltando: `.pipeline-node__descriptor`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__tag` (faltando: `.pipeline-node__tag`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__tag--info` (faltando: `.pipeline-node__tag--info`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__tag--accent` (faltando: `.pipeline-node__tag--accent`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__tag--success` (faltando: `.pipeline-node__tag--success`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-node__tag-dot` (faltando: `.pipeline-node__tag-dot`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector` (faltando: `.pipeline-connector`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__line` (faltando: `.pipeline-connector__line`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow` (faltando: `.pipeline-connector__arrow`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow svg` (faltando: `.pipeline-connector__arrow`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow--subtract` (faltando: `.pipeline-connector__arrow--subtract`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow--result` (faltando: `.pipeline-connector__arrow--result`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__label` (faltando: `.pipeline-connector__label`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow::before` (faltando: `.pipeline-connector__arrow`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow::after` (faltando: `.pipeline-connector__arrow`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow--subtract::before` (faltando: `.pipeline-connector__arrow--subtract`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow--subtract::after` (faltando: `.pipeline-connector__arrow--subtract`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow--result::before` (faltando: `.pipeline-connector__arrow--result`)
+- `#screen-dashboard[data-dashboard-presentation] .pipeline-connector__arrow--result::after` (faltando: `.pipeline-connector__arrow--result`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-visual` (faltando: `.deficit-visual`)
+- `#screen-dashboard[data-dashboard-presentation] [data-activated='true'] .deficit-visual` (faltando: `.deficit-visual`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-visual__container` (faltando: `.deficit-visual__container`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-visual__container::before` (faltando: `.deficit-visual__container`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-visual__inner` (faltando: `.deficit-visual__inner`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-visual__legend` (faltando: `.deficit-visual__legend`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item` (faltando: `.deficit-legend-item`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item:hover` (faltando: `.deficit-legend-item`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__marker` (faltando: `.deficit-legend-item__marker`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__marker--tdee` (faltando: `.deficit-legend-item__marker--tdee`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__marker--meta` (faltando: `.deficit-legend-item__marker--meta`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__marker--deficit` (faltando: `.deficit-legend-item__marker--deficit`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__label` (faltando: `.deficit-legend-item__label`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__value` (faltando: `.deficit-legend-item__value`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__value span` (faltando: `.deficit-legend-item__value`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-legend-item__percent` (faltando: `.deficit-legend-item__percent`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-visual__chart` (faltando: `.deficit-visual__chart`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart` (faltando: `.radial-chart`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__svg` (faltando: `.radial-chart__svg`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__track` (faltando: `.radial-chart__track`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__deficit-zone` (faltando: `.radial-chart__deficit-zone`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__progress` (faltando: `.radial-chart__progress`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__center` (faltando: `.radial-chart__center`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__center-label` (faltando: `.radial-chart__center-label`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__center-value` (faltando: `.radial-chart__center-value`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__center-unit` (faltando: `.radial-chart__center-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__center-sub` (faltando: `.radial-chart__center-sub`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__center-sub svg` (faltando: `.radial-chart__center-sub`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__badge` (faltando: `.radial-chart__badge`)
+- `#screen-dashboard[data-dashboard-presentation] .radial-chart__badge.animate` (faltando: `.radial-chart__badge`, `.animate`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-visual__equation` (faltando: `.deficit-visual__equation`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row` (faltando: `.equation-row`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row:hover` (faltando: `.equation-row`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__operator` (faltando: `.equation-row__operator`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__operator--base` (faltando: `.equation-row__operator--base`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__operator--minus` (faltando: `.equation-row__operator--minus`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__operator--equals` (faltando: `.equation-row__operator--equals`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__name` (faltando: `.equation-row__name`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__number` (faltando: `.equation-row__number`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__number--base` (faltando: `.equation-row__number--base`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__number--minus` (faltando: `.equation-row__number--minus`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-row__number--result` (faltando: `.equation-row__number--result`)
+- `#screen-dashboard[data-dashboard-presentation] .equation-divider` (faltando: `.equation-divider`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-weekly-box` (faltando: `.deficit-weekly-box`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-weekly-box__header` (faltando: `.deficit-weekly-box__header`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-weekly-box__header svg` (faltando: `.deficit-weekly-box__header`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-weekly-box__label` (faltando: `.deficit-weekly-box__label`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-weekly-box__value` (faltando: `.deficit-weekly-box__value`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-weekly-box__value span` (faltando: `.deficit-weekly-box__value`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-weekly-box__sub` (faltando: `.deficit-weekly-box__sub`)
+- `#screen-dashboard[data-dashboard-presentation] .deficit-results` (faltando: `.deficit-results`)
+- `#screen-dashboard[data-dashboard-presentation] [data-activated='true'] .deficit-results` (faltando: `.deficit-results`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card` (faltando: `.result-card`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card::before` (faltando: `.result-card`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card:hover` (faltando: `.result-card`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card:hover::before` (faltando: `.result-card`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--ritmo` (faltando: `.result-card--ritmo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--ritmo::before` (faltando: `.result-card--ritmo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--ritmo:hover` (faltando: `.result-card--ritmo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--prazo` (faltando: `.result-card--prazo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--prazo::before` (faltando: `.result-card--prazo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--prazo:hover` (faltando: `.result-card--prazo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--class` (faltando: `.result-card--class`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--class::before` (faltando: `.result-card--class`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card--class:hover` (faltando: `.result-card--class`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__icon` (faltando: `.result-card__icon`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__icon svg` (faltando: `.result-card__icon`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__icon--ritmo` (faltando: `.result-card__icon--ritmo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__icon--ritmo::after` (faltando: `.result-card__icon--ritmo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__icon--prazo` (faltando: `.result-card__icon--prazo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__icon--class` (faltando: `.result-card__icon--class`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__label` (faltando: `.result-card__label`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__value` (faltando: `.result-card__value`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__value--ritmo` (faltando: `.result-card__value--ritmo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__value--prazo` (faltando: `.result-card__value--prazo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__value--class` (faltando: `.result-card__value--class`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__value-unit` (faltando: `.result-card__value-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__desc` (faltando: `.result-card__desc`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__bar` (faltando: `.result-card__bar`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__bar-fill` (faltando: `.result-card__bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__bar-fill--ritmo` (faltando: `.result-card__bar-fill--ritmo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__bar-fill--prazo` (faltando: `.result-card__bar-fill--prazo`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__bar-fill--class` (faltando: `.result-card__bar-fill--class`)
+- `#screen-dashboard[data-dashboard-presentation] .result-card__bar-label` (faltando: `.result-card__bar-label`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-badge` (faltando: `.classification-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-badge__icon` (faltando: `.classification-badge__icon`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-badge__text` (faltando: `.classification-badge__text`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale` (faltando: `.classification-scale`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__segment` (faltando: `.classification-scale__segment`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__segment--active` (faltando: `.classification-scale__segment--active`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__segment--warning` (faltando: `.classification-scale__segment--warning`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__segment--danger` (faltando: `.classification-scale__segment--danger`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__labels` (faltando: `.classification-scale__labels`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__pointer` (faltando: `.classification-scale__pointer`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__pointer.animate` (faltando: `.classification-scale__pointer`, `.animate`)
+- `#screen-dashboard[data-dashboard-presentation] .classification-scale__pointer svg` (faltando: `.classification-scale__pointer`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section` (faltando: `.macros-section`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-header` (faltando: `.macros-header`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric` (faltando: `.hero-metric`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river` (faltando: `.composition-river`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-section` (faltando: `.contrib-section`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof` (faltando: `.caloric-proof`)
+- `#screen-dashboard[data-dashboard-presentation] .insights-bar` (faltando: `.insights-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card` (faltando: `.macro-card`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .macros-header` (faltando: `.macros-section`, `.is-activated`, `.macros-header`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .hero-metric` (faltando: `.macros-section`, `.is-activated`, `.hero-metric`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .macro-card:nth-child(1)` (faltando: `.macros-section`, `.is-activated`, `.macro-card`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .macro-card:nth-child(2)` (faltando: `.macros-section`, `.is-activated`, `.macro-card`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .macro-card:nth-child(3)` (faltando: `.macros-section`, `.is-activated`, `.macro-card`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .composition-river` (faltando: `.macros-section`, `.is-activated`, `.composition-river`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .contrib-section` (faltando: `.macros-section`, `.is-activated`, `.contrib-section`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .caloric-proof` (faltando: `.macros-section`, `.is-activated`, `.caloric-proof`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-section.is-activated .insights-bar` (faltando: `.macros-section`, `.is-activated`, `.insights-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-header__badge` (faltando: `.macros-header__badge`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-header__badge::before` (faltando: `.macros-header__badge`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-header__title` (faltando: `.macros-header__title`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-header__subtitle` (faltando: `.macros-header__subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-header__subtitle strong` (faltando: `.macros-header__subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-header__divider` (faltando: `.macros-header__divider`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__card` (faltando: `.hero-metric__card`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__card::before` (faltando: `.hero-metric__card`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__icon-wrap` (faltando: `.hero-metric__icon-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__content` (faltando: `.hero-metric__content`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__label` (faltando: `.hero-metric__label`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__value-row` (faltando: `.hero-metric__value-row`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__value` (faltando: `.hero-metric__value`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__unit` (faltando: `.hero-metric__unit`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__status` (faltando: `.hero-metric__status`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__mini-bar` (faltando: `.hero-metric__mini-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__mini-seg` (faltando: `.hero-metric__mini-seg`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__mini-seg--protein` (faltando: `.hero-metric__mini-seg--protein`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__mini-seg--carb` (faltando: `.hero-metric__mini-seg--carb`)
+- `#screen-dashboard[data-dashboard-presentation] .hero-metric__mini-seg--fat` (faltando: `.hero-metric__mini-seg--fat`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-trio` (faltando: `.macro-trio`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card:hover` (faltando: `.macro-card`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein:hover` (faltando: `.macro-card--protein`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb:hover` (faltando: `.macro-card--carb`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat:hover` (faltando: `.macro-card--fat`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__accent-line` (faltando: `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .macro-card__accent-line` (faltando: `.macro-card--protein`, `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .macro-card__accent-line` (faltando: `.macro-card--carb`, `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .macro-card__accent-line` (faltando: `.macro-card--fat`, `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__accent-line::after` (faltando: `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .macro-card__accent-line::after` (faltando: `.macro-card--protein`, `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .macro-card__accent-line::after` (faltando: `.macro-card--carb`, `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .macro-card__accent-line::after` (faltando: `.macro-card--fat`, `.macro-card__accent-line`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__glow-orb` (faltando: `.macro-card__glow-orb`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card:hover .macro-card__glow-orb` (faltando: `.macro-card`, `.macro-card__glow-orb`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .macro-card__glow-orb` (faltando: `.macro-card--protein`, `.macro-card__glow-orb`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .macro-card__glow-orb` (faltando: `.macro-card--carb`, `.macro-card__glow-orb`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .macro-card__glow-orb` (faltando: `.macro-card--fat`, `.macro-card__glow-orb`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__body` (faltando: `.macro-card__body`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__header` (faltando: `.macro-card__header`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__identity` (faltando: `.macro-card__identity`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__emoji-wrap` (faltando: `.macro-card__emoji-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card:hover .macro-card__emoji-wrap` (faltando: `.macro-card`, `.macro-card__emoji-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .macro-card__emoji-wrap` (faltando: `.macro-card--protein`, `.macro-card__emoji-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .macro-card__emoji-wrap` (faltando: `.macro-card--carb`, `.macro-card__emoji-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .macro-card__emoji-wrap` (faltando: `.macro-card--fat`, `.macro-card__emoji-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__name-group` (faltando: `.macro-card__name-group`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__name` (faltando: `.macro-card__name`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__role` (faltando: `.macro-card__role`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__pct-badge` (faltando: `.macro-card__pct-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .macro-card__pct-badge` (faltando: `.macro-card--protein`, `.macro-card__pct-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .macro-card__pct-badge` (faltando: `.macro-card--carb`, `.macro-card__pct-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .macro-card__pct-badge` (faltando: `.macro-card--fat`, `.macro-card__pct-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__big-number` (faltando: `.macro-card__big-number`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__value-row` (faltando: `.macro-card__value-row`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__grams-value` (faltando: `.macro-card__grams-value`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card:hover .macro-card__grams-value` (faltando: `.macro-card`, `.macro-card__grams-value`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .macro-card__grams-value` (faltando: `.macro-card--protein`, `.macro-card__grams-value`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .macro-card__grams-value` (faltando: `.macro-card--carb`, `.macro-card__grams-value`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .macro-card__grams-value` (faltando: `.macro-card--fat`, `.macro-card__grams-value`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__grams-unit` (faltando: `.macro-card__grams-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__kcal-row` (faltando: `.macro-card__kcal-row`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__kcal-label` (faltando: `.macro-card__kcal-label`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__kcal-divider` (faltando: `.macro-card__kcal-divider`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__kcal-formula` (faltando: `.macro-card__kcal-formula`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring-section` (faltando: `.macro-card__ring-section`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring` (faltando: `.macro-card__ring`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring svg` (faltando: `.macro-card__ring`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring-bg` (faltando: `.macro-card__ring-bg`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring-fill` (faltando: `.macro-card__ring-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring-pct` (faltando: `.macro-card__ring-pct`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .macro-card__ring-pct` (faltando: `.macro-card--protein`, `.macro-card__ring-pct`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .macro-card__ring-pct` (faltando: `.macro-card--carb`, `.macro-card__ring-pct`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .macro-card__ring-pct` (faltando: `.macro-card--fat`, `.macro-card__ring-pct`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring-label` (faltando: `.macro-card__ring-label`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__ring-stats` (faltando: `.macro-card__ring-stats`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__stat-item` (faltando: `.macro-card__stat-item`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__stat-item:not(:last-child)` (faltando: `.macro-card__stat-item`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__stat-label` (faltando: `.macro-card__stat-label`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__stat-value` (faltando: `.macro-card__stat-value`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge` (faltando: `.range-gauge`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__header` (faltando: `.range-gauge__header`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__title` (faltando: `.range-gauge__title`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__status` (faltando: `.range-gauge__status`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__status--low` (faltando: `.range-gauge__status--low`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__status--ideal` (faltando: `.range-gauge__status--ideal`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__status--max` (faltando: `.range-gauge__status--max`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__track-wrapper` (faltando: `.range-gauge__track-wrapper`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__track` (faltando: `.range-gauge__track`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__zone-ideal` (faltando: `.range-gauge__zone-ideal`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .range-gauge__zone-ideal` (faltando: `.macro-card--protein`, `.range-gauge__zone-ideal`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .range-gauge__zone-ideal` (faltando: `.macro-card--carb`, `.range-gauge__zone-ideal`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .range-gauge__zone-ideal` (faltando: `.macro-card--fat`, `.range-gauge__zone-ideal`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__fill` (faltando: `.range-gauge__fill`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .range-gauge__fill` (faltando: `.macro-card--protein`, `.range-gauge__fill`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .range-gauge__fill` (faltando: `.macro-card--carb`, `.range-gauge__fill`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .range-gauge__fill` (faltando: `.macro-card--fat`, `.range-gauge__fill`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__marker` (faltando: `.range-gauge__marker`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--protein .range-gauge__marker` (faltando: `.macro-card--protein`, `.range-gauge__marker`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--carb .range-gauge__marker` (faltando: `.macro-card--carb`, `.range-gauge__marker`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card--fat .range-gauge__marker` (faltando: `.macro-card--fat`, `.range-gauge__marker`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__marker-tooltip` (faltando: `.range-gauge__marker-tooltip`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__marker-tooltip::after` (faltando: `.range-gauge__marker-tooltip`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card:hover .range-gauge__marker-tooltip` (faltando: `.macro-card`, `.range-gauge__marker-tooltip`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__limits` (faltando: `.range-gauge__limits`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__limit` (faltando: `.range-gauge__limit`)
+- `#screen-dashboard[data-dashboard-presentation] .range-gauge__limit-label` (faltando: `.range-gauge__limit-label`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__toggle-btn` (faltando: `.macro-card__toggle-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__toggle-btn:hover` (faltando: `.macro-card__toggle-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__toggle-icon` (faltando: `.macro-card__toggle-icon`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__toggle-btn.is-open .macro-card__toggle-icon` (faltando: `.macro-card__toggle-btn`, `.is-open`, `.macro-card__toggle-icon`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__toggle-icon svg` (faltando: `.macro-card__toggle-icon`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__details` (faltando: `.macro-card__details`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__details.is-open` (faltando: `.macro-card__details`, `.is-open`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card__details-inner` (faltando: `.macro-card__details-inner`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-grid` (faltando: `.detail-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell` (faltando: `.detail-cell`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell:hover` (faltando: `.detail-cell`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell__label` (faltando: `.detail-cell__label`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell__value` (faltando: `.detail-cell__value`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell--full` (faltando: `.detail-cell--full`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell--highlight` (faltando: `.detail-cell--highlight`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell--highlight .detail-cell__value` (faltando: `.detail-cell--highlight`, `.detail-cell__value`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell--warn` (faltando: `.detail-cell--warn`)
+- `#screen-dashboard[data-dashboard-presentation] .detail-cell--warn .detail-cell__value` (faltando: `.detail-cell--warn`, `.detail-cell__value`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river::before` (faltando: `.composition-river`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river__title` (faltando: `.composition-river__title`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river__title-text` (faltando: `.composition-river__title-text`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river__title-emoji` (faltando: `.composition-river__title-emoji`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river__total-badge` (faltando: `.composition-river__total-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river__total-val` (faltando: `.composition-river__total-val`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river__total-unit` (faltando: `.composition-river__total-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .composition-river__check` (faltando: `.composition-river__check`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar` (faltando: `.river-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg` (faltando: `.river-bar__seg`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg:hover` (faltando: `.river-bar__seg`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg::after` (faltando: `.river-bar__seg`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg--protein` (faltando: `.river-bar__seg--protein`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg--carb` (faltando: `.river-bar__seg--carb`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg--fat` (faltando: `.river-bar__seg--fat`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg-content` (faltando: `.river-bar__seg-content`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg-content.is-visible` (faltando: `.river-bar__seg-content`, `.is-visible`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg-emoji` (faltando: `.river-bar__seg-emoji`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg-info` (faltando: `.river-bar__seg-info`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg-name` (faltando: `.river-bar__seg-name`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__seg-pct` (faltando: `.river-bar__seg-pct`)
+- `#screen-dashboard[data-dashboard-presentation] .river-bar__divider` (faltando: `.river-bar__divider`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend` (faltando: `.river-legend`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__item` (faltando: `.river-legend__item`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__item:hover` (faltando: `.river-legend__item`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__dot` (faltando: `.river-legend__dot`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__dot--protein` (faltando: `.river-legend__dot--protein`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__dot--carb` (faltando: `.river-legend__dot--carb`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__dot--fat` (faltando: `.river-legend__dot--fat`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__text` (faltando: `.river-legend__text`)
+- `#screen-dashboard[data-dashboard-presentation] .river-legend__val` (faltando: `.river-legend__val`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-section::before` (faltando: `.contrib-section`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-section__header` (faltando: `.contrib-section__header`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-section__title` (faltando: `.contrib-section__title`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-section__subtitle` (faltando: `.contrib-section__subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row` (faltando: `.contrib-row`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row:last-of-type` (faltando: `.contrib-row`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__emoji` (faltando: `.contrib-row__emoji`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__label` (faltando: `.contrib-row__label`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__bar-wrap` (faltando: `.contrib-row__bar-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__bar-fill` (faltando: `.contrib-row__bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__bar-fill::after` (faltando: `.contrib-row__bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__bar-fill--protein` (faltando: `.contrib-row__bar-fill--protein`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__bar-fill--carb` (faltando: `.contrib-row__bar-fill--carb`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__bar-fill--fat` (faltando: `.contrib-row__bar-fill--fat`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__bar-text` (faltando: `.contrib-row__bar-text`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__kcal` (faltando: `.contrib-row__kcal`)
+- `#screen-dashboard[data-dashboard-presentation] .contrib-row__kcal span` (faltando: `.contrib-row__kcal`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pills` (faltando: `.density-pills`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill` (faltando: `.density-pill`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill:hover` (faltando: `.density-pill`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill__emoji` (faltando: `.density-pill__emoji`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill__number` (faltando: `.density-pill__number`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill__number--protein` (faltando: `.density-pill__number--protein`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill__number--carb` (faltando: `.density-pill__number--carb`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill__number--fat` (faltando: `.density-pill__number--fat`)
+- `#screen-dashboard[data-dashboard-presentation] .density-pill__label` (faltando: `.density-pill__label`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof::before` (faltando: `.caloric-proof`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__header` (faltando: `.caloric-proof__header`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__header-text` (faltando: `.caloric-proof__header-text`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__equation` (faltando: `.caloric-proof__equation`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__term` (faltando: `.caloric-proof__term`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__term:hover` (faltando: `.caloric-proof__term`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__term-emoji` (faltando: `.caloric-proof__term-emoji`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__term-info` (faltando: `.caloric-proof__term-info`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__term-name` (faltando: `.caloric-proof__term-name`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__term-val` (faltando: `.caloric-proof__term-val`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__op` (faltando: `.caloric-proof__op`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__result` (faltando: `.caloric-proof__result`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__result:hover` (faltando: `.caloric-proof__result`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__result-emoji` (faltando: `.caloric-proof__result-emoji`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__result-value` (faltando: `.caloric-proof__result-value`)
+- `#screen-dashboard[data-dashboard-presentation] .caloric-proof__result-label` (faltando: `.caloric-proof__result-label`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card` (faltando: `.insight-card`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card:hover` (faltando: `.insight-card`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card__emoji` (faltando: `.insight-card__emoji`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card__value` (faltando: `.insight-card__value`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card__label` (faltando: `.insight-card__label`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card__sub` (faltando: `.insight-card__sub`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card--protein .insight-card__value` (faltando: `.insight-card--protein`, `.insight-card__value`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card--carb .insight-card__value` (faltando: `.insight-card--carb`, `.insight-card__value`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card--fat .insight-card__value` (faltando: `.insight-card--fat`, `.insight-card__value`)
+- `#screen-dashboard[data-dashboard-presentation] .insight-card--total .insight-card__value` (faltando: `.insight-card--total`, `.insight-card__value`)
+- `#screen-dashboard[data-dashboard-presentation] .macros-svg-defs` (faltando: `.macros-svg-defs`)
+- `#screen-dashboard[data-dashboard-presentation] .s5-content` (faltando: `.s5-content`)
+- `#screen-dashboard[data-dashboard-presentation] .dash-section-header` (faltando: `.dash-section-header`)
+- `#screen-dashboard[data-dashboard-presentation] .dash-section-title` (faltando: `.dash-section-title`)
+- `#screen-dashboard[data-dashboard-presentation] .dash-section-action` (faltando: `.dash-section-action`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-card` (faltando: `.chart-card`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-card` (faltando: `.whatif-card`)
+- `#screen-dashboard[data-dashboard-presentation] .before-after-card` (faltando: `.before-after-card`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-card` (faltando: `.speed-card`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-card` (faltando: `.meal-card`)
+- `#screen-dashboard[data-dashboard-presentation] .supp-card` (faltando: `.supp-card`)
+- `#screen-dashboard[data-dashboard-presentation] .projection-empty-card` (faltando: `.projection-empty-card`)
+- `#screen-dashboard[data-dashboard-presentation] .projection-empty-actions` (faltando: `.projection-empty-actions`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-header` (faltando: `.chart-header`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-title` (faltando: `.chart-title`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-subtitle` (faltando: `.chart-subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .projection-estimated-pill` (faltando: `.projection-estimated-pill`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-legend` (faltando: `.chart-legend`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-legend-item` (faltando: `.chart-legend-item`)
+- `#screen-dashboard[data-dashboard-presentation] .legend-line` (faltando: `.legend-line`)
+- `#screen-dashboard[data-dashboard-presentation] .legend-line-red` (faltando: `.legend-line-red`)
+- `#screen-dashboard[data-dashboard-presentation] .legend-line-violet` (faltando: `.legend-line-violet`)
+- `#screen-dashboard[data-dashboard-presentation] .legend-line-cyan` (faltando: `.legend-line-cyan`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-wrapper` (faltando: `.chart-wrapper`)
+- `#screen-dashboard[data-dashboard-presentation] .projection-chart-hybrid` (faltando: `.projection-chart-hybrid`)
+- `#screen-dashboard[data-dashboard-presentation] .projection-chart-hybrid canvas` (faltando: `.projection-chart-hybrid`)
+- `#screen-dashboard[data-dashboard-presentation] .projection-chart-overlay` (faltando: `.projection-chart-overlay`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-grid-line` (faltando: `.chart-grid-line`)
+- `#screen-dashboard[data-dashboard-presentation] .chart-axis-label` (faltando: `.chart-axis-label`)
+- `#screen-dashboard[data-dashboard-presentation] .milestone-circle` (faltando: `.milestone-circle`)
+- `#screen-dashboard[data-dashboard-presentation] .milestone-label` (faltando: `.milestone-label`)
+- `#screen-dashboard[data-dashboard-presentation] .dash-two-col` (faltando: `.dash-two-col`)
+- `#screen-dashboard[data-dashboard-presentation] .before-after-badge` (faltando: `.before-after-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .before-after-row` (faltando: `.before-after-row`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-side` (faltando: `.ba-side`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-side-label` (faltando: `.ba-side-label`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-side-label.after-label` (faltando: `.ba-side-label`, `.after-label`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-metric-value` (faltando: `.ba-metric-value`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-metric-value.after-val` (faltando: `.ba-metric-value`, `.after-val`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-metric-label` (faltando: `.ba-metric-label`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-arrow` (faltando: `.ba-arrow`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-weeks` (faltando: `.ba-weeks`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-stack` (faltando: `.speed-stack`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-label` (faltando: `.speed-label`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-main` (faltando: `.speed-main`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-main .highlight` (faltando: `.speed-main`, `.highlight`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-sub` (faltando: `.speed-sub`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-direction` (faltando: `.speed-direction`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-direction-cut` (faltando: `.speed-direction-cut`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-direction-bulk` (faltando: `.speed-direction-bulk`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-strong` (faltando: `.speed-strong`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-card-cyan` (faltando: `.speed-card-cyan`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-label-cyan` (faltando: `.speed-label-cyan`)
+- `#screen-dashboard[data-dashboard-presentation] .s5-refeed-wrap .refeed-badge` (faltando: `.s5-refeed-wrap`, `.refeed-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-card-wrapper` (faltando: `.refeed-card-wrapper`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-grid` (faltando: `.refeed-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-item` (faltando: `.refeed-item`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-item-title` (faltando: `.refeed-item-title`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-item-value` (faltando: `.refeed-item-value`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-item-subtitle` (faltando: `.refeed-item-subtitle`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-item-macros` (faltando: `.refeed-item-macros`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-info-box` (faltando: `.refeed-info-box`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-info-text` (faltando: `.refeed-info-text`)
+- `#screen-dashboard[data-dashboard-presentation] .s6-content` (faltando: `.s6-content`)
+- `#screen-dashboard[data-dashboard-presentation] .s7-content` (faltando: `.s7-content`)
+- `#screen-dashboard[data-dashboard-presentation] .s8-content` (faltando: `.s8-content`)
+- `#screen-dashboard[data-dashboard-presentation] .s9-content` (faltando: `.s9-content`)
+- `#screen-dashboard[data-dashboard-presentation] .meals-carousel-wrap` (faltando: `.meals-carousel-wrap`)
+- `#screen-dashboard[data-dashboard-presentation] .carousel-btn` (faltando: `.carousel-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .carousel-btn:disabled` (faltando: `.carousel-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .meals-grid` (faltando: `.meals-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .meals-grid::-webkit-scrollbar` (faltando: `.meals-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .s6-content .dash-section-header` (faltando: `.s6-content`, `.dash-section-header`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-card.pre-treino` (faltando: `.meal-card`, `.pre-treino`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-card.pos-treino` (faltando: `.meal-card`, `.pos-treino`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-header` (faltando: `.meal-header`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-info` (faltando: `.meal-info`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-number` (faltando: `.meal-number`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-name` (faltando: `.meal-name`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-time-badge` (faltando: `.meal-time-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-kcal` (faltando: `.meal-kcal`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-kcal-unit` (faltando: `.meal-kcal-unit`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-macros` (faltando: `.meal-macros`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-macro` (faltando: `.meal-macro`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-macro-val` (faltando: `.meal-macro-val`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-macro-label` (faltando: `.meal-macro-label`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-composition-bar` (faltando: `.meal-composition-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-composition-prot` (faltando: `.meal-composition-prot`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-composition-carb` (faltando: `.meal-composition-carb`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-composition-fat` (faltando: `.meal-composition-fat`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-tag` (faltando: `.meal-tag`)
+- `#screen-dashboard[data-dashboard-presentation] .badge-yellow` (faltando: `.badge-yellow`)
+- `#screen-dashboard[data-dashboard-presentation] .badge-green` (faltando: `.badge-green`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-totals` (faltando: `.meal-totals`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-totals-label` (faltando: `.meal-totals-label`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-totals-values` (faltando: `.meal-totals-values`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-total-item` (faltando: `.meal-total-item`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-total-value` (faltando: `.meal-total-value`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-total-sub` (faltando: `.meal-total-sub`)
+- `#screen-dashboard[data-dashboard-presentation] .accent-prot` (faltando: `.accent-prot`)
+- `#screen-dashboard[data-dashboard-presentation] .accent-carb` (faltando: `.accent-carb`)
+- `#screen-dashboard[data-dashboard-presentation] .accent-fat` (faltando: `.accent-fat`)
+- `#screen-dashboard[data-dashboard-presentation] .supps-priority-block + .supps-priority-block` (faltando: `.supps-priority-block`)
+- `#screen-dashboard[data-dashboard-presentation] .supps-priority-label` (faltando: `.supps-priority-label`)
+- `#screen-dashboard[data-dashboard-presentation] .supps-grid` (faltando: `.supps-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .supps-grid-uniform` (faltando: `.supps-grid-uniform`)
+- `#screen-dashboard[data-dashboard-presentation] .supp-priority` (faltando: `.supp-priority`)
+- `#screen-dashboard[data-dashboard-presentation] .priority-badge` (faltando: `.priority-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .priority-high` (faltando: `.priority-high`)
+- `#screen-dashboard[data-dashboard-presentation] .priority-medium` (faltando: `.priority-medium`)
+- `#screen-dashboard[data-dashboard-presentation] .priority-low` (faltando: `.priority-low`)
+- `#screen-dashboard[data-dashboard-presentation] .supp-icon` (faltando: `.supp-icon`)
+- `#screen-dashboard[data-dashboard-presentation] .supp-name` (faltando: `.supp-name`)
+- `#screen-dashboard[data-dashboard-presentation] .supp-dose` (faltando: `.supp-dose`)
+- `#screen-dashboard[data-dashboard-presentation] .supp-timing` (faltando: `.supp-timing`)
+- `#screen-dashboard[data-dashboard-presentation] .sim-left` (faltando: `.sim-left`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-card-zone` (faltando: `.whatif-card-zone`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-inner-grid` (faltando: `.whatif-inner-grid`)
+- `#screen-dashboard[data-dashboard-presentation] .sim-panel-title` (faltando: `.sim-panel-title`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-slider-item + .whatif-slider-item` (faltando: `.whatif-slider-item`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-slider-label-row` (faltando: `.whatif-slider-label-row`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-slider-label` (faltando: `.whatif-slider-label`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-slider-value` (faltando: `.whatif-slider-value`)
+- `#screen-dashboard[data-dashboard-presentation] .slider-track` (faltando: `.slider-track`)
+- `#screen-dashboard[data-dashboard-presentation] .slider-fill` (faltando: `.slider-fill`)
+- `#screen-dashboard[data-dashboard-presentation] .range-input` (faltando: `.range-input`)
+- `#screen-dashboard[data-dashboard-presentation] .range-input::-webkit-slider-thumb` (faltando: `.range-input`)
+- `#screen-dashboard[data-dashboard-presentation] .range-input::-moz-range-thumb` (faltando: `.range-input`)
+- `#screen-dashboard[data-dashboard-presentation] .goal-card` (faltando: `.goal-card`)
+- `#screen-dashboard[data-dashboard-presentation] .goal-card.selected` (faltando: `.goal-card`)
+- `#screen-dashboard[data-dashboard-presentation] .btn-form-back` (faltando: `.btn-form-back`)
+- `#screen-dashboard[data-dashboard-presentation] .btn-form-next` (faltando: `.btn-form-next`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-preview` (faltando: `.whatif-preview`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-preview-title` (faltando: `.whatif-preview-title`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-result-row` (faltando: `.whatif-result-row`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-result-row-last` (faltando: `.whatif-result-row-last`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-result-label` (faltando: `.whatif-result-label`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-result-value` (faltando: `.whatif-result-value`)
+- `#screen-dashboard[data-dashboard-presentation] .whatif-result-diff` (faltando: `.whatif-result-diff`)
+- `#screen-dashboard[data-dashboard-presentation] .delta-positive` (faltando: `.delta-positive`)
+- `#screen-dashboard[data-dashboard-presentation] .delta-negative` (faltando: `.delta-negative`)
+- `#screen-dashboard[data-dashboard-presentation] .cta-card` (faltando: `.cta-card`)
+- `#screen-dashboard[data-dashboard-presentation] .cta-border-svg` (faltando: `.cta-border-svg`)
+- `#screen-dashboard[data-dashboard-presentation] .cta-border-rect` (faltando: `.cta-border-rect`)
+- `#screen-dashboard[data-dashboard-presentation] .cta-badge` (faltando: `.cta-badge`)
+- `#screen-dashboard[data-dashboard-presentation] .cta-title` (faltando: `.cta-title`)
+- `#screen-dashboard[data-dashboard-presentation] .cta-title span` (faltando: `.cta-title`)
+- `#screen-dashboard[data-dashboard-presentation] .cta-copy` (faltando: `.cta-copy`)
+- `#screen-dashboard[data-dashboard-presentation] .email-form` (faltando: `.email-form`)
+- `#screen-dashboard[data-dashboard-presentation] .email-input` (faltando: `.email-input`)
+- `#screen-dashboard[data-dashboard-presentation] .email-input:focus` (faltando: `.email-input`)
+- `#screen-dashboard[data-dashboard-presentation] .email-btn` (faltando: `.email-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .email-btn:hover` (faltando: `.email-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .s9-actions` (faltando: `.s9-actions`)
+- `#screen-dashboard[data-dashboard-presentation] .action-btn` (faltando: `.action-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .action-btn:hover` (faltando: `.action-btn`)
+- `#screen-dashboard[data-dashboard-presentation] .action-btn-primary` (faltando: `.action-btn-primary`)
+- `#screen-dashboard[data-dashboard-presentation] .action-btn-primary:hover` (faltando: `.action-btn-primary`)
+- `#screen-dashboard[data-dashboard-presentation] .s9-footer` (faltando: `.s9-footer`)
+- `#screen-dashboard[data-dashboard-presentation] .s9-disclaimer` (faltando: `.s9-disclaimer`)
+- `#screen-dashboard[data-dashboard-presentation] .s9-methodology` (faltando: `.s9-methodology`)
+- `#screen-dashboard[data-dashboard-presentation] .s3-block` (faltando: `.s3-block`)
+- `#screen-dashboard[data-dashboard-presentation] .velocity-card` (faltando: `.velocity-card`)
+- `#screen-dashboard[data-dashboard-presentation] .s3-block:hover` (faltando: `.s3-block`)
+- `#screen-dashboard[data-dashboard-presentation] .velocity-card:hover` (faltando: `.velocity-card`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-card:hover` (faltando: `.speed-card`)
+- `#screen-dashboard[data-dashboard-presentation] .before-after-card:hover` (faltando: `.before-after-card`)
+- `#screen-dashboard[data-dashboard-presentation] .supp-card:hover` (faltando: `.supp-card`)
+- `#screen-dashboard[data-dashboard-presentation] .refeed-item:hover` (faltando: `.refeed-item`)
+- `#screen-dashboard[data-dashboard-presentation] .meal-card:hover` (faltando: `.meal-card`)
+- `#screen-dashboard[data-dashboard-presentation] .goal-card:hover:not(.selected)` (faltando: `.goal-card`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-donut-wrapper` (faltando: `.macro-donut-wrapper`)
+- `#screen-dashboard[data-dashboard-presentation] .velocity-icon` (faltando: `.velocity-icon`)
+- `#screen-dashboard[data-dashboard-presentation] .ba-arrow svg` (faltando: `.ba-arrow`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-card-icon` (faltando: `.speed-card-icon`)
+- `#screen-dashboard[data-dashboard-presentation] .speed-card-cyan .speed-card-icon` (faltando: `.speed-card-cyan`, `.speed-card-icon`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .hero-seq` (faltando: `.hero-seq`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .hero-card` (faltando: `.hero-card`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .protocol-badge.is-pulsing` (faltando: `.protocol-badge`, `.is-pulsing`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .hero-bg-grid` (faltando: `.hero-bg-grid`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .hero-glow-top` (faltando: `.hero-glow-top`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .tdee-eyebrow` (faltando: `.tdee-eyebrow`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .tdee-title` (faltando: `.tdee-title`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .tdee-number-row` (faltando: `.tdee-number-row`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .tdee-subtitle` (faltando: `.tdee-subtitle`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .composition-section` (faltando: `.composition-section`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .comp-legend-item` (faltando: `.comp-legend-item`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .composition-component-item` (faltando: `.composition-component-item`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .component-card` (faltando: `.component-card`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .waterfall-section` (faltando: `.waterfall-section`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .tdee-total` (faltando: `.tdee-total`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .comp-segment` (faltando: `.comp-segment`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .card-bar-fill` (faltando: `.card-bar-fill`)
+- `#screen-dashboard[data-dashboard-presentation][data-reduced-motion='true'] .wf-bar` (faltando: `.wf-bar`)
+- `#screen-dashboard[data-dashboard-presentation] .s4-content` (faltando: `.s4-content`)
+- `#screen-dashboard[data-dashboard-presentation] .s3-numbers` (faltando: `.s3-numbers`)
+- `#screen-dashboard[data-dashboard-presentation] .s3-velocity` (faltando: `.s3-velocity`)
+- `#screen-dashboard[data-dashboard-presentation] .s3-block-value` (faltando: `.s3-block-value`)
+- `#screen-dashboard[data-dashboard-presentation] .macro-card-grams` (faltando: `.macro-card-grams`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='macros']` (faltando: `[data-section-id='macros']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='supplements']` (faltando: `[data-section-id='supplements']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='goal']` (faltando: `[data-section-id='goal']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='projection']` (faltando: `[data-section-id='projection']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='whatif']` (faltando: `[data-section-id='whatif']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='final']` (faltando: `[data-section-id='final']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-carousel-dots` (faltando: `.dfp-carousel-dots`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .s1-content` (faltando: `.s1-content`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .hero-content` (faltando: `.hero-content`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .hero-headline-wrapper` (faltando: `.hero-headline-wrapper`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .hero-eyebrow::before` (faltando: `.hero-eyebrow`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .hero-eyebrow::after` (faltando: `.hero-eyebrow`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .kpi-grid` (faltando: `.kpi-grid`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .kpi-card-number` (faltando: `.kpi-card-number`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .protocol-detail-row` (faltando: `.protocol-detail-row`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .hero-footer-strip` (faltando: `.hero-footer-strip`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .footer-divider` (faltando: `.footer-divider`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .footer-stat` (faltando: `.footer-stat`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .kpi-card:nth-child(3)` (faltando: `.kpi-card`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .hero-title-accent` (faltando: `.hero-title-accent`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .hero-glow-top` (faltando: `.hero-glow-top`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .confidence-strip` (faltando: `.confidence-strip`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'] .protocol-badge` (faltando: `.protocol-badge`, `[data-section-id='welcome']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='meals']` (faltando: `[data-section-id='meals']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='goal']::before` (faltando: `[data-section-id='goal']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='macros']::before` (faltando: `[data-section-id='macros']`)
+- `#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='goal'] .dfp-slide-inner` (faltando: `[data-section-id='goal']`)
+
+## src/styles/dashboard-final.css
+
+- Seletores totais: 20
+- Usados: 20
+- Mortos: 0
+- Percentual morto: 0.0%
+- Recomendacao: manter
+
+### Seletores USADOS
+
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-section` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-section::before` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/ReceiptCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt::after` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/ReceiptCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt__header` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/ReceiptCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt__grid` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/ReceiptCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt__metric` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/ReceiptCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt__footer` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/ReceiptCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt__footer-dot` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/ReceiptCard.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-cta-card` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-cta-card--primary` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-primary-button` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-primary-button:disabled` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-soon-badge` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/presentation/FinalSlide.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/DashboardFooter.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer__top` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/DashboardFooter.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer__brand` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/DashboardFooter.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer__version` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/DashboardFooter.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer__chips` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/DashboardFooter.tsx`
+- `#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer__copy` -> `src/components/screens/dashboard/DashboardScreen.tsx`, `src/components/screens/dashboard/sections/DashboardFooter.tsx`
+
+### Seletores MORTOS
+
+- Nenhum.
+
+## Validacao
+
+- PASS: src/styles/screens.css: used + dead = total (340 + 695 = 1035)
+- PASS: src/styles/dashboard-presentation.css: used + dead = total (60 + 837 = 897)
+- PASS: src/styles/dashboard-final.css: used + dead = total (20 + 0 = 20)
+- PASS: spot-check #screen-hero (src/styles/screens.css)
+- PASS: spot-check .form-body (src/styles/screens.css)
+- PASS: spot-check .summary-cta-primary (src/styles/screens.css)
+- PASS: spot-check #screen-dashboard[data-dashboard-presentation] .dfp-shell (src/styles/dashboard-presentation.css)
+- PASS: spot-check .nav-dot (src/styles/dashboard-presentation.css)
+- PASS: spot-check .dfp-mobile-dot (src/styles/dashboard-presentation.css)
+- PASS: spot-check .dashboard-final-footer (src/styles/dashboard-final.css)
+- PASS: spot-check .dashboard-final-receipt (src/styles/dashboard-final.css)
+- PASS: spot-check .dashboard-final-primary-button (src/styles/dashboard-final.css)
+- PASS: src/test/** excluded from runtime index (113 runtime files indexed)
+- PASS: keyframe steps excluded (No from/to/percentage selectors found in audit lists)
+
