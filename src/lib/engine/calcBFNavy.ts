@@ -1,4 +1,4 @@
-﻿import type { SexType } from '../types';
+import type { SexType } from '../types';
 
 import { clamp, toOneDecimal } from './math';
 

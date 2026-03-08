@@ -1,4 +1,4 @@
-﻿import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 
 import type { ValidationIssue } from './engine';
 import type { FormData, FormPatch } from './form';

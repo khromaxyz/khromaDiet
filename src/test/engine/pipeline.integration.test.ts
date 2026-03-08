@@ -1,4 +1,4 @@
-import { initialFormData } from '../../lib/constants/mockForm';
+import { initialFormData } from '@/features/form/config/formConfig';
 import { derivePrecisionPresence, runPipeline } from '../../lib/engine/runPipeline';
 import { renormalizeWeights } from '../../lib/engine/renormalizeWeights';
 

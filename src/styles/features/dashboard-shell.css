@@ -1,0 +1,195 @@
+        /* ============================================================
+   SCREEN 4 - DASHBOARD
+   ============================================================ */
+        #screen-dashboard {
+            background: var(--bg-900);
+            min-height: 100vh;
+        }
+
+        /* Dashboard Section Headers */
+
+        /* ============================================================
+   RECIBO DE CALCULO
+   ============================================================ */
+
+        /* ============================================================
+   MACRO CARDS
+   ============================================================ */
+
+        /* ============================================================
+   DASHBOARD MAIN GRID
+   ============================================================ */
+
+        /* ============================================================
+   PROJECTION CHART
+   ============================================================ */
+
+        /* ============================================================
+   BEFORE/AFTER CARD
+   ============================================================ */
+
+        /* ============================================================
+   SPEED CARD
+   ============================================================ */
+
+        /* ============================================================
+   SUPPLEMENTS GRID
+   ============================================================ */
+
+        /* ============================================================
+   WHAT-IF SIMULATOR
+   ============================================================ */
+
+        /* ============================================================
+   MEAL DISTRIBUTION
+   ============================================================ */
+
+        /* ============================================================
+   DASH OVERVIEW STRIP (top KPIs)
+   ============================================================ */
+
+        /* ============================================================
+   FLOATING NAV PILLS (screen nav)
+   ============================================================ */
+        .screen-nav-pill {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1-5);
+            padding: var(--space-2) var(--space-3);
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-pill);
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--bg-500);
+            cursor: pointer;
+            transition: background var(--transition-base), width var(--transition-base), transform var(--transition-base);
+        }
+
+        .nav-pill-dot.active {
+            background: var(--accent-lime);
+            width: 24px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(16,185,129,0.5);
+        }
+
+        .nav-pill-dot:hover {
+            background: var(--text-tertiary);
+            transform: scale(1.2);
+        }
+
+        /* ============================================================
+   ANIMATIONS & GSAP TARGETS
+   ============================================================ */
+
+        /* ============================================================
+   CARD GLOW EFFECT ON HOVER
+   ============================================================ */
+
+        /* ============================================================
+   PROFILE STRIP (dashboard)
+   ============================================================ */
+
+        /* ============================================================
+   SECTION DIVIDER
+   ============================================================ */
+
+        /* ============================================================
+   RESPONSIVE HELPERS
+   ============================================================ */
+
+        /* ============================================================
+   LIGHT TOGGLE (decorative)
+   ============================================================ */
+
+        /* ============================================================
+   DASH FULL LAYOUT SECTION
+   ============================================================ */
+
+        /* ============================================================
+   FOOTER RIBBON
+   ============================================================ */
+
+/* ===== React migration helper classes (replacing former inline styles) ===== */
+
+/* ============================================================
+   DASHBOARD PREMIUM REDESIGN (SCOPED)
+   ============================================================ */
+#screen-dashboard {
+  --dash-accent: #10b981;
+  --dash-surface: rgba(8, 8, 12, 0.76);
+  --dash-text: #f8f9ff;
+  --dash-muted: rgba(248, 249, 255, 0.65);
+  --dash-soft: rgba(248, 249, 255, 0.35);
+  --dash-positive: #32b86f;
+  --dash-yellow: #facc15;
+  --color-section-title: #e2e8f0;
+  --color-kpi-accent-soft: #34d399;
+  --color-kpi-positive-soft: #6eb38f;
+  --spacing-section-gap: 42px;
+  --spacing-card-gap: 17px;
+}
+
+#screen-dashboard .target-info-highlight {
+  color: var(--dash-accent);
+}
+
+#screen-dashboard .target-info-card {
+  background: var(--dash-surface);
+  border-color: var(--border-dim);
+}
+
+#screen-dashboard .nav-pill-dot.active {
+  background: var(--dash-accent);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+/* ============================================================
+   DASHBOARD BUGFIX + PREMIUM REFINEMENTS
+   ============================================================ */
+body.dashboard-active {
+  cursor: auto;
+}
+
+#screen-dashboard {
+  color: var(--dash-text);
+  font-family: var(--font-body);
+}
+
+#screen-dashboard .target-info-highlight {
+  font-family: var(--font-body);
+}
+
+#screen-dashboard .btn-dash-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  border-radius: 12px;
+  padding: var(--space-2-5) var(--space-4);
+  transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+#screen-dashboard .btn-dash-cta:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.95);
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.32);
+}

@@ -1,4 +1,4 @@
-﻿import { calcGoalProjection } from '../../lib/engine/calcGoalProjection';
+import { calcGoalProjection } from '../../lib/engine/calcGoalProjection';
 
 describe('calcGoalProjection', () => {
   it('classifies viable cut goals and returns milestones', () => {

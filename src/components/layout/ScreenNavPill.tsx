@@ -1,4 +1,5 @@
-﻿import type { ScreenId } from '../../lib/types';
+import { screenDefinitions } from '@/app/screens';
+import type { ScreenId } from '@/app/types';
 
 interface ScreenNavPillProps {
   currentScreen: ScreenId;
@@ -7,14 +8,6 @@ interface ScreenNavPillProps {
   onNavigate: (screen: ScreenId) => void;
 }
 
-const order: Array<{ id: ScreenId; title: string }> = [
-  { id: 'hero', title: 'Início' },
-  { id: 'form', title: 'Formulário' },
-  { id: 'profile_create', title: 'Perfil' },
-  { id: 'summary', title: 'Resumo' },
-  { id: 'dashboard', title: 'Dashboard' },
-];
-
 export const ScreenNavPill = ({ currentScreen, currentStep, totalSteps, onNavigate }: ScreenNavPillProps) => {
   if (currentScreen === 'dashboard') {
     return null;
@@ -22,7 +15,7 @@ export const ScreenNavPill = ({ currentScreen, currentStep, totalSteps, onNaviga
 
   if (currentScreen === 'form') {
     return (
-      <nav className="screen-nav-pill screen-nav-pill-form" id="screen-nav" aria-label="Progresso do formulário">
+      <nav className="screen-nav-pill screen-nav-pill-form" id="screen-nav" aria-label="Progresso do formulario">
         {Array.from({ length: totalSteps }, (_, index) => {
           const step = index + 1;
           const stateClass =
@@ -46,8 +39,8 @@ export const ScreenNavPill = ({ currentScreen, currentStep, totalSteps, onNaviga
   }
 
   return (
-    <nav className="screen-nav-pill screen-nav-pill-screen" id="screen-nav" aria-label="Navegação de telas">
-      {order.map((item) => (
+    <nav className="screen-nav-pill screen-nav-pill-screen" id="screen-nav" aria-label="Navegacao de telas">
+      {screenDefinitions.map((item) => (
         <button
           key={item.id}
           type="button"

@@ -1,13 +1,11 @@
-﻿import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ACTIVE_PROFILE_STORAGE_KEY, DRAFT_STORAGE_KEY, PROFILE_STORAGE_KEY } from '../lib/profiles/constants';
+import { DRAFT_STORAGE_KEY, clearDraft, loadDraft, saveDraft } from '../features/form/storage/draftStorage';
+import { ACTIVE_PROFILE_STORAGE_KEY, PROFILE_STORAGE_KEY } from '../lib/profiles/constants';
 import {
-  clearDraft,
   insertProfileWithLimit,
   isStorageAvailable,
-  loadDraft,
   loadProfiles,
-  saveDraft,
   saveProfiles,
 } from '../lib/profiles/storage';
 import type { UserProfile } from '../lib/profiles/types';

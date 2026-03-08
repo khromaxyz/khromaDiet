@@ -1,8 +1,10 @@
 node_modules
 dist
+artifacts
 coverage
 .vscode
 .idea
 .DS_Store
 *.local
 vitest-*.log
+test-results

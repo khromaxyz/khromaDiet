@@ -1,0 +1,3826 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KhromaDiet — Design System Manifesto</title>
+<style>
+/* ============================================= */
+/* FOUNDATION: CSS RESET                         */
+/* ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================= */
+/* TOKENS: COLOR SYSTEM                          */
+/* ============================================= */
+:root {
+  /* — Core Palette — */
+  --white: #FFFFFF;
+  --black: #000000;
+  --green: #00E46A;
+  --green-hover: #00C95D;
+  --green-active: #00AD50;
+  --green-subtle: #00E46A1A;
+  --green-medium: #00E46A33;
+  --green-glow: #00E46A66;
+
+  /* — Neutral Scale (Light) — */
+  --gray-50: #FAFAFA;
+  --gray-100: #F4F4F5;
+  --gray-150: #EBEBED;
+  --gray-200: #E0E0E3;
+  --gray-300: #C6C6CC;
+  --gray-400: #9E9EA8;
+  --gray-500: #71717A;
+  --gray-600: #52525B;
+  --gray-700: #3F3F46;
+  --gray-800: #27272A;
+  --gray-900: #18181B;
+  --gray-950: #09090B;
+
+  /* — Semantic — */
+  --success: #00E46A;
+  --error: #FF3B3B;
+  --error-subtle: #FF3B3B1A;
+  --warning: #FFB800;
+  --warning-subtle: #FFB8001A;
+  --info: #00E46A;
+
+  /* — Surface (Light Theme) — */
+  --bg-primary: var(--white);
+  --bg-secondary: var(--gray-50);
+  --bg-tertiary: var(--gray-100);
+  --bg-elevated: var(--white);
+  --bg-overlay: rgba(0,0,0,0.5);
+  --bg-inverse: var(--gray-950);
+
+  /* — Text (Light Theme) — */
+  --text-primary: var(--gray-950);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-400);
+  --text-inverse: var(--white);
+  --text-accent: var(--green);
+
+  /* — Border (Light Theme) — */
+  --border-default: var(--gray-200);
+  --border-strong: var(--gray-950);
+  --border-subtle: var(--gray-100);
+  --border-accent: var(--green);
+
+  /* — Spacing Scale — */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 56px;
+  --space-11: 64px;
+  --space-12: 80px;
+  --space-13: 96px;
+  --space-14: 120px;
+  --space-15: 160px;
+
+  /* — Radius Scale — */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* — Shadow System — */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
+  --shadow-accent: 0 4px 20px var(--green-glow);
+  --shadow-border: inset 0 0 0 2px var(--border-strong);
+
+  /* — Typography — */
+  --font-display: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.3125rem;
+  --text-2xl: 1.625rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.625rem;
+  --text-5xl: 3.375rem;
+  --text-6xl: 4.25rem;
+  --text-7xl: 5.5rem;
+
+  --leading-none: 1;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.03em;
+  --tracking-snug: -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.08em;
+  --tracking-widest: 0.14em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  /* — Transitions — */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  /* — Z-index — */
+  --z-base: 0;
+  --z-elevated: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* — Layout — */
+  --container-max: 1200px;
+  --container-narrow: 720px;
+  --sidebar-width: 280px;
+}
+
+/* ============================================= */
+/* TOKENS: DARK THEME OVERRIDES                  */
+/* ============================================= */
+[data-theme="dark"] {
+  --bg-primary: var(--black);
+  --bg-secondary: #0A0A0A;
+  --bg-tertiary: #111111;
+  --bg-elevated: #141414;
+  --bg-overlay: rgba(0,0,0,0.75);
+  --bg-inverse: var(--white);
+
+  --text-primary: var(--gray-100);
+  --text-secondary: var(--gray-400);
+  --text-tertiary: var(--gray-600);
+  --text-inverse: var(--gray-950);
+
+  --border-default: #1E1E1E;
+  --border-strong: var(--gray-100);
+  --border-subtle: #141414;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.6);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.7);
+  --shadow-border: inset 0 0 0 2px var(--border-strong);
+}
+
+/* ============================================= */
+/* BASE: BODY & LAYOUT                           */
+/* ============================================= */
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color var(--duration-slow) var(--ease-out),
+              color var(--duration-slow) var(--ease-out);
+  overflow-x: hidden;
+}
+
+.ds-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.ds-container--narrow {
+  max-width: var(--container-narrow);
+}
+
+/* ============================================= */
+/* UTILITY: SECTION STRUCTURE                    */
+/* ============================================= */
+.ds-section {
+  padding: var(--space-14) 0;
+  border-bottom: 2px solid var(--border-default);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-section:last-child {
+  border-bottom: none;
+}
+
+.ds-section__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+.ds-section__title {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.ds-section__desc {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+  max-width: 560px;
+  margin-bottom: var(--space-11);
+}
+
+/* ============================================= */
+/* UTILITY: GRID HELPERS                         */
+/* ============================================= */
+.ds-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.ds-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.ds-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .ds-grid-2,
+  .ds-grid-3,
+  .ds-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ds-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ds-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================= */
+/* NAVIGATION: TOP BAR                           */
+/* ============================================= */
+.ds-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  background: var(--bg-primary);
+  border-bottom: 2px solid var(--border-default);
+  transition: background-color var(--duration-slow) var(--ease-out),
+              border-color var(--duration-slow) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
+  height: 60px;
+}
+
+.ds-topbar.is-scrolled {
+  box-shadow: var(--shadow-md);
+}
+
+.ds-topbar__inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ds-topbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-topbar__logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--green);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-topbar__logo-text {
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-snug);
+}
+
+.ds-topbar__logo-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-tertiary);
+  border: 1.5px solid var(--border-default);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  transition: border-color var(--duration-slow) var(--ease-out),
+              color var(--duration-slow) var(--ease-out);
+}
+
+.ds-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ds-topbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-right: var(--space-4);
+}
+
+.ds-topbar__nav-link {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.ds-topbar__nav-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.ds-topbar__nav-link.is-active {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+@media (max-width: 900px) {
+  .ds-topbar__nav {
+    display: none;
+  }
+}
+
+/* Theme Toggle */
+.ds-theme-toggle {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-default);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.ds-theme-toggle:hover {
+  border-color: var(--border-strong);
+  transform: scale(1.05);
+}
+
+.ds-theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.ds-theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.ds-theme-toggle .icon-moon { display: block; }
+.ds-theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .ds-theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .ds-theme-toggle .icon-sun { display: block; }
+
+/* ============================================= */
+/* HERO: MANIFESTO HEADER                        */
+/* ============================================= */
+.ds-hero {
+  padding-top: calc(60px + var(--space-15));
+  padding-bottom: var(--space-14);
+  border-bottom: 2px solid var(--border-default);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-hero__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-hero__label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: var(--radius-full);
+  display: inline-block;
+  animation: pulse-dot 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.ds-hero__title {
+  font-size: clamp(var(--text-5xl), 8vw, var(--text-7xl));
+  font-weight: var(--weight-black);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--text-primary);
+  margin-bottom: var(--space-8);
+  max-width: 900px;
+}
+
+.ds-hero__title em {
+  font-style: normal;
+  color: var(--green);
+}
+
+.ds-hero__subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+  max-width: 520px;
+  margin-bottom: var(--space-9);
+}
+
+.ds-hero__meta {
+  display: flex;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.ds-hero__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ds-hero__meta-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.ds-hero__meta-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* ============================================= */
+/* SECTION: PRINCIPLES                           */
+/* ============================================= */
+.ds-principle-card {
+  padding: var(--space-7);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  transition: border-color var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-principle-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.ds-principle-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.ds-principle-card:hover::before {
+  transform: scaleX(1);
+}
+
+.ds-principle-card__number {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--green);
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-5);
+}
+
+.ds-principle-card__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-3);
+}
+
+.ds-principle-card__desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+/* ============================================= */
+/* SECTION: COLOR PALETTE                        */
+/* ============================================= */
+.ds-color-block {
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-color-block__swatch {
+  height: 120px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-4);
+}
+
+.ds-color-block__info {
+  padding: var(--space-4);
+  background: var(--bg-primary);
+  transition: background-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-color-block__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.ds-color-block__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+}
+
+.ds-color-block__usage {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+}
+
+/* Neutral strip */
+.ds-neutral-strip {
+  display: flex;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-neutral-strip__cell {
+  flex: 1;
+  height: 64px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: var(--space-2);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.ds-neutral-strip__cell:hover {
+  transform: scaleY(1.15);
+  z-index: 2;
+}
+
+.ds-neutral-strip__cell span {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--tracking-wide);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.ds-neutral-strip__cell:hover span {
+  opacity: 1;
+}
+
+/* ============================================= */
+/* SECTION: TYPOGRAPHY                           */
+/* ============================================= */
+.ds-type-specimen {
+  margin-bottom: var(--space-9);
+  padding-bottom: var(--space-9);
+  border-bottom: 1px solid var(--border-default);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-type-specimen:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ds-type-specimen__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.ds-type-specimen__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ds-type-specimen__specs {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--green);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ============================================= */
+/* SECTION: SPACING                              */
+/* ============================================= */
+.ds-spacing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) 0;
+}
+
+.ds-spacing-row__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  width: 72px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.ds-spacing-row__bar {
+  height: 24px;
+  background: var(--green-subtle);
+  border: 2px solid var(--green);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.ds-spacing-row__bar:hover {
+  background: var(--green-medium);
+}
+
+.ds-spacing-row__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  width: 40px;
+  flex-shrink: 0;
+}
+
+/* ============================================= */
+/* SECTION: ELEVATION                            */
+/* ============================================= */
+.ds-elevation-card {
+  width: 100%;
+  aspect-ratio: 1.4;
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  transition: background-color var(--duration-slow) var(--ease-out),
+              transform var(--duration-normal) var(--ease-spring);
+  border: 2px solid var(--border-default);
+}
+
+.ds-elevation-card:hover {
+  transform: translateY(-4px);
+}
+
+.ds-elevation-card__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+/* ============================================= */
+/* SECTION: RADIUS                               */
+/* ============================================= */
+.ds-radius-demo {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-7);
+  flex-wrap: wrap;
+}
+
+.ds-radius-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-radius-item__shape {
+  width: 72px;
+  height: 72px;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-tertiary);
+  transition: background-color var(--duration-slow) var(--ease-out),
+              border-color var(--duration-slow) var(--ease-out),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.ds-radius-item__shape:hover {
+  background: var(--green-subtle);
+  border-color: var(--green);
+  transform: scale(1.1);
+}
+
+.ds-radius-item__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ============================================= */
+/* COMPONENTS: BUTTONS                           */
+/* ============================================= */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ds-btn:active {
+  transform: scale(0.97);
+}
+
+.ds-btn:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* Size variants */
+.ds-btn--sm {
+  height: 36px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.ds-btn--md {
+  height: 44px;
+  padding: 0 var(--space-6);
+  font-size: var(--text-base);
+}
+
+.ds-btn--lg {
+  height: 52px;
+  padding: 0 var(--space-8);
+  font-size: var(--text-md);
+}
+
+.ds-btn--xl {
+  height: 60px;
+  padding: 0 var(--space-10);
+  font-size: var(--text-lg);
+  border-radius: var(--radius-lg);
+}
+
+/* Style: Primary (Green) */
+.ds-btn--primary {
+  background: var(--green);
+  color: var(--black);
+  border: 2px solid var(--green);
+}
+
+.ds-btn--primary:hover {
+  background: var(--green-hover);
+  border-color: var(--green-hover);
+  box-shadow: var(--shadow-accent);
+}
+
+.ds-btn--primary:active {
+  background: var(--green-active);
+  border-color: var(--green-active);
+}
+
+/* Style: Secondary (Outlined) */
+.ds-btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-strong);
+}
+
+.ds-btn--secondary:hover {
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+}
+
+/* Style: Ghost */
+.ds-btn--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid transparent;
+}
+
+.ds-btn--ghost:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Style: Danger */
+.ds-btn--danger {
+  background: var(--error);
+  color: var(--white);
+  border: 2px solid var(--error);
+}
+
+.ds-btn--danger:hover {
+  background: #E03030;
+  border-color: #E03030;
+}
+
+/* Disabled */
+.ds-btn:disabled,
+.ds-btn.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Loading */
+.ds-btn.is-loading {
+  color: transparent;
+  pointer-events: none;
+}
+
+.ds-btn.is-loading::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: var(--radius-full);
+  animation: btn-spin 0.6s linear infinite;
+}
+
+.ds-btn--primary.is-loading::after {
+  border-top-color: var(--black);
+}
+
+.ds-btn--secondary.is-loading::after {
+  border-top-color: var(--text-primary);
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Button icon */
+.ds-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.ds-btn--lg svg,
+.ds-btn--xl svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ============================================= */
+/* COMPONENTS: INPUTS                            */
+/* ============================================= */
+.ds-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ds-field__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ds-field__label .required {
+  color: var(--error);
+}
+
+.ds-field__hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.ds-input {
+  height: 48px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+  width: 100%;
+}
+
+.ds-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.ds-input:hover {
+  border-color: var(--gray-400);
+}
+
+.ds-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-subtle);
+}
+
+.ds-input.is-error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px var(--error-subtle);
+}
+
+.ds-input.is-success {
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px var(--green-subtle);
+}
+
+.ds-field__error {
+  font-size: var(--text-xs);
+  color: var(--error);
+  font-weight: var(--weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ds-field__success {
+  font-size: var(--text-xs);
+  color: var(--success);
+  font-weight: var(--weight-medium);
+}
+
+/* Select */
+.ds-select-wrap {
+  position: relative;
+}
+
+.ds-select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--text-secondary);
+  pointer-events: none;
+}
+
+.ds-select {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 48px;
+  padding: 0 var(--space-8) 0 var(--space-4);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+  width: 100%;
+  cursor: pointer;
+}
+
+.ds-select:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-subtle);
+}
+
+/* Textarea */
+.ds-textarea {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  min-height: 100px;
+  line-height: var(--leading-normal);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+  width: 100%;
+  font-family: var(--font-body);
+}
+
+.ds-textarea:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-subtle);
+}
+
+/* ============================================= */
+/* COMPONENTS: TOGGLE                            */
+/* ============================================= */
+.ds-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ds-toggle__track {
+  width: 48px;
+  height: 28px;
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+  position: relative;
+  transition: background-color var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .ds-toggle__track {
+  background: var(--gray-700);
+}
+
+.ds-toggle__thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--white);
+  border-radius: var(--radius-full);
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-sm);
+}
+
+.ds-toggle.is-active .ds-toggle__track {
+  background: var(--green);
+}
+
+.ds-toggle.is-active .ds-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.ds-toggle__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* COMPONENTS: CHECKBOX & RADIO                  */
+/* ============================================= */
+.ds-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ds-check__box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+}
+
+.ds-check__box svg {
+  width: 12px;
+  height: 12px;
+  color: var(--black);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.ds-check.is-checked .ds-check__box {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.ds-check.is-checked .ds-check__box svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ds-check__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+/* Radio */
+.ds-radio__box {
+  border-radius: var(--radius-full);
+}
+
+.ds-radio__box .ds-radio__dot {
+  width: 10px;
+  height: 10px;
+  background: var(--black);
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.ds-check.is-checked .ds-radio__box {
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.ds-check.is-checked .ds-radio__box .ds-radio__dot {
+  opacity: 1;
+  transform: scale(1);
+  background: var(--black);
+}
+
+/* ============================================= */
+/* COMPONENTS: SLIDER                            */
+/* ============================================= */
+.ds-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ds-slider-wrap__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ds-slider-wrap__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.ds-slider-wrap__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--green);
+}
+
+.ds-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+
+.ds-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: var(--green);
+  border: 3px solid var(--bg-primary);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.ds-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-accent);
+}
+
+.ds-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: var(--green);
+  border: 3px solid var(--bg-primary);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+
+/* ============================================= */
+/* COMPONENTS: BADGES                            */
+/* ============================================= */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ds-badge--default {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border-default);
+}
+
+.ds-badge--green {
+  background: var(--green-subtle);
+  color: var(--green);
+  border: 1.5px solid var(--green);
+}
+
+.ds-badge--error {
+  background: var(--error-subtle);
+  color: var(--error);
+  border: 1.5px solid var(--error);
+}
+
+.ds-badge--warning {
+  background: var(--warning-subtle);
+  color: var(--warning);
+  border: 1.5px solid var(--warning);
+}
+
+.ds-badge--solid {
+  background: var(--green);
+  color: var(--black);
+  border: 1.5px solid var(--green);
+}
+
+.ds-badge--dark {
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  border: 1.5px solid var(--bg-inverse);
+}
+
+.ds-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+/* ============================================= */
+/* COMPONENTS: CARDS                             */
+/* ============================================= */
+.ds-card {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-card--interactive:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ds-card__header {
+  padding: var(--space-6);
+  border-bottom: 2px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-card__body {
+  padding: var(--space-6);
+}
+
+.ds-card__footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 2px solid var(--border-default);
+  background: var(--bg-secondary);
+  transition: border-color var(--duration-slow) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.ds-card__subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+/* ============================================= */
+/* COMPONENTS: STAT / METRIC CARD                */
+/* ============================================= */
+.ds-stat {
+  padding: var(--space-6);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  transition: border-color var(--duration-normal) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-stat:hover {
+  border-color: var(--green);
+}
+
+.ds-stat__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+
+.ds-stat__value {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-none);
+  margin-bottom: var(--space-2);
+}
+
+.ds-stat__change {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
+.ds-stat__change--up {
+  color: var(--green);
+  background: var(--green-subtle);
+}
+
+.ds-stat__change--down {
+  color: var(--error);
+  background: var(--error-subtle);
+}
+
+.ds-stat__sparkline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  opacity: 0.15;
+}
+
+/* ============================================= */
+/* COMPONENTS: PROGRESS / STEPPER                */
+/* ============================================= */
+.ds-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ds-progress__bar {
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  transition: background-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-progress__fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slower) var(--ease-out);
+}
+
+.ds-progress__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ds-progress__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.ds-progress__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* Stepper */
+.ds-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ds-stepper__step {
+  height: 4px;
+  flex: 1;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+.ds-stepper__step.is-complete {
+  background: var(--green);
+}
+
+.ds-stepper__step.is-current {
+  background: var(--green);
+  animation: stepper-pulse 2s var(--ease-in-out) infinite;
+}
+
+@keyframes stepper-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ============================================= */
+/* COMPONENTS: TOAST / FEEDBACK                  */
+/* ============================================= */
+.ds-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 2px solid;
+  position: relative;
+}
+
+.ds-toast--success {
+  background: var(--green-subtle);
+  border-color: var(--green);
+  color: var(--text-primary);
+}
+
+.ds-toast--error {
+  background: var(--error-subtle);
+  border-color: var(--error);
+  color: var(--text-primary);
+}
+
+.ds-toast--warning {
+  background: var(--warning-subtle);
+  border-color: var(--warning);
+  color: var(--text-primary);
+}
+
+.ds-toast__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ds-toast__content {
+  flex: 1;
+}
+
+.ds-toast__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+.ds-toast__message {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.ds-toast__close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.ds-toast__close:hover {
+  background: rgba(0,0,0,0.08);
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* COMPONENTS: EMPTY STATE                       */
+/* ============================================= */
+.ds-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  border: 2px dashed var(--border-default);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-empty__icon {
+  width: 48px;
+  height: 48px;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-5);
+}
+
+.ds-empty__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.ds-empty__desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 320px;
+  margin-bottom: var(--space-6);
+}
+
+/* ============================================= */
+/* COMPONENTS: SKELETON / LOADING                */
+/* ============================================= */
+.ds-skeleton {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  transition: background-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  animation: skeleton-shimmer 1.8s linear infinite;
+}
+
+[data-theme="dark"] .ds-skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+}
+
+@keyframes skeleton-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ============================================= */
+/* COMPONENTS: MINI CHART                        */
+/* ============================================= */
+.ds-mini-chart {
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  background: var(--bg-primary);
+  transition: border-color var(--duration-normal) var(--ease-out),
+              background-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-mini-chart:hover {
+  border-color: var(--border-strong);
+}
+
+.ds-mini-chart__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-5);
+}
+
+.ds-mini-chart__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.ds-mini-chart__value {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-none);
+  margin-top: var(--space-2);
+}
+
+.ds-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 60px;
+}
+
+.ds-bar-chart__bar {
+  flex: 1;
+  background: var(--green);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  opacity: 0.6;
+}
+
+.ds-bar-chart__bar:hover {
+  opacity: 1;
+}
+
+.ds-bar-chart__bar:last-child {
+  opacity: 1;
+}
+
+/* Donut chart */
+.ds-donut-chart {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-donut-chart__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+/* ============================================= */
+/* COMPONENTS: TABLE ROW                         */
+/* ============================================= */
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ds-table th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 2px solid var(--border-default);
+}
+
+.ds-table td {
+  font-size: var(--text-sm);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-table tr {
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.ds-table tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
+/* ============================================= */
+/* COMPONENTS: NAVIGATION TABS                   */
+/* ============================================= */
+.ds-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border-default);
+  gap: var(--space-1);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-tab {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.ds-tab:hover {
+  color: var(--text-primary);
+}
+
+.ds-tab.is-active {
+  color: var(--text-primary);
+  border-bottom-color: var(--green);
+}
+
+/* ============================================= */
+/* COMPONENTS: BREADCRUMBS                       */
+/* ============================================= */
+.ds-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.ds-breadcrumbs__item {
+  color: var(--text-tertiary);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.ds-breadcrumbs__item:hover {
+  color: var(--text-primary);
+}
+
+.ds-breadcrumbs__item.is-current {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.ds-breadcrumbs__sep {
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+}
+
+/* ============================================= */
+/* COMPONENTS: AVATAR                            */
+/* ============================================= */
+.ds-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--green);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--weight-bold);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+  border: 2px solid var(--bg-primary);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-avatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--text-xs);
+}
+
+.ds-avatar--lg {
+  width: 56px;
+  height: 56px;
+  font-size: var(--text-lg);
+}
+
+/* ============================================= */
+/* COMPONENTS: TAG / CHIP                        */
+/* ============================================= */
+.ds-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 32px;
+  padding: 0 var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: var(--bg-primary);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ds-tag:hover {
+  border-color: var(--border-strong);
+}
+
+.ds-tag.is-selected {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--black);
+}
+
+.ds-tag__remove {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  opacity: 0.6;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.ds-tag__remove:hover {
+  opacity: 1;
+}
+
+/* ============================================= */
+/* COMPONENTS: TOOLTIP (CSS only)                */
+/* ============================================= */
+.ds-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.ds-tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  border-radius: var(--radius-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+  z-index: var(--z-tooltip, 600);
+}
+
+.ds-tooltip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================= */
+/* SECTION: MOTION DEMO                          */
+/* ============================================= */
+.ds-motion-box {
+  width: 100%;
+  aspect-ratio: 2;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-motion-ball {
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  border-radius: var(--radius-full);
+  position: absolute;
+}
+
+/* ============================================= */
+/* OBSERVER ANIMATIONS                           */
+/* ============================================= */
+.ds-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-slower) var(--ease-out),
+              transform var(--duration-slower) var(--ease-out);
+}
+
+.ds-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.ds-stagger > .ds-reveal:nth-child(1) { transition-delay: 0ms; }
+.ds-stagger > .ds-reveal:nth-child(2) { transition-delay: 80ms; }
+.ds-stagger > .ds-reveal:nth-child(3) { transition-delay: 160ms; }
+.ds-stagger > .ds-reveal:nth-child(4) { transition-delay: 240ms; }
+.ds-stagger > .ds-reveal:nth-child(5) { transition-delay: 320ms; }
+.ds-stagger > .ds-reveal:nth-child(6) { transition-delay: 400ms; }
+
+/* ============================================= */
+/* RESPONSIVE                                    */
+/* ============================================= */
+@media (max-width: 768px) {
+  .ds-hero__title {
+    font-size: clamp(var(--text-4xl), 10vw, var(--text-5xl));
+  }
+  .ds-section {
+    padding: var(--space-12) 0;
+  }
+  .ds-hero {
+    padding-top: calc(60px + var(--space-12));
+    padding-bottom: var(--space-12);
+  }
+  .ds-hero__meta {
+    gap: var(--space-5);
+  }
+  .ds-container {
+    padding: 0 var(--space-4);
+  }
+  .ds-radius-demo {
+    gap: var(--space-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .ds-topbar__logo-badge {
+    display: none;
+  }
+}
+
+/* ============================================= */
+/* SCROLLBAR STYLING                             */
+/* ============================================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--gray-700);
+}
+
+/* ============================================= */
+/* COMPONENT SHOWCASE LAYOUT                     */
+/* ============================================= */
+.ds-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+}
+
+.ds-showcase__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.ds-showcase__group-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-showcase__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.ds-showcase__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ============================================= */
+/* TOKEN TABLE                                   */
+/* ============================================= */
+.ds-token-table {
+  width: 100%;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-token-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ds-token-table th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-default);
+  transition: background-color var(--duration-slow) var(--ease-out),
+              border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-token-table td {
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: border-color var(--duration-slow) var(--ease-out);
+}
+
+.ds-token-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ds-token-table .token-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--green);
+  letter-spacing: var(--tracking-wide);
+}
+
+.ds-token-table .token-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+/* ============================================= */
+/* FOOTER                                        */
+/* ============================================= */
+.ds-footer {
+  padding: var(--space-12) 0;
+  text-align: center;
+}
+
+.ds-footer__text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.ds-footer__logo {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+}
+
+.ds-footer__logo em {
+  font-style: normal;
+  color: var(--green);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- NAVIGATION: TOP BAR                           -->
+<!-- ============================================= -->
+<nav class="ds-topbar" id="topbar" role="navigation" aria-label="Design system navigation">
+  <div class="ds-topbar__inner">
+    <div class="ds-topbar__logo">
+      <div class="ds-topbar__logo-mark" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M4 8L7 11L12 5" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ds-topbar__logo-text">KhromaDiet</span>
+      <span class="ds-topbar__logo-badge">Design System v1.0</span>
+    </div>
+    <div class="ds-topbar__actions">
+      <nav class="ds-topbar__nav" aria-label="Section navigation">
+        <a href="#principles" class="ds-topbar__nav-link">Principles</a>
+        <a href="#color" class="ds-topbar__nav-link">Color</a>
+        <a href="#typography" class="ds-topbar__nav-link">Type</a>
+        <a href="#components" class="ds-topbar__nav-link">Components</a>
+        <a href="#patterns" class="ds-topbar__nav-link">Patterns</a>
+      </nav>
+      <button class="ds-theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================= -->
+<!-- HERO: MANIFESTO HEADER                        -->
+<!-- ============================================= -->
+<header class="ds-hero" id="hero">
+  <div class="ds-container">
+    <div class="ds-hero__label ds-reveal">KhromaDiet Design System</div>
+    <h1 class="ds-hero__title ds-reveal">Visual<br>Foun<em>d</em>ation</h1>
+    <p class="ds-hero__subtitle ds-reveal">The official design language for KhromaDiet. A strict, cohesive system built to sustain Hero, Form, Summary and Dashboard with absolute consistency across every surface, state and interaction.</p>
+    <div class="ds-hero__meta ds-reveal">
+      <div class="ds-hero__meta-item">
+        <span class="ds-hero__meta-value">v1.0.0</span>
+        <span class="ds-hero__meta-label">Version</span>
+      </div>
+      <div class="ds-hero__meta-item">
+        <span class="ds-hero__meta-value">3 Colors</span>
+        <span class="ds-hero__meta-label">Palette</span>
+      </div>
+      <div class="ds-hero__meta-item">
+        <span class="ds-hero__meta-value">8px Grid</span>
+        <span class="ds-hero__meta-label">Base Unit</span>
+      </div>
+      <div class="ds-hero__meta-item">
+        <span class="ds-hero__meta-value">15 Tokens</span>
+        <span class="ds-hero__meta-label">Spacing</span>
+      </div>
+      <div class="ds-hero__meta-item">
+        <span class="ds-hero__meta-value">Light + Dark</span>
+        <span class="ds-hero__meta-label">Themes</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============================================= -->
+  <!-- SECTION: DESIGN PRINCIPLES                    -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="principles">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">01 — Foundation</span>
+      <h2 class="ds-section__title ds-reveal">Design Principles</h2>
+      <p class="ds-section__desc ds-reveal">Five non-negotiable beliefs that shape every decision. If a component, animation or layout choice cannot trace back to one of these principles, it does not belong in the system.</p>
+      <div class="ds-grid-3 ds-stagger">
+        <article class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">01</div>
+          <h3 class="ds-principle-card__title">Structural Clarity</h3>
+          <p class="ds-principle-card__desc">Every element earns its space. No ornament without function. Borders, blocks and surfaces communicate hierarchy — not decoration.</p>
+        </article>
+        <article class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">02</div>
+          <h3 class="ds-principle-card__title">Clinical Confidence</h3>
+          <p class="ds-principle-card__desc">Generous whitespace, precise alignment and restrained palette create the feeling of a system that knows exactly what it's doing.</p>
+        </article>
+        <article class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">03</div>
+          <h3 class="ds-principle-card__title">Tactile Precision</h3>
+          <p class="ds-principle-card__desc">Interactive elements feel solid and responsive. Weight, depth and motion feedback make digital surfaces feel physically grounded.</p>
+        </article>
+        <article class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">04</div>
+          <h3 class="ds-principle-card__title">Purposeful Motion</h3>
+          <p class="ds-principle-card__desc">Animation exists only to orient, confirm or reveal. Every transition has a reason. Zero decorative movement. Zero delays without meaning.</p>
+        </article>
+        <article class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">05</div>
+          <h3 class="ds-principle-card__title">Essential Completeness</h3>
+          <p class="ds-principle-card__desc">Ship less, but ship finished. Every state is designed: empty, loading, error, success, edge. Nothing is left as an afterthought.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION: COLOR SYSTEM                         -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="color">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">02 — Chromatic</span>
+      <h2 class="ds-section__title ds-reveal">Color System</h2>
+      <p class="ds-section__desc ds-reveal">Three colors. No exceptions. White for surface. Black for structure. Green for energy. All sophistication comes from contrast, transparency and material — never from palette expansion.</p>
+
+      <div class="ds-grid-3 ds-stagger" style="margin-bottom: var(--space-9);">
+        <div class="ds-color-block ds-reveal">
+          <div class="ds-color-block__swatch" style="background: #000000;">
+            <span style="color: #fff; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Structure</span>
+          </div>
+          <div class="ds-color-block__info">
+            <div class="ds-color-block__name">Black</div>
+            <div class="ds-color-block__value">#000000</div>
+            <div class="ds-color-block__usage">Text, borders, inverse surfaces, structural weight</div>
+          </div>
+        </div>
+        <div class="ds-color-block ds-reveal">
+          <div class="ds-color-block__swatch" style="background: #FFFFFF; border-bottom: 2px solid var(--border-default);">
+            <span style="color: #000; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Surface</span>
+          </div>
+          <div class="ds-color-block__info">
+            <div class="ds-color-block__name">White</div>
+            <div class="ds-color-block__value">#FFFFFF</div>
+            <div class="ds-color-block__usage">Primary background, cards, elevated surfaces</div>
+          </div>
+        </div>
+        <div class="ds-color-block ds-reveal">
+          <div class="ds-color-block__swatch" style="background: #00E46A;">
+            <span style="color: #000; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Energy</span>
+          </div>
+          <div class="ds-color-block__info">
+            <div class="ds-color-block__name">Green</div>
+            <div class="ds-color-block__value">#00E46A</div>
+            <div class="ds-color-block__usage">CTAs, focus, selection, progress, accents</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-showcase__group ds-reveal" style="margin-bottom: var(--space-9);">
+        <div class="ds-showcase__group-title">Neutral Scale</div>
+        <div class="ds-neutral-strip">
+          <div class="ds-neutral-strip__cell" style="background: #FAFAFA;"><span style="color:#000;">50</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #F4F4F5;"><span style="color:#000;">100</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #EBEBED;"><span style="color:#000;">150</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #E0E0E3;"><span style="color:#000;">200</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #C6C6CC;"><span style="color:#000;">300</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #9E9EA8;"><span style="color:#000;">400</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #71717A;"><span style="color:#fff;">500</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #52525B;"><span style="color:#fff;">600</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #3F3F46;"><span style="color:#fff;">700</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #27272A;"><span style="color:#fff;">800</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #18181B;"><span style="color:#fff;">900</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #09090B;"><span style="color:#fff;">950</span></div>
+        </div>
+      </div>
+
+      <div class="ds-showcase__group ds-reveal">
+        <div class="ds-showcase__group-title">Green Scale (Derived)</div>
+        <div class="ds-neutral-strip">
+          <div class="ds-neutral-strip__cell" style="background: #00E46A1A; flex: 2;"><span style="color:#000;">Subtle 10%</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #00E46A33; flex: 2;"><span style="color:#000;">Medium 20%</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #00E46A66; flex: 2;"><span style="color:#000;">Glow 40%</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #00E46A; flex: 2;"><span style="color:#000;">Base</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #00C95D; flex: 2;"><span style="color:#000;">Hover</span></div>
+          <div class="ds-neutral-strip__cell" style="background: #00AD50; flex: 2;"><span style="color:#000;">Active</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION: TYPOGRAPHY                           -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="typography">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">03 — Typographic</span>
+      <h2 class="ds-section__title ds-reveal">Type System</h2>
+      <p class="ds-section__desc ds-reveal">System font stack for maximum performance and native feel. Hierarchy through weight, size and tracking — not through font diversity.</p>
+
+      <div class="ds-showcase ds-reveal">
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Display / Hero</span>
+            <span class="ds-type-specimen__specs">5.5rem · 900 · -0.04em · 0.95</span>
+          </div>
+          <div style="font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.95;">
+            KhromaDiet
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Heading 1</span>
+            <span class="ds-type-specimen__specs">4.25rem · 900 · -0.03em · 1.0</span>
+          </div>
+          <div style="font-size: clamp(2.25rem, 4.5vw, 4.25rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1;">
+            Your nutrition,<br>measured.
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Heading 2</span>
+            <span class="ds-type-specimen__specs">2.625rem · 700 · -0.03em · 1.15</span>
+          </div>
+          <div style="font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15;">
+            Dashboard Analytics
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Heading 3</span>
+            <span class="ds-type-specimen__specs">2rem · 700 · -0.02em · 1.2</span>
+          </div>
+          <div style="font-size: var(--text-3xl); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2;">
+            Profile Summary
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Heading 4</span>
+            <span class="ds-type-specimen__specs">1.3125rem · 600 · -0.015em · 1.3</span>
+          </div>
+          <div style="font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3;">
+            Weekly Macro Distribution
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Body Large</span>
+            <span class="ds-type-specimen__specs">1.125rem · 400 · 0 · 1.55</span>
+          </div>
+          <div style="font-size: var(--text-lg); font-weight: 400; line-height: 1.55; max-width: 560px;">
+            Track your macronutrients with clinical precision. KhromaDiet adapts to your body composition, activity level and metabolic profile to deliver personalized nutrition guidance.
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Body Base</span>
+            <span class="ds-type-specimen__specs">0.9375rem · 400 · 0 · 1.55</span>
+          </div>
+          <div style="font-size: var(--text-base); font-weight: 400; line-height: 1.55; max-width: 520px;">
+            Based on your responses, we've calculated your daily caloric needs at 2,340 kcal with a macro split of 40% carbohydrates, 30% protein and 30% healthy fats. Adjustments are recommended after your first 14 days.
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Small / Caption</span>
+            <span class="ds-type-specimen__specs">0.8125rem · 500 · 0 · 1.4</span>
+          </div>
+          <div style="font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--text-secondary);">
+            Last updated 3 minutes ago · Step 7 of 14 · 85% complete
+          </div>
+        </div>
+
+        <div class="ds-type-specimen">
+          <div class="ds-type-specimen__meta">
+            <span class="ds-type-specimen__label">Mono / Technical</span>
+            <span class="ds-type-specimen__specs">0.6875rem · 500 · 0.08em · 1.4 · uppercase</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary);">
+            Macronutrient Ratio · Daily Intake · BMR Calculation · Active Metabolic Rate
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION: SPACING & GRID                       -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="spacing">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">04 — Spatial</span>
+      <h2 class="ds-section__title ds-reveal">Spacing & Grid</h2>
+      <p class="ds-section__desc ds-reveal">A 4px base unit, doubling progressively. Sparse density with generous breathing room. Every measurement is intentional.</p>
+
+      <div class="ds-grid-2 ds-reveal">
+        <div>
+          <div class="ds-showcase__group-title" style="margin-bottom: var(--space-6);">Spacing Scale</div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-1</span>
+            <div class="ds-spacing-row__bar" style="width: 4px;"></div>
+            <span class="ds-spacing-row__value">4px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-2</span>
+            <div class="ds-spacing-row__bar" style="width: 8px;"></div>
+            <span class="ds-spacing-row__value">8px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-3</span>
+            <div class="ds-spacing-row__bar" style="width: 12px;"></div>
+            <span class="ds-spacing-row__value">12px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-4</span>
+            <div class="ds-spacing-row__bar" style="width: 16px;"></div>
+            <span class="ds-spacing-row__value">16px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-5</span>
+            <div class="ds-spacing-row__bar" style="width: 20px;"></div>
+            <span class="ds-spacing-row__value">20px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-6</span>
+            <div class="ds-spacing-row__bar" style="width: 24px;"></div>
+            <span class="ds-spacing-row__value">24px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-7</span>
+            <div class="ds-spacing-row__bar" style="width: 32px;"></div>
+            <span class="ds-spacing-row__value">32px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-8</span>
+            <div class="ds-spacing-row__bar" style="width: 40px;"></div>
+            <span class="ds-spacing-row__value">40px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-9</span>
+            <div class="ds-spacing-row__bar" style="width: 48px;"></div>
+            <span class="ds-spacing-row__value">48px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-10</span>
+            <div class="ds-spacing-row__bar" style="width: 56px;"></div>
+            <span class="ds-spacing-row__value">56px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-11</span>
+            <div class="ds-spacing-row__bar" style="width: 64px;"></div>
+            <span class="ds-spacing-row__value">64px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-12</span>
+            <div class="ds-spacing-row__bar" style="width: 80px;"></div>
+            <span class="ds-spacing-row__value">80px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-13</span>
+            <div class="ds-spacing-row__bar" style="width: 96px;"></div>
+            <span class="ds-spacing-row__value">96px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-14</span>
+            <div class="ds-spacing-row__bar" style="width: 120px;"></div>
+            <span class="ds-spacing-row__value">120px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-row__label">space-15</span>
+            <div class="ds-spacing-row__bar" style="width: 160px;"></div>
+            <span class="ds-spacing-row__value">160px</span>
+          </div>
+        </div>
+        <div>
+          <div class="ds-showcase__group-title" style="margin-bottom: var(--space-6);">Border Radius</div>
+          <div class="ds-radius-demo">
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__shape" style="border-radius: 0;"></div>
+              <span class="ds-radius-item__label">none · 0</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__shape" style="border-radius: 4px;"></div>
+              <span class="ds-radius-item__label">sm · 4px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__shape" style="border-radius: 8px;"></div>
+              <span class="ds-radius-item__label">md · 8px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__shape" style="border-radius: 12px;"></div>
+              <span class="ds-radius-item__label">lg · 12px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__shape" style="border-radius: 16px;"></div>
+              <span class="ds-radius-item__label">xl · 16px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__shape" style="border-radius: 9999px;"></div>
+              <span class="ds-radius-item__label">full</span>
+            </div>
+          </div>
+
+          <div class="ds-showcase__group-title" style="margin-bottom: var(--space-6); margin-top: var(--space-9);">Elevation</div>
+          <div class="ds-grid-3" style="gap: var(--space-4);">
+            <div class="ds-elevation-card" style="box-shadow: var(--shadow-xs);">
+              <span class="ds-elevation-card__label">XS</span>
+            </div>
+            <div class="ds-elevation-card" style="box-shadow: var(--shadow-sm);">
+              <span class="ds-elevation-card__label">SM</span>
+            </div>
+            <div class="ds-elevation-card" style="box-shadow: var(--shadow-md);">
+              <span class="ds-elevation-card__label">MD</span>
+            </div>
+            <div class="ds-elevation-card" style="box-shadow: var(--shadow-lg);">
+              <span class="ds-elevation-card__label">LG</span>
+            </div>
+            <div class="ds-elevation-card" style="box-shadow: var(--shadow-xl);">
+              <span class="ds-elevation-card__label">XL</span>
+            </div>
+            <div class="ds-elevation-card" style="box-shadow: var(--shadow-accent);">
+              <span class="ds-elevation-card__label" style="color: var(--green);">Accent</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION: COMPONENTS                           -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="components">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">05 — Components</span>
+      <h2 class="ds-section__title ds-reveal">Component Library</h2>
+      <p class="ds-section__desc ds-reveal">Every interactive element, fully resolved across all states. Built for the real product — forms, dashboards, navigation and data surfaces.</p>
+
+      <div class="ds-showcase">
+
+        <!-- BUTTONS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Buttons</div>
+          <div class="ds-showcase__row">
+            <button class="ds-btn ds-btn--primary ds-btn--sm">Small</button>
+            <button class="ds-btn ds-btn--primary ds-btn--md">Continue</button>
+            <button class="ds-btn ds-btn--primary ds-btn--lg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Next Step
+            </button>
+            <button class="ds-btn ds-btn--primary ds-btn--xl">Get Started</button>
+          </div>
+          <div class="ds-showcase__row">
+            <button class="ds-btn ds-btn--secondary ds-btn--sm">Cancel</button>
+            <button class="ds-btn ds-btn--secondary ds-btn--md">Back</button>
+            <button class="ds-btn ds-btn--secondary ds-btn--lg">Learn More</button>
+          </div>
+          <div class="ds-showcase__row">
+            <button class="ds-btn ds-btn--ghost ds-btn--md">Skip for now</button>
+            <button class="ds-btn ds-btn--danger ds-btn--md">Delete Profile</button>
+            <button class="ds-btn ds-btn--primary ds-btn--md is-disabled" disabled>Disabled</button>
+            <button class="ds-btn ds-btn--primary ds-btn--md is-loading" aria-label="Loading">Loading</button>
+          </div>
+        </div>
+
+        <!-- BADGES -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Badges & Status</div>
+          <div class="ds-showcase__row">
+            <span class="ds-badge ds-badge--green"><span class="ds-badge__dot"></span>Active</span>
+            <span class="ds-badge ds-badge--error"><span class="ds-badge__dot"></span>Alert</span>
+            <span class="ds-badge ds-badge--warning"><span class="ds-badge__dot"></span>Pending</span>
+            <span class="ds-badge ds-badge--default">Default</span>
+            <span class="ds-badge ds-badge--solid">New</span>
+            <span class="ds-badge ds-badge--dark">Pro</span>
+          </div>
+        </div>
+
+        <!-- INPUTS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Form Inputs</div>
+          <div class="ds-grid-2">
+            <div class="ds-field">
+              <label class="ds-field__label" for="input-default">Full Name <span class="required">*</span></label>
+              <input type="text" class="ds-input" id="input-default" placeholder="Enter your full name">
+              <span class="ds-field__hint">As it appears on your ID</span>
+            </div>
+            <div class="ds-field">
+              <label class="ds-field__label" for="input-error">Email Address <span class="required">*</span></label>
+              <input type="email" class="ds-input is-error" id="input-error" value="invalid-email">
+              <span class="ds-field__error">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Please enter a valid email address
+              </span>
+            </div>
+            <div class="ds-field">
+              <label class="ds-field__label" for="input-success">Weight (kg)</label>
+              <input type="number" class="ds-input is-success" id="input-success" value="72.5">
+              <span class="ds-field__success">Valid measurement recorded</span>
+            </div>
+            <div class="ds-field">
+              <label class="ds-field__label" for="select-default">Activity Level</label>
+              <div class="ds-select-wrap">
+                <select class="ds-select" id="select-default">
+                  <option value="">Select your activity level</option>
+                  <option value="sedentary">Sedentary (little or no exercise)</option>
+                  <option value="light">Lightly active (1-3 days/week)</option>
+                  <option value="moderate">Moderately active (3-5 days/week)</option>
+                  <option value="very">Very active (6-7 days/week)</option>
+                  <option value="extra">Extra active (physical job + training)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-4);">
+            <div class="ds-field">
+              <label class="ds-field__label" for="textarea-default">Health Notes</label>
+              <textarea class="ds-textarea" id="textarea-default" placeholder="Any dietary restrictions, allergies or health conditions we should know about..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOGGLES, CHECKS, RADIOS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Selection Controls</div>
+          <div class="ds-grid-3">
+            <div class="ds-showcase__col">
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-2);">Toggles</div>
+              <div class="ds-toggle is-active" data-toggle role="switch" aria-checked="true" tabindex="0">
+                <div class="ds-toggle__track"><div class="ds-toggle__thumb"></div></div>
+                <span class="ds-toggle__label">Dark Mode</span>
+              </div>
+              <div class="ds-toggle" data-toggle role="switch" aria-checked="false" tabindex="0">
+                <div class="ds-toggle__track"><div class="ds-toggle__thumb"></div></div>
+                <span class="ds-toggle__label">Notifications</span>
+              </div>
+              <div class="ds-toggle is-active" data-toggle role="switch" aria-checked="true" tabindex="0">
+                <div class="ds-toggle__track"><div class="ds-toggle__thumb"></div></div>
+                <span class="ds-toggle__label">Auto-calculate BMR</span>
+              </div>
+            </div>
+            <div class="ds-showcase__col">
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-2);">Checkboxes</div>
+              <div class="ds-check is-checked" data-check tabindex="0" role="checkbox" aria-checked="true">
+                <div class="ds-check__box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="ds-check__label">Track calories</span>
+              </div>
+              <div class="ds-check" data-check tabindex="0" role="checkbox" aria-checked="false">
+                <div class="ds-check__box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="ds-check__label">Track hydration</span>
+              </div>
+              <div class="ds-check is-checked" data-check tabindex="0" role="checkbox" aria-checked="true">
+                <div class="ds-check__box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="ds-check__label">Weekly reports</span>
+              </div>
+            </div>
+            <div class="ds-showcase__col">
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-2);">Radio Buttons</div>
+              <div class="ds-check is-checked" data-radio="goal" tabindex="0" role="radio" aria-checked="true">
+                <div class="ds-check__box ds-radio__box"><div class="ds-radio__dot"></div></div>
+                <span class="ds-check__label">Lose weight</span>
+              </div>
+              <div class="ds-check" data-radio="goal" tabindex="0" role="radio" aria-checked="false">
+                <div class="ds-check__box ds-radio__box"><div class="ds-radio__dot"></div></div>
+                <span class="ds-check__label">Maintain weight</span>
+              </div>
+              <div class="ds-check" data-radio="goal" tabindex="0" role="radio" aria-checked="false">
+                <div class="ds-check__box ds-radio__box"><div class="ds-radio__dot"></div></div>
+                <span class="ds-check__label">Build muscle</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDER -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Sliders</div>
+          <div class="ds-grid-2">
+            <div class="ds-slider-wrap">
+              <div class="ds-slider-wrap__header">
+                <span class="ds-slider-wrap__label">Target Weight</span>
+                <span class="ds-slider-wrap__value" id="slider1-val">68 kg</span>
+              </div>
+              <input type="range" class="ds-slider" id="slider1" min="40" max="150" value="68" aria-label="Target weight">
+            </div>
+            <div class="ds-slider-wrap">
+              <div class="ds-slider-wrap__header">
+                <span class="ds-slider-wrap__label">Protein Ratio</span>
+                <span class="ds-slider-wrap__value" id="slider2-val">30%</span>
+              </div>
+              <input type="range" class="ds-slider" id="slider2" min="10" max="50" value="30" aria-label="Protein ratio">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAGS / CHIPS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Tags & Chips</div>
+          <div class="ds-showcase__row">
+            <span class="ds-tag is-selected" data-tag>Protein</span>
+            <span class="ds-tag is-selected" data-tag>Low Carb</span>
+            <span class="ds-tag" data-tag>Vegetarian</span>
+            <span class="ds-tag" data-tag>Keto</span>
+            <span class="ds-tag" data-tag>Mediterranean</span>
+            <span class="ds-tag" data-tag>Intermittent Fasting</span>
+            <span class="ds-tag" data-tag>Gluten-Free</span>
+            <span class="ds-tag" data-tag>High Fiber</span>
+          </div>
+        </div>
+
+        <!-- PROGRESS & STEPPER -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Progress & Stepper</div>
+          <div class="ds-grid-2">
+            <div>
+              <div class="ds-progress" style="margin-bottom: var(--space-6);">
+                <div class="ds-progress__meta">
+                  <span class="ds-progress__label">Daily Calorie Goal</span>
+                  <span class="ds-progress__value">1,680 / 2,340 kcal</span>
+                </div>
+                <div class="ds-progress__bar">
+                  <div class="ds-progress__fill" style="width: 72%;"></div>
+                </div>
+              </div>
+              <div class="ds-progress" style="margin-bottom: var(--space-6);">
+                <div class="ds-progress__meta">
+                  <span class="ds-progress__label">Protein Intake</span>
+                  <span class="ds-progress__value">45 / 120g</span>
+                </div>
+                <div class="ds-progress__bar">
+                  <div class="ds-progress__fill" style="width: 37%;"></div>
+                </div>
+              </div>
+              <div class="ds-progress">
+                <div class="ds-progress__meta">
+                  <span class="ds-progress__label">Profile Completion</span>
+                  <span class="ds-progress__value">100%</span>
+                </div>
+                <div class="ds-progress__bar">
+                  <div class="ds-progress__fill" style="width: 100%;"></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-4);">Form Stepper (14 steps)</div>
+              <div class="ds-stepper" style="margin-bottom: var(--space-6);">
+                <div class="ds-stepper__step is-complete"></div>
+                <div class="ds-stepper__step is-complete"></div>
+                <div class="ds-stepper__step is-complete"></div>
+                <div class="ds-stepper__step is-complete"></div>
+                <div class="ds-stepper__step is-complete"></div>
+                <div class="ds-stepper__step is-complete"></div>
+                <div class="ds-stepper__step is-current"></div>
+                <div class="ds-stepper__step"></div>
+                <div class="ds-stepper__step"></div>
+                <div class="ds-stepper__step"></div>
+                <div class="ds-stepper__step"></div>
+                <div class="ds-stepper__step"></div>
+                <div class="ds-stepper__step"></div>
+                <div class="ds-stepper__step"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary); letter-spacing: var(--tracking-wide); text-transform: uppercase;">Step 7 of 14</span>
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--green); font-weight: var(--weight-semibold);">50%</span>
+              </div>
+
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-top: var(--space-8); margin-bottom: var(--space-4);">Skeleton Loading</div>
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                <div class="ds-skeleton" style="height: 14px; width: 40%;"></div>
+                <div class="ds-skeleton" style="height: 48px; width: 100%;"></div>
+                <div class="ds-skeleton" style="height: 14px; width: 65%;"></div>
+                <div style="display: flex; gap: var(--space-3); margin-top: var(--space-2);">
+                  <div class="ds-skeleton" style="height: 44px; width: 120px; border-radius: var(--radius-md);"></div>
+                  <div class="ds-skeleton" style="height: 44px; width: 100px; border-radius: var(--radius-md);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NAVIGATION PATTERNS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Navigation</div>
+          <div style="margin-bottom: var(--space-6);">
+            <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-3);">Tabs</div>
+            <div class="ds-tabs">
+              <button class="ds-tab is-active" data-tab-btn="overview">Overview</button>
+              <button class="ds-tab" data-tab-btn="macros">Macros</button>
+              <button class="ds-tab" data-tab-btn="meals">Meals</button>
+              <button class="ds-tab" data-tab-btn="history">History</button>
+              <button class="ds-tab" data-tab-btn="settings">Settings</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-3);">Breadcrumbs</div>
+            <nav class="ds-breadcrumbs" aria-label="Breadcrumb">
+              <a href="#" class="ds-breadcrumbs__item">Dashboard</a>
+              <span class="ds-breadcrumbs__sep" aria-hidden="true">/</span>
+              <a href="#" class="ds-breadcrumbs__item">Profile</a>
+              <span class="ds-breadcrumbs__sep" aria-hidden="true">/</span>
+              <span class="ds-breadcrumbs__item is-current" aria-current="page">Nutrition Plan</span>
+            </nav>
+          </div>
+        </div>
+
+        <!-- AVATARS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Avatars</div>
+          <div class="ds-showcase__row">
+            <div class="ds-avatar ds-avatar--sm">K</div>
+            <div class="ds-avatar">KD</div>
+            <div class="ds-avatar ds-avatar--lg">JM</div>
+            <div style="display: flex; margin-left: var(--space-4);">
+              <div class="ds-avatar" style="margin-left: -8px; z-index: 4;">A</div>
+              <div class="ds-avatar" style="margin-left: -8px; z-index: 3;">B</div>
+              <div class="ds-avatar" style="margin-left: -8px; z-index: 2;">C</div>
+              <div class="ds-avatar" style="margin-left: -8px; z-index: 1; background: var(--bg-tertiary); color: var(--text-secondary); font-size: var(--text-xs);">+5</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION: FEEDBACK STATES                      -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="patterns">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">06 — Patterns</span>
+      <h2 class="ds-section__title ds-reveal">States & Patterns</h2>
+      <p class="ds-section__desc ds-reveal">Every state the product can inhabit — feedback, emptiness, loading, data visualization, tables. Nothing is left to improvisation.</p>
+
+      <div class="ds-showcase">
+
+        <!-- TOASTS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Feedback Toasts</div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: 520px;">
+            <div class="ds-toast ds-toast--success">
+              <svg class="ds-toast__icon" viewBox="0 0 24 24" fill="none" stroke="#00E46A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <div class="ds-toast__content">
+                <div class="ds-toast__title">Profile saved successfully</div>
+                <div class="ds-toast__message">Your nutrition plan has been updated with the new parameters.</div>
+              </div>
+              <button class="ds-toast__close" aria-label="Dismiss">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div class="ds-toast ds-toast--error">
+              <svg class="ds-toast__icon" viewBox="0 0 24 24" fill="none" stroke="#FF3B3B" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <div class="ds-toast__content">
+                <div class="ds-toast__title">Calculation failed</div>
+                <div class="ds-toast__message">Unable to compute BMR. Please verify your height and weight inputs.</div>
+              </div>
+              <button class="ds-toast__close" aria-label="Dismiss">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div class="ds-toast ds-toast--warning">
+              <svg class="ds-toast__icon" viewBox="0 0 24 24" fill="none" stroke="#FFB800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <div class="ds-toast__content">
+                <div class="ds-toast__title">Low protein intake detected</div>
+                <div class="ds-toast__message">You've consumed only 23g of protein today. Target is 120g.</div>
+              </div>
+              <button class="ds-toast__close" aria-label="Dismiss">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Empty State</div>
+          <div class="ds-empty">
+            <svg class="ds-empty__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <h4 class="ds-empty__title">No meal data yet</h4>
+            <p class="ds-empty__desc">Start logging your meals to see your nutrition breakdown and progress analytics here.</p>
+            <button class="ds-btn ds-btn--primary ds-btn--md">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Log First Meal
+            </button>
+          </div>
+        </div>
+
+        <!-- CARDS (Data / Dashboard) -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Data Cards</div>
+          <div class="ds-grid-4">
+            <div class="ds-stat">
+              <div class="ds-stat__label">Daily Calories</div>
+              <div class="ds-stat__value">2,340</div>
+              <span class="ds-stat__change ds-stat__change--up">+12%</span>
+            </div>
+            <div class="ds-stat">
+              <div class="ds-stat__label">Protein</div>
+              <div class="ds-stat__value">120<span style="font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--text-tertiary);">g</span></div>
+              <span class="ds-stat__change ds-stat__change--up">+5g</span>
+            </div>
+            <div class="ds-stat">
+              <div class="ds-stat__label">Hydration</div>
+              <div class="ds-stat__value">2.1<span style="font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--text-tertiary);">L</span></div>
+              <span class="ds-stat__change ds-stat__change--down">-0.4L</span>
+            </div>
+            <div class="ds-stat">
+              <div class="ds-stat__label">Streak</div>
+              <div class="ds-stat__value" style="color: var(--green);">14<span style="font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--text-tertiary);">d</span></div>
+              <span class="ds-stat__change ds-stat__change--up">Best</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MINI CHARTS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Data Visualization</div>
+          <div class="ds-grid-3">
+            <div class="ds-mini-chart">
+              <div class="ds-mini-chart__header">
+                <div>
+                  <div class="ds-mini-chart__label">Weekly Intake</div>
+                  <div class="ds-mini-chart__value">1,892</div>
+                </div>
+                <span class="ds-badge ds-badge--green">On Track</span>
+              </div>
+              <div class="ds-bar-chart" id="bar-chart-1">
+                <div class="ds-bar-chart__bar" style="height: 60%;"></div>
+                <div class="ds-bar-chart__bar" style="height: 80%;"></div>
+                <div class="ds-bar-chart__bar" style="height: 45%;"></div>
+                <div class="ds-bar-chart__bar" style="height: 90%;"></div>
+                <div class="ds-bar-chart__bar" style="height: 70%;"></div>
+                <div class="ds-bar-chart__bar" style="height: 55%;"></div>
+                <div class="ds-bar-chart__bar" style="height: 85%;"></div>
+              </div>
+            </div>
+            <div class="ds-mini-chart">
+              <div class="ds-mini-chart__header">
+                <div>
+                  <div class="ds-mini-chart__label">Macro Split</div>
+                  <div class="ds-mini-chart__value">Balanced</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: var(--space-2); align-items: flex-end;">
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);">
+                  <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--green);">40%</div>
+                  <div style="width: 100%; height: 48px; background: var(--green); border-radius: var(--radius-sm);"></div>
+                  <div style="font-family: var(--font-mono); font-size: 9px; color: var(--text-tertiary); letter-spacing: 0.06em; text-transform: uppercase;">Carbs</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);">
+                  <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--green);">30%</div>
+                  <div style="width: 100%; height: 36px; background: var(--green); border-radius: var(--radius-sm); opacity: 0.7;"></div>
+                  <div style="font-family: var(--font-mono); font-size: 9px; color: var(--text-tertiary); letter-spacing: 0.06em; text-transform: uppercase;">Protein</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);">
+                  <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--green);">30%</div>
+                  <div style="width: 100%; height: 36px; background: var(--green); border-radius: var(--radius-sm); opacity: 0.4;"></div>
+                  <div style="font-family: var(--font-mono); font-size: 9px; color: var(--text-tertiary); letter-spacing: 0.06em; text-transform: uppercase;">Fat</div>
+                </div>
+              </div>
+            </div>
+            <div class="ds-mini-chart">
+              <div class="ds-mini-chart__header">
+                <div>
+                  <div class="ds-mini-chart__label">Completion</div>
+                  <div class="ds-mini-chart__value">86%</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: center; padding: var(--space-2) 0;">
+                <svg width="80" height="80" viewBox="0 0 80 80">
+                  <circle cx="40" cy="40" r="34" fill="none" stroke="var(--border-default)" stroke-width="6"/>
+                  <circle cx="40" cy="40" r="34" fill="none" stroke="var(--green)" stroke-width="6"
+                    stroke-dasharray="213.6" stroke-dashoffset="30" stroke-linecap="round"
+                    transform="rotate(-90 40 40)"
+                    style="transition: stroke-dashoffset 1s var(--ease-out);"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD VARIANTS -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Structured Cards</div>
+          <div class="ds-grid-2">
+            <div class="ds-card ds-card--interactive">
+              <div class="ds-card__header">
+                <div>
+                  <div class="ds-card__title">Daily Summary</div>
+                  <div class="ds-card__subtitle">Monday, January 15</div>
+                </div>
+                <span class="ds-badge ds-badge--green"><span class="ds-badge__dot"></span>Complete</span>
+              </div>
+              <div class="ds-card__body">
+                <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+                  <div class="ds-progress">
+                    <div class="ds-progress__meta">
+                      <span class="ds-progress__label">Calories</span>
+                      <span class="ds-progress__value">2,120 / 2,340</span>
+                    </div>
+                    <div class="ds-progress__bar">
+                      <div class="ds-progress__fill" style="width: 90%;"></div>
+                    </div>
+                  </div>
+                  <div class="ds-progress">
+                    <div class="ds-progress__meta">
+                      <span class="ds-progress__label">Water</span>
+                      <span class="ds-progress__value">2.5L / 3.0L</span>
+                    </div>
+                    <div class="ds-progress__bar">
+                      <div class="ds-progress__fill" style="width: 83%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ds-card__footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">Updated 5 min ago</span>
+                <button class="ds-btn ds-btn--ghost ds-btn--sm">View Details</button>
+              </div>
+            </div>
+            <div class="ds-card ds-card--interactive">
+              <div class="ds-card__header">
+                <div>
+                  <div class="ds-card__title">Meal Plan</div>
+                  <div class="ds-card__subtitle">Next meal in 2h 15m</div>
+                </div>
+                <span class="ds-badge ds-badge--warning"><span class="ds-badge__dot"></span>Upcoming</span>
+              </div>
+              <div class="ds-card__body">
+                <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); border: 1.5px solid var(--border-default); border-radius: var(--radius-md); transition: border-color var(--duration-slow) var(--ease-out);">
+                    <div>
+                      <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold);">Breakfast</div>
+                      <div style="font-size: var(--text-xs); color: var(--text-tertiary);">7:30 AM · 480 kcal</div>
+                    </div>
+                    <span class="ds-badge ds-badge--green" style="font-size: 9px;">Done</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); border: 1.5px solid var(--green); border-radius: var(--radius-md); background: var(--green-subtle);">
+                    <div>
+                      <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold);">Lunch</div>
+                      <div style="font-size: var(--text-xs); color: var(--text-tertiary);">12:30 PM · 720 kcal</div>
+                    </div>
+                    <span class="ds-badge ds-badge--solid" style="font-size: 9px;">Next</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); border: 1.5px solid var(--border-default); border-radius: var(--radius-md); opacity: 0.5; transition: border-color var(--duration-slow) var(--ease-out);">
+                    <div>
+                      <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold);">Dinner</div>
+                      <div style="font-size: var(--text-xs); color: var(--text-tertiary);">7:00 PM · 650 kcal</div>
+                    </div>
+                    <span class="ds-badge ds-badge--default" style="font-size: 9px;">Later</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ds-card__footer" style="display: flex; justify-content: flex-end;">
+                <button class="ds-btn ds-btn--primary ds-btn--sm">Edit Plan</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Data Table</div>
+          <div class="ds-token-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Meal</th>
+                  <th>Time</th>
+                  <th>Calories</th>
+                  <th>Protein</th>
+                  <th>Carbs</th>
+                  <th>Fat</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Greek Yogurt + Granola</td>
+                  <td><span class="token-value">7:30 AM</span></td>
+                  <td>320</td>
+                  <td>18g</td>
+                  <td>42g</td>
+                  <td>10g</td>
+                  <td><span class="ds-badge ds-badge--green" style="font-size: 9px;">Logged</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Grilled Chicken Salad</td>
+                  <td><span class="token-value">12:45 PM</span></td>
+                  <td>520</td>
+                  <td>42g</td>
+                  <td>28g</td>
+                  <td>22g</td>
+                  <td><span class="ds-badge ds-badge--green" style="font-size: 9px;">Logged</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Protein Shake</td>
+                  <td><span class="token-value">3:30 PM</span></td>
+                  <td>180</td>
+                  <td>30g</td>
+                  <td>8g</td>
+                  <td>4g</td>
+                  <td><span class="ds-badge ds-badge--green" style="font-size: 9px;">Logged</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Salmon + Brown Rice</td>
+                  <td><span class="token-value">7:00 PM</span></td>
+                  <td>680</td>
+                  <td>38g</td>
+                  <td>55g</td>
+                  <td>28g</td>
+                  <td><span class="ds-badge ds-badge--warning" style="font-size: 9px;">Pending</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Mixed Nuts</td>
+                  <td><span class="token-value">9:15 PM</span></td>
+                  <td>210</td>
+                  <td>6g</td>
+                  <td>9g</td>
+                  <td>18g</td>
+                  <td><span class="ds-badge ds-badge--default" style="font-size: 9px;">Planned</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MOTION -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Motion Language</div>
+          <div class="ds-grid-3">
+            <div>
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-3);">Ease Out (Primary)</div>
+              <div class="ds-motion-box" data-motion="ease-out">
+                <div class="ds-motion-ball" style="left: 16px;"></div>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-2);">cubic-bezier(0.16, 1, 0.3, 1)</div>
+            </div>
+            <div>
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-3);">Ease In-Out</div>
+              <div class="ds-motion-box" data-motion="ease-in-out">
+                <div class="ds-motion-ball" style="left: 16px;"></div>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-2);">cubic-bezier(0.65, 0, 0.35, 1)</div>
+            </div>
+            <div>
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-3);">Spring</div>
+              <div class="ds-motion-box" data-motion="spring">
+                <div class="ds-motion-ball" style="left: 16px;"></div>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-2);">cubic-bezier(0.34, 1.56, 0.64, 1)</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-4); display: flex; justify-content: center;">
+            <button class="ds-btn ds-btn--secondary ds-btn--md" id="playMotion">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Play All Curves
+            </button>
+          </div>
+        </div>
+
+        <!-- TOKEN REFERENCE -->
+        <div class="ds-showcase__group ds-reveal">
+          <div class="ds-showcase__group-title">Transition Tokens</div>
+          <div class="ds-token-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Value</th>
+                  <th>Usage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="token-name">--duration-instant</span></td>
+                  <td><span class="token-value">100ms</span></td>
+                  <td>Micro-feedback: checkbox tick, radio fill</td>
+                </tr>
+                <tr>
+                  <td><span class="token-name">--duration-fast</span></td>
+                  <td><span class="token-value">150ms</span></td>
+                  <td>Hover states, focus rings, color changes</td>
+                </tr>
+                <tr>
+                  <td><span class="token-name">--duration-normal</span></td>
+                  <td><span class="token-value">250ms</span></td>
+                  <td>Card elevation, border transitions, reveals</td>
+                </tr>
+                <tr>
+                  <td><span class="token-name">--duration-slow</span></td>
+                  <td><span class="token-value">400ms</span></td>
+                  <td>Theme switch, surface backgrounds, large reveals</td>
+                </tr>
+                <tr>
+                  <td><span class="token-name">--duration-slower</span></td>
+                  <td><span class="token-value">600ms</span></td>
+                  <td>Scroll reveals, stagger entry, progress fills</td>
+                </tr>
+                <tr>
+                  <td><span class="token-name">--ease-out</span></td>
+                  <td><span class="token-value">cubic-bezier(0.16, 1, 0.3, 1)</span></td>
+                  <td>Primary easing — all entrances and state changes</td>
+                </tr>
+                <tr>
+                  <td><span class="token-name">--ease-in-out</span></td>
+                  <td><span class="token-value">cubic-bezier(0.65, 0, 0.35, 1)</span></td>
+                  <td>Symmetric motion — looping, pulsing, cycling</td>
+                </tr>
+                <tr>
+                  <td><span class="token-name">--ease-spring</span></td>
+                  <td><span class="token-value">cubic-bezier(0.34, 1.56, 0.64, 1)</span></td>
+                  <td>Bouncy — toggles, scale pops, playful feedback</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION: RESPONSIVE PREVIEW                   -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="responsive">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">07 — Responsive</span>
+      <h2 class="ds-section__title ds-reveal">Breakpoint System</h2>
+      <p class="ds-section__desc ds-reveal">Mobile-first scaling with three key breakpoints. The grid collapses gracefully. Typography clamps. Spacing contracts proportionally.</p>
+
+      <div class="ds-token-table ds-reveal">
+        <table>
+          <thead>
+            <tr>
+              <th>Breakpoint</th>
+              <th>Width</th>
+              <th>Columns</th>
+              <th>Container</th>
+              <th>Gutter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: var(--weight-semibold);">Mobile</td>
+              <td><span class="token-value">0 — 768px</span></td>
+              <td>1</td>
+              <td>100% — 32px padding</td>
+              <td>16px</td>
+            </tr>
+            <tr>
+              <td style="font-weight: var(--weight-semibold);">Tablet</td>
+              <td><span class="token-value">769px — 1024px</span></td>
+              <td>2</td>
+              <td>100% — 48px padding</td>
+              <td>24px</td>
+            </tr>
+            <tr>
+              <td style="font-weight: var(--weight-semibold);">Desktop</td>
+              <td><span class="token-value">1025px+</span></td>
+              <td>3 — 4</td>
+              <td>1200px max</td>
+              <td>24px</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION: ACCESSIBILITY                        -->
+  <!-- ============================================= -->
+  <section class="ds-section" id="a11y">
+    <div class="ds-container">
+      <span class="ds-section__label ds-reveal">08 — Accessibility</span>
+      <h2 class="ds-section__title ds-reveal">A11Y Standards</h2>
+      <p class="ds-section__desc ds-reveal">WCAG AA compliance across all interactive elements. Keyboard navigation, focus management, semantic HTML and proper ARIA attributes are not optional — they are structural.</p>
+
+      <div class="ds-grid-3 ds-stagger">
+        <div class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">A11Y</div>
+          <h3 class="ds-principle-card__title">Contrast Ratios</h3>
+          <p class="ds-principle-card__desc">Black on White: 21:1. Green (#00E46A) on Black: 8.2:1. Green on White: 2.6:1 (decorative only, never for readable text). All body text meets AA minimum of 4.5:1.</p>
+        </div>
+        <div class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">A11Y</div>
+          <h3 class="ds-principle-card__title">Keyboard Navigation</h3>
+          <p class="ds-principle-card__desc">All interactive elements are focusable via Tab. Visible focus rings use green outline with 2px offset. Escape closes modals. Enter activates buttons. Space toggles controls.</p>
+        </div>
+        <div class="ds-principle-card ds-reveal">
+          <div class="ds-principle-card__number">A11Y</div>
+          <h3 class="ds-principle-card__title">Semantic Structure</h3>
+          <p class="ds-principle-card__desc">Proper heading hierarchy (h1-h6). ARIA labels on icon-only buttons. Role attributes on custom controls. Alt text policy. Landmark regions for screen readers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================= -->
+<!-- FOOTER                                        -->
+<!-- ============================================= -->
+<footer class="ds-footer ds-section">
+  <div class="ds-container">
+    <div class="ds-footer__logo ds-reveal">Khroma<em>Diet</em></div>
+    <div class="ds-footer__text ds-reveal">Design System v1.0.0 — Visual Foundation Manifesto</div>
+  </div>
+</footer>
+
+<!-- ============================================= -->
+<!-- JAVASCRIPT: INTERACTIONS & BEHAVIORS          -->
+<!-- ============================================= -->
+<script>
+// ============================================= //
+// SECTION: THEME TOGGLE                         //
+// ============================================= //
+(function() {
+  'use strict';
+
+  var themeToggle = document.getElementById('themeToggle');
+  var html = document.documentElement;
+
+  function getPreferredTheme() {
+    var stored = localStorage.getItem('khroma-theme');
+    if (stored) return stored;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('khroma-theme', theme);
+  }
+
+  setTheme(getPreferredTheme());
+
+  themeToggle.addEventListener('click', function() {
+    var current = html.getAttribute('data-theme');
+    setTheme(current === 'dark' ? 'light' : 'dark');
+  });
+})();
+
+// ============================================= //
+// SECTION: TOPBAR SCROLL EFFECT                 //
+// ============================================= //
+(function() {
+  'use strict';
+
+  var topbar = document.getElementById('topbar');
+  var scrolled = false;
+
+  function checkScroll() {
+    var isScrolled = window.scrollY > 10;
+    if (isScrolled !== scrolled) {
+      scrolled = isScrolled;
+      topbar.classList.toggle('is-scrolled', scrolled);
+    }
+  }
+
+  var scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (scrollTimeout) return;
+    scrollTimeout = requestAnimationFrame(function() {
+      checkScroll();
+      scrollTimeout = null;
+    });
+  }, { passive: true });
+
+  checkScroll();
+})();
+
+// ============================================= //
+// SECTION: INTERSECTION OBSERVER REVEALS        //
+// ============================================= //
+(function() {
+  'use strict';
+
+  var reveals = document.querySelectorAll('.ds-reveal');
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(function(el) { el.classList.add('is-visible'); });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+
+// ============================================= //
+// SECTION: TOGGLE INTERACTIONS                  //
+// ============================================= //
+(function() {
+  'use strict';
+
+  document.querySelectorAll('[data-toggle]').forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+      this.classList.toggle('is-active');
+      var isActive = this.classList.contains('is-active');
+      this.setAttribute('aria-checked', isActive ? 'true' : 'false');
+    });
+
+    toggle.addEventListener('keydown', function(e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+})();
+
+// ============================================= //
+// SECTION: CHECKBOX INTERACTIONS                //
+// ============================================= //
+(function() {
+  'use strict';
+
+  document.querySelectorAll('[data-check]').forEach(function(check) {
+    check.addEventListener('click', function() {
+      this.classList.toggle('is-checked');
+      var isChecked = this.classList.contains('is-checked');
+      this.setAttribute('aria-checked', isChecked ? 'true' : 'false');
+    });
+
+    check.addEventListener('keydown', function(e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+})();
+
+// ============================================= //
+// SECTION: RADIO BUTTON INTERACTIONS            //
+// ============================================= //
+(function() {
+  'use strict';
+
+  document.querySelectorAll('[data-radio]').forEach(function(radio) {
+    radio.addEventListener('click', function() {
+      var group = this.getAttribute('data-radio');
+      document.querySelectorAll('[data-radio="' + group + '"]').forEach(function(r) {
+        r.classList.remove('is-checked');
+        r.setAttribute('aria-checked', 'false');
+      });
+      this.classList.add('is-checked');
+      this.setAttribute('aria-checked', 'true');
+    });
+
+    radio.addEventListener('keydown', function(e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+})();
+
+// ============================================= //
+// SECTION: TAG / CHIP INTERACTIONS              //
+// ============================================= //
+(function() {
+  'use strict';
+
+  document.querySelectorAll('[data-tag]').forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      this.classList.toggle('is-selected');
+    });
+  });
+})();
+
+// ============================================= //
+// SECTION: TAB INTERACTIONS                     //
+// ============================================= //
+(function() {
+  'use strict';
+
+  document.querySelectorAll('[data-tab-btn]').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      this.closest('.ds-tabs').querySelectorAll('.ds-tab').forEach(function(t) {
+        t.classList.remove('is-active');
+      });
+      this.classList.add('is-active');
+    });
+  });
+})();
+
+// ============================================= //
+// SECTION: SLIDER VALUE DISPLAY                 //
+// ============================================= //
+(function() {
+  'use strict';
+
+  var slider1 = document.getElementById('slider1');
+  var slider1Val = document.getElementById('slider1-val');
+  if (slider1 && slider1Val) {
+    slider1.addEventListener('input', function() {
+      slider1Val.textContent = this.value + ' kg';
+    });
+  }
+
+  var slider2 = document.getElementById('slider2');
+  var slider2Val = document.getElementById('slider2-val');
+  if (slider2 && slider2Val) {
+    slider2.addEventListener('input', function() {
+      slider2Val.textContent = this.value + '%';
+    });
+  }
+})();
+
+// ============================================= //
+// SECTION: MOTION DEMO                          //
+// ============================================= //
+(function() {
+  'use strict';
+
+  var playBtn = document.getElementById('playMotion');
+  if (!playBtn) return;
+
+  var isPlaying = false;
+
+  playBtn.addEventListener('click', function() {
+    if (isPlaying) return;
+    isPlaying = true;
+    playBtn.classList.add('is-disabled');
+
+    var boxes = document.querySelectorAll('.ds-motion-box');
+    boxes.forEach(function(box) {
+      var ball = box.querySelector('.ds-motion-ball');
+      if (!ball) return;
+      var boxWidth = box.clientWidth;
+      var targetX = boxWidth - 48;
+
+      var motionType = box.getAttribute('data-motion');
+      var easing;
+      if (motionType === 'ease-out') easing = 'cubic-bezier(0.16, 1, 0.3, 1)';
+      else if (motionType === 'ease-in-out') easing = 'cubic-bezier(0.65, 0, 0.35, 1)';
+      else if (motionType === 'spring') easing = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+      ball.style.transition = 'none';
+      ball.style.left = '16px';
+
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          ball.style.transition = 'left 800ms ' + easing;
+          ball.style.left = targetX + 'px';
+        });
+      });
+    });
+
+    setTimeout(function() {
+      boxes.forEach(function(box) {
+        var ball = box.querySelector('.ds-motion-ball');
+        if (!ball) return;
+        var motionType = box.getAttribute('data-motion');
+        var easing;
+        if (motionType === 'ease-out') easing = 'cubic-bezier(0.16, 1, 0.3, 1)';
+        else if (motionType === 'ease-in-out') easing = 'cubic-bezier(0.65, 0, 0.35, 1)';
+        else if (motionType === 'spring') easing = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+        ball.style.transition = 'left 800ms ' + easing;
+        ball.style.left = '16px';
+      });
+
+      setTimeout(function() {
+        isPlaying = false;
+        playBtn.classList.remove('is-disabled');
+      }, 900);
+    }, 1200);
+  });
+})();
+
+// ============================================= //
+// SECTION: ACTIVE NAV LINK ON SCROLL            //
+// ============================================= //
+(function() {
+  'use strict';
+
+  var sections = document.querySelectorAll('.ds-section[id]');
+  var navLinks = document.querySelectorAll('.ds-topbar__nav-link');
+
+  if (sections.length === 0 || navLinks.length === 0) return;
+
+  var scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (scrollTimeout) return;
+    scrollTimeout = requestAnimationFrame(function() {
+      var scrollPos = window.scrollY + 120;
+      var currentId = '';
+
+      sections.forEach(function(section) {
+        if (section.offsetTop <= scrollPos) {
+          currentId = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(function(link) {
+        link.classList.remove('is-active');
+        if (link.getAttribute('href') === '#' + currentId) {
+          link.classList.add('is-active');
+        }
+      });
+
+      scrollTimeout = null;
+    });
+  }, { passive: true });
+})();
+
+// ============================================= //
+// SECTION: SMOOTH SCROLL FOR NAV LINKS          //
+// ============================================= //
+(function() {
+  'use strict';
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      e.preventDefault();
+      var offset = 80;
+      var targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    });
+  });
+})();
+
+// ============================================= //
+// SECTION: TOAST CLOSE BUTTONS                  //
+// ============================================= //
+(function() {
+  'use strict';
+
+  document.querySelectorAll('.ds-toast__close').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var toast = this.closest('.ds-toast');
+      if (!toast) return;
+      toast.style.transition = 'opacity 200ms ease, transform 200ms ease';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(20px)';
+      setTimeout(function() {
+        toast.style.display = 'none';
+      }, 220);
+    });
+  });
+})();
+
+</script>
+
+</body>
+</html>

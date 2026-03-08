@@ -1,4 +1,4 @@
-﻿import { calcBFNavy } from '../../lib/engine/calcBFNavy';
+import { calcBFNavy } from '../../lib/engine/calcBFNavy';
 
 describe('calcBFNavy', () => {
   it('calculates male body fat with valid geometry', () => {

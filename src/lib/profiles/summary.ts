@@ -1,4 +1,4 @@
-﻿import type { CalculationResults } from '../types/engine';
+import type { CalculationResults } from '../types/engine';
 import type { FormData } from '../types/form';
 
 import type { ProfileSummary } from './types';

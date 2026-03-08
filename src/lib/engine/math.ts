@@ -1,4 +1,4 @@
-﻿export const clamp = (value: number, min: number, max: number): number => {
+export const clamp = (value: number, min: number, max: number): number => {
   if (value < min) {
     return min;
   }

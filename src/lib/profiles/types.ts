@@ -1,4 +1,4 @@
-﻿import type { CalculationResults } from '../types/engine';
+import type { CalculationResults } from '../types/engine';
 import type { FormData, GoalType } from '../types/form';
 
 export interface ProfileSummary {
@@ -23,12 +23,6 @@ export interface UserProfile {
   formData: FormData;
   results: CalculationResults;
   summary: ProfileSummary;
-}
-
-export interface DraftPayload {
-  formData: FormData;
-  currentStep: number;
-  updatedAt: string;
 }
 
 export interface SharedProfileMeta {

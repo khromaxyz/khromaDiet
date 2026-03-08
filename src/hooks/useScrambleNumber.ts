@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const randomDigit = (): string => String(Math.floor(Math.random() * 10));
 

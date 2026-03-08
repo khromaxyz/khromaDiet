@@ -1,5 +1,5 @@
-import { initialFormData } from '../../lib/constants/mockForm';
-import { formSteps } from '../../lib/constants/steps';
+import { formSteps } from '@/features/form/config/formSteps';
+import { initialFormData } from '@/features/form/config/formConfig';
 import { parseShareState, serializeShareState } from '../../lib/shareState';
 import { useDietForgeStore } from '../../store/useDietForgeStore';
 

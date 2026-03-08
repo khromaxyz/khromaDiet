@@ -32,3 +32,7 @@ A interface baseia-se num contraste de três pilares absolutos com um acabamento
 
 ## Densidade (Clean & Sparse)
 Muito espaço em branco (white-space). O layout deve respirar. Nada de espremer informações. Margens épicas, paddings generosos dentro de cards. Cada elemento deve ter seu espaço para brilhar, passando segurança e confiança clínica e nutricional.
+
+### Health-tech Premium
+
+

@@ -3,7 +3,7 @@ import { createElement } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '@/App';
-import { DesignSystemPreview } from '@/components/screens/DesignSystemPreview';
+import { DesignSystemPreview } from '@/components/design-system/DesignSystemPreview';
 
 vi.mock('@nivo/line', async () => {
   const actual = await vi.importActual<typeof import('@nivo/line')>('@nivo/line');

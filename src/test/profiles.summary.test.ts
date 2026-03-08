@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { buildProfileSummary } from '../lib/profiles/summary';
 import type { CalculationResults } from '../lib/types/engine';

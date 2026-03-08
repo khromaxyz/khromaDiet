@@ -1,21 +1,20 @@
 import { create } from 'zustand';
 
-import { exampleFormData } from '../lib/constants/exampleForm';
-import { initialFormData } from '../lib/constants/mockForm';
-import { formSteps } from '../lib/constants/steps';
-import { derivePrecisionPresence, runPipeline } from '../lib/engine/runPipeline';
-import { renormalizeWeights } from '../lib/engine/renormalizeWeights';
+import type { ScreenId } from '@/app/types';
+import { exampleFormData } from '@/features/form/config/exampleFormData';
+import { initialFormData } from '@/features/form/config/formConfig';
+import { GOAL_TIMELINE_STEP } from '@/features/form/config/formSteps';
 import type {
   BfDecision,
   CalculationResults,
-  DietForgeState,
-  ExamplePreviewSnapshot,
   FormData,
   FormPatch,
-  ScreenId,
   ValidationIssue,
   ViewMode,
-} from '../lib/types';
+} from '@/lib/types';
+
+import { cloneFormData, clonePartialFormData, computeForForm, mergeFormData } from './formState';
+import type { DietForgeState, ExamplePreviewSnapshot } from './types';
 
 interface DietForgeActions {
   setScreen: (screen: ScreenId) => void;
@@ -43,74 +42,6 @@ interface DietForgeActions {
 }
 
 type DietForgeStore = DietForgeState & DietForgeActions;
-
-const GOAL_TIMELINE_STEP =
-  formSteps.findIndex((step) => step.id === 'goal_timeline') >= 0
-    ? formSteps.findIndex((step) => step.id === 'goal_timeline') + 1
-    : formSteps.length;
-
-const normalizeHealthConditions = (conditions: FormData['healthConditions']): FormData['healthConditions'] => {
-  if (conditions.length === 0) {
-    return ['none'];
-  }
-
-  if (conditions.includes('none') && conditions.length > 1) {
-    return conditions.filter((condition) => condition !== 'none');
-  }
-
-  return conditions;
-};
-
-const cloneFormData = (formData: FormData): FormData => ({
-  ...formData,
-  hormones: formData.hormones.map((hormone) => ({ ...hormone })),
-  healthConditions: [...formData.healthConditions],
-});
-
-const clonePartialFormData = (formData: Partial<FormData>): Partial<FormData> => {
-  const next: Partial<FormData> = { ...formData };
-
-  if (formData.hormones) {
-    next.hormones = formData.hormones.map((hormone) => ({ ...hormone }));
-  }
-
-  if (formData.healthConditions) {
-    next.healthConditions = [...formData.healthConditions];
-  }
-
-  return next;
-};
-
-const sanitizeFormPatch = (patch: FormPatch): Partial<FormData> => {
-  const entries = Object.entries(patch).filter(([, value]) => value !== undefined);
-  return Object.fromEntries(entries) as Partial<FormData>;
-};
-
-const mergeFormData = (base: FormData, patch: FormPatch): FormData => {
-  const next = { ...base, ...sanitizeFormPatch(patch) };
-
-  next.healthConditions = normalizeHealthConditions(next.healthConditions);
-
-  if (!next.hormonesEnabled) {
-    next.hormones = [];
-  }
-
-  return next;
-};
-
-const computeForForm = (formData: FormData): {
-  precisionPct: number;
-  results: CalculationResults;
-} => {
-  const precisionPresence = derivePrecisionPresence(formData);
-  const precisionState = renormalizeWeights(precisionPresence);
-  const results = runPipeline({ formData, precisionState, precisionPresence });
-
-  return {
-    precisionPct: precisionState.precisionPct,
-    results,
-  };
-};
 
 const buildSnapshot = (state: DietForgeStore): ExamplePreviewSnapshot => ({
   currentScreen: state.currentScreen,
@@ -163,7 +94,10 @@ export const useDietForgeStore = create<DietForgeStore>((set, get) => ({
       return {
         formData,
         precisionPct: computed.precisionPct,
-        results: state.currentScreen === 'dashboard' || state.currentScreen === 'summary' ? computed.results : state.results,
+        results:
+          state.currentScreen === 'dashboard' || state.currentScreen === 'summary'
+            ? computed.results
+            : state.results,
         validationIssues: computed.results.validations,
         bfDecision: formData.bfDecision,
       };

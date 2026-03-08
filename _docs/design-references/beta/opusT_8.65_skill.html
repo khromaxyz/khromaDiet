@@ -1,0 +1,3847 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KhromaDiet — Design System Manifesto v1.0</title>
+<style>
+/* ============================================= */
+/* FOUNDATION: CSS CUSTOM PROPERTIES            */
+/* ============================================= */
+:root {
+  /* — Color Tokens — */
+  --white-pure: #FFFFFF;
+  --white-soft: #FAFAFA;
+  --white-warm: #F5F5F3;
+  --gray-50: #F2F2F0;
+  --gray-100: #E8E8E6;
+  --gray-200: #D4D4D0;
+  --gray-300: #B8B8B4;
+  --gray-400: #8E8E8A;
+  --gray-500: #6B6B67;
+  --gray-600: #4A4A47;
+  --gray-700: #333330;
+  --gray-800: #1E1E1C;
+  --gray-900: #141413;
+  --black-deep: #0A0A09;
+  --black-pure: #000000;
+
+  /* — Accent: Green Energy — */
+  --green-50: #EDFCF2;
+  --green-100: #D3F9E0;
+  --green-200: #AAF0C4;
+  --green-300: #6DE4A0;
+  --green-400: #34D27A;
+  --green-500: #16B364;
+  --green-600: #0A9150;
+  --green-700: #087342;
+  --green-800: #095C37;
+  --green-900: #084C2E;
+
+  /* — Semantic — */
+  --color-success: var(--green-500);
+  --color-error: #E5484D;
+  --color-error-soft: #FFEEF0;
+  --color-warning: #F5A623;
+  --color-warning-soft: #FFF8EB;
+  --color-info: var(--green-400);
+
+  /* — Surface (Light) — */
+  --surface-primary: var(--white-pure);
+  --surface-secondary: var(--white-soft);
+  --surface-tertiary: var(--gray-50);
+  --surface-elevated: var(--white-pure);
+  --surface-sunken: var(--gray-50);
+  --surface-overlay: rgba(0, 0, 0, 0.5);
+
+  /* — Text (Light) — */
+  --text-primary: var(--black-deep);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-400);
+  --text-disabled: var(--gray-300);
+  --text-inverse: var(--white-pure);
+  --text-accent: var(--green-600);
+
+  /* — Border (Light) — */
+  --border-default: var(--gray-200);
+  --border-strong: var(--black-deep);
+  --border-subtle: var(--gray-100);
+  --border-focus: var(--green-500);
+
+  /* — Typography Scale — */
+  --font-display: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.375rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+  --text-6xl: 4.75rem;
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.03em;
+  --tracking-snug: -0.015em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.08em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  /* — Spacing Scale — */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* — Border Radius — */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* — Elevation / Shadows — */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
+  --shadow-brutal: 4px 4px 0px var(--black-deep);
+  --shadow-brutal-sm: 2px 2px 0px var(--black-deep);
+  --shadow-brutal-green: 4px 4px 0px var(--green-600);
+
+  /* — Borders — */
+  --border-thin: 1px solid var(--border-default);
+  --border-medium: 2px solid var(--border-strong);
+  --border-thick: 3px solid var(--border-strong);
+
+  /* — Motion — */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-instant: 80ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  /* — Z-index Scale — */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* — Layout — */
+  --page-max-width: 1200px;
+  --page-padding: var(--space-6);
+  --section-gap: var(--space-24);
+}
+
+/* ============================================= */
+/* DARK THEME OVERRIDES                         */
+/* ============================================= */
+[data-theme="dark"] {
+  --surface-primary: var(--black-pure);
+  --surface-secondary: var(--gray-900);
+  --surface-tertiary: var(--gray-800);
+  --surface-elevated: var(--gray-900);
+  --surface-sunken: var(--black-deep);
+  --surface-overlay: rgba(0, 0, 0, 0.7);
+
+  --text-primary: var(--white-pure);
+  --text-secondary: var(--gray-400);
+  --text-tertiary: var(--gray-500);
+  --text-disabled: var(--gray-600);
+  --text-inverse: var(--black-deep);
+  --text-accent: var(--green-400);
+
+  --border-default: var(--gray-700);
+  --border-strong: var(--white-pure);
+  --border-subtle: var(--gray-800);
+  --border-focus: var(--green-400);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.25);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.35);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.4);
+  --shadow-brutal: 4px 4px 0px var(--white-pure);
+  --shadow-brutal-sm: 2px 2px 0px var(--white-pure);
+  --shadow-brutal-green: 4px 4px 0px var(--green-400);
+
+  --color-error-soft: #3D1215;
+  --color-warning-soft: #3D2E0A;
+}
+
+/* ============================================= */
+/* RESET & BASE                                 */
+/* ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--surface-primary);
+  transition: background-color var(--duration-normal) var(--ease-out),
+              color var(--duration-normal) var(--ease-out);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--green-500);
+  color: var(--white-pure);
+}
+
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* ============================================= */
+/* GLOBAL LAYOUT                                */
+/* ============================================= */
+.page-container {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+}
+
+.section {
+  padding: var(--section-gap) 0;
+  border-bottom: var(--border-thin);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.section__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+.section__title {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.section__description {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 640px;
+  margin-bottom: var(--space-12);
+}
+
+/* ============================================= */
+/* TOP NAV                                      */
+/* ============================================= */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background: var(--surface-primary);
+  border-bottom: var(--border-medium);
+  padding: var(--space-4) 0;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+.topnav__inner {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.topnav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.topnav__logo {
+  width: 32px;
+  height: 32px;
+  background: var(--green-500);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--weight-black);
+  font-size: var(--text-sm);
+  color: var(--white-pure);
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.topnav__brand:hover .topnav__logo {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.topnav__wordmark {
+  font-weight: var(--weight-black);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-tight);
+}
+
+.topnav__wordmark span {
+  color: var(--green-500);
+}
+
+.topnav__version {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-default);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: var(--tracking-wide);
+}
+
+.topnav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.topnav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.topnav__link {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+}
+
+.topnav__link:hover {
+  color: var(--text-primary);
+  background: var(--surface-tertiary);
+}
+
+.topnav__link--active {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.theme-toggle:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+.theme-toggle__icon {
+  transition: transform var(--duration-normal) var(--ease-spring),
+              opacity var(--duration-fast) var(--ease-out);
+  position: absolute;
+}
+
+.theme-toggle__icon--sun { opacity: 0; transform: rotate(90deg) scale(0); }
+.theme-toggle__icon--moon { opacity: 1; transform: rotate(0) scale(1); }
+
+[data-theme="dark"] .theme-toggle__icon--sun { opacity: 1; transform: rotate(0) scale(1); }
+[data-theme="dark"] .theme-toggle__icon--moon { opacity: 0; transform: rotate(-90deg) scale(0); }
+
+/* ============================================= */
+/* HERO / MANIFESTO                             */
+/* ============================================= */
+.hero {
+  padding: var(--space-32) 0 var(--space-24);
+  position: relative;
+}
+
+.hero__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--green-500);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hero__eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--green-500);
+}
+
+.hero__title {
+  font-size: clamp(var(--text-4xl), 8vw, var(--text-6xl));
+  font-weight: var(--weight-black);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-bottom: var(--space-8);
+  max-width: 900px;
+}
+
+.hero__title em {
+  font-style: normal;
+  color: var(--green-500);
+  position: relative;
+}
+
+.hero__subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 560px;
+  margin-bottom: var(--space-12);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.hero__meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hero__meta-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--green-500);
+  display: inline-block;
+}
+
+/* ============================================= */
+/* PRINCIPLES                                   */
+/* ============================================= */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.principle-card {
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  background: var(--surface-primary);
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out);
+  cursor: default;
+}
+
+.principle-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.principle-card__number {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--green-500);
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-4);
+}
+
+.principle-card__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-3);
+  line-height: var(--leading-snug);
+}
+
+.principle-card__desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* ============================================= */
+/* COLOR SYSTEM                                 */
+/* ============================================= */
+.color-group {
+  margin-bottom: var(--space-12);
+}
+
+.color-group:last-child {
+  margin-bottom: 0;
+}
+
+.color-group__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  color: var(--text-secondary);
+}
+
+.color-row {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.color-chip {
+  flex: 1;
+  min-width: 80px;
+  max-width: 120px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-2);
+  position: relative;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.color-chip:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.color-chip__label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  line-height: 1.2;
+}
+
+.color-chip__value {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+.color-chip--light-text .color-chip__label,
+.color-chip--light-text .color-chip__value { color: var(--white-pure); }
+.color-chip--dark-text .color-chip__label,
+.color-chip--dark-text .color-chip__value { color: var(--black-deep); }
+
+.contrast-demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.contrast-block {
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.contrast-block__headline {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-2);
+}
+
+.contrast-block__body {
+  font-size: var(--text-sm);
+  opacity: 0.8;
+  margin-bottom: var(--space-3);
+}
+
+.contrast-block__tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+}
+
+/* ============================================= */
+/* TYPOGRAPHY                                   */
+/* ============================================= */
+.type-specimen {
+  margin-bottom: var(--space-12);
+}
+
+.type-specimen:last-child {
+  margin-bottom: 0;
+}
+
+.type-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.type-row:last-child {
+  border-bottom: none;
+}
+
+.type-row__meta {
+  flex-shrink: 0;
+  width: 140px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-normal);
+}
+
+.type-row__sample {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================= */
+/* SPACING                                      */
+/* ============================================= */
+.spacing-scale {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.spacing-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.spacing-item__label {
+  flex-shrink: 0;
+  width: 80px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-align: right;
+  letter-spacing: var(--tracking-wide);
+}
+
+.spacing-item__bar {
+  height: 20px;
+  background: var(--green-500);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  transition: width var(--duration-normal) var(--ease-spring);
+}
+
+.spacing-item__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  width: 40px;
+}
+
+/* ============================================= */
+/* ELEVATION                                    */
+/* ============================================= */
+.elevation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-6);
+}
+
+.elevation-card {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background: var(--surface-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+
+.elevation-card:hover {
+  transform: translateY(-4px);
+}
+
+.elevation-card__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wide);
+}
+
+.elevation-card__sublabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* RADIUS                                       */
+/* ============================================= */
+.radius-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: end;
+}
+
+.radius-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.radius-sample {
+  width: 72px;
+  height: 72px;
+  border: var(--border-thick);
+  background: var(--surface-tertiary);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.radius-sample:hover {
+  background: var(--green-100);
+}
+
+[data-theme="dark"] .radius-sample:hover {
+  background: var(--green-900);
+}
+
+.radius-item__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* ============================================= */
+/* BUTTONS                                      */
+/* ============================================= */
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.button-row:last-child {
+  margin-bottom: 0;
+}
+
+.button-row__label {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--space-1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-snug);
+  text-decoration: none;
+  cursor: pointer;
+  border: var(--border-medium);
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: translate(0, 0) !important;
+  box-shadow: none !important;
+}
+
+/* Sizes */
+.btn--sm {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+.btn--md {
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+}
+
+.btn--lg {
+  font-size: var(--text-base);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-md);
+}
+
+/* Primary */
+.btn--primary {
+  background: var(--green-500);
+  color: var(--white-pure);
+  border-color: var(--border-strong);
+}
+
+.btn--primary:hover {
+  background: var(--green-600);
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal);
+}
+
+/* Secondary */
+.btn--secondary {
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.btn--secondary:hover {
+  background: var(--surface-tertiary);
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal);
+}
+
+/* Ghost */
+.btn--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: transparent;
+}
+
+.btn--ghost:hover {
+  background: var(--surface-tertiary);
+  border-color: var(--border-strong);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+/* Danger */
+.btn--danger {
+  background: var(--color-error);
+  color: var(--white-pure);
+  border-color: var(--border-strong);
+}
+
+.btn--danger:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal);
+}
+
+/* Disabled */
+.btn--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Icon button */
+.btn--icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  font-size: var(--text-lg);
+}
+
+/* ============================================= */
+/* BADGES                                       */
+/* ============================================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border-strong);
+  white-space: nowrap;
+}
+
+.badge--default { background: var(--surface-tertiary); color: var(--text-primary); }
+.badge--green { background: var(--green-100); color: var(--green-800); }
+.badge--error { background: var(--color-error-soft); color: var(--color-error); }
+.badge--warning { background: var(--color-warning-soft); color: var(--color-warning); }
+
+[data-theme="dark"] .badge--green { background: var(--green-900); color: var(--green-300); }
+
+.badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+/* ============================================= */
+/* FORM ELEMENTS                                */
+/* ============================================= */
+.form-group {
+  margin-bottom: var(--space-6);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+  letter-spacing: var(--tracking-snug);
+}
+
+.form-hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-1);
+}
+
+.form-error {
+  font-size: var(--text-xs);
+  color: var(--color-error);
+  margin-top: var(--space-1);
+  font-weight: var(--weight-medium);
+}
+
+.input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-normal) var(--ease-out);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input::placeholder {
+  color: var(--text-disabled);
+  font-weight: var(--weight-regular);
+}
+
+.input:hover {
+  border-color: var(--gray-400);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px rgba(22, 179, 100, 0.15);
+}
+
+.input--error {
+  border-color: var(--color-error);
+}
+
+.input--error:focus {
+  box-shadow: 0 0 0 3px rgba(229, 72, 77, 0.15);
+}
+
+.input--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--surface-tertiary);
+}
+
+/* Select */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '▾';
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  font-size: var(--text-sm);
+}
+
+.select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-10) var(--space-3) var(--space-4);
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px rgba(22, 179, 100, 0.15);
+}
+
+/* Textarea */
+.textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px rgba(22, 179, 100, 0.15);
+}
+
+/* Toggle */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.toggle__track {
+  width: 48px;
+  height: 28px;
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  background: var(--surface-tertiary);
+  position: relative;
+  transition: background-color var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.toggle__thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--text-primary);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--duration-fast) var(--ease-spring),
+              background-color var(--duration-fast) var(--ease-out);
+}
+
+.toggle--active .toggle__track {
+  background: var(--green-500);
+}
+
+.toggle--active .toggle__thumb {
+  transform: translateX(20px);
+  background: var(--white-pure);
+}
+
+.toggle__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+/* Checkbox */
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.checkbox__box {
+  width: 22px;
+  height: 22px;
+  border: var(--border-medium);
+  border-radius: var(--radius-sm);
+  background: var(--surface-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.checkbox__check {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-spring);
+  color: var(--white-pure);
+  font-size: 12px;
+  font-weight: var(--weight-black);
+}
+
+.checkbox--checked .checkbox__box {
+  background: var(--green-500);
+  border-color: var(--border-strong);
+}
+
+.checkbox--checked .checkbox__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.checkbox__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+/* Radio */
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio__circle {
+  width: 22px;
+  height: 22px;
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  background: var(--surface-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.radio__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--green-500);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.radio--selected .radio__dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.radio__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+/* Slider */
+.slider-container {
+  width: 100%;
+}
+
+.slider-track {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-tertiary);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  position: relative;
+  cursor: pointer;
+}
+
+.slider-fill {
+  height: 100%;
+  background: var(--green-500);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-fast) var(--ease-out);
+}
+
+.slider-thumb {
+  width: 24px;
+  height: 24px;
+  border: var(--border-thick);
+  border-radius: var(--radius-full);
+  background: var(--surface-primary);
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  transition: box-shadow var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.slider-thumb:hover {
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* STEPPER                                      */
+/* ============================================= */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.stepper__step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stepper__circle {
+  width: 36px;
+  height: 36px;
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  background: var(--surface-primary);
+  color: var(--text-tertiary);
+  transition: all var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.stepper__step--completed .stepper__circle {
+  background: var(--green-500);
+  color: var(--white-pure);
+}
+
+.stepper__step--active .stepper__circle {
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-brutal-sm);
+  transform: translate(-2px, -2px);
+}
+
+.stepper__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.stepper__step--active .stepper__label {
+  color: var(--text-primary);
+}
+
+.stepper__step--completed .stepper__label {
+  color: var(--green-600);
+}
+
+.stepper__connector {
+  width: 32px;
+  height: 2px;
+  background: var(--border-default);
+  margin: 0 var(--space-1);
+  flex-shrink: 0;
+}
+
+.stepper__step--completed + .stepper__connector {
+  background: var(--green-500);
+}
+
+/* ============================================= */
+/* CARDS                                        */
+/* ============================================= */
+.card {
+  border: var(--border-medium);
+  border-radius: var(--radius-lg);
+  background: var(--surface-primary);
+  overflow: hidden;
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.card__media {
+  width: 100%;
+  height: 180px;
+  background: var(--surface-tertiary);
+  border-bottom: var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: var(--text-3xl);
+}
+
+.card__body {
+  padding: var(--space-6);
+}
+
+.card__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--green-500);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-2);
+  line-height: var(--leading-snug);
+}
+
+.card__text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+.card__footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Card variants */
+.card--compact .card__body {
+  padding: var(--space-4);
+}
+
+.card--horizontal {
+  display: flex;
+}
+
+.card--horizontal .card__media {
+  width: 200px;
+  height: auto;
+  border-bottom: none;
+  border-right: var(--border-medium);
+  flex-shrink: 0;
+}
+
+/* ============================================= */
+/* DASHBOARD BLOCKS                             */
+/* ============================================= */
+.stat-card {
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  background: var(--surface-primary);
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.stat-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.stat-card__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.stat-card__value {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.stat-card__delta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.stat-card__delta--up { color: var(--green-600); }
+.stat-card__delta--down { color: var(--color-error); }
+
+/* Mini Bar Chart */
+.mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 48px;
+  margin-top: var(--space-4);
+}
+
+.mini-chart__bar {
+  flex: 1;
+  background: var(--green-200);
+  border-radius: 2px 2px 0 0;
+  border: 1px solid var(--border-strong);
+  border-bottom: none;
+  transition: height var(--duration-slow) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+  min-height: 4px;
+}
+
+.mini-chart__bar:hover {
+  background: var(--green-500);
+}
+
+[data-theme="dark"] .mini-chart__bar {
+  background: var(--green-800);
+}
+
+[data-theme="dark"] .mini-chart__bar:hover {
+  background: var(--green-500);
+}
+
+/* Progress Ring */
+.progress-ring {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.progress-ring svg {
+  transform: rotate(-90deg);
+}
+
+.progress-ring__bg {
+  fill: none;
+  stroke: var(--border-default);
+  stroke-width: 6;
+}
+
+.progress-ring__fill {
+  fill: none;
+  stroke: var(--green-500);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--duration-slower) var(--ease-out);
+}
+
+.progress-ring__value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ============================================= */
+/* DATA VIZ                                     */
+/* ============================================= */
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bar-chart__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bar-chart__label {
+  width: 80px;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.bar-chart__track {
+  flex: 1;
+  height: 24px;
+  background: var(--surface-tertiary);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.bar-chart__fill {
+  height: 100%;
+  background: var(--green-500);
+  border-radius: 0;
+  transition: width var(--duration-slower) var(--ease-out);
+}
+
+.bar-chart__value {
+  width: 48px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+/* ============================================= */
+/* FEEDBACK STATES                              */
+/* ============================================= */
+.feedback {
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.feedback:last-child {
+  margin-bottom: 0;
+}
+
+.feedback__icon {
+  font-size: var(--text-lg);
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.feedback__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.feedback__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  margin-bottom: 2px;
+}
+
+.feedback__text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.feedback--success {
+  background: var(--green-50);
+  border-color: var(--green-600);
+}
+.feedback--success .feedback__title { color: var(--green-800); }
+
+.feedback--error {
+  background: var(--color-error-soft);
+  border-color: var(--color-error);
+}
+.feedback--error .feedback__title { color: var(--color-error); }
+
+.feedback--warning {
+  background: var(--color-warning-soft);
+  border-color: var(--color-warning);
+}
+.feedback--warning .feedback__title { color: #8B6914; }
+
+.feedback--info {
+  background: var(--surface-tertiary);
+  border-color: var(--border-strong);
+}
+
+[data-theme="dark"] .feedback--success { background: rgba(22, 179, 100, 0.1); }
+[data-theme="dark"] .feedback--success .feedback__title { color: var(--green-400); }
+[data-theme="dark"] .feedback--warning .feedback__title { color: var(--color-warning); }
+
+/* ============================================= */
+/* EMPTY STATE                                  */
+/* ============================================= */
+.empty-state {
+  text-align: center;
+  padding: var(--space-16) var(--space-8);
+  border: 2px dashed var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.empty-state__icon {
+  font-size: 48px;
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.empty-state__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.empty-state__text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 320px;
+  margin: 0 auto var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
+/* ============================================= */
+/* LOADING / SKELETON                           */
+/* ============================================= */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 25%,
+    var(--surface-secondary) 50%,
+    var(--surface-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--text {
+  height: 14px;
+  margin-bottom: var(--space-2);
+}
+
+.skeleton--title {
+  height: 24px;
+  width: 60%;
+  margin-bottom: var(--space-3);
+}
+
+.skeleton--avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton--block {
+  height: 120px;
+  border-radius: var(--radius-md);
+}
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border-default);
+  border-top-color: var(--green-500);
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner--lg {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
+
+/* ============================================= */
+/* TOAST                                        */
+/* ============================================= */
+.toast-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-xl);
+}
+
+.toast-demo__text {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.toast-demo__action {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--green-400);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  padding: 0;
+}
+
+/* ============================================= */
+/* MOTION SHOWCASE                              */
+/* ============================================= */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.motion-cell {
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 180px;
+  justify-content: center;
+  background: var(--surface-primary);
+}
+
+.motion-cell__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.motion-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--green-500);
+  border: 2px solid var(--border-strong);
+}
+
+/* ============================================= */
+/* NAVIGATION PATTERNS                          */
+/* ============================================= */
+.tab-bar {
+  display: flex;
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-primary);
+}
+
+.tab-bar__item {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  border-right: 2px solid var(--border-strong);
+  background: var(--surface-primary);
+  user-select: none;
+}
+
+.tab-bar__item:last-child {
+  border-right: none;
+}
+
+.tab-bar__item:hover {
+  background: var(--surface-tertiary);
+  color: var(--text-primary);
+}
+
+.tab-bar__item--active {
+  background: var(--text-primary);
+  color: var(--text-inverse);
+}
+
+.tab-bar__item--active:hover {
+  background: var(--text-primary);
+  color: var(--text-inverse);
+}
+
+/* ============================================= */
+/* PROGRESS BAR                                 */
+/* ============================================= */
+.progress {
+  width: 100%;
+  height: 12px;
+  background: var(--surface-tertiary);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  background: var(--green-500);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slower) var(--ease-out);
+}
+
+.progress--sm {
+  height: 6px;
+}
+
+/* ============================================= */
+/* RESPONSIVE DEMO                              */
+/* ============================================= */
+.responsive-frames {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: var(--space-4);
+}
+
+.device-frame {
+  flex-shrink: 0;
+  border: var(--border-thick);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--surface-primary);
+}
+
+.device-frame__top {
+  border-bottom: 2px solid var(--border-strong);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--surface-tertiary);
+}
+
+.device-frame__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border-strong);
+}
+
+.device-frame__body {
+  padding: var(--space-3);
+}
+
+.device-frame__skeleton {
+  margin-bottom: var(--space-2);
+}
+
+/* ============================================= */
+/* SECTION-SPECIFIC GRIDS                       */
+/* ============================================= */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+/* ============================================= */
+/* TOKENS TABLE                                 */
+/* ============================================= */
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: var(--border-medium);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.token-table th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-tertiary);
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-tertiary);
+  border-bottom: var(--border-medium);
+}
+
+.token-table td {
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+.token-table tr:last-child td {
+  border-bottom: none;
+}
+
+.token-table__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--green-600);
+  font-weight: var(--weight-medium);
+}
+
+[data-theme="dark"] .token-table__name {
+  color: var(--green-400);
+}
+
+/* ============================================= */
+/* ANIMATIONS                                   */
+/* ============================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================= */
+/* RESPONSIVE                                   */
+/* ============================================= */
+@media (max-width: 768px) {
+  :root {
+    --page-padding: var(--space-4);
+    --section-gap: var(--space-16);
+  }
+
+  .hero__title {
+    font-size: clamp(var(--text-3xl), 10vw, var(--text-5xl));
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contrast-demo {
+    grid-template-columns: 1fr;
+  }
+
+  .card--horizontal {
+    flex-direction: column;
+  }
+
+  .card--horizontal .card__media {
+    width: 100%;
+    height: 160px;
+    border-right: none;
+    border-bottom: var(--border-medium);
+  }
+
+  .topnav__links {
+    display: none;
+  }
+
+  .topnav__version {
+    display: none;
+  }
+
+  .stepper {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .stepper__connector {
+    width: 16px;
+  }
+
+  .stepper__label {
+    display: none;
+  }
+
+  .responsive-frames {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .type-row {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .type-row__meta {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: var(--space-20) 0 var(--space-16);
+  }
+
+  .section__title {
+    font-size: var(--text-2xl);
+  }
+
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .color-chip {
+    min-width: 56px;
+  }
+
+  .elevation-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================= */
+/* FOOTER                                       */
+/* ============================================= */
+.footer {
+  padding: var(--space-16) 0 var(--space-8);
+  text-align: center;
+}
+
+.footer__brand {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-2);
+}
+
+.footer__brand span {
+  color: var(--green-500);
+}
+
+.footer__note {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ============================================= */
+/* UTILITY                                      */
+/* ============================================= */
+.mt-2 { margin-top: var(--space-2); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.text-mono { font-family: var(--font-mono); }
+.text-xs { font-size: var(--text-xs); }
+.text-secondary { color: var(--text-secondary); }
+.text-accent { color: var(--text-accent); }
+.font-bold { font-weight: var(--weight-bold); }
+.w-full { width: 100%; }
+.inline-flex { display: inline-flex; }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================= -->
+<!-- NAVIGATION                                    -->
+<!-- ============================================= -->
+<nav class="topnav" role="navigation" aria-label="Design system navigation">
+  <div class="topnav__inner">
+    <a href="#" class="topnav__brand" aria-label="KhromaDiet Design System">
+      <div class="topnav__logo" aria-hidden="true">K</div>
+      <span class="topnav__wordmark">Khroma<span>Diet</span></span>
+      <span class="topnav__version">v1.0</span>
+    </a>
+    <ul class="topnav__links" role="list">
+      <li><a href="#principles" class="topnav__link topnav__link--active">Principles</a></li>
+      <li><a href="#color" class="topnav__link">Color</a></li>
+      <li><a href="#typography" class="topnav__link">Type</a></li>
+      <li><a href="#components" class="topnav__link">Components</a></li>
+      <li><a href="#data" class="topnav__link">Data</a></li>
+      <li><a href="#states" class="topnav__link">States</a></li>
+    </ul>
+    <div class="topnav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+        <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">☽</span>
+        <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="page-container" role="main">
+
+  <!-- ============================================= -->
+  <!-- HERO                                          -->
+  <!-- ============================================= -->
+  <header class="hero section" id="hero" style="border-bottom: var(--border-medium);">
+    <div class="hero__eyebrow">Design System Manifesto</div>
+    <h1 class="hero__title">
+      The visual<br>foundation of<br><em>KhromaDiet.</em>
+    </h1>
+    <p class="hero__subtitle">
+      A disciplined design language built for precision nutrition software. 
+      Neo-brutalismo clean — structural conviction with clinical comfort. 
+      Every token, every state, every gesture exists to serve the product.
+    </p>
+    <div class="hero__meta">
+      <span class="hero__meta-item"><span class="hero__meta-dot"></span> Single source of truth</span>
+      <span class="hero__meta-item"><span class="hero__meta-dot"></span> Light + Dark</span>
+      <span class="hero__meta-item"><span class="hero__meta-dot"></span> Responsive</span>
+      <span class="hero__meta-item"><span class="hero__meta-dot"></span> Accessible</span>
+    </div>
+  </header>
+
+  <!-- ============================================= -->
+  <!-- PRINCIPLES                                    -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="principles" aria-labelledby="principles-title">
+    <span class="section__label">01 / Foundation</span>
+    <h2 class="section__title" id="principles-title">Design Principles</h2>
+    <p class="section__description">
+      Four convictions that govern every visual decision in KhromaDiet. 
+      They are not aspirational — they are constraints.
+    </p>
+    <div class="principles-grid">
+      <article class="principle-card">
+        <span class="principle-card__number">01</span>
+        <h3 class="principle-card__title">Structural Clarity</h3>
+        <p class="principle-card__desc">
+          Every element declares itself. Borders with conviction, typography with hierarchy, 
+          surfaces with purpose. Ambiguity is a bug. If the user has to guess, we failed.
+        </p>
+      </article>
+      <article class="principle-card">
+        <span class="principle-card__number">02</span>
+        <h3 class="principle-card__title">Clinical Comfort</h3>
+        <p class="principle-card__desc">
+          Precision without coldness. Sparse layouts breathe confidence, 
+          generous whitespace signals trust. Health data deserves calm, not chaos.
+        </p>
+      </article>
+      <article class="principle-card">
+        <span class="principle-card__number">03</span>
+        <h3 class="principle-card__title">Earned Presence</h3>
+        <p class="principle-card__desc">
+          Nothing exists without justification. Every component, every color use, 
+          every animation must earn its place. Decoration is noise — clarity is signal.
+        </p>
+      </article>
+      <article class="principle-card">
+        <span class="principle-card__number">04</span>
+        <h3 class="principle-card__title">Tactile Intelligence</h3>
+        <p class="principle-card__desc">
+          Interactions feel physical. Buttons press, cards lift, toggles snap. 
+          Motion reveals system state, not personality. The product thinks; the UI responds.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- COLOR SYSTEM                                  -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="color" aria-labelledby="color-title">
+    <span class="section__label">02 / Color</span>
+    <h2 class="section__title" id="color-title">Color System</h2>
+    <p class="section__description">
+      A strict triad: white, black, green. No escapes. Sophistication comes from 
+      contrast, temperature and materiality — never from palette expansion.
+    </p>
+
+    <!-- Neutrals -->
+    <div class="color-group">
+      <h3 class="color-group__title">Neutrals</h3>
+      <div class="color-row">
+        <div class="color-chip color-chip--dark-text" style="background: #FFFFFF; border-color: #D4D4D0;">
+          <span class="color-chip__label">White</span>
+          <span class="color-chip__value">#FFF</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #FAFAFA;">
+          <span class="color-chip__label">50</span>
+          <span class="color-chip__value">#FAFAFA</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #F2F2F0;">
+          <span class="color-chip__label">100</span>
+          <span class="color-chip__value">#F2F2F0</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #E8E8E6;">
+          <span class="color-chip__label">200</span>
+          <span class="color-chip__value">#E8E8E6</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #D4D4D0;">
+          <span class="color-chip__label">300</span>
+          <span class="color-chip__value">#D4D4D0</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #B8B8B4;">
+          <span class="color-chip__label">400</span>
+          <span class="color-chip__value">#B8B8B4</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #6B6B67;">
+          <span class="color-chip__label">500</span>
+          <span class="color-chip__value">#6B6B67</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #4A4A47;">
+          <span class="color-chip__label">600</span>
+          <span class="color-chip__value">#4A4A47</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #1E1E1C;">
+          <span class="color-chip__label">800</span>
+          <span class="color-chip__value">#1E1E1C</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #0A0A09;">
+          <span class="color-chip__label">900</span>
+          <span class="color-chip__value">#0A0A09</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Green Accent -->
+    <div class="color-group">
+      <h3 class="color-group__title">Green — Energy Accent</h3>
+      <div class="color-row">
+        <div class="color-chip color-chip--dark-text" style="background: #EDFCF2;">
+          <span class="color-chip__label">50</span>
+          <span class="color-chip__value">#EDFCF2</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #D3F9E0;">
+          <span class="color-chip__label">100</span>
+          <span class="color-chip__value">#D3F9E0</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #AAF0C4;">
+          <span class="color-chip__label">200</span>
+          <span class="color-chip__value">#AAF0C4</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #6DE4A0;">
+          <span class="color-chip__label">300</span>
+          <span class="color-chip__value">#6DE4A0</span>
+        </div>
+        <div class="color-chip color-chip--dark-text" style="background: #34D27A;">
+          <span class="color-chip__label">400</span>
+          <span class="color-chip__value">#34D27A</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #16B364;">
+          <span class="color-chip__label">500</span>
+          <span class="color-chip__value">#16B364</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #0A9150;">
+          <span class="color-chip__label">600</span>
+          <span class="color-chip__value">#0A9150</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #087342;">
+          <span class="color-chip__label">700</span>
+          <span class="color-chip__value">#087342</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #095C37;">
+          <span class="color-chip__label">800</span>
+          <span class="color-chip__value">#095C37</span>
+        </div>
+        <div class="color-chip color-chip--light-text" style="background: #084C2E;">
+          <span class="color-chip__label">900</span>
+          <span class="color-chip__value">#084C2E</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contrast Demo -->
+    <div class="color-group">
+      <h3 class="color-group__title">Contrast in Practice</h3>
+      <div class="contrast-demo">
+        <div class="contrast-block" style="background: #FFFFFF; color: #0A0A09;">
+          <div class="contrast-block__headline">Light Mode</div>
+          <div class="contrast-block__body">White clinical base, deep black structure</div>
+          <span class="contrast-block__tag" style="background: #EDFCF2; color: #087342; border: 1.5px solid #087342;">WCAG AAA</span>
+        </div>
+        <div class="contrast-block" style="background: #000000; color: #FFFFFF;">
+          <div class="contrast-block__headline">Dark Mode</div>
+          <div class="contrast-block__body">Abyssal black, luminous white type</div>
+          <span class="contrast-block__tag" style="background: rgba(22,179,100,0.15); color: #34D27A; border: 1.5px solid #34D27A;">WCAG AAA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- TYPOGRAPHY                                    -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="typography" aria-labelledby="type-title">
+    <span class="section__label">03 / Typography</span>
+    <h2 class="section__title" id="type-title">Type System</h2>
+    <p class="section__description">
+      System fonts at their best. Headlines command with weight and tracking. 
+      Body text reads with refined silence. Mono anchors data and metadata.
+    </p>
+
+    <div class="type-specimen">
+      <div class="type-row">
+        <div class="type-row__meta">
+          Display<br>4.75rem / 900<br>-0.04em
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-6xl); font-weight: 900; letter-spacing: -0.04em; line-height: 1;">
+          Aa
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          H1<br>3.75rem / 900<br>-0.04em
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-5xl); font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;">
+          Nutrição de precisão
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          H2<br>3rem / 900<br>-0.03em
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-4xl); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;">
+          Seu perfil metabólico
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          H3<br>2.375rem / 900<br>-0.03em
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-3xl); font-weight: 900; letter-spacing: var(--tracking-tight); line-height: 1.15;">
+          Macros diários recomendados
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          H4<br>1.875rem / 700<br>-0.015em
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-2xl); font-weight: 700; letter-spacing: var(--tracking-snug); line-height: 1.2;">
+          Distribuição calórica semanal
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          H5<br>1.5rem / 700<br>-0.015em
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-xl); font-weight: 700; letter-spacing: var(--tracking-snug); line-height: 1.25;">
+          Proteínas, carboidratos e gorduras
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          Body LG<br>1.25rem / 400<br>Normal
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-lg); font-weight: 400; line-height: var(--leading-relaxed);">
+          Cada decisão alimentar importa. O KhromaDiet analisa suas necessidades e entrega recomendações com precisão clínica.
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          Body<br>0.9375rem / 400<br>Normal
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-base); font-weight: 400; line-height: var(--leading-normal); color: var(--text-secondary);">
+          Insira seus dados biométricos para que possamos calcular sua taxa metabólica basal e definir alvos nutricionais personalizados com base no seu objetivo.
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          Small<br>0.8125rem / 500<br>Normal
+        </div>
+        <div class="type-row__sample" style="font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-normal); color: var(--text-secondary);">
+          Valores de referência com base em diretrizes da OMS e literatura científica revisada por pares. Consulte seu nutricionista.
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          Caption<br>0.6875rem / 500<br>+0.04em UPPER
+        </div>
+        <div class="type-row__sample" style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 500; letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--text-tertiary);">
+          Última atualização: 12 jun 2025 · Etapa 7 de 14 · Dados parciais
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__meta">
+          Mono Data<br>0.8125rem / 700<br>+0.04em
+        </div>
+        <div class="type-row__sample" style="font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700; letter-spacing: var(--tracking-wide);">
+          2.847 kcal · 186g P · 312g C · 94g G · IMC 24.3
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SPACING & GRID                                -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="spacing" aria-labelledby="spacing-title">
+    <span class="section__label">04 / Spacing</span>
+    <h2 class="section__title" id="spacing-title">Spacing Scale</h2>
+    <p class="section__description">
+      A 4px base unit. Generous gaps signal trust. Dense data gets tighter 
+      increments. The system breathes with intention.
+    </p>
+
+    <div class="spacing-scale">
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-1</span>
+        <div class="spacing-item__bar" style="width: 4px;"></div>
+        <span class="spacing-item__value">4px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-2</span>
+        <div class="spacing-item__bar" style="width: 8px;"></div>
+        <span class="spacing-item__value">8px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-3</span>
+        <div class="spacing-item__bar" style="width: 12px;"></div>
+        <span class="spacing-item__value">12px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-4</span>
+        <div class="spacing-item__bar" style="width: 16px;"></div>
+        <span class="spacing-item__value">16px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-5</span>
+        <div class="spacing-item__bar" style="width: 20px;"></div>
+        <span class="spacing-item__value">20px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-6</span>
+        <div class="spacing-item__bar" style="width: 24px;"></div>
+        <span class="spacing-item__value">24px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-8</span>
+        <div class="spacing-item__bar" style="width: 32px;"></div>
+        <span class="spacing-item__value">32px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-10</span>
+        <div class="spacing-item__bar" style="width: 40px;"></div>
+        <span class="spacing-item__value">40px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-12</span>
+        <div class="spacing-item__bar" style="width: 48px;"></div>
+        <span class="spacing-item__value">48px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-16</span>
+        <div class="spacing-item__bar" style="width: 64px;"></div>
+        <span class="spacing-item__value">64px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-20</span>
+        <div class="spacing-item__bar" style="width: 80px;"></div>
+        <span class="spacing-item__value">80px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-24</span>
+        <div class="spacing-item__bar" style="width: 96px;"></div>
+        <span class="spacing-item__value">96px</span>
+      </div>
+      <div class="spacing-item">
+        <span class="spacing-item__label">space-32</span>
+        <div class="spacing-item__bar" style="width: 128px;"></div>
+        <span class="spacing-item__value">128px</span>
+      </div>
+    </div>
+
+    <!-- Radius -->
+    <h3 class="color-group__title mt-8">Border Radius</h3>
+    <div class="radius-grid mt-4">
+      <div class="radius-item">
+        <div class="radius-sample" style="border-radius: 0;"></div>
+        <span class="radius-item__label">none<br>0</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-sample" style="border-radius: 4px;"></div>
+        <span class="radius-item__label">sm<br>4px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-sample" style="border-radius: 8px;"></div>
+        <span class="radius-item__label">md<br>8px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-sample" style="border-radius: 12px;"></div>
+        <span class="radius-item__label">lg<br>12px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-sample" style="border-radius: 16px;"></div>
+        <span class="radius-item__label">xl<br>16px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-sample" style="border-radius: 24px;"></div>
+        <span class="radius-item__label">2xl<br>24px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-sample" style="border-radius: 9999px;"></div>
+        <span class="radius-item__label">full<br>pill</span>
+      </div>
+    </div>
+
+    <!-- Elevation -->
+    <h3 class="color-group__title mt-8">Elevation</h3>
+    <div class="elevation-grid mt-4">
+      <div class="elevation-card" style="border: var(--border-thin);">
+        <span class="elevation-card__label">Flat</span>
+        <span class="elevation-card__sublabel">No shadow</span>
+      </div>
+      <div class="elevation-card" style="box-shadow: var(--shadow-xs); border: 1px solid var(--border-subtle);">
+        <span class="elevation-card__label">XS</span>
+        <span class="elevation-card__sublabel">Subtle lift</span>
+      </div>
+      <div class="elevation-card" style="box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle);">
+        <span class="elevation-card__label">SM</span>
+        <span class="elevation-card__sublabel">Resting</span>
+      </div>
+      <div class="elevation-card" style="box-shadow: var(--shadow-md); border: 1px solid var(--border-subtle);">
+        <span class="elevation-card__label">MD</span>
+        <span class="elevation-card__sublabel">Raised</span>
+      </div>
+      <div class="elevation-card" style="box-shadow: var(--shadow-lg); border: 1px solid var(--border-subtle);">
+        <span class="elevation-card__label">LG</span>
+        <span class="elevation-card__sublabel">Floating</span>
+      </div>
+      <div class="elevation-card" style="box-shadow: var(--shadow-xl); border: 1px solid var(--border-subtle);">
+        <span class="elevation-card__label">XL</span>
+        <span class="elevation-card__sublabel">Modal</span>
+      </div>
+      <div class="elevation-card" style="box-shadow: var(--shadow-brutal); border: var(--border-medium);">
+        <span class="elevation-card__label">Brutal</span>
+        <span class="elevation-card__sublabel">Offset solid</span>
+      </div>
+      <div class="elevation-card" style="box-shadow: var(--shadow-brutal-green); border: var(--border-medium);">
+        <span class="elevation-card__label">Brutal Green</span>
+        <span class="elevation-card__sublabel">CTA emphasis</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- COMPONENTS                                    -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="components" aria-labelledby="components-title">
+    <span class="section__label">05 / Components</span>
+    <h2 class="section__title" id="components-title">Component Library</h2>
+    <p class="section__description">
+      Essential building blocks. Each earns its place. 
+      Buttons press, inputs receive, cards contain, navigation orients.
+    </p>
+
+    <!-- Buttons -->
+    <h3 class="color-group__title">Buttons</h3>
+    <div class="button-row mt-4">
+      <span class="button-row__label">Primary — CTA, Progress, Confirm</span>
+      <button class="btn btn--primary btn--sm" type="button">Small</button>
+      <button class="btn btn--primary btn--md" type="button">Continue</button>
+      <button class="btn btn--primary btn--lg" type="button">Start My Profile</button>
+    </div>
+    <div class="button-row">
+      <span class="button-row__label">Secondary — Alternatives, Back</span>
+      <button class="btn btn--secondary btn--sm" type="button">Cancel</button>
+      <button class="btn btn--secondary btn--md" type="button">Go Back</button>
+      <button class="btn btn--secondary btn--lg" type="button">View Summary</button>
+    </div>
+    <div class="button-row">
+      <span class="button-row__label">Ghost — Tertiary actions</span>
+      <button class="btn btn--ghost btn--sm" type="button">Skip</button>
+      <button class="btn btn--ghost btn--md" type="button">Learn More</button>
+    </div>
+    <div class="button-row">
+      <span class="button-row__label">Danger + Disabled</span>
+      <button class="btn btn--danger btn--md" type="button">Delete Profile</button>
+      <button class="btn btn--primary btn--md btn--disabled" type="button" disabled aria-disabled="true">Disabled</button>
+      <button class="btn btn--secondary btn--icon" type="button" aria-label="More options">⋯</button>
+    </div>
+
+    <!-- Badges -->
+    <h3 class="color-group__title mt-8">Badges</h3>
+    <div class="flex flex-wrap gap-3 items-center mt-4">
+      <span class="badge badge--default">Default</span>
+      <span class="badge badge--green"><span class="badge__dot"></span> Active</span>
+      <span class="badge badge--green">Step 7/14</span>
+      <span class="badge badge--error"><span class="badge__dot"></span> Incomplete</span>
+      <span class="badge badge--warning"><span class="badge__dot"></span> Review</span>
+      <span class="badge badge--default">Ectomorph</span>
+      <span class="badge badge--green">2.847 kcal</span>
+    </div>
+
+    <!-- Navigation -->
+    <h3 class="color-group__title mt-8">Tab Navigation</h3>
+    <div class="mt-4" style="max-width: 520px;">
+      <div class="tab-bar" id="demoTabBar" role="tablist" aria-label="Dashboard tabs">
+        <div class="tab-bar__item tab-bar__item--active" role="tab" aria-selected="true" tabindex="0" data-tab="0">Overview</div>
+        <div class="tab-bar__item" role="tab" aria-selected="false" tabindex="-1" data-tab="1">Macros</div>
+        <div class="tab-bar__item" role="tab" aria-selected="false" tabindex="-1" data-tab="2">Meals</div>
+        <div class="tab-bar__item" role="tab" aria-selected="false" tabindex="-1" data-tab="3">Progress</div>
+      </div>
+    </div>
+
+    <!-- Stepper -->
+    <h3 class="color-group__title mt-8">Form Stepper</h3>
+    <div class="mt-4" style="overflow-x: auto; padding-bottom: var(--space-2);">
+      <div class="stepper" role="group" aria-label="Form progress">
+        <div class="stepper__step stepper__step--completed">
+          <div class="stepper__circle" aria-label="Step 1, completed">✓</div>
+          <span class="stepper__label">Basics</span>
+        </div>
+        <div class="stepper__connector" style="background: var(--green-500);"></div>
+        <div class="stepper__step stepper__step--completed">
+          <div class="stepper__circle" aria-label="Step 2, completed">✓</div>
+          <span class="stepper__label">Body</span>
+        </div>
+        <div class="stepper__connector" style="background: var(--green-500);"></div>
+        <div class="stepper__step stepper__step--completed">
+          <div class="stepper__circle" aria-label="Step 3, completed">✓</div>
+          <span class="stepper__label">Activity</span>
+        </div>
+        <div class="stepper__connector" style="background: var(--green-500);"></div>
+        <div class="stepper__step stepper__step--active">
+          <div class="stepper__circle" aria-label="Step 4, current">4</div>
+          <span class="stepper__label">Goals</span>
+        </div>
+        <div class="stepper__connector"></div>
+        <div class="stepper__step">
+          <div class="stepper__circle" aria-label="Step 5, pending">5</div>
+          <span class="stepper__label">Diet</span>
+        </div>
+        <div class="stepper__connector"></div>
+        <div class="stepper__step">
+          <div class="stepper__circle" aria-label="Step 6, pending">6</div>
+          <span class="stepper__label">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <h3 class="color-group__title mt-8">Progress</h3>
+    <div class="mt-4" style="max-width: 480px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
+        <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold);">Profile Completion</span>
+        <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: var(--weight-bold); color: var(--green-600);">68%</span>
+      </div>
+      <div class="progress">
+        <div class="progress__fill" style="width: 68%;"></div>
+      </div>
+      <div class="mt-4" style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
+        <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold);">Daily Calories</span>
+        <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: var(--weight-bold);">1.920 / 2.847</span>
+      </div>
+      <div class="progress progress--sm">
+        <div class="progress__fill" style="width: 67%;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- FORM ELEMENTS                                 -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="forms" aria-labelledby="forms-title">
+    <span class="section__label">06 / Forms</span>
+    <h2 class="section__title" id="forms-title">Input System</h2>
+    <p class="section__description">
+      The 14-step form is the product's spine. Every input state must be 
+      crystal clear: default, focus, filled, error, disabled.
+    </p>
+
+    <div class="form-grid">
+      <div>
+        <div class="form-group">
+          <label class="form-label" for="input-name">Full Name</label>
+          <input class="input" type="text" id="input-name" placeholder="Maria Silva" autocomplete="off">
+          <span class="form-hint">As it appears on your ID</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-email">Email</label>
+          <input class="input" type="email" id="input-email" value="maria@example.com" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-error">Weight (kg)</label>
+          <input class="input input--error" type="number" id="input-error" value="-5" autocomplete="off">
+          <span class="form-error">Weight must be a positive number</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-disabled">Calculated BMR</label>
+          <input class="input input--disabled" type="text" id="input-disabled" value="1.847 kcal" disabled>
+          <span class="form-hint">Auto-calculated from your data</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="form-group">
+          <label class="form-label" for="select-goal">Primary Goal</label>
+          <div class="select-wrapper">
+            <select class="select" id="select-goal">
+              <option value="" disabled>Select your goal</option>
+              <option value="lose" selected>Lose Weight</option>
+              <option value="maintain">Maintain Weight</option>
+              <option value="gain">Gain Muscle</option>
+              <option value="recomp">Body Recomposition</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="textarea-notes">Additional Notes</label>
+          <textarea class="textarea" id="textarea-notes" placeholder="Allergies, dietary restrictions, medical conditions..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Activity Level</label>
+          <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-2);">
+            <label class="radio radio--selected" id="radio-1">
+              <span class="radio__circle"><span class="radio__dot"></span></span>
+              <span class="radio__label">Moderately Active (3–5x/week)</span>
+            </label>
+            <label class="radio" id="radio-2">
+              <span class="radio__circle"><span class="radio__dot"></span></span>
+              <span class="radio__label">Sedentary (desk job)</span>
+            </label>
+            <label class="radio" id="radio-3">
+              <span class="radio__circle"><span class="radio__dot"></span></span>
+              <span class="radio__label">Very Active (6–7x/week)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toggles and Checkboxes -->
+    <h3 class="color-group__title mt-8">Controls</h3>
+    <div class="mt-4" style="display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: flex-start;">
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <label class="toggle toggle--active" id="toggle-1">
+          <span class="toggle__track"><span class="toggle__thumb"></span></span>
+          <span class="toggle__label">Track water intake</span>
+        </label>
+        <label class="toggle" id="toggle-2">
+          <span class="toggle__track"><span class="toggle__thumb"></span></span>
+          <span class="toggle__label">Send daily reminders</span>
+        </label>
+        <label class="toggle toggle--active" id="toggle-3">
+          <span class="toggle__track"><span class="toggle__thumb"></span></span>
+          <span class="toggle__label">Dark mode</span>
+        </label>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <label class="checkbox checkbox--checked" id="check-1">
+          <span class="checkbox__box"><span class="checkbox__check">✓</span></span>
+          <span class="checkbox__label">I agree to the terms of service</span>
+        </label>
+        <label class="checkbox" id="check-2">
+          <span class="checkbox__box"><span class="checkbox__check">✓</span></span>
+          <span class="checkbox__label">Subscribe to weekly reports</span>
+        </label>
+        <label class="checkbox checkbox--checked" id="check-3">
+          <span class="checkbox__box"><span class="checkbox__check">✓</span></span>
+          <span class="checkbox__label">Include supplement recommendations</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <h3 class="color-group__title mt-8">Slider</h3>
+    <div class="mt-4" style="max-width: 400px;">
+      <label class="form-label">Target Daily Protein (g)</label>
+      <div class="slider-container" id="proteinSlider">
+        <div class="slider-track">
+          <div class="slider-fill" style="width: 62%;"></div>
+          <div class="slider-thumb" style="left: 62%;"></div>
+        </div>
+        <div class="slider-labels">
+          <span>50g</span>
+          <span style="font-weight: var(--weight-bold); color: var(--green-600);">155g</span>
+          <span>250g</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- CARDS                                         -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="cards" aria-labelledby="cards-title">
+    <span class="section__label">07 / Cards</span>
+    <h2 class="section__title" id="cards-title">Card Patterns</h2>
+    <p class="section__description">
+      Cards contain, organize and reveal. Three patterns cover every need: 
+      standard, compact and horizontal.
+    </p>
+
+    <div class="grid-3">
+      <article class="card">
+        <div class="card__media">🥗</div>
+        <div class="card__body">
+          <span class="card__eyebrow">Meal Plan</span>
+          <h3 class="card__title">Mediterranean Balance</h3>
+          <p class="card__text">
+            High in omega-3, fiber and antioxidants. Optimized for cardiovascular health and sustained energy.
+          </p>
+          <button class="btn btn--primary btn--sm" type="button">View Plan</button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__media">📊</div>
+        <div class="card__body">
+          <span class="card__eyebrow">Report</span>
+          <h3 class="card__title">Weekly Analysis</h3>
+          <p class="card__text">
+            Caloric adherence at 94%. Protein targets met 6/7 days. Fiber intake below threshold on 3 days.
+          </p>
+          <button class="btn btn--secondary btn--sm" type="button">Open Report</button>
+        </div>
+      </article>
+      <article class="card card--compact">
+        <div class="card__body">
+          <span class="card__eyebrow">Tip</span>
+          <h3 class="card__title">Hydration Matters</h3>
+          <p class="card__text">
+            Aim for 35ml per kg of body weight daily. Proper hydration improves metabolic efficiency by up to 3%.
+          </p>
+        </div>
+        <div class="card__footer">
+          <span class="badge badge--green">Health</span>
+          <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">2 min read</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Horizontal -->
+    <div class="mt-6" style="max-width: 600px;">
+      <article class="card card--horizontal">
+        <div class="card__media" style="font-size: var(--text-2xl);">🏋️</div>
+        <div class="card__body">
+          <span class="card__eyebrow">Activity Sync</span>
+          <h3 class="card__title">Training Detected</h3>
+          <p class="card__text">
+            Upper body strength session — 47min, ~380 kcal burned. Protein target adjusted to 2.2g/kg.
+          </p>
+          <div class="flex gap-2">
+            <button class="btn btn--primary btn--sm" type="button">Confirm</button>
+            <button class="btn btn--ghost btn--sm" type="button">Dismiss</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- DATA VISUALIZATION & DASHBOARD               -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="data" aria-labelledby="data-title">
+    <span class="section__label">08 / Data</span>
+    <h2 class="section__title" id="data-title">Dashboard Patterns</h2>
+    <p class="section__description">
+      Analytics demand density with clarity. Stat cards, mini charts, 
+      progress rings and bar charts — all under the same visual discipline.
+    </p>
+
+    <!-- Stat Cards -->
+    <div class="grid-4 mb-8">
+      <div class="stat-card">
+        <div class="stat-card__label">Daily Calories</div>
+        <div class="stat-card__value">2,847</div>
+        <span class="stat-card__delta stat-card__delta--up">↑ 3.2%</span>
+        <div class="mini-chart">
+          <div class="mini-chart__bar" style="height: 60%;"></div>
+          <div class="mini-chart__bar" style="height: 75%;"></div>
+          <div class="mini-chart__bar" style="height: 45%;"></div>
+          <div class="mini-chart__bar" style="height: 90%;"></div>
+          <div class="mini-chart__bar" style="height: 80%;"></div>
+          <div class="mini-chart__bar" style="height: 65%;"></div>
+          <div class="mini-chart__bar" style="height: 100%;"></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Protein</div>
+        <div class="stat-card__value" style="color: var(--green-500);">186g</div>
+        <span class="stat-card__delta stat-card__delta--up">↑ Target met</span>
+        <div class="mini-chart">
+          <div class="mini-chart__bar" style="height: 80%;"></div>
+          <div class="mini-chart__bar" style="height: 95%;"></div>
+          <div class="mini-chart__bar" style="height: 100%;"></div>
+          <div class="mini-chart__bar" style="height: 70%;"></div>
+          <div class="mini-chart__bar" style="height: 85%;"></div>
+          <div class="mini-chart__bar" style="height: 90%;"></div>
+          <div class="mini-chart__bar" style="height: 95%;"></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Weight</div>
+        <div class="stat-card__value">78.3<span style="font-size: var(--text-lg);">kg</span></div>
+        <span class="stat-card__delta stat-card__delta--down">↓ 0.4kg this week</span>
+        <div class="mini-chart">
+          <div class="mini-chart__bar" style="height: 100%;"></div>
+          <div class="mini-chart__bar" style="height: 95%;"></div>
+          <div class="mini-chart__bar" style="height: 90%;"></div>
+          <div class="mini-chart__bar" style="height: 88%;"></div>
+          <div class="mini-chart__bar" style="height: 85%;"></div>
+          <div class="mini-chart__bar" style="height: 82%;"></div>
+          <div class="mini-chart__bar" style="height: 78%;"></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Adherence</div>
+        <div class="stat-card__value">94<span style="font-size: var(--text-lg);">%</span></div>
+        <span class="stat-card__delta stat-card__delta--up">↑ +6% vs last week</span>
+        <div class="mini-chart">
+          <div class="mini-chart__bar" style="height: 70%;"></div>
+          <div class="mini-chart__bar" style="height: 85%;"></div>
+          <div class="mini-chart__bar" style="height: 75%;"></div>
+          <div class="mini-chart__bar" style="height: 95%;"></div>
+          <div class="mini-chart__bar" style="height: 100%;"></div>
+          <div class="mini-chart__bar" style="height: 90%;"></div>
+          <div class="mini-chart__bar" style="height: 94%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Macro breakdown -->
+    <div class="grid-2">
+      <div>
+        <h3 class="color-group__title">Macro Distribution</h3>
+        <div class="bar-chart mt-4">
+          <div class="bar-chart__row">
+            <span class="bar-chart__label">Protein</span>
+            <div class="bar-chart__track">
+              <div class="bar-chart__fill" style="width: 72%;"></div>
+            </div>
+            <span class="bar-chart__value">186g</span>
+          </div>
+          <div class="bar-chart__row">
+            <span class="bar-chart__label">Carbs</span>
+            <div class="bar-chart__track">
+              <div class="bar-chart__fill" style="width: 85%; background: var(--gray-600);">
+              </div>
+            </div>
+            <span class="bar-chart__value">312g</span>
+          </div>
+          <div class="bar-chart__row">
+            <span class="bar-chart__label">Fat</span>
+            <div class="bar-chart__track">
+              <div class="bar-chart__fill" style="width: 45%; background: var(--gray-400);">
+              </div>
+            </div>
+            <span class="bar-chart__value">94g</span>
+          </div>
+          <div class="bar-chart__row">
+            <span class="bar-chart__label">Fiber</span>
+            <div class="bar-chart__track">
+              <div class="bar-chart__fill" style="width: 58%; background: var(--green-300);">
+              </div>
+            </div>
+            <span class="bar-chart__value">29g</span>
+          </div>
+          <div class="bar-chart__row">
+            <span class="bar-chart__label">Water</span>
+            <div class="bar-chart__track">
+              <div class="bar-chart__fill" style="width: 64%; background: var(--green-200);">
+              </div>
+            </div>
+            <span class="bar-chart__value">2.1L</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="color-group__title">Goal Progress</h3>
+        <div class="mt-4" style="display: flex; align-items: center; gap: var(--space-8);">
+          <div class="progress-ring" id="progressRing">
+            <svg width="96" height="96" viewBox="0 0 96 96">
+              <circle class="progress-ring__bg" cx="48" cy="48" r="40"></circle>
+              <circle class="progress-ring__fill" cx="48" cy="48" r="40"
+                stroke-dasharray="251.327"
+                stroke-dashoffset="75.4"></circle>
+            </svg>
+            <div class="progress-ring__value">70%</div>
+          </div>
+          <div>
+            <div style="font-size: var(--text-lg); font-weight: var(--weight-black); margin-bottom: var(--space-2);">
+              Weight Goal
+            </div>
+            <div style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-3); line-height: var(--leading-relaxed);">
+              Target: 75kg<br>
+              Current: 78.3kg<br>
+              Started: 83kg
+            </div>
+            <span class="badge badge--green"><span class="badge__dot"></span> On Track</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- FEEDBACK STATES                               -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="states" aria-labelledby="states-title">
+    <span class="section__label">09 / States</span>
+    <h2 class="section__title" id="states-title">Feedback & States</h2>
+    <p class="section__description">
+      Every system state has a visual voice. Success is green confidence, 
+      error is clear without alarm, warnings advise, info orients.
+    </p>
+
+    <div class="grid-2">
+      <div>
+        <!-- Feedback Messages -->
+        <h3 class="color-group__title">Notifications</h3>
+        <div class="mt-4">
+          <div class="feedback feedback--success" role="alert">
+            <span class="feedback__icon" aria-hidden="true">✓</span>
+            <div class="feedback__content">
+              <div class="feedback__title">Profile saved successfully</div>
+              <div class="feedback__text">Your nutritional targets have been updated.</div>
+            </div>
+          </div>
+          <div class="feedback feedback--error" role="alert">
+            <span class="feedback__icon" aria-hidden="true">✕</span>
+            <div class="feedback__content">
+              <div class="feedback__title">Invalid weight value</div>
+              <div class="feedback__text">Please enter a number between 30 and 300 kg.</div>
+            </div>
+          </div>
+          <div class="feedback feedback--warning" role="alert">
+            <span class="feedback__icon" aria-hidden="true">!</span>
+            <div class="feedback__content">
+              <div class="feedback__title">Caloric deficit too aggressive</div>
+              <div class="feedback__text">A deficit above 25% may impact muscle retention. Consider adjusting.</div>
+            </div>
+          </div>
+          <div class="feedback feedback--info" role="status">
+            <span class="feedback__icon" aria-hidden="true">i</span>
+            <div class="feedback__content">
+              <div class="feedback__title">Step 7 of 14</div>
+              <div class="feedback__text">You can save progress and return later at any time.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toast -->
+        <h3 class="color-group__title mt-8">Toast</h3>
+        <div class="mt-4">
+          <div class="toast-demo" role="status" aria-live="polite">
+            <span aria-hidden="true">✓</span>
+            <span class="toast-demo__text">Meal logged — 642 kcal</span>
+            <button class="toast-demo__action" type="button">Undo</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- Empty State -->
+        <h3 class="color-group__title">Empty State</h3>
+        <div class="mt-4">
+          <div class="empty-state">
+            <div class="empty-state__icon" aria-hidden="true">📋</div>
+            <h3 class="empty-state__title">No meals logged yet</h3>
+            <p class="empty-state__text">
+              Start tracking your nutrition by adding your first meal. It only takes a moment.
+            </p>
+            <button class="btn btn--primary btn--md" type="button">Log First Meal</button>
+          </div>
+        </div>
+
+        <!-- Loading -->
+        <h3 class="color-group__title mt-8">Loading States</h3>
+        <div class="mt-4" style="display: flex; flex-direction: column; gap: var(--space-6);">
+          <div style="display: flex; align-items: center; gap: var(--space-4);">
+            <div class="spinner"></div>
+            <span style="font-size: var(--text-sm); color: var(--text-secondary);">Calculating targets...</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--space-4);">
+            <div class="spinner spinner--lg"></div>
+            <span style="font-size: var(--text-sm); color: var(--text-secondary);">Loading dashboard...</span>
+          </div>
+          <div style="border: var(--border-medium); border-radius: var(--radius-md); padding: var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+              <div class="skeleton skeleton--avatar"></div>
+              <div style="flex:1;">
+                <div class="skeleton skeleton--title"></div>
+                <div class="skeleton skeleton--text" style="width: 40%;"></div>
+              </div>
+            </div>
+            <div class="skeleton skeleton--block"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- MOTION                                        -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="motion" aria-labelledby="motion-title">
+    <span class="section__label">10 / Motion</span>
+    <h2 class="section__title" id="motion-title">Motion Language</h2>
+    <p class="section__description">
+      Movement is intelligence, not decoration. Three easing curves, four durations. 
+      Hover to see each timing in action.
+    </p>
+
+    <div class="motion-grid">
+      <div class="motion-cell" id="motionEaseOut">
+        <div class="motion-dot" style="transition: transform var(--duration-normal) var(--ease-out);"></div>
+        <span class="motion-cell__label">Ease Out<br><span style="color: var(--text-tertiary);">250ms — UI responses</span></span>
+      </div>
+      <div class="motion-cell" id="motionEaseInOut">
+        <div class="motion-dot" style="transition: transform var(--duration-slow) var(--ease-in-out);"></div>
+        <span class="motion-cell__label">Ease In-Out<br><span style="color: var(--text-tertiary);">400ms — Layout shifts</span></span>
+      </div>
+      <div class="motion-cell" id="motionSpring">
+        <div class="motion-dot" style="transition: transform var(--duration-normal) var(--ease-spring);"></div>
+        <span class="motion-cell__label">Spring<br><span style="color: var(--text-tertiary);">250ms — Tactile feedback</span></span>
+      </div>
+      <div class="motion-cell" id="motionInstant">
+        <div class="motion-dot" style="transition: transform var(--duration-instant) linear;"></div>
+        <span class="motion-cell__label">Instant<br><span style="color: var(--text-tertiary);">80ms — Micro states</span></span>
+      </div>
+    </div>
+
+    <!-- Motion token table -->
+    <div class="mt-8">
+      <table class="token-table" role="table">
+        <thead>
+          <tr>
+            <th scope="col">Token</th>
+            <th scope="col">Value</th>
+            <th scope="col">Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="token-table__name">--duration-instant</span></td>
+            <td>80ms</td>
+            <td>Color changes, opacity micro-states</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">--duration-fast</span></td>
+            <td>150ms</td>
+            <td>Hover states, focus rings, small toggles</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">--duration-normal</span></td>
+            <td>250ms</td>
+            <td>Button presses, card lifts, tab switches</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">--duration-slow</span></td>
+            <td>400ms</td>
+            <td>Panel reveals, layout transitions, modals</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">--duration-slower</span></td>
+            <td>600ms</td>
+            <td>Chart animations, progress fills, page entrances</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">--ease-out</span></td>
+            <td>cubic-bezier(0.16, 1, 0.3, 1)</td>
+            <td>Default for all UI responses</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">--ease-in-out</span></td>
+            <td>cubic-bezier(0.65, 0, 0.35, 1)</td>
+            <td>Symmetrical transitions, layout morphs</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">--ease-spring</span></td>
+            <td>cubic-bezier(0.34, 1.56, 0.64, 1)</td>
+            <td>Tactile overshoots — buttons, toggles, badges</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- RESPONSIVE                                    -->
+  <!-- ============================================= -->
+  <section class="section animate-on-scroll" id="responsive" aria-labelledby="responsive-title">
+    <span class="section__label">11 / Responsive</span>
+    <h2 class="section__title" id="responsive-title">Responsive Scaling</h2>
+    <p class="section__description">
+      Mobile-first. The system compresses gracefully — grids collapse, 
+      typography scales via clamp, touch targets grow to 44px minimum.
+    </p>
+
+    <div class="responsive-frames">
+      <!-- Mobile -->
+      <div class="device-frame" style="width: 180px;">
+        <div class="device-frame__top">
+          <div class="device-frame__dot"></div>
+          <div class="device-frame__dot"></div>
+          <div class="device-frame__dot"></div>
+          <span style="font-family: var(--font-mono); font-size: 8px; color: var(--text-tertiary); margin-left: auto;">375px</span>
+        </div>
+        <div class="device-frame__body">
+          <div class="skeleton skeleton--title device-frame__skeleton" style="width: 80%;"></div>
+          <div class="skeleton skeleton--text device-frame__skeleton"></div>
+          <div class="skeleton skeleton--text device-frame__skeleton" style="width: 70%;"></div>
+          <div style="height: 4px;"></div>
+          <div class="skeleton device-frame__skeleton" style="height: 24px; border-radius: var(--radius-md); background: var(--green-200);"></div>
+          <div style="height: 8px;"></div>
+          <div class="skeleton device-frame__skeleton" style="height: 60px;"></div>
+          <div style="height: 4px;"></div>
+          <div class="skeleton device-frame__skeleton" style="height: 60px;"></div>
+        </div>
+      </div>
+
+      <!-- Tablet -->
+      <div class="device-frame" style="width: 320px;">
+        <div class="device-frame__top">
+          <div class="device-frame__dot"></div>
+          <div class="device-frame__dot"></div>
+          <div class="device-frame__dot"></div>
+          <span style="font-family: var(--font-mono); font-size: 8px; color: var(--text-tertiary); margin-left: auto;">768px</span>
+        </div>
+        <div class="device-frame__body">
+          <div class="skeleton skeleton--title device-frame__skeleton" style="width: 50%;"></div>
+          <div class="skeleton skeleton--text device-frame__skeleton" style="width: 80%;"></div>
+          <div style="height: 8px;"></div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+            <div class="skeleton device-frame__skeleton" style="height: 56px;"></div>
+            <div class="skeleton device-frame__skeleton" style="height: 56px;"></div>
+            <div class="skeleton device-frame__skeleton" style="height: 56px;"></div>
+            <div class="skeleton device-frame__skeleton" style="height: 56px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop -->
+      <div class="device-frame" style="width: 480px;">
+        <div class="device-frame__top">
+          <div class="device-frame__dot"></div>
+          <div class="device-frame__dot"></div>
+          <div class="device-frame__dot"></div>
+          <span style="font-family: var(--font-mono); font-size: 8px; color: var(--text-tertiary); margin-left: auto;">1200px</span>
+        </div>
+        <div class="device-frame__body">
+          <div style="display: flex; gap: 6px; align-items: flex-start;">
+            <div style="flex: 1;">
+              <div class="skeleton skeleton--title device-frame__skeleton" style="width: 60%;"></div>
+              <div class="skeleton skeleton--text device-frame__skeleton"></div>
+              <div class="skeleton skeleton--text device-frame__skeleton" style="width: 85%;"></div>
+            </div>
+            <div style="width: 60px;">
+              <div class="skeleton device-frame__skeleton" style="height: 24px; border-radius: var(--radius-md); background: var(--green-200); margin-bottom: 4px;"></div>
+            </div>
+          </div>
+          <div style="height: 8px;"></div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px;">
+            <div class="skeleton device-frame__skeleton" style="height: 48px;"></div>
+            <div class="skeleton device-frame__skeleton" style="height: 48px;"></div>
+            <div class="skeleton device-frame__skeleton" style="height: 48px;"></div>
+            <div class="skeleton device-frame__skeleton" style="height: 48px;"></div>
+          </div>
+          <div style="height: 6px;"></div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 4px;">
+            <div class="skeleton device-frame__skeleton" style="height: 80px;"></div>
+            <div class="skeleton device-frame__skeleton" style="height: 80px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Breakpoint tokens -->
+    <div class="mt-8">
+      <table class="token-table" role="table">
+        <thead>
+          <tr>
+            <th scope="col">Breakpoint</th>
+            <th scope="col">Width</th>
+            <th scope="col">Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="token-table__name">Mobile</span></td>
+            <td>< 480px</td>
+            <td>Single column, full-width cards, stacked forms</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">Tablet</span></td>
+            <td>480–768px</td>
+            <td>2-column grids, side-by-side inputs</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">Desktop</span></td>
+            <td>768–1200px</td>
+            <td>Full grid, sidebar navigation, expanded dashboard</td>
+          </tr>
+          <tr>
+            <td><span class="token-table__name">Wide</span></td>
+            <td>> 1200px</td>
+            <td>Max-width container, centered, generous margins</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- FOOTER                                        -->
+  <!-- ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__brand">Khroma<span>Diet</span></div>
+    <p class="footer__note">Design System Manifesto v1.0 — The visual foundation. Every pixel earned.</p>
+  </footer>
+
+</main>
+
+<!-- ============================================= -->
+<!-- JAVASCRIPT                                    -->
+<!-- ============================================= -->
+<script>
+// ============================================= //
+// SECTION: Theme Toggle                         //
+// ============================================= //
+(function initThemeToggle() {
+  try {
+    var toggle = document.getElementById('themeToggle');
+    var html = document.documentElement;
+    var storedTheme = localStorage.getItem('khroma-theme');
+
+    if (storedTheme === 'dark') {
+      html.setAttribute('data-theme', 'dark');
+    }
+
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var currentTheme = html.getAttribute('data-theme');
+        var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        try {
+          localStorage.setItem('khroma-theme', newTheme);
+        } catch (e) {
+          console.error('localStorage not available:', e);
+        }
+      });
+    }
+  } catch (e) {
+    console.error('Theme toggle init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Scroll Animations                    //
+// ============================================= //
+(function initScrollAnimations() {
+  try {
+    var elements = document.querySelectorAll('.animate-on-scroll');
+    if (!elements.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    elements.forEach(function(el) {
+      observer.observe(el);
+    });
+  } catch (e) {
+    console.error('Scroll animation init error:', e);
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+      el.classList.add('is-visible');
+    });
+  }
+})();
+
+// ============================================= //
+// SECTION: Interactive Toggles                  //
+// ============================================= //
+(function initToggles() {
+  try {
+    var toggles = document.querySelectorAll('.toggle');
+    toggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('toggle--active');
+      });
+    });
+  } catch (e) {
+    console.error('Toggle init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Interactive Checkboxes               //
+// ============================================= //
+(function initCheckboxes() {
+  try {
+    var checkboxes = document.querySelectorAll('.checkbox');
+    checkboxes.forEach(function(cb) {
+      cb.addEventListener('click', function() {
+        this.classList.toggle('checkbox--checked');
+        var isChecked = this.classList.contains('checkbox--checked');
+        this.setAttribute('aria-checked', isChecked);
+      });
+    });
+  } catch (e) {
+    console.error('Checkbox init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Interactive Radios                   //
+// ============================================= //
+(function initRadios() {
+  try {
+    var radios = document.querySelectorAll('.radio');
+    radios.forEach(function(radio) {
+      radio.addEventListener('click', function() {
+        radios.forEach(function(r) {
+          r.classList.remove('radio--selected');
+        });
+        this.classList.add('radio--selected');
+      });
+    });
+  } catch (e) {
+    console.error('Radio init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Tab Bar                              //
+// ============================================= //
+(function initTabBar() {
+  try {
+    var tabBar = document.getElementById('demoTabBar');
+    if (!tabBar) return;
+
+    var tabs = tabBar.querySelectorAll('.tab-bar__item');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) {
+          t.classList.remove('tab-bar__item--active');
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        });
+        this.classList.add('tab-bar__item--active');
+        this.setAttribute('aria-selected', 'true');
+        this.setAttribute('tabindex', '0');
+      });
+
+      tab.addEventListener('keydown', function(e) {
+        var tabsArr = Array.from(tabs);
+        var idx = tabsArr.indexOf(this);
+        var newIdx = idx;
+
+        if (e.key === 'ArrowRight') {
+          newIdx = (idx + 1) % tabsArr.length;
+          e.preventDefault();
+        } else if (e.key === 'ArrowLeft') {
+          newIdx = (idx - 1 + tabsArr.length) % tabsArr.length;
+          e.preventDefault();
+        }
+
+        if (newIdx !== idx) {
+          tabsArr[newIdx].click();
+          tabsArr[newIdx].focus();
+        }
+      });
+    });
+  } catch (e) {
+    console.error('Tab bar init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Motion Demo                          //
+// ============================================= //
+(function initMotionDemos() {
+  try {
+    var cells = document.querySelectorAll('.motion-cell');
+    cells.forEach(function(cell) {
+      var dot = cell.querySelector('.motion-dot');
+      if (!dot) return;
+
+      cell.addEventListener('mouseenter', function() {
+        dot.style.transform = 'translateX(60px) scale(1.3)';
+      });
+      cell.addEventListener('mouseleave', function() {
+        dot.style.transform = 'translateX(0) scale(1)';
+      });
+    });
+  } catch (e) {
+    console.error('Motion demo init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Color Chip Copy                      //
+// ============================================= //
+(function initColorChipCopy() {
+  try {
+    var chips = document.querySelectorAll('.color-chip');
+    chips.forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        var valueEl = chip.querySelector('.color-chip__value');
+        if (!valueEl) return;
+        var colorValue = valueEl.textContent.trim();
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(colorValue).then(function() {
+            var originalText = valueEl.textContent;
+            valueEl.textContent = 'Copied!';
+            setTimeout(function() {
+              valueEl.textContent = originalText;
+            }, 1200);
+          }).catch(function() {
+            console.error('Clipboard write failed');
+          });
+        }
+      });
+
+      chip.setAttribute('title', 'Click to copy');
+      chip.setAttribute('role', 'button');
+      chip.setAttribute('tabindex', '0');
+
+      chip.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+    });
+  } catch (e) {
+    console.error('Color chip copy init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Nav Active Link Tracking             //
+// ============================================= //
+(function initNavTracking() {
+  try {
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.topnav__link');
+    if (!sections.length || !navLinks.length) return;
+
+    var debounceTimer = null;
+    function onScroll() {
+      if (debounceTimer) return;
+      debounceTimer = setTimeout(function() {
+        debounceTimer = null;
+        var scrollPos = window.scrollY + 120;
+        var activeId = null;
+
+        sections.forEach(function(section) {
+          if (section.offsetTop <= scrollPos) {
+            activeId = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(function(link) {
+          var href = link.getAttribute('href');
+          if (href && href === '#' + activeId) {
+            link.classList.add('topnav__link--active');
+          } else {
+            link.classList.remove('topnav__link--active');
+          }
+        });
+      }, 80);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  } catch (e) {
+    console.error('Nav tracking init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Slider Interaction                   //
+// ============================================= //
+(function initSlider() {
+  try {
+    var container = document.getElementById('proteinSlider');
+    if (!container) return;
+
+    var track = container.querySelector('.slider-track');
+    var fill = container.querySelector('.slider-fill');
+    var thumb = container.querySelector('.slider-thumb');
+    var labels = container.querySelectorAll('.slider-labels span');
+    var isDragging = false;
+    var min = 50;
+    var max = 250;
+
+    function updateSlider(percent) {
+      percent = Math.max(0, Math.min(100, percent));
+      fill.style.width = percent + '%';
+      thumb.style.left = percent + '%';
+      var value = Math.round(min + (percent / 100) * (max - min));
+      if (labels.length >= 2) {
+        labels[1].textContent = value + 'g';
+      }
+    }
+
+    function getPercent(e) {
+      var rect = track.getBoundingClientRect();
+      var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      return ((clientX - rect.left) / rect.width) * 100;
+    }
+
+    track.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      updateSlider(getPercent(e));
+      e.preventDefault();
+    });
+
+    track.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      updateSlider(getPercent(e));
+    }, { passive: true });
+
+    document.addEventListener('mousemove', function(e) {
+      if (isDragging) updateSlider(getPercent(e));
+    });
+
+    document.addEventListener('touchmove', function(e) {
+      if (isDragging) updateSlider(getPercent(e));
+    }, { passive: true });
+
+    document.addEventListener('mouseup', function() { isDragging = false; });
+    document.addEventListener('touchend', function() { isDragging = false; });
+
+  } catch (e) {
+    console.error('Slider init error:', e);
+  }
+})();
+
+// ============================================= //
+// SECTION: Smooth Scroll for Nav Links          //
+// ============================================= //
+(function initSmoothScroll() {
+  try {
+    document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        var target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          var navHeight = 60;
+          var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+          window.scrollTo({ top: targetPos, behavior: 'smooth' });
+        }
+      });
+    });
+  } catch (e) {
+    console.error('Smooth scroll init error:', e);
+  }
+})();
+</script>
+
+</body>
+</html>

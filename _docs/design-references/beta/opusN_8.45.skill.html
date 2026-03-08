@@ -1,0 +1,5060 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="KhromaDiet — Design System Manifesto v1.0">
+<title>KhromaDiet — Design System Manifesto</title>
+<style>
+/* ============================================= */
+/* SECTION: CSS RESET & FOUNDATION              */
+/* ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ========== COLOR TOKENS ========== */
+  --white-100: #FFFFFF;
+  --white-95: #F2F2F2;
+  --white-90: #E5E5E5;
+  --white-85: #D9D9D9;
+  --white-80: #CCCCCC;
+  --white-70: #B3B3B3;
+  --white-60: #999999;
+
+  --black-100: #000000;
+  --black-95: #0A0A0A;
+  --black-90: #141414;
+  --black-85: #1A1A1A;
+  --black-80: #222222;
+  --black-75: #2A2A2A;
+  --black-70: #333333;
+  --black-60: #444444;
+  --black-50: #555555;
+  --black-40: #666666;
+  --black-30: #777777;
+
+  --green-vivid: #00E06B;
+  --green-bright: #00FF7A;
+  --green-medium: #00C45E;
+  --green-dark: #00A34E;
+  --green-deep: #007A3A;
+  --green-muted: #00E06B26;
+  --green-ghost: #00E06B0D;
+  --green-glow: #00E06B40;
+
+  --red-error: #FF3B3B;
+  --red-error-bg: #FF3B3B14;
+  --amber-warn: #FFB020;
+  --amber-warn-bg: #FFB02014;
+
+  /* ========== SEMANTIC TOKENS — LIGHT ========== */
+  --bg-primary: var(--white-100);
+  --bg-secondary: var(--white-95);
+  --bg-tertiary: var(--white-90);
+  --bg-elevated: var(--white-100);
+  --bg-inverse: var(--black-100);
+  --bg-accent: var(--green-vivid);
+  --bg-accent-ghost: var(--green-ghost);
+  --bg-accent-muted: var(--green-muted);
+
+  --text-primary: var(--black-100);
+  --text-secondary: var(--black-50);
+  --text-tertiary: var(--black-30);
+  --text-inverse: var(--white-100);
+  --text-accent: var(--green-dark);
+  --text-on-accent: var(--black-100);
+
+  --border-primary: var(--black-100);
+  --border-secondary: var(--white-90);
+  --border-tertiary: var(--white-85);
+  --border-accent: var(--green-vivid);
+  --border-focus: var(--green-vivid);
+
+  --surface-glass: rgba(255,255,255,0.72);
+  --surface-overlay: rgba(0,0,0,0.04);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.14);
+  --shadow-brutal: 4px 4px 0px var(--black-100);
+  --shadow-brutal-sm: 2px 2px 0px var(--black-100);
+  --shadow-brutal-lg: 6px 6px 0px var(--black-100);
+  --shadow-brutal-accent: 4px 4px 0px var(--green-vivid);
+  --shadow-glow: 0 0 20px var(--green-glow);
+
+  /* ========== SPACING SCALE ========== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ========== RADIUS ========== */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ========== TYPOGRAPHY ========== */
+  --font-display: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'Consolas', 'Monaco', monospace;
+
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.3125rem;
+  --text-2xl: 1.625rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.25rem;
+  --text-6xl: 4rem;
+  --text-7xl: 5rem;
+  --text-8xl: 6.5rem;
+
+  --leading-none: 1;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tighter: -0.04em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.12em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+  --weight-black: 900;
+
+  /* ========== MOTION ========== */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap: cubic-bezier(0, 0.7, 0.3, 1);
+
+  --duration-instant: 80ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+  --duration-dramatic: 1000ms;
+
+  /* ========== Z-INDEX ========== */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* ========== LAYOUT ========== */
+  --max-width: 1280px;
+  --max-width-narrow: 960px;
+  --max-width-wide: 1440px;
+  --gutter: var(--space-6);
+}
+
+/* ============================================= */
+/* SECTION: DARK MODE TOKENS                     */
+/* ============================================= */
+[data-theme="dark"] {
+  --bg-primary: var(--black-100);
+  --bg-secondary: var(--black-95);
+  --bg-tertiary: var(--black-90);
+  --bg-elevated: var(--black-85);
+  --bg-inverse: var(--white-100);
+  --bg-accent: var(--green-vivid);
+  --bg-accent-ghost: #00E06B12;
+  --bg-accent-muted: #00E06B20;
+
+  --text-primary: var(--white-100);
+  --text-secondary: var(--white-60);
+  --text-tertiary: var(--white-70);
+  --text-inverse: var(--black-100);
+  --text-accent: var(--green-vivid);
+  --text-on-accent: var(--black-100);
+
+  --border-primary: var(--white-100);
+  --border-secondary: var(--black-75);
+  --border-tertiary: var(--black-70);
+  --border-accent: var(--green-vivid);
+  --border-focus: var(--green-vivid);
+
+  --surface-glass: rgba(10,10,10,0.80);
+  --surface-overlay: rgba(255,255,255,0.04);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.6);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.7);
+  --shadow-brutal: 4px 4px 0px var(--white-100);
+  --shadow-brutal-sm: 2px 2px 0px var(--white-100);
+  --shadow-brutal-lg: 6px 6px 0px var(--white-100);
+  --shadow-brutal-accent: 4px 4px 0px var(--green-vivid);
+  --shadow-glow: 0 0 24px var(--green-glow);
+}
+
+/* ============================================= */
+/* SECTION: BASE STYLES                          */
+/* ============================================= */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color var(--duration-slow) var(--ease-out-expo),
+              color var(--duration-slow) var(--ease-out-expo);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--green-vivid);
+  color: var(--black-100);
+}
+
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+a {
+  color: var(--text-accent);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out-expo);
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ============================================= */
+/* SECTION: SCROLLBAR STYLING                    */
+/* ============================================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* SECTION: NAVIGATION                           */
+/* ============================================= */
+.nav-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border-bottom: 2px solid var(--border-primary);
+  transition: background var(--duration-slow) var(--ease-out-expo),
+              border-color var(--duration-slow) var(--ease-out-expo);
+}
+
+.nav-inner {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--space-4) var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: var(--weight-black);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  text-decoration: none;
+  user-select: none;
+}
+
+.nav-logo:hover {
+  text-decoration: none;
+}
+
+.nav-logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--green-vivid);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-brutal-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-md);
+  font-weight: var(--weight-black);
+  color: var(--black-100);
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+
+.nav-logo:hover .nav-logo-mark {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) var(--ease-out-expo),
+              background var(--duration-fast) var(--ease-out-expo);
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+  background: var(--surface-overlay);
+  text-decoration: none;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  transition: all var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-brutal-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.theme-toggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  position: absolute;
+  transition: all var(--duration-normal) var(--ease-spring);
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0);
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0);
+}
+
+.nav-mobile-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+/* ============================================= */
+/* SECTION: LAYOUT UTILITIES                     */
+/* ============================================= */
+.page-content {
+  padding-top: 72px;
+}
+
+.section {
+  padding: var(--space-24) var(--gutter);
+  position: relative;
+}
+
+.section--hero {
+  padding: var(--space-32) var(--gutter) var(--space-24);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.section--alt {
+  background: var(--bg-secondary);
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section-inner--narrow {
+  max-width: var(--max-width-narrow);
+}
+
+.section-inner--wide {
+  max-width: var(--max-width-wide);
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-accent);
+  margin-bottom: var(--space-6);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--border-accent);
+  border-radius: var(--radius-full);
+  background: var(--bg-accent-ghost);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.section-subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin-bottom: var(--space-16);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+/* ============================================= */
+/* SECTION: ANIMATION KEYFRAMES                  */
+/* ============================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes progressFill {
+  from { width: 0%; }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes brutalShake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2px, -1px); }
+  30% { transform: translate(2px, 1px); }
+  50% { transform: translate(-1px, 2px); }
+  70% { transform: translate(1px, -2px); }
+  90% { transform: translate(-2px, 0px); }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--duration-slower) var(--ease-out-expo),
+              transform var(--duration-slower) var(--ease-out-expo);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0ms; }
+.stagger-2 { transition-delay: 80ms; }
+.stagger-3 { transition-delay: 160ms; }
+.stagger-4 { transition-delay: 240ms; }
+.stagger-5 { transition-delay: 320ms; }
+.stagger-6 { transition-delay: 400ms; }
+.stagger-7 { transition-delay: 480ms; }
+.stagger-8 { transition-delay: 560ms; }
+
+/* ============================================= */
+/* SECTION: HERO                                 */
+/* ============================================= */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-on-accent);
+  background: var(--bg-accent);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-brutal-sm);
+  margin-bottom: var(--space-8);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-7xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--text-primary);
+  margin-bottom: var(--space-8);
+}
+
+.hero-title .accent {
+  color: var(--green-vivid);
+  position: relative;
+}
+
+.hero-description {
+  font-size: var(--text-xl);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin-bottom: var(--space-12);
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.hero-meta-value {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-meta-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.hero-divider {
+  width: 2px;
+  height: 40px;
+  background: var(--border-secondary);
+}
+
+/* ============================================= */
+/* SECTION: TOKEN DISPLAY COMPONENTS             */
+/* ============================================= */
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-4);
+}
+
+.token-card {
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out-expo),
+              box-shadow var(--duration-fast) var(--ease-out-expo),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.token-card:hover {
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-brutal-sm);
+  transform: translate(-1px, -1px);
+}
+
+.token-swatch {
+  height: 80px;
+  width: 100%;
+  border-bottom: 2px solid var(--border-secondary);
+}
+
+.token-info {
+  padding: var(--space-3);
+}
+
+.token-name {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+  letter-spacing: var(--tracking-wide);
+}
+
+.token-value {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* SECTION: TYPOGRAPHY SPECIMENS                 */
+/* ============================================= */
+.type-specimen {
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.type-specimen:last-child {
+  border-bottom: none;
+}
+
+.type-specimen-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.type-specimen-tag {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xs);
+  letter-spacing: var(--tracking-wide);
+}
+
+.type-display-1 {
+  font-family: var(--font-display);
+  font-size: var(--text-8xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.type-display-2 {
+  font-family: var(--font-display);
+  font-size: var(--text-7xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.type-h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.type-h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-extrabold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.type-h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+.type-h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+}
+
+.type-h5 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+.type-body-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  font-weight: var(--weight-regular);
+}
+
+.type-body {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-regular);
+}
+
+.type-body-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-regular);
+}
+
+.type-caption {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-tertiary);
+}
+
+.type-overline {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.type-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+/* ============================================= */
+/* SECTION: BUTTON SYSTEM                        */
+/* ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid var(--border-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Sizes */
+.btn--xs {
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.btn--sm {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.btn--md {
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-brutal);
+}
+
+.btn--lg {
+  font-size: var(--text-base);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brutal);
+}
+
+.btn--xl {
+  font-size: var(--text-md);
+  padding: var(--space-5) var(--space-10);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+/* Button Variants */
+.btn--primary {
+  background: var(--bg-accent);
+  color: var(--black-100);
+  border-color: var(--border-primary);
+}
+
+.btn--primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+.btn--primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.btn--secondary {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+}
+
+.btn--secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+.btn--secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.btn--ghost:hover {
+  background: var(--surface-overlay);
+  transform: none;
+  box-shadow: none;
+}
+
+.btn--ghost:active {
+  background: var(--bg-tertiary);
+}
+
+.btn--danger {
+  background: var(--red-error);
+  color: var(--white-100);
+  border-color: var(--border-primary);
+}
+
+.btn--danger:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+.btn--danger:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+}
+
+.btn--outline:hover {
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+.btn--outline:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.btn--accent-outline {
+  background: transparent;
+  color: var(--text-accent);
+  border-color: var(--border-accent);
+}
+
+.btn--accent-outline:hover {
+  background: var(--bg-accent);
+  color: var(--black-100);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-accent);
+}
+
+.btn--icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+}
+
+.btn--icon.btn--lg {
+  width: 48px;
+  height: 48px;
+}
+
+.btn--icon.btn--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* ============================================= */
+/* SECTION: BADGE SYSTEM                         */
+/* ============================================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+}
+
+.badge--default {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.badge--accent {
+  background: var(--bg-accent);
+  color: var(--black-100);
+}
+
+.badge--outline {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.badge--success {
+  background: var(--green-muted);
+  color: var(--green-dark);
+  border-color: var(--green-vivid);
+}
+
+[data-theme="dark"] .badge--success {
+  color: var(--green-vivid);
+}
+
+.badge--error {
+  background: var(--red-error-bg);
+  color: var(--red-error);
+  border-color: var(--red-error);
+}
+
+.badge--warning {
+  background: var(--amber-warn-bg);
+  color: var(--amber-warn);
+  border-color: var(--amber-warn);
+}
+
+.badge--pill {
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-4);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+/* ============================================= */
+/* SECTION: CARD SYSTEM                          */
+/* ============================================= */
+.card {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--duration-fast) var(--ease-spring),
+              box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+
+.card--brutal {
+  box-shadow: var(--shadow-brutal);
+}
+
+.card--brutal:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+.card--brutal:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.card--flat {
+  border-color: var(--border-secondary);
+  box-shadow: none;
+}
+
+.card--flat:hover {
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-brutal-sm);
+  transform: translate(-1px, -1px);
+}
+
+.card--ghost {
+  background: transparent;
+  border-color: var(--border-secondary);
+  border-style: dashed;
+}
+
+.card--accent {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-brutal-accent);
+}
+
+.card--accent:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0px var(--green-vivid);
+}
+
+.card-body {
+  padding: var(--space-6);
+}
+
+.card-body--lg {
+  padding: var(--space-8);
+}
+
+.card-body--sm {
+  padding: var(--space-4);
+}
+
+.card-header {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 2px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.card-footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 2px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* ============================================= */
+/* SECTION: FORM ELEMENTS                        */
+/* ============================================= */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-wide);
+}
+
+.form-label .required {
+  color: var(--red-error);
+  margin-left: var(--space-1);
+}
+
+.form-hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  line-height: var(--leading-normal);
+}
+
+.form-input {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-brutal-sm);
+  transition: all var(--duration-fast) var(--ease-out-expo);
+  width: 100%;
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: var(--text-tertiary);
+  font-weight: var(--weight-regular);
+}
+
+.form-input:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.form-input:focus {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-brutal-accent);
+  transform: translate(-1px, -1px);
+}
+
+.form-input--error {
+  border-color: var(--red-error);
+  box-shadow: 4px 4px 0px var(--red-error);
+}
+
+.form-input--success {
+  border-color: var(--green-vivid);
+  box-shadow: var(--shadow-brutal-accent);
+}
+
+.form-input--lg {
+  font-size: var(--text-md);
+  padding: var(--space-4) var(--space-5);
+}
+
+.form-error {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--red-error);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.form-success {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--green-dark);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+[data-theme="dark"] .form-success {
+  color: var(--green-vivid);
+}
+
+textarea.form-input {
+  min-height: 120px;
+  resize: vertical;
+}
+
+select.form-input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 12 12'%3E%3Cpath stroke='%23666' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 4 4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+[data-theme="dark"] select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 12 12'%3E%3Cpath stroke='%23999' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 4 4 4 4-4'/%3E%3C/svg%3E");
+}
+
+/* ============================================= */
+/* SECTION: TOGGLE / SWITCH                      */
+/* ============================================= */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  transition: all var(--duration-fast) var(--ease-spring);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--text-primary);
+  border-radius: var(--radius-full);
+  transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.toggle.is-active {
+  background: var(--bg-accent);
+}
+
+.toggle.is-active::after {
+  transform: translateX(20px);
+  background: var(--black-100);
+}
+
+.toggle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.toggle-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* SECTION: SLIDER / RANGE                       */
+/* ============================================= */
+.slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slider-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.slider-value {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-mono);
+  color: var(--text-accent);
+  background: var(--bg-accent-ghost);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-accent);
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--bg-accent);
+  border: 2px solid var(--border-primary);
+  box-shadow: var(--shadow-brutal-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-brutal);
+}
+
+.slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--bg-accent);
+  border: 2px solid var(--border-primary);
+  box-shadow: var(--shadow-brutal-sm);
+  cursor: pointer;
+}
+
+/* ============================================= */
+/* SECTION: CHECKBOX & RADIO                     */
+/* ============================================= */
+.check-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.check-box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-xs);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.check-box.is-checked {
+  background: var(--bg-accent);
+}
+
+.check-box.is-checked svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.check-box svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all var(--duration-fast) var(--ease-spring);
+}
+
+.check-box:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.radio-circle {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.radio-circle::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--black-100);
+  opacity: 0;
+  transform: scale(0);
+  transition: all var(--duration-fast) var(--ease-spring);
+}
+
+.radio-circle.is-checked {
+  background: var(--bg-accent);
+}
+
+.radio-circle.is-checked::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.radio-circle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.check-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* SECTION: STEPPER / PROGRESS                   */
+/* ============================================= */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.stepper-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.stepper-circle {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  background: var(--bg-primary);
+  color: var(--text-tertiary);
+  transition: all var(--duration-normal) var(--ease-spring);
+  flex-shrink: 0;
+}
+
+.stepper-circle--active {
+  background: var(--bg-accent);
+  color: var(--black-100);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.stepper-circle--done {
+  background: var(--bg-accent);
+  color: var(--black-100);
+}
+
+.stepper-line {
+  width: 32px;
+  height: 2px;
+  background: var(--border-secondary);
+  flex-shrink: 0;
+}
+
+.stepper-line--done {
+  background: var(--green-vivid);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--green-vivid);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease-out-expo);
+  animation: progressFill var(--duration-dramatic) var(--ease-out-expo);
+}
+
+/* ============================================= */
+/* SECTION: METRICS / DASHBOARD BLOCKS           */
+/* ============================================= */
+.metric-card {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-brutal);
+  transition: all var(--duration-fast) var(--ease-spring);
+}
+
+.metric-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+.metric-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+.metric-value {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-black);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-tighter);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+  line-height: var(--leading-none);
+}
+
+.metric-change {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-xs);
+}
+
+.metric-change--up {
+  color: var(--green-dark);
+  background: var(--green-muted);
+}
+
+[data-theme="dark"] .metric-change--up {
+  color: var(--green-vivid);
+}
+
+.metric-change--down {
+  color: var(--red-error);
+  background: var(--red-error-bg);
+}
+
+.metric-sparkline {
+  margin-top: var(--space-4);
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.sparkline-bar {
+  flex: 1;
+  background: var(--bg-accent-muted);
+  border-radius: 2px 2px 0 0;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+  min-height: 4px;
+}
+
+.sparkline-bar:hover {
+  background: var(--green-vivid);
+}
+
+.sparkline-bar:last-child {
+  background: var(--green-vivid);
+}
+
+/* ============================================= */
+/* SECTION: CHART PLACEHOLDER                    */
+/* ============================================= */
+.chart-container {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brutal);
+  overflow: hidden;
+}
+
+.chart-header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 2px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.chart-title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+}
+
+.chart-body {
+  padding: var(--space-6);
+  min-height: 200px;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.chart-bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.chart-bar {
+  width: 100%;
+  max-width: 40px;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  border: 2px solid var(--border-primary);
+  border-bottom: none;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  cursor: pointer;
+  position: relative;
+}
+
+.chart-bar--primary {
+  background: var(--green-vivid);
+}
+
+.chart-bar--secondary {
+  background: var(--bg-tertiary);
+}
+
+.chart-bar:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+.chart-bar-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* ============================================= */
+/* SECTION: TOAST / NOTIFICATION                 */
+/* ============================================= */
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-brutal);
+  max-width: 420px;
+  width: 100%;
+}
+
+.toast--success {
+  border-left: 6px solid var(--green-vivid);
+}
+
+.toast--error {
+  border-left: 6px solid var(--red-error);
+}
+
+.toast--warning {
+  border-left: 6px solid var(--amber-warn);
+}
+
+.toast--info {
+  border-left: 6px solid var(--text-primary);
+}
+
+.toast-icon {
+  font-size: var(--text-lg);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.toast-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.toast-message {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: var(--text-md);
+  padding: var(--space-1);
+  flex-shrink: 0;
+  transition: color var(--duration-fast);
+}
+
+.toast-close:hover {
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* SECTION: EMPTY / LOADING / ERROR STATES       */
+/* ============================================= */
+.state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  border: 2px dashed var(--border-secondary);
+  border-radius: var(--radius-lg);
+  background: var(--surface-overlay);
+}
+
+.state-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-6);
+  opacity: 0.6;
+}
+
+.state-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.state-description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 360px;
+  margin-bottom: var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
+/* Loading Spinner */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-secondary);
+  border-top-color: var(--green-vivid);
+  border-radius: var(--radius-full);
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner--lg {
+  width: 48px;
+  height: 48px;
+  border-width: 4px;
+}
+
+.spinner--sm {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--bg-tertiary) 25%,
+    var(--bg-secondary) 50%,
+    var(--bg-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--text {
+  height: 14px;
+  width: 100%;
+  margin-bottom: var(--space-2);
+}
+
+.skeleton--text-short {
+  height: 14px;
+  width: 60%;
+}
+
+.skeleton--heading {
+  height: 24px;
+  width: 50%;
+  margin-bottom: var(--space-4);
+}
+
+.skeleton--avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton--block {
+  height: 120px;
+  width: 100%;
+}
+
+.skeleton--circle {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+}
+
+/* ============================================= */
+/* SECTION: SPACING VISUAL                       */
+/* ============================================= */
+.spacing-demo {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.spacing-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.spacing-visual {
+  background: var(--green-vivid);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-xs);
+  width: 48px;
+}
+
+.spacing-name {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.spacing-px {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* SECTION: RADIUS DEMO                          */
+/* ============================================= */
+.radius-demo {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.radius-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.radius-visual {
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--border-primary);
+  background: var(--bg-accent-muted);
+  transition: background var(--duration-fast);
+}
+
+.radius-visual:hover {
+  background: var(--bg-accent);
+}
+
+.radius-name {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* ============================================= */
+/* SECTION: SHADOW DEMO                          */
+/* ============================================= */
+.shadow-demo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-8);
+}
+
+.shadow-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.shadow-visual {
+  width: 120px;
+  height: 80px;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.shadow-label {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* ============================================= */
+/* SECTION: MOTION DEMO                          */
+/* ============================================= */
+.motion-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-6);
+}
+
+.motion-demo-card {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-spring);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.motion-demo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.motion-demo-visual {
+  width: 40px;
+  height: 40px;
+  background: var(--green-vivid);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  margin: 0 auto var(--space-4);
+}
+
+.motion-demo-card:hover .motion-bounce {
+  animation: float 0.6s var(--ease-spring);
+}
+
+.motion-demo-card:hover .motion-spin {
+  animation: spin 0.6s var(--ease-out-expo);
+}
+
+.motion-demo-card:hover .motion-shake {
+  animation: brutalShake 0.4s var(--ease-out-expo);
+}
+
+.motion-demo-card:hover .motion-pulse {
+  animation: pulse 0.6s var(--ease-in-out);
+}
+
+.motion-demo-card:hover .motion-scale {
+  transform: scale(1.3);
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.motion-demo-name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.motion-demo-timing {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* SECTION: TABLE                                */
+/* ============================================= */
+.table-wrapper {
+  overflow-x: auto;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brutal);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-primary);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-secondary);
+  color: var(--text-primary);
+  font-weight: var(--weight-medium);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background: var(--surface-overlay);
+}
+
+/* ============================================= */
+/* SECTION: TABS                                 */
+/* ============================================= */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border-primary);
+  gap: 0;
+  overflow-x: auto;
+}
+
+.tab {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+  margin-bottom: -2px;
+  font-family: var(--font-body);
+  letter-spacing: var(--tracking-wide);
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  background: var(--surface-overlay);
+}
+
+.tab.is-active {
+  color: var(--text-accent);
+  border-bottom-color: var(--green-vivid);
+  font-weight: var(--weight-bold);
+}
+
+/* ============================================= */
+/* SECTION: AVATAR                               */
+/* ============================================= */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border-primary);
+  background: var(--bg-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--weight-bold);
+  font-size: var(--text-sm);
+  color: var(--black-100);
+  flex-shrink: 0;
+}
+
+.avatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--text-xs);
+}
+
+.avatar--lg {
+  width: 56px;
+  height: 56px;
+  font-size: var(--text-lg);
+}
+
+.avatar--xl {
+  width: 72px;
+  height: 72px;
+  font-size: var(--text-2xl);
+}
+
+.avatar-group {
+  display: flex;
+}
+
+.avatar-group .avatar {
+  margin-left: -8px;
+  box-shadow: 0 0 0 2px var(--bg-primary);
+}
+
+.avatar-group .avatar:first-child {
+  margin-left: 0;
+}
+
+/* ============================================= */
+/* SECTION: TOOLTIP                              */
+/* ============================================= */
+.tooltip-trigger {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip-trigger .tooltip-content {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border-primary);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--duration-fast) var(--ease-spring);
+  z-index: var(--z-tooltip);
+}
+
+.tooltip-trigger:hover .tooltip-content {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================= */
+/* SECTION: DIVIDER                              */
+/* ============================================= */
+.divider {
+  height: 2px;
+  background: var(--border-secondary);
+  width: 100%;
+  margin: var(--space-12) 0;
+}
+
+.divider--thick {
+  height: 4px;
+  background: var(--border-primary);
+}
+
+.divider--accent {
+  background: var(--green-vivid);
+  height: 3px;
+}
+
+.divider--dashed {
+  background: none;
+  border-top: 2px dashed var(--border-secondary);
+  height: 0;
+}
+
+/* ============================================= */
+/* SECTION: COMPARISON BLOCK                     */
+/* ============================================= */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-brutal);
+}
+
+.comparison-side {
+  padding: var(--space-8);
+}
+
+.comparison-side--light {
+  background: var(--white-100);
+  color: var(--black-100);
+}
+
+.comparison-side--dark {
+  background: var(--black-100);
+  color: var(--white-100);
+}
+
+.comparison-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  margin-bottom: var(--space-6);
+  opacity: 0.6;
+}
+
+.comparison-sample-text {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  margin-bottom: var(--space-4);
+  letter-spacing: var(--tracking-tight);
+}
+
+.comparison-body-text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  opacity: 0.7;
+  margin-bottom: var(--space-6);
+}
+
+.comparison-accent-bar {
+  height: 4px;
+  width: 64px;
+  background: var(--green-vivid);
+  border-radius: var(--radius-full);
+}
+
+/* ============================================= */
+/* SECTION: FOOTER                               */
+/* ============================================= */
+.ds-footer {
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  padding: var(--space-16) var(--gutter);
+  text-align: center;
+}
+
+.ds-footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.ds-footer-logo {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tighter);
+  margin-bottom: var(--space-4);
+}
+
+.ds-footer-logo .accent {
+  color: var(--green-vivid);
+}
+
+.ds-footer-text {
+  font-size: var(--text-sm);
+  opacity: 0.5;
+  line-height: var(--leading-relaxed);
+  max-width: 480px;
+  margin: 0 auto var(--space-8);
+}
+
+.ds-footer-version {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  opacity: 0.3;
+  letter-spacing: var(--tracking-wider);
+}
+
+/* ============================================= */
+/* SECTION: RESPONSIVE BREAKPOINTS               */
+/* ============================================= */
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-title {
+    font-size: var(--text-5xl);
+  }
+  .type-display-1 {
+    font-size: var(--text-6xl);
+  }
+  .type-display-2 {
+    font-size: var(--text-5xl);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --gutter: var(--space-4);
+  }
+
+  .section {
+    padding: var(--space-16) var(--gutter);
+  }
+
+  .section--hero {
+    padding: var(--space-24) var(--gutter) var(--space-16);
+    min-height: auto;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+  }
+
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: var(--text-4xl);
+  }
+
+  .hero-meta {
+    gap: var(--space-5);
+  }
+
+  .hero-divider {
+    display: none;
+  }
+
+  .section-title {
+    font-size: var(--text-3xl);
+  }
+
+  .type-display-1 {
+    font-size: var(--text-4xl);
+  }
+
+  .type-display-2 {
+    font-size: var(--text-3xl);
+  }
+
+  .type-h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .token-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: var(--text-3xl);
+  }
+
+  .section-title {
+    font-size: var(--text-2xl);
+  }
+
+  .btn--xl {
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .metric-value {
+    font-size: var(--text-3xl);
+  }
+}
+
+/* ============================================= */
+/* SECTION: PRINT STYLES                         */
+/* ============================================= */
+@media print {
+  .nav-fixed, .theme-toggle, .nav-mobile-toggle {
+    display: none !important;
+  }
+  .page-content {
+    padding-top: 0;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}
+
+/* ============================================= */
+/* SECTION: SPECIFICITY OVERRIDES                */
+/* ============================================= */
+.show-grid-lines {
+  position: relative;
+}
+.show-grid-lines > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inline code */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--text-accent);
+  border: 1px solid var(--border-secondary);
+}
+
+/* ============================================= */
+/* SECTION: NAV LINK CHIPS (horizontal scroll)   */
+/* ============================================= */
+.chip-row {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-brutal-sm);
+  user-select: none;
+  letter-spacing: var(--tracking-wide);
+}
+
+.chip:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.chip.is-active {
+  background: var(--bg-accent);
+  color: var(--black-100);
+}
+
+/* ============================================= */
+/* SECTION: GRADIENT BANNER                      */
+/* ============================================= */
+.gradient-strip {
+  height: 4px;
+  background: linear-gradient(90deg, var(--green-vivid) 0%, var(--green-dark) 50%, var(--green-vivid) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ============================================= */
+/* SECTION: ICON TOKENS (Inline SVG helpers)     */
+/* ============================================= */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon--sm svg { width: 16px; height: 16px; }
+.icon--md svg { width: 20px; height: 20px; }
+.icon--lg svg { width: 24px; height: 24px; }
+.icon--xl svg { width: 32px; height: 32px; }
+
+/* ============================================= */
+/* SECTION: NUMBER INPUT STEPPER                 */
+/* ============================================= */
+.number-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-brutal-sm);
+  overflow: hidden;
+}
+
+.number-stepper-btn {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  transition: background var(--duration-fast);
+  font-family: var(--font-body);
+}
+
+.number-stepper-btn:hover {
+  background: var(--bg-tertiary);
+}
+
+.number-stepper-btn:active {
+  background: var(--bg-accent);
+}
+
+.number-stepper-value {
+  width: 56px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  border-left: 2px solid var(--border-primary);
+  border-right: 2px solid var(--border-primary);
+  background: var(--bg-primary);
+}
+
+/* ============================================= */
+/* SECTION: TAG INPUT                            */
+/* ============================================= */
+.tag-input-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-brutal-sm);
+  background: var(--bg-primary);
+  min-height: 48px;
+  align-items: center;
+  cursor: text;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.tag-input-container:focus-within {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-brutal-accent);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background: var(--bg-accent);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-xs);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--black-100);
+}
+
+.tag-remove {
+  cursor: pointer;
+  font-size: var(--text-sm);
+  opacity: 0.6;
+  transition: opacity var(--duration-fast);
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  line-height: 1;
+}
+
+.tag-remove:hover {
+  opacity: 1;
+}
+
+.tag-input {
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  background: transparent;
+  color: var(--text-primary);
+  min-width: 120px;
+  flex: 1;
+}
+
+.tag-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* SECTION: NAVIGATION LIST (Sidebar style)      */
+/* ============================================= */
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+  border: 2px solid transparent;
+}
+
+.nav-list-item:hover {
+  background: var(--surface-overlay);
+  color: var(--text-primary);
+}
+
+.nav-list-item.is-active {
+  background: var(--bg-accent-ghost);
+  color: var(--text-accent);
+  border-color: var(--border-accent);
+  font-weight: var(--weight-bold);
+}
+
+.nav-list-item-icon {
+  font-size: var(--text-md);
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.nav-list-item-badge {
+  margin-left: auto;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  background: var(--bg-accent);
+  color: var(--black-100);
+  padding: 1px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-primary);
+}
+
+/* ============================================= */
+/* SECTION: ADDITIONAL UTILITIES                 */
+/* ============================================= */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+.mb-12 { margin-bottom: var(--space-12); }
+.mb-16 { margin-bottom: var(--space-16); }
+
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.w-full { width: 100%; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+</style>
+</head>
+<body>
+  <!-- ============================================= -->
+  <!-- SECTION: NAVIGATION BAR                       -->
+  <!-- ============================================= -->
+  <nav class="nav-fixed" role="navigation" aria-label="Navegacao principal">
+    <div class="nav-inner">
+      <a href="#top" class="nav-logo" aria-label="KhromaDiet Design System">
+        <div class="nav-logo-mark" aria-hidden="true">K</div>
+        <span>Khroma<span style="color: var(--green-vivid)">Diet</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="#foundations">Foundations</a></li>
+        <li><a href="#typography">Typography</a></li>
+        <li><a href="#colors">Colors</a></li>
+        <li><a href="#components">Components</a></li>
+        <li><a href="#forms">Forms</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#states">States</a></li>
+        <li><a href="#motion">Motion</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro e escuro" type="button">
+          <span class="icon-sun" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span class="icon-moon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+        </button>
+        <button class="nav-mobile-toggle" id="mobileNav" aria-label="Menu" type="button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="gradient-strip"></div>
+  </nav>
+
+  <main class="page-content" id="top">
+    <!-- ============================================= -->
+    <!-- SECTION: HERO / MANIFESTO                     -->
+    <!-- ============================================= -->
+    <section class="section section--hero" aria-labelledby="hero-title">
+      <div class="section-inner">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-eyebrow animate-on-scroll stagger-1">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><rect width="12" height="12" rx="2"/></svg>
+              Design System v1.0
+            </div>
+            <h1 class="hero-title animate-on-scroll stagger-2" id="hero-title">
+              A linguagem<br>visual do<br><span class="accent">KhromaDiet.</span>
+            </h1>
+            <p class="hero-description animate-on-scroll stagger-3">
+              Fundação oficial de design. Neo-Brutalismo Clean com refinamento premium. 
+              Cada token, cada componente, cada estado foi pensado para sustentar 
+              um produto de nutrição inteligente com autoridade, clareza e conforto.
+            </p>
+            <div class="hero-meta animate-on-scroll stagger-4">
+              <div class="hero-meta-item">
+                <span class="hero-meta-value">148</span>
+                <span class="hero-meta-label">Tokens</span>
+              </div>
+              <div class="hero-divider"></div>
+              <div class="hero-meta-item">
+                <span class="hero-meta-value">36</span>
+                <span class="hero-meta-label">Components</span>
+              </div>
+              <div class="hero-divider"></div>
+              <div class="hero-meta-item">
+                <span class="hero-meta-value">2</span>
+                <span class="hero-meta-label">Themes</span>
+              </div>
+              <div class="hero-divider"></div>
+              <div class="hero-meta-item">
+                <span class="hero-meta-value">A11Y</span>
+                <span class="hero-meta-label">WCAG AA+</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: DESIGN PRINCIPLES                    -->
+    <!-- ============================================= -->
+    <section class="section section--alt" id="foundations" aria-labelledby="principles-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+          Foundations
+        </span>
+        <h2 class="section-title animate-on-scroll" id="principles-title">Princípios de Design</h2>
+        <p class="section-subtitle animate-on-scroll">As cinco convicções que orientam cada decisão visual, de interação e de arquitetura do KhromaDiet.</p>
+
+        <div class="grid-auto">
+          <div class="card card--brutal animate-on-scroll stagger-1">
+            <div class="card-body--lg">
+              <div style="font-size: 2rem; margin-bottom: var(--space-4);">◼</div>
+              <h3 style="font-size: var(--text-lg); font-weight: var(--weight-black); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Clareza Frontal</h3>
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Nada se esconde. A informação chega antes do esforço. Hierarquia forte, leitura imediata, zero ambiguidade. O produto fala primeiro, o usuário entende sempre.</p>
+            </div>
+          </div>
+          <div class="card card--brutal animate-on-scroll stagger-2">
+            <div class="card-body--lg">
+              <div style="font-size: 2rem; margin-bottom: var(--space-4);">◻</div>
+              <h3 style="font-size: var(--text-lg); font-weight: var(--weight-black); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Precisão Industrial</h3>
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Cada pixel tem função. Espaçamento calculado, proporções controladas, alinhamentos exatos. A disciplina do grid e da escala cria confiança silenciosa e permanente.</p>
+            </div>
+          </div>
+          <div class="card card--brutal animate-on-scroll stagger-3">
+            <div class="card-body--lg">
+              <div style="font-size: 2rem; margin-bottom: var(--space-4);">●</div>
+              <h3 style="font-size: var(--text-lg); font-weight: var(--weight-black); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Conforto Tátil</h3>
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Brutalismo com calor. Botões que reagem, transições que respiram, estados que informam. Cada interação comunica cuidado e inteligência, nunca frieza ou rigidez.</p>
+            </div>
+          </div>
+          <div class="card card--brutal animate-on-scroll stagger-4">
+            <div class="card-body--lg">
+              <div style="font-size: 2rem; margin-bottom: var(--space-4);">▲</div>
+              <h3 style="font-size: var(--text-lg); font-weight: var(--weight-black); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Escala Coesa</h3>
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">De um badge ao dashboard inteiro, tudo respira a mesma linguagem. Componentes crescem organicamente, sem rupturas visuais, sem exceções ao sistema.</p>
+            </div>
+          </div>
+          <div class="card card--brutal animate-on-scroll stagger-5">
+            <div class="card-body--lg">
+              <div style="font-size: 2rem; margin-bottom: var(--space-4);">◆</div>
+              <h3 style="font-size: var(--text-lg); font-weight: var(--weight-black); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Energia Controlada</h3>
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">O verde existe como pulso vital, não decoração. Marca ação, progresso, foco e saúde. O restante do sistema permanece neutro, dando ao acento sua força máxima.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: COLOR PALETTE                        -->
+    <!-- ============================================= -->
+    <section class="section" id="colors" aria-labelledby="colors-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="var(--green-vivid)"><circle cx="5" cy="5" r="5"/></svg>
+          Color Tokens
+        </span>
+        <h2 class="section-title animate-on-scroll" id="colors-title">Paleta Cromática</h2>
+        <p class="section-subtitle animate-on-scroll">Branco, preto e verde vivo. Nada mais. Toda sofisticação nasce do contraste, da temperatura e da materialidade dentro desse eixo restrito.</p>
+
+        <!-- White Scale -->
+        <h3 style="font-size: var(--text-md); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-4);" class="animate-on-scroll">Escala Branca</h3>
+        <div class="token-grid mb-12 animate-on-scroll">
+          <div class="token-card">
+            <div class="token-swatch" style="background: #FFFFFF;"></div>
+            <div class="token-info"><div class="token-name">white-100</div><div class="token-value">#FFFFFF</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #F2F2F2;"></div>
+            <div class="token-info"><div class="token-name">white-95</div><div class="token-value">#F2F2F2</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #E5E5E5;"></div>
+            <div class="token-info"><div class="token-name">white-90</div><div class="token-value">#E5E5E5</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #D9D9D9;"></div>
+            <div class="token-info"><div class="token-name">white-85</div><div class="token-value">#D9D9D9</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #CCCCCC;"></div>
+            <div class="token-info"><div class="token-name">white-80</div><div class="token-value">#CCCCCC</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #B3B3B3;"></div>
+            <div class="token-info"><div class="token-name">white-70</div><div class="token-value">#B3B3B3</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #999999;"></div>
+            <div class="token-info"><div class="token-name">white-60</div><div class="token-value">#999999</div></div>
+          </div>
+        </div>
+
+        <!-- Black Scale -->
+        <h3 style="font-size: var(--text-md); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-4);" class="animate-on-scroll">Escala Preta</h3>
+        <div class="token-grid mb-12 animate-on-scroll">
+          <div class="token-card">
+            <div class="token-swatch" style="background: #000000;"></div>
+            <div class="token-info"><div class="token-name">black-100</div><div class="token-value">#000000</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #0A0A0A;"></div>
+            <div class="token-info"><div class="token-name">black-95</div><div class="token-value">#0A0A0A</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #141414;"></div>
+            <div class="token-info"><div class="token-name">black-90</div><div class="token-value">#141414</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #1A1A1A;"></div>
+            <div class="token-info"><div class="token-name">black-85</div><div class="token-value">#1A1A1A</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #222222;"></div>
+            <div class="token-info"><div class="token-name">black-80</div><div class="token-value">#222222</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #2A2A2A;"></div>
+            <div class="token-info"><div class="token-name">black-75</div><div class="token-value">#2A2A2A</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #333333;"></div>
+            <div class="token-info"><div class="token-name">black-70</div><div class="token-value">#333333</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #444444;"></div>
+            <div class="token-info"><div class="token-name">black-60</div><div class="token-value">#444444</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #555555;"></div>
+            <div class="token-info"><div class="token-name">black-50</div><div class="token-value">#555555</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #666666;"></div>
+            <div class="token-info"><div class="token-name">black-40</div><div class="token-value">#666666</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #777777;"></div>
+            <div class="token-info"><div class="token-name">black-30</div><div class="token-value">#777777</div></div>
+          </div>
+        </div>
+
+        <!-- Green Scale -->
+        <h3 style="font-size: var(--text-md); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-4);" class="animate-on-scroll">Escala Verde — Acento Vital</h3>
+        <div class="token-grid mb-12 animate-on-scroll">
+          <div class="token-card">
+            <div class="token-swatch" style="background: #00FF7A;"></div>
+            <div class="token-info"><div class="token-name">green-bright</div><div class="token-value">#00FF7A</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #00E06B;"></div>
+            <div class="token-info"><div class="token-name">green-vivid</div><div class="token-value">#00E06B</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #00C45E;"></div>
+            <div class="token-info"><div class="token-name">green-medium</div><div class="token-value">#00C45E</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #00A34E;"></div>
+            <div class="token-info"><div class="token-name">green-dark</div><div class="token-value">#00A34E</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #007A3A;"></div>
+            <div class="token-info"><div class="token-name">green-deep</div><div class="token-value">#007A3A</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #00E06B26;"></div>
+            <div class="token-info"><div class="token-name">green-muted</div><div class="token-value">15% opacity</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #00E06B0D;"></div>
+            <div class="token-info"><div class="token-name">green-ghost</div><div class="token-value">5% opacity</div></div>
+          </div>
+        </div>
+
+        <!-- Semantic Colors -->
+        <h3 style="font-size: var(--text-md); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-4);" class="animate-on-scroll">Cores Semânticas (somente feedback)</h3>
+        <div class="token-grid mb-12 animate-on-scroll">
+          <div class="token-card">
+            <div class="token-swatch" style="background: #FF3B3B;"></div>
+            <div class="token-info"><div class="token-name">red-error</div><div class="token-value">#FF3B3B</div></div>
+          </div>
+          <div class="token-card">
+            <div class="token-swatch" style="background: #FFB020;"></div>
+            <div class="token-info"><div class="token-name">amber-warn</div><div class="token-value">#FFB020</div></div>
+          </div>
+        </div>
+
+        <!-- Light vs Dark Comparison -->
+        <h3 style="font-size: var(--text-md); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-4);" class="animate-on-scroll">Modo Claro vs. Modo Escuro</h3>
+        <div class="comparison-grid animate-on-scroll">
+          <div class="comparison-side comparison-side--light">
+            <div class="comparison-label">LIGHT MODE</div>
+            <div class="comparison-sample-text">KhromaDiet</div>
+            <p class="comparison-body-text">Base branca luminosa e clínica. Preto profundo organiza texto e estrutura. Verde vivo marca ação e energia. Clareza absoluta.</p>
+            <div class="comparison-accent-bar"></div>
+          </div>
+          <div class="comparison-side comparison-side--dark">
+            <div class="comparison-label">DARK MODE</div>
+            <div class="comparison-sample-text">KhromaDiet</div>
+            <p class="comparison-body-text">Preto abissal e imersivo. Branco puro para texto e bordas. Verde vivo ganha luminescência contra o fundo escuro. Presença total.</p>
+            <div class="comparison-accent-bar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: TYPOGRAPHY                           -->
+    <!-- ============================================= -->
+    <section class="section section--alt" id="typography" aria-labelledby="type-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><rect width="10" height="10" rx="1"/></svg>
+          Typography
+        </span>
+        <h2 class="section-title animate-on-scroll" id="type-title">Sistema Tipográfico</h2>
+        <p class="section-subtitle animate-on-scroll">Hierarquia rigorosa. Escala pensada para impacto em headlines e extrema legibilidade em formulários e dashboards densos.</p>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Display 1</span>
+            <span class="type-specimen-tag">6.5rem / 900</span>
+            <span class="type-specimen-tag">tracking: -0.04em</span>
+          </div>
+          <div class="type-display-1">Nutrição</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Display 2</span>
+            <span class="type-specimen-tag">5rem / 900</span>
+            <span class="type-specimen-tag">tracking: -0.04em</span>
+          </div>
+          <div class="type-display-2">Inteligente</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Heading 1</span>
+            <span class="type-specimen-tag">3.25rem / 900</span>
+            <span class="type-specimen-tag">tracking: -0.04em</span>
+          </div>
+          <div class="type-h1">Seu plano alimentar começa aqui</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Heading 2</span>
+            <span class="type-specimen-tag">2.5rem / 800</span>
+            <span class="type-specimen-tag">tracking: -0.025em</span>
+          </div>
+          <div class="type-h2">Análise nutricional detalhada</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Heading 3</span>
+            <span class="type-specimen-tag">2rem / 700</span>
+            <span class="type-specimen-tag">tracking: -0.025em</span>
+          </div>
+          <div class="type-h3">Macronutrientes e micronutrientes</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Heading 4</span>
+            <span class="type-specimen-tag">1.625rem / 700</span>
+          </div>
+          <div class="type-h4">Distribuição calórica diária</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Heading 5</span>
+            <span class="type-specimen-tag">1.3125rem / 600</span>
+          </div>
+          <div class="type-h5">Recomendações personalizadas</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Body Large</span>
+            <span class="type-specimen-tag">1.125rem / 400</span>
+            <span class="type-specimen-tag">leading: 1.7</span>
+          </div>
+          <div class="type-body-lg">O KhromaDiet analisa seu perfil completo — idade, peso, altura, nível de atividade, restrições alimentares e objetivos — para gerar um plano nutricional cientificamente fundamentado e totalmente personalizado.</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Body</span>
+            <span class="type-specimen-tag">0.9375rem / 400</span>
+            <span class="type-specimen-tag">leading: 1.55</span>
+          </div>
+          <div class="type-body">Cada refeição é calculada para otimizar sua ingestão de proteínas, carboidratos, gorduras, fibras, vitaminas e minerais. O sistema adapta as proporções com base no seu progresso real, criando um ciclo de melhoria contínua.</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Body Small</span>
+            <span class="type-specimen-tag">0.8125rem / 400</span>
+          </div>
+          <div class="type-body-sm">Valores nutricionais baseados em tabelas TACO e USDA. Atualizações periódicas conforme novas evidências científicas.</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Caption</span>
+            <span class="type-specimen-tag">0.6875rem / 500</span>
+            <span class="type-specimen-tag">tracking: 0.025em</span>
+          </div>
+          <div class="type-caption">Última atualização: 15 de janeiro de 2025 — Dados sincronizados</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Overline</span>
+            <span class="type-specimen-tag">0.6875rem / 700</span>
+            <span class="type-specimen-tag">uppercase / tracking: 0.12em</span>
+          </div>
+          <div class="type-overline">Progresso semanal</div>
+        </div>
+
+        <div class="type-specimen animate-on-scroll">
+          <div class="type-specimen-meta">
+            <span class="type-specimen-tag">Monospace</span>
+            <span class="type-specimen-tag">SF Mono / Cascadia Code</span>
+          </div>
+          <div class="type-mono">
+            <code>--green-vivid: #00E06B;</code> &nbsp; <code>font-weight: 900;</code> &nbsp; <code>border: 2px solid;</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: SPACING SCALE                        -->
+    <!-- ============================================= -->
+    <section class="section" aria-labelledby="spacing-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="8" height="8" rx="1"/></svg>
+          Spacing
+        </span>
+        <h2 class="section-title animate-on-scroll" id="spacing-title">Escala de Espaçamento</h2>
+        <p class="section-subtitle animate-on-scroll">Base de 4px. Progressão previsível. Respiro generoso em todas as escalas para densidade sparse e confiança clínica.</p>
+
+        <div class="spacing-demo animate-on-scroll">
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 4px;"></div>
+            <div class="spacing-name">space-1</div>
+            <div class="spacing-px">4px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 8px;"></div>
+            <div class="spacing-name">space-2</div>
+            <div class="spacing-px">8px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 12px;"></div>
+            <div class="spacing-name">space-3</div>
+            <div class="spacing-px">12px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 16px;"></div>
+            <div class="spacing-name">space-4</div>
+            <div class="spacing-px">16px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 20px;"></div>
+            <div class="spacing-name">space-5</div>
+            <div class="spacing-px">20px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 24px;"></div>
+            <div class="spacing-name">space-6</div>
+            <div class="spacing-px">24px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 32px;"></div>
+            <div class="spacing-name">space-8</div>
+            <div class="spacing-px">32px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 40px;"></div>
+            <div class="spacing-name">space-10</div>
+            <div class="spacing-px">40px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 48px;"></div>
+            <div class="spacing-name">space-12</div>
+            <div class="spacing-px">48px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 64px;"></div>
+            <div class="spacing-name">space-16</div>
+            <div class="spacing-px">64px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 80px;"></div>
+            <div class="spacing-name">space-20</div>
+            <div class="spacing-px">80px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 96px;"></div>
+            <div class="spacing-name">space-24</div>
+            <div class="spacing-px">96px</div>
+          </div>
+          <div class="spacing-block">
+            <div class="spacing-visual" style="height: 128px;"></div>
+            <div class="spacing-name">space-32</div>
+            <div class="spacing-px">128px</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Radius -->
+        <h3 style="font-size: var(--text-md); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Border Radius</h3>
+        <div class="radius-demo animate-on-scroll">
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 0px;"></div>
+            <div class="radius-name">none<br><span style="color: var(--text-tertiary); font-weight: 400;">0px</span></div>
+          </div>
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 4px;"></div>
+            <div class="radius-name">xs<br><span style="color: var(--text-tertiary); font-weight: 400;">4px</span></div>
+          </div>
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 6px;"></div>
+            <div class="radius-name">sm<br><span style="color: var(--text-tertiary); font-weight: 400;">6px</span></div>
+          </div>
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 8px;"></div>
+            <div class="radius-name">md<br><span style="color: var(--text-tertiary); font-weight: 400;">8px</span></div>
+          </div>
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 12px;"></div>
+            <div class="radius-name">lg<br><span style="color: var(--text-tertiary); font-weight: 400;">12px</span></div>
+          </div>
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 16px;"></div>
+            <div class="radius-name">xl<br><span style="color: var(--text-tertiary); font-weight: 400;">16px</span></div>
+          </div>
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 24px;"></div>
+            <div class="radius-name">2xl<br><span style="color: var(--text-tertiary); font-weight: 400;">24px</span></div>
+          </div>
+          <div class="radius-block">
+            <div class="radius-visual" style="border-radius: 9999px;"></div>
+            <div class="radius-name">full<br><span style="color: var(--text-tertiary); font-weight: 400;">9999px</span></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Shadows -->
+        <h3 style="font-size: var(--text-md); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Elevação e Sombras</h3>
+        <div class="shadow-demo animate-on-scroll">
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-xs);"></div>
+            <div class="shadow-label">shadow-xs</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-sm);"></div>
+            <div class="shadow-label">shadow-sm</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-md);"></div>
+            <div class="shadow-label">shadow-md</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-lg);"></div>
+            <div class="shadow-label">shadow-lg</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-xl);"></div>
+            <div class="shadow-label">shadow-xl</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-brutal-sm);"></div>
+            <div class="shadow-label">brutal-sm</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-brutal);"></div>
+            <div class="shadow-label">brutal</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-brutal-lg);"></div>
+            <div class="shadow-label">brutal-lg</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-brutal-accent);"></div>
+            <div class="shadow-label">brutal-accent</div>
+          </div>
+          <div class="shadow-block">
+            <div class="shadow-visual" style="box-shadow: var(--shadow-glow);"></div>
+            <div class="shadow-label">glow</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: COMPONENTS — BUTTONS                 -->
+    <!-- ============================================= -->
+    <section class="section section--alt" id="components" aria-labelledby="comp-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><rect width="10" height="10"/></svg>
+          Components
+        </span>
+        <h2 class="section-title animate-on-scroll" id="comp-title">Biblioteca de Componentes</h2>
+        <p class="section-subtitle animate-on-scroll">Todos os blocos construtivos do produto, com variantes, tamanhos e estados interativos. Passe o mouse e clique para sentir o sistema.</p>
+
+        <!-- Buttons -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Botões</h3>
+
+        <div class="mb-8 animate-on-scroll">
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Variantes</p>
+          <div class="btn-group">
+            <button class="btn btn--md btn--primary" type="button">Primary</button>
+            <button class="btn btn--md btn--secondary" type="button">Secondary</button>
+            <button class="btn btn--md btn--outline" type="button">Outline</button>
+            <button class="btn btn--md btn--accent-outline" type="button">Accent</button>
+            <button class="btn btn--md btn--ghost" type="button">Ghost</button>
+            <button class="btn btn--md btn--danger" type="button">Danger</button>
+          </div>
+        </div>
+
+        <div class="mb-8 animate-on-scroll">
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Tamanhos</p>
+          <div class="btn-group" style="align-items: flex-end;">
+            <button class="btn btn--xs btn--primary" type="button">Extra Small</button>
+            <button class="btn btn--sm btn--primary" type="button">Small</button>
+            <button class="btn btn--md btn--primary" type="button">Medium</button>
+            <button class="btn btn--lg btn--primary" type="button">Large</button>
+            <button class="btn btn--xl btn--primary" type="button">Extra Large</button>
+          </div>
+        </div>
+
+        <div class="mb-8 animate-on-scroll">
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Estados</p>
+          <div class="btn-group">
+            <button class="btn btn--md btn--primary" type="button">Default</button>
+            <button class="btn btn--md btn--primary" type="button" disabled>Disabled</button>
+            <button class="btn btn--md btn--primary" type="button" style="position:relative;">
+              <span class="spinner spinner--sm" style="border-top-color: var(--black-100); border-color: rgba(0,0,0,0.2); border-top-color: var(--black-100);"></span>
+              Loading
+            </button>
+            <button class="btn btn--md btn--secondary btn--icon" type="button" aria-label="Menu">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <button class="btn btn--md btn--primary btn--icon" type="button" aria-label="Adicionar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Badges -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Badges</h3>
+        <div class="btn-group mb-8 animate-on-scroll">
+          <span class="badge badge--default">Default</span>
+          <span class="badge badge--accent">Accent</span>
+          <span class="badge badge--outline">Outline</span>
+          <span class="badge badge--success"><span class="badge-dot"></span> Success</span>
+          <span class="badge badge--error"><span class="badge-dot"></span> Error</span>
+          <span class="badge badge--warning"><span class="badge-dot"></span> Warning</span>
+          <span class="badge badge--accent badge--pill">Pill Shape</span>
+          <span class="badge badge--default badge--pill">v1.0.0</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Chips -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Chips / Filtros</h3>
+        <div class="chip-row mb-8 animate-on-scroll" id="chipRow">
+          <button class="chip is-active" type="button" data-chip>Todos</button>
+          <button class="chip" type="button" data-chip>Proteínas</button>
+          <button class="chip" type="button" data-chip>Carboidratos</button>
+          <button class="chip" type="button" data-chip>Gorduras</button>
+          <button class="chip" type="button" data-chip>Fibras</button>
+          <button class="chip" type="button" data-chip>Vitaminas</button>
+          <button class="chip" type="button" data-chip>Minerais</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Avatars -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Avatares</h3>
+        <div class="btn-group mb-8 animate-on-scroll" style="align-items: center;">
+          <div class="avatar avatar--sm">K</div>
+          <div class="avatar">AB</div>
+          <div class="avatar avatar--lg">CD</div>
+          <div class="avatar avatar--xl">EF</div>
+          <div style="margin-left: var(--space-8);">
+            <div class="avatar-group">
+              <div class="avatar" style="background: var(--green-vivid);">A</div>
+              <div class="avatar" style="background: var(--green-medium);">B</div>
+              <div class="avatar" style="background: var(--green-dark);">C</div>
+              <div class="avatar" style="background: var(--green-deep); color: var(--white-100);">+5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Cards -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Cards</h3>
+        <div class="grid-3 mb-8">
+          <div class="card card--brutal animate-on-scroll stagger-1">
+            <div class="card-header">
+              <span style="font-size: var(--text-sm); font-weight: var(--weight-bold);">Card Brutal</span>
+              <span class="badge badge--accent">Novo</span>
+            </div>
+            <div class="card-body">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Presença máxima com sombra bruta deslocada. Usado para CTAs e blocos de destaque no produto.</p>
+            </div>
+            <div class="card-footer">
+              <span class="type-caption">Última edição: hoje</span>
+              <button class="btn btn--sm btn--primary" type="button">Ação</button>
+            </div>
+          </div>
+
+          <div class="card card--flat animate-on-scroll stagger-2">
+            <div class="card-header">
+              <span style="font-size: var(--text-sm); font-weight: var(--weight-bold);">Card Flat</span>
+              <span class="badge badge--default">Padrão</span>
+            </div>
+            <div class="card-body">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Elegância discreta. Borda suave que ganha presença brutal apenas no hover. Para conteúdo secundário.</p>
+            </div>
+            <div class="card-footer">
+              <span class="type-caption">3 itens</span>
+              <button class="btn btn--sm btn--outline" type="button">Detalhes</button>
+            </div>
+          </div>
+
+          <div class="card card--accent animate-on-scroll stagger-3">
+            <div class="card-header">
+              <span style="font-size: var(--text-sm); font-weight: var(--weight-bold);">Card Accent</span>
+              <span class="badge badge--success"><span class="badge-dot"></span> Ativo</span>
+            </div>
+            <div class="card-body">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Sombra verde sinaliza energia e progresso. Usado para planos ativos, metas alcançadas e estados positivos.</p>
+            </div>
+            <div class="card-footer">
+              <span class="type-caption">Atualizado agora</span>
+              <button class="btn btn--sm btn--accent-outline" type="button">Ver</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--ghost mb-8 animate-on-scroll">
+          <div class="card-body" style="text-align:center;">
+            <p style="font-size: var(--text-sm); color: var(--text-tertiary);">Card Ghost — borda tracejada, sem fundo. Ideal para ações de adicionar, empty states e áreas de drop.</p>
+            <button class="btn btn--sm btn--ghost mt-4" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Adicionar item
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Tabs -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Tabs</h3>
+        <div class="animate-on-scroll mb-8">
+          <div class="tabs" role="tablist" id="demoTabs">
+            <button class="tab is-active" role="tab" data-tab="tab1" type="button">Visão Geral</button>
+            <button class="tab" role="tab" data-tab="tab2" type="button">Macros</button>
+            <button class="tab" role="tab" data-tab="tab3" type="button">Refeições</button>
+            <button class="tab" role="tab" data-tab="tab4" type="button">Progresso</button>
+            <button class="tab" role="tab" data-tab="tab5" type="button">Configurações</button>
+          </div>
+          <div style="padding: var(--space-6); border: 2px solid var(--border-secondary); border-top: none; border-radius: 0 0 var(--radius-md) var(--radius-md); background: var(--bg-elevated);">
+            <div id="tab1-content" class="tab-content">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary);">Conteúdo da aba Visão Geral. Aqui ficam as métricas resumidas do dia, gráficos de acompanhamento e indicadores de progresso geral do plano nutricional.</p>
+            </div>
+            <div id="tab2-content" class="tab-content" style="display:none;">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary);">Distribuição detalhada de macronutrientes: proteínas, carboidratos, gorduras e fibras com metas e consumo real.</p>
+            </div>
+            <div id="tab3-content" class="tab-content" style="display:none;">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary);">Lista de refeições planejadas para o dia com horários, alimentos, porções e valores nutricionais de cada item.</p>
+            </div>
+            <div id="tab4-content" class="tab-content" style="display:none;">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary);">Evolução do plano ao longo das semanas. Gráficos de peso, composição corporal e adesão ao planejamento.</p>
+            </div>
+            <div id="tab5-content" class="tab-content" style="display:none;">
+              <p style="font-size: var(--text-sm); color: var(--text-secondary);">Preferências do perfil, restrições alimentares, metas pessoais e configurações de notificação do sistema.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Navigation List -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Navegação Lateral</h3>
+        <div class="grid-2 mb-8 animate-on-scroll">
+          <div class="card card--flat">
+            <div class="card-body">
+              <ul class="nav-list" id="navListDemo">
+                <li class="nav-list-item is-active" data-navitem>
+                  <span class="nav-list-item-icon">◼</span>
+                  Dashboard
+                  <span class="nav-list-item-badge">3</span>
+                </li>
+                <li class="nav-list-item" data-navitem>
+                  <span class="nav-list-item-icon">◻</span>
+                  Meu Plano
+                </li>
+                <li class="nav-list-item" data-navitem>
+                  <span class="nav-list-item-icon">●</span>
+                  Refeições
+                  <span class="nav-list-item-badge">12</span>
+                </li>
+                <li class="nav-list-item" data-navitem>
+                  <span class="nav-list-item-icon">▲</span>
+                  Progresso
+                </li>
+                <li class="nav-list-item" data-navitem>
+                  <span class="nav-list-item-icon">◆</span>
+                  Alimentos
+                  <span class="nav-list-item-badge">248</span>
+                </li>
+                <li class="nav-list-item" data-navitem>
+                  <span class="nav-list-item-icon">○</span>
+                  Preferências
+                </li>
+                <li class="nav-list-item" data-navitem>
+                  <span class="nav-list-item-icon">□</span>
+                  Suporte
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">
+              Navegação de sidebar pensada para o dashboard principal. Ícones geométricos reforçam a linguagem brutalista. 
+              O item ativo recebe borda verde e fundo ghost. Badges numéricas usam o verde sólido para comunicar contagem.
+              <br><br>
+              Clique nos itens para ver a transição de estado ativo.
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Stepper -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Stepper de Progresso</h3>
+        <div class="animate-on-scroll mb-8">
+          <div class="stepper mb-8" id="stepperDemo">
+            <div class="stepper-step">
+              <div class="stepper-circle stepper-circle--done">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+            <div class="stepper-line stepper-line--done"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle stepper-circle--done">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+            <div class="stepper-line stepper-line--done"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle stepper-circle--done">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+            <div class="stepper-line stepper-line--done"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle stepper-circle--active">4</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle">5</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle">6</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle">7</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle">8</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle">9</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-step">
+              <div class="stepper-circle">10</div>
+            </div>
+          </div>
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Progress Bar</p>
+          <div class="progress-bar mb-4">
+            <div class="progress-fill" style="width: 42%;"></div>
+          </div>
+          <div class="flex-between">
+            <span class="type-caption">Etapa 4 de 14</span>
+            <span style="font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--text-accent);">42%</span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Toasts -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Toasts / Notificações</h3>
+        <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: 420px;" class="animate-on-scroll mb-8">
+          <div class="toast toast--success">
+            <span class="toast-icon">✓</span>
+            <div class="toast-content">
+              <div class="toast-title">Plano salvo</div>
+              <div class="toast-message">Seu plano alimentar foi atualizado com sucesso.</div>
+            </div>
+            <button class="toast-close" type="button" aria-label="Fechar">×</button>
+          </div>
+          <div class="toast toast--error">
+            <span class="toast-icon">✕</span>
+            <div class="toast-content">
+              <div class="toast-title">Erro ao calcular</div>
+              <div class="toast-message">Não foi possível processar os dados. Tente novamente.</div>
+            </div>
+            <button class="toast-close" type="button" aria-label="Fechar">×</button>
+          </div>
+          <div class="toast toast--warning">
+            <span class="toast-icon">⚠</span>
+            <div class="toast-content">
+              <div class="toast-title">Atenção</div>
+              <div class="toast-message">Seu consumo de sódio está 20% acima da meta diária.</div>
+            </div>
+            <button class="toast-close" type="button" aria-label="Fechar">×</button>
+          </div>
+          <div class="toast toast--info">
+            <span class="toast-icon">ℹ</span>
+            <div class="toast-content">
+              <div class="toast-title">Dica</div>
+              <div class="toast-message">Adicione mais vegetais verdes para atingir a meta de fibras.</div>
+            </div>
+            <button class="toast-close" type="button" aria-label="Fechar">×</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Table -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Tabela de Dados</h3>
+        <div class="table-wrapper mb-8 animate-on-scroll">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Porção</th>
+                <th>Calorias</th>
+                <th>Proteína</th>
+                <th>Carbs</th>
+                <th>Gordura</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: var(--weight-bold);">Peito de Frango Grelhado</td>
+                <td>150g</td>
+                <td style="font-family: var(--font-mono);">248</td>
+                <td style="font-family: var(--font-mono);">46.5g</td>
+                <td style="font-family: var(--font-mono);">0g</td>
+                <td style="font-family: var(--font-mono);">5.4g</td>
+                <td><span class="badge badge--success badge--pill"><span class="badge-dot"></span> Ideal</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: var(--weight-bold);">Arroz Integral</td>
+                <td>120g</td>
+                <td style="font-family: var(--font-mono);">148</td>
+                <td style="font-family: var(--font-mono);">3.1g</td>
+                <td style="font-family: var(--font-mono);">31.2g</td>
+                <td style="font-family: var(--font-mono);">1.2g</td>
+                <td><span class="badge badge--success badge--pill"><span class="badge-dot"></span> Ideal</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: var(--weight-bold);">Brócolis Cozido</td>
+                <td>100g</td>
+                <td style="font-family: var(--font-mono);">35</td>
+                <td style="font-family: var(--font-mono);">2.4g</td>
+                <td style="font-family: var(--font-mono);">7.2g</td>
+                <td style="font-family: var(--font-mono);">0.4g</td>
+                <td><span class="badge badge--success badge--pill"><span class="badge-dot"></span> Ideal</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: var(--weight-bold);">Azeite Extra Virgem</td>
+                <td>15ml</td>
+                <td style="font-family: var(--font-mono);">120</td>
+                <td style="font-family: var(--font-mono);">0g</td>
+                <td style="font-family: var(--font-mono);">0g</td>
+                <td style="font-family: var(--font-mono);">14g</td>
+                <td><span class="badge badge--warning badge--pill"><span class="badge-dot"></span> Ajustar</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: var(--weight-bold);">Batata Doce Assada</td>
+                <td>200g</td>
+                <td style="font-family: var(--font-mono);">180</td>
+                <td style="font-family: var(--font-mono);">2.0g</td>
+                <td style="font-family: var(--font-mono);">41.4g</td>
+                <td style="font-family: var(--font-mono);">0.2g</td>
+                <td><span class="badge badge--success badge--pill"><span class="badge-dot"></span> Ideal</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: var(--weight-bold);">Ovo Cozido</td>
+                <td>2 unidades</td>
+                <td style="font-family: var(--font-mono);">156</td>
+                <td style="font-family: var(--font-mono);">12.6g</td>
+                <td style="font-family: var(--font-mono);">1.1g</td>
+                <td style="font-family: var(--font-mono);">10.6g</td>
+                <td><span class="badge badge--success badge--pill"><span class="badge-dot"></span> Ideal</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: FORM ELEMENTS                        -->
+    <!-- ============================================= -->
+    <section class="section" id="forms" aria-labelledby="forms-title">
+      <div class="section-inner section-inner--narrow">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="8" height="8"/></svg>
+          Form Elements
+        </span>
+        <h2 class="section-title animate-on-scroll" id="forms-title">Elementos de Formulário</h2>
+        <p class="section-subtitle animate-on-scroll">Inputs, selects, toggles, sliders, checkboxes e radios. Todos com sombra bruta, transições suaves e estados de validação completos.</p>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8);">
+          <!-- Text Input -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label" for="input-name">Nome Completo <span class="required">*</span></label>
+            <input class="form-input" type="text" id="input-name" placeholder="Digite seu nome completo" autocomplete="name">
+            <span class="form-hint">Usado para personalização do seu plano alimentar.</span>
+          </div>
+
+          <!-- Email Input -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label" for="input-email">E-mail <span class="required">*</span></label>
+            <input class="form-input" type="email" id="input-email" placeholder="seu@email.com" autocomplete="email">
+          </div>
+
+          <!-- Input with Error -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label" for="input-weight">Peso (kg) <span class="required">*</span></label>
+            <input class="form-input form-input--error" type="number" id="input-weight" value="-5" aria-invalid="true" aria-describedby="weight-error">
+            <span class="form-error" id="weight-error">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              O peso deve ser um valor positivo entre 20 e 300 kg.
+            </span>
+          </div>
+
+          <!-- Input with Success -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label" for="input-height">Altura (cm)</label>
+            <input class="form-input form-input--success" type="number" id="input-height" value="175" aria-describedby="height-success">
+            <span class="form-success" id="height-success">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Valor válido.
+            </span>
+          </div>
+
+          <!-- Large Input -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label" for="input-goal">Qual é o seu objetivo principal?</label>
+            <input class="form-input form-input--lg" type="text" id="input-goal" placeholder="Ex: Perder 5kg em 3 meses mantendo massa muscular">
+          </div>
+
+          <!-- Select -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label" for="select-activity">Nível de Atividade Física</label>
+            <select class="form-input" id="select-activity">
+              <option value="" disabled selected>Selecione seu nível</option>
+              <option value="sedentary">Sedentário — Pouco ou nenhum exercício</option>
+              <option value="light">Leve — Exercício 1-3 dias/semana</option>
+              <option value="moderate">Moderado — Exercício 3-5 dias/semana</option>
+              <option value="active">Ativo — Exercício 6-7 dias/semana</option>
+              <option value="very-active">Muito Ativo — Exercício intenso diário</option>
+              <option value="athlete">Atleta — Treino profissional</option>
+            </select>
+          </div>
+
+          <!-- Textarea -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label" for="textarea-restrictions">Restrições Alimentares</label>
+            <textarea class="form-input" id="textarea-restrictions" placeholder="Descreva alergias, intolerâncias ou preferências alimentares..."></textarea>
+            <span class="form-hint">Exemplo: Intolerância à lactose, alergia a frutos do mar, vegetariano.</span>
+          </div>
+
+          <!-- Toggles -->
+          <div class="animate-on-scroll">
+            <p class="form-label mb-4">Preferências do Plano</p>
+            <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+              <div class="toggle-wrapper" data-toggle>
+                <div class="toggle is-active" role="switch" aria-checked="true" tabindex="0"></div>
+                <span class="toggle-label">Incluir suplementação</span>
+              </div>
+              <div class="toggle-wrapper" data-toggle>
+                <div class="toggle" role="switch" aria-checked="false" tabindex="0"></div>
+                <span class="toggle-label">Modo jejum intermitente</span>
+              </div>
+              <div class="toggle-wrapper" data-toggle>
+                <div class="toggle is-active" role="switch" aria-checked="true" tabindex="0"></div>
+                <span class="toggle-label">Notificações de refeição</span>
+              </div>
+              <div class="toggle-wrapper" data-toggle>
+                <div class="toggle" role="switch" aria-checked="false" tabindex="0"></div>
+                <span class="toggle-label">Compartilhar progresso com nutricionista</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slider -->
+          <div class="animate-on-scroll">
+            <div class="slider-wrapper">
+              <div class="slider-header">
+                <span class="slider-label">Meta de água diária</span>
+                <span class="slider-value" id="waterValue">2.5L</span>
+              </div>
+              <input type="range" class="slider" min="1" max="5" step="0.1" value="2.5" id="waterSlider" aria-label="Meta de agua diaria">
+            </div>
+          </div>
+
+          <div class="animate-on-scroll">
+            <div class="slider-wrapper">
+              <div class="slider-header">
+                <span class="slider-label">Meta calórica diária</span>
+                <span class="slider-value" id="calValue">2200 kcal</span>
+              </div>
+              <input type="range" class="slider" min="1200" max="4000" step="50" value="2200" id="calSlider" aria-label="Meta calorica diaria">
+            </div>
+          </div>
+
+          <!-- Checkboxes -->
+          <div class="animate-on-scroll">
+            <p class="form-label mb-4">Refeições do dia</p>
+            <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+              <div class="check-group" data-checkbox>
+                <div class="check-box is-checked" role="checkbox" aria-checked="true" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--black-100)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="check-label">Café da manhã</span>
+              </div>
+              <div class="check-group" data-checkbox>
+                <div class="check-box is-checked" role="checkbox" aria-checked="true" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--black-100)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="check-label">Lanche da manhã</span>
+              </div>
+              <div class="check-group" data-checkbox>
+                <div class="check-box is-checked" role="checkbox" aria-checked="true" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--black-100)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="check-label">Almoço</span>
+              </div>
+              <div class="check-group" data-checkbox>
+                <div class="check-box" role="checkbox" aria-checked="false" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--black-100)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="check-label">Lanche da tarde</span>
+              </div>
+              <div class="check-group" data-checkbox>
+                <div class="check-box is-checked" role="checkbox" aria-checked="true" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--black-100)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="check-label">Jantar</span>
+              </div>
+              <div class="check-group" data-checkbox>
+                <div class="check-box" role="checkbox" aria-checked="false" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--black-100)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="check-label">Ceia</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Radios -->
+          <div class="animate-on-scroll">
+            <p class="form-label mb-4">Objetivo principal</p>
+            <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+              <div class="check-group" data-radio="goal">
+                <div class="radio-circle" role="radio" aria-checked="false" tabindex="0"></div>
+                <span class="check-label">Perder peso</span>
+              </div>
+              <div class="check-group" data-radio="goal">
+                <div class="radio-circle is-checked" role="radio" aria-checked="true" tabindex="0"></div>
+                <span class="check-label">Manter peso</span>
+              </div>
+              <div class="check-group" data-radio="goal">
+                <div class="radio-circle" role="radio" aria-checked="false" tabindex="0"></div>
+                <span class="check-label">Ganhar massa muscular</span>
+              </div>
+              <div class="check-group" data-radio="goal">
+                <div class="radio-circle" role="radio" aria-checked="false" tabindex="0"></div>
+                <span class="check-label">Melhorar saúde geral</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Number Stepper -->
+          <div class="animate-on-scroll">
+            <p class="form-label mb-4">Número de refeições por dia</p>
+            <div class="number-stepper" id="numberStepper">
+              <button class="number-stepper-btn" type="button" data-action="decrement" aria-label="Diminuir">−</button>
+              <div class="number-stepper-value" id="stepperValue">5</div>
+              <button class="number-stepper-btn" type="button" data-action="increment" aria-label="Aumentar">+</button>
+            </div>
+          </div>
+
+          <!-- Tag Input -->
+          <div class="form-group animate-on-scroll">
+            <label class="form-label">Alimentos favoritos</label>
+            <div class="tag-input-container" id="tagContainer">
+              <span class="tag">Frango <button class="tag-remove" type="button" aria-label="Remover">×</button></span>
+              <span class="tag">Arroz Integral <button class="tag-remove" type="button" aria-label="Remover">×</button></span>
+              <span class="tag">Brócolis <button class="tag-remove" type="button" aria-label="Remover">×</button></span>
+              <input class="tag-input" type="text" placeholder="Digite e pressione Enter..." id="tagInput">
+            </div>
+            <span class="form-hint">Pressione Enter para adicionar um alimento.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: DASHBOARD BLOCKS                     -->
+    <!-- ============================================= -->
+    <section class="section section--alt" id="dashboard" aria-labelledby="dash-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 10,10 0,10"/></svg>
+          Dashboard
+        </span>
+        <h2 class="section-title animate-on-scroll" id="dash-title">Blocos de Dashboard</h2>
+        <p class="section-subtitle animate-on-scroll">Métricas, gráficos, sparklines e cartões analíticos. Como o design system escala para dashboards densos sem perder elegância.</p>
+
+        <!-- Metric Cards -->
+        <div class="grid-4 mb-12">
+          <div class="metric-card animate-on-scroll stagger-1">
+            <div class="metric-label">Calorias Hoje</div>
+            <div class="metric-value">1,847</div>
+            <span class="metric-change metric-change--up">↑ 8.2%</span>
+            <div class="metric-sparkline">
+              <div class="sparkline-bar" style="height: 45%;"></div>
+              <div class="sparkline-bar" style="height: 62%;"></div>
+              <div class="sparkline-bar" style="height: 38%;"></div>
+              <div class="sparkline-bar" style="height: 71%;"></div>
+              <div class="sparkline-bar" style="height: 55%;"></div>
+              <div class="sparkline-bar" style="height: 48%;"></div>
+              <div class="sparkline-bar" style="height: 82%;"></div>
+              <div class="sparkline-bar" style="height: 65%;"></div>
+              <div class="sparkline-bar" style="height: 73%;"></div>
+              <div class="sparkline-bar" style="height: 90%;"></div>
+            </div>
+          </div>
+          <div class="metric-card animate-on-scroll stagger-2">
+            <div class="metric-label">Proteína</div>
+            <div class="metric-value">142g</div>
+            <span class="metric-change metric-change--up">↑ 12.5%</span>
+            <div class="metric-sparkline">
+              <div class="sparkline-bar" style="height: 30%;"></div>
+              <div class="sparkline-bar" style="height: 50%;"></div>
+              <div class="sparkline-bar" style="height: 45%;"></div>
+              <div class="sparkline-bar" style="height: 60%;"></div>
+              <div class="sparkline-bar" style="height: 72%;"></div>
+              <div class="sparkline-bar" style="height: 68%;"></div>
+              <div class="sparkline-bar" style="height: 75%;"></div>
+              <div class="sparkline-bar" style="height: 85%;"></div>
+              <div class="sparkline-bar" style="height: 78%;"></div>
+              <div class="sparkline-bar" style="height: 95%;"></div>
+            </div>
+          </div>
+          <div class="metric-card animate-on-scroll stagger-3">
+            <div class="metric-label">Água</div>
+            <div class="metric-value">2.1L</div>
+            <span class="metric-change metric-change--down">↓ 4.3%</span>
+            <div class="metric-sparkline">
+              <div class="sparkline-bar" style="height: 80%;"></div>
+              <div class="sparkline-bar" style="height: 75%;"></div>
+              <div class="sparkline-bar" style="height: 90%;"></div>
+              <div class="sparkline-bar" style="height: 65%;"></div>
+              <div class="sparkline-bar" style="height: 70%;"></div>
+              <div class="sparkline-bar" style="height: 55%;"></div>
+              <div class="sparkline-bar" style="height: 60%;"></div>
+              <div class="sparkline-bar" style="height: 50%;"></div>
+              <div class="sparkline-bar" style="height: 45%;"></div>
+              <div class="sparkline-bar" style="height: 58%;"></div>
+            </div>
+          </div>
+          <div class="metric-card animate-on-scroll stagger-4">
+            <div class="metric-label">Adesão Semanal</div>
+            <div class="metric-value">87%</div>
+            <span class="metric-change metric-change--up">↑ 3.1%</span>
+            <div class="metric-sparkline">
+              <div class="sparkline-bar" style="height: 50%;"></div>
+              <div class="sparkline-bar" style="height: 55%;"></div>
+              <div class="sparkline-bar" style="height: 60%;"></div>
+              <div class="sparkline-bar" style="height: 58%;"></div>
+              <div class="sparkline-bar" style="height: 65%;"></div>
+              <div class="sparkline-bar" style="height: 70%;"></div>
+              <div class="sparkline-bar" style="height: 72%;"></div>
+              <div class="sparkline-bar" style="height: 78%;"></div>
+              <div class="sparkline-bar" style="height: 82%;"></div>
+              <div class="sparkline-bar" style="height: 92%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-container mb-12 animate-on-scroll">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Distribuição Calórica Semanal</div>
+              <span class="type-caption">Últimos 7 dias — kcal por refeição</span>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn--xs btn--primary" type="button">Semana</button>
+              <button class="btn btn--xs btn--ghost" type="button">Mês</button>
+              <button class="btn btn--xs btn--ghost" type="button">Ano</button>
+            </div>
+          </div>
+          <div class="chart-body" style="height: 240px; align-items: flex-end; padding-bottom: var(--space-8);">
+            <div class="chart-bar-group">
+              <div class="chart-bar chart-bar--primary" style="height: 65%;"></div>
+              <span class="chart-bar-label">Seg</span>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bar chart-bar--primary" style="height: 78%;"></div>
+              <span class="chart-bar-label">Ter</span>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bar chart-bar--primary" style="height: 55%;"></div>
+              <span class="chart-bar-label">Qua</span>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bar chart-bar--primary" style="height: 90%;"></div>
+              <span class="chart-bar-label">Qui</span>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bar chart-bar--primary" style="height: 72%;"></div>
+              <span class="chart-bar-label">Sex</span>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bar chart-bar--secondary" style="height: 48%;"></div>
+              <span class="chart-bar-label">Sáb</span>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bar chart-bar--secondary" style="height: 42%;"></div>
+              <span class="chart-bar-label">Dom</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Macro Comparison -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Comparação de Macros</h3>
+        <div class="grid-3 mb-8">
+          <div class="card card--flat animate-on-scroll stagger-1">
+            <div class="card-body--lg">
+              <div class="flex-between mb-4">
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-bold);">Proteínas</span>
+                <span class="badge badge--success badge--pill"><span class="badge-dot"></span> No alvo</span>
+              </div>
+              <div style="font-size: var(--text-3xl); font-weight: var(--weight-black); margin-bottom: var(--space-2); font-variant-numeric: tabular-nums;">142g</div>
+              <span class="type-caption">Meta: 150g</span>
+              <div class="progress-bar mt-4">
+                <div class="progress-fill" style="width: 94.6%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll stagger-2">
+            <div class="card-body--lg">
+              <div class="flex-between mb-4">
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-bold);">Carboidratos</span>
+                <span class="badge badge--warning badge--pill"><span class="badge-dot"></span> Abaixo</span>
+              </div>
+              <div style="font-size: var(--text-3xl); font-weight: var(--weight-black); margin-bottom: var(--space-2); font-variant-numeric: tabular-nums;">185g</div>
+              <span class="type-caption">Meta: 250g</span>
+              <div class="progress-bar mt-4">
+                <div class="progress-fill" style="width: 74%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll stagger-3">
+            <div class="card-body--lg">
+              <div class="flex-between mb-4">
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-bold);">Gorduras</span>
+                <span class="badge badge--error badge--pill"><span class="badge-dot"></span> Acima</span>
+              </div>
+              <div style="font-size: var(--text-3xl); font-weight: var(--weight-black); margin-bottom: var(--space-2); font-variant-numeric: tabular-nums;">78g</div>
+              <span class="type-caption">Meta: 65g</span>
+              <div class="progress-bar mt-4">
+                <div class="progress-fill" style="width: 100%; background: var(--red-error);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: STATES                               -->
+    <!-- ============================================= -->
+    <section class="section" id="states" aria-labelledby="states-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="5" r="4"/></svg>
+          States
+        </span>
+        <h2 class="section-title animate-on-scroll" id="states-title">Estados de Interface</h2>
+        <p class="section-subtitle animate-on-scroll">Empty, loading, error e success. Cada estado é pensado como parte do produto, não como exceção.</p>
+
+        <div class="grid-2 mb-8">
+          <!-- Empty State -->
+          <div class="state-container animate-on-scroll stagger-1">
+            <div class="state-icon">◻</div>
+            <div class="state-title">Nenhuma refeição registrada</div>
+            <div class="state-description">Comece adicionando sua primeira refeição do dia. O sistema irá calcular automaticamente seus macronutrientes.</div>
+            <button class="btn btn--md btn--primary" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Adicionar Refeição
+            </button>
+          </div>
+
+          <!-- Loading State -->
+          <div class="state-container animate-on-scroll stagger-2">
+            <div class="spinner spinner--lg mb-6"></div>
+            <div class="state-title">Calculando seu plano</div>
+            <div class="state-description">Analisando seu perfil e gerando recomendações personalizadas. Isso pode levar alguns segundos.</div>
+          </div>
+        </div>
+
+        <div class="grid-2 mb-8">
+          <!-- Error State -->
+          <div class="state-container animate-on-scroll stagger-3" style="border-color: var(--red-error);">
+            <div class="state-icon" style="color: var(--red-error);">✕</div>
+            <div class="state-title">Erro ao carregar dados</div>
+            <div class="state-description">Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.</div>
+            <button class="btn btn--md btn--danger" type="button">Tentar novamente</button>
+          </div>
+
+          <!-- Success State -->
+          <div class="state-container animate-on-scroll stagger-4" style="border-color: var(--green-vivid);">
+            <div class="state-icon" style="color: var(--green-vivid);">✓</div>
+            <div class="state-title">Plano gerado com sucesso!</div>
+            <div class="state-description">Seu plano alimentar personalizado está pronto. São 5 refeições diárias totalizando 2.200 kcal.</div>
+            <button class="btn btn--md btn--primary" type="button">Ver Plano Completo</button>
+          </div>
+        </div>
+
+        <!-- Skeleton Loading -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Skeleton Loading</h3>
+        <div class="grid-3 mb-8">
+          <div class="card card--flat animate-on-scroll stagger-1">
+            <div class="card-body">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+                <div class="skeleton skeleton--avatar"></div>
+                <div style="flex:1;">
+                  <div class="skeleton skeleton--text" style="width: 60%;"></div>
+                  <div class="skeleton skeleton--text" style="width: 40%;"></div>
+                </div>
+              </div>
+              <div class="skeleton skeleton--heading"></div>
+              <div class="skeleton skeleton--text"></div>
+              <div class="skeleton skeleton--text"></div>
+              <div class="skeleton skeleton--text-short"></div>
+              <div class="skeleton skeleton--block mt-4"></div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll stagger-2">
+            <div class="card-body">
+              <div class="skeleton skeleton--circle" style="margin: 0 auto var(--space-4);"></div>
+              <div class="skeleton skeleton--heading" style="margin: 0 auto var(--space-3); width: 50%;"></div>
+              <div class="skeleton skeleton--text" style="width: 80%; margin: 0 auto var(--space-2);"></div>
+              <div class="skeleton skeleton--text" style="width: 60%; margin: 0 auto;"></div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll stagger-3">
+            <div class="card-body">
+              <div class="skeleton skeleton--text" style="width: 30%; margin-bottom: var(--space-4);"></div>
+              <div class="skeleton skeleton--heading" style="width: 70%;"></div>
+              <div class="skeleton skeleton--text" style="width: 90%;"></div>
+              <div class="skeleton skeleton--text" style="width: 85%;"></div>
+              <div class="skeleton skeleton--text" style="width: 70%;"></div>
+              <div style="display: flex; gap: var(--space-3); margin-top: var(--space-6);">
+                <div class="skeleton" style="height: 36px; flex: 1; border-radius: var(--radius-sm);"></div>
+                <div class="skeleton" style="height: 36px; flex: 1; border-radius: var(--radius-sm);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: MOTION                               -->
+    <!-- ============================================= -->
+    <section class="section section--alt" id="motion" aria-labelledby="motion-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><polygon points="5,0 10,5 5,10 0,5"/></svg>
+          Motion
+        </span>
+        <h2 class="section-title animate-on-scroll" id="motion-title">Motion Language</h2>
+        <p class="section-subtitle animate-on-scroll">Micro-interações, easings e durações. Passe o mouse sobre cada card para sentir o movimento do sistema.</p>
+
+        <div class="motion-demo-grid mb-12">
+          <div class="motion-demo-card animate-on-scroll stagger-1">
+            <div class="motion-demo-visual motion-bounce"></div>
+            <div class="motion-demo-name">Float</div>
+            <div class="motion-demo-timing">ease-spring · 600ms</div>
+          </div>
+          <div class="motion-demo-card animate-on-scroll stagger-2">
+            <div class="motion-demo-visual motion-spin"></div>
+            <div class="motion-demo-name">Spin</div>
+            <div class="motion-demo-timing">ease-out-expo · 600ms</div>
+          </div>
+          <div class="motion-demo-card animate-on-scroll stagger-3">
+            <div class="motion-demo-visual motion-shake"></div>
+            <div class="motion-demo-name">Shake</div>
+            <div class="motion-demo-timing">ease-out-expo · 400ms</div>
+          </div>
+          <div class="motion-demo-card animate-on-scroll stagger-4">
+            <div class="motion-demo-visual motion-pulse"></div>
+            <div class="motion-demo-name">Pulse</div>
+            <div class="motion-demo-timing">ease-in-out · 600ms</div>
+          </div>
+          <div class="motion-demo-card animate-on-scroll stagger-5">
+            <div class="motion-demo-visual motion-scale"></div>
+            <div class="motion-demo-name">Scale</div>
+            <div class="motion-demo-timing">ease-spring · 150ms</div>
+          </div>
+        </div>
+
+        <!-- Easing Curves -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Curvas de Easing</h3>
+        <div class="grid-auto mb-12">
+          <div class="card card--flat animate-on-scroll">
+            <div class="card-body--sm">
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin-bottom: var(--space-2);">ease-out-expo</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">cubic-bezier(0.16, 1, 0.3, 1)</div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-2);">Padrão. Saída rápida, aterrissagem suave.</div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll">
+            <div class="card-body--sm">
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin-bottom: var(--space-2);">ease-spring</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">cubic-bezier(0.34, 1.56, 0.64, 1)</div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-2);">Overshoot. Botões, toggles, chips.</div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll">
+            <div class="card-body--sm">
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin-bottom: var(--space-2);">ease-snap</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">cubic-bezier(0, 0.7, 0.3, 1)</div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-2);">Saída imediata. Menus, dropdowns.</div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll">
+            <div class="card-body--sm">
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin-bottom: var(--space-2);">ease-out-quart</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">cubic-bezier(0.25, 1, 0.5, 1)</div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-2);">Gentil. Scroll, page transitions.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duration Scale -->
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-black); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6);" class="animate-on-scroll">Escala de Duração</h3>
+        <div class="animate-on-scroll">
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+              <div style="width: 120px; font-size: var(--text-sm); font-weight: var(--weight-bold);">Instant</div>
+              <div style="width: 80px; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">80ms</div>
+              <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: var(--radius-full); border: 2px solid var(--border-secondary); overflow: hidden;"><div style="width: 5%; height: 100%; background: var(--green-vivid); border-radius: var(--radius-full);"></div></div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); width: 140px;">Hover, active states</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+              <div style="width: 120px; font-size: var(--text-sm); font-weight: var(--weight-bold);">Fast</div>
+              <div style="width: 80px; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">150ms</div>
+              <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: var(--radius-full); border: 2px solid var(--border-secondary); overflow: hidden;"><div style="width: 12%; height: 100%; background: var(--green-vivid); border-radius: var(--radius-full);"></div></div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); width: 140px;">Toggles, chips, focus</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+              <div style="width: 120px; font-size: var(--text-sm); font-weight: var(--weight-bold);">Normal</div>
+              <div style="width: 80px; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">250ms</div>
+              <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: var(--radius-full); border: 2px solid var(--border-secondary); overflow: hidden;"><div style="width: 22%; height: 100%; background: var(--green-vivid); border-radius: var(--radius-full);"></div></div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); width: 140px;">Menus, dropdowns</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+              <div style="width: 120px; font-size: var(--text-sm); font-weight: var(--weight-bold);">Slow</div>
+              <div style="width: 80px; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">400ms</div>
+              <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: var(--radius-full); border: 2px solid var(--border-secondary); overflow: hidden;"><div style="width: 35%; height: 100%; background: var(--green-vivid); border-radius: var(--radius-full);"></div></div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); width: 140px;">Modals, panels</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+              <div style="width: 120px; font-size: var(--text-sm); font-weight: var(--weight-bold);">Slower</div>
+              <div style="width: 80px; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">600ms</div>
+              <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: var(--radius-full); border: 2px solid var(--border-secondary); overflow: hidden;"><div style="width: 52%; height: 100%; background: var(--green-vivid); border-radius: var(--radius-full);"></div></div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); width: 140px;">Page transitions</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+              <div style="width: 120px; font-size: var(--text-sm); font-weight: var(--weight-bold);">Dramatic</div>
+              <div style="width: 80px; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary);">1000ms</div>
+              <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: var(--radius-full); border: 2px solid var(--border-secondary); overflow: hidden;"><div style="width: 85%; height: 100%; background: var(--green-vivid); border-radius: var(--radius-full);"></div></div>
+              <div style="font-size: var(--text-xs); color: var(--text-tertiary); width: 140px;">Hero, onboarding</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: GRID & LAYOUT                        -->
+    <!-- ============================================= -->
+    <section class="section" aria-labelledby="grid-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="0.5" y="0.5" width="4" height="4"/><rect x="5.5" y="0.5" width="4" height="4"/><rect x="0.5" y="5.5" width="4" height="4"/><rect x="5.5" y="5.5" width="4" height="4"/></svg>
+          Grid & Layout
+        </span>
+        <h2 class="section-title animate-on-scroll" id="grid-title">Sistema de Grid</h2>
+        <p class="section-subtitle animate-on-scroll">Grids flexíveis de 2, 3, 4 colunas e auto-fill responsivo. Gutter de 24px, max-width de 1280px (estreito: 960px, largo: 1440px).</p>
+
+        <div class="mb-8 animate-on-scroll">
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Grid 4 Colunas</p>
+          <div class="grid-4">
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">1</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">2</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">3</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">4</div>
+          </div>
+        </div>
+
+        <div class="mb-8 animate-on-scroll">
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Grid 3 Colunas</p>
+          <div class="grid-3">
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">1</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">2</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">3</div>
+          </div>
+        </div>
+
+        <div class="mb-8 animate-on-scroll">
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Grid 2 Colunas</p>
+          <div class="grid-2">
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">1</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">2</div>
+          </div>
+        </div>
+
+        <div class="mb-8 animate-on-scroll">
+          <p style="font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);">Grid Auto-Fill (min 280px)</p>
+          <div class="grid-auto">
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">Auto 1</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">Auto 2</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">Auto 3</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">Auto 4</div>
+            <div style="background: var(--bg-accent-muted); border: 2px solid var(--border-accent); border-radius: var(--radius-sm); padding: var(--space-4); text-align: center; font-size: var(--text-sm); font-weight: var(--weight-bold);">Auto 5</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: DIVIDERS SHOWCASE                    -->
+    <!-- ============================================= -->
+    <section class="section section--alt" aria-labelledby="dividers-title">
+      <div class="section-inner section-inner--narrow">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="2" viewBox="0 0 10 2" fill="currentColor"><rect width="10" height="2"/></svg>
+          Dividers
+        </span>
+        <h2 class="section-title animate-on-scroll" id="dividers-title">Divisores</h2>
+        <p class="section-subtitle animate-on-scroll">Separadores visuais para criar ritmo e hierarquia entre seções de conteúdo.</p>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-8);" class="animate-on-scroll">
+          <div>
+            <span class="type-caption mb-3" style="display: block;">Default (2px)</span>
+            <div class="divider" style="margin: 0;"></div>
+          </div>
+          <div>
+            <span class="type-caption mb-3" style="display: block;">Thick (4px)</span>
+            <div class="divider divider--thick" style="margin: 0;"></div>
+          </div>
+          <div>
+            <span class="type-caption mb-3" style="display: block;">Accent (3px green)</span>
+            <div class="divider divider--accent" style="margin: 0;"></div>
+          </div>
+          <div>
+            <span class="type-caption mb-3" style="display: block;">Dashed</span>
+            <div class="divider divider--dashed" style="margin: 0;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SECTION: ACCESSIBILITY REFERENCE              -->
+    <!-- ============================================= -->
+    <section class="section" aria-labelledby="a11y-title">
+      <div class="section-inner">
+        <span class="section-label animate-on-scroll">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="3"/><circle cx="5" cy="5" r="5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          Accessibility
+        </span>
+        <h2 class="section-title animate-on-scroll" id="a11y-title">Acessibilidade</h2>
+        <p class="section-subtitle animate-on-scroll">WCAG AA+ desde a origem. Contraste, foco, semântica e navegação por teclado são parte do DNA do sistema.</p>
+
+        <div class="grid-3">
+          <div class="card card--flat animate-on-scroll stagger-1">
+            <div class="card-body--lg">
+              <div style="font-size: var(--text-3xl); font-weight: var(--weight-black); margin-bottom: var(--space-3); color: var(--text-accent);">21:1</div>
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin-bottom: var(--space-2);">Contraste máximo</div>
+              <div style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Preto sobre branco (e vice-versa) no texto principal. Supera largamente o mínimo WCAG AAA de 7:1.</div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll stagger-2">
+            <div class="card-body--lg">
+              <div style="font-size: var(--text-3xl); font-weight: var(--weight-black); margin-bottom: var(--space-3); color: var(--text-accent);">AA+</div>
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin-bottom: var(--space-2);">Foco visível</div>
+              <div style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">Todos os elementos interativos têm :focus-visible com anel verde de 2px e offset de 3px. Navegação completa por Tab.</div>
+            </div>
+          </div>
+          <div class="card card--flat animate-on-scroll stagger-3">
+            <div class="card-body--lg">
+              <div style="font-size: var(--text-3xl); font-weight: var(--weight-black); margin-bottom: var(--space-3); color: var(--text-accent);">100%</div>
+              <div style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin-bottom: var(--space-2);">HTML Semântico</div>
+              <div style="font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed);">nav, main, section, article, header, footer. ARIA labels, roles e landmarks em todos os componentes interativos.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================= -->
+  <!-- SECTION: FOOTER                               -->
+  <!-- ============================================= -->
+  <footer class="ds-footer" role="contentinfo">
+    <div class="ds-footer-inner">
+      <div class="ds-footer-logo">Khroma<span class="accent">Diet</span></div>
+      <p class="ds-footer-text">
+        Design System Manifesto v1.0 — Fundação visual oficial. 
+        Neo-Brutalismo Clean. Branco, preto, verde. 
+        Cada decisão é deliberada. Cada componente tem autoridade.
+      </p>
+      <p class="ds-footer-version">KHROMADIET-DS-1.0.0 — 2025</p>
+    </div>
+  </footer>
+
+  <!-- ============================================= -->
+  <!-- SECTION: JAVASCRIPT                           -->
+  <!-- ============================================= -->
+  <script>
+    // ============================================= //
+    // SECTION: THEME TOGGLE                         //
+    // ============================================= //
+    (function initTheme() {
+      try {
+        var saved = localStorage.getItem('khroma-theme');
+        if (saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {
+        console.error('Theme init error:', e);
+      }
+    })();
+
+    var themeToggleBtn = document.getElementById('themeToggle');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', function () {
+        try {
+          var current = document.documentElement.getAttribute('data-theme');
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('khroma-theme', next);
+          themeToggleBtn.setAttribute('aria-label',
+            next === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro'
+          );
+        } catch (e) {
+          console.error('Theme toggle error:', e);
+        }
+      });
+    }
+
+    // ============================================= //
+    // SECTION: SCROLL ANIMATIONS (Intersection)     //
+    // ============================================= //
+    (function initScrollAnimations() {
+      try {
+        var elements = document.querySelectorAll('.animate-on-scroll');
+        if (!elements.length) return;
+
+        if (!('IntersectionObserver' in window)) {
+          elements.forEach(function (el) {
+            el.classList.add('is-visible');
+          });
+          return;
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+            }
+          });
+        }, {
+          threshold: 0.08,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        elements.forEach(function (el) {
+          observer.observe(el);
+        });
+      } catch (e) {
+        console.error('Scroll animation error:', e);
+        document.querySelectorAll('.animate-on-scroll').forEach(function (el) {
+          el.classList.add('is-visible');
+        });
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: CHIP TOGGLE                          //
+    // ============================================= //
+    (function initChips() {
+      try {
+        var chipRow = document.getElementById('chipRow');
+        if (!chipRow) return;
+
+        chipRow.addEventListener('click', function (e) {
+          var chip = e.target.closest('[data-chip]');
+          if (!chip) return;
+
+          chipRow.querySelectorAll('[data-chip]').forEach(function (c) {
+            c.classList.remove('is-active');
+          });
+          chip.classList.add('is-active');
+        });
+      } catch (e) {
+        console.error('Chip init error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: TAB SWITCHING                        //
+    // ============================================= //
+    (function initTabs() {
+      try {
+        var tabContainer = document.getElementById('demoTabs');
+        if (!tabContainer) return;
+
+        tabContainer.addEventListener('click', function (e) {
+          var tab = e.target.closest('[data-tab]');
+          if (!tab) return;
+
+          tabContainer.querySelectorAll('.tab').forEach(function (t) {
+            t.classList.remove('is-active');
+          });
+          tab.classList.add('is-active');
+
+          document.querySelectorAll('.tab-content').forEach(function (content) {
+            content.style.display = 'none';
+          });
+
+          var targetId = tab.getAttribute('data-tab') + '-content';
+          var targetContent = document.getElementById(targetId);
+          if (targetContent) {
+            targetContent.style.display = 'block';
+          }
+        });
+      } catch (e) {
+        console.error('Tab init error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: TOGGLE SWITCH                        //
+    // ============================================= //
+    (function initToggles() {
+      try {
+        document.querySelectorAll('[data-toggle]').forEach(function (wrapper) {
+          wrapper.addEventListener('click', function () {
+            var toggle = wrapper.querySelector('.toggle');
+            if (!toggle) return;
+
+            var isActive = toggle.classList.toggle('is-active');
+            toggle.setAttribute('aria-checked', isActive ? 'true' : 'false');
+          });
+
+          var toggle = wrapper.querySelector('.toggle');
+          if (toggle) {
+            toggle.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                wrapper.click();
+              }
+            });
+          }
+        });
+      } catch (e) {
+        console.error('Toggle init error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: CHECKBOX                             //
+    // ============================================= //
+    (function initCheckboxes() {
+      try {
+        document.querySelectorAll('[data-checkbox]').forEach(function (group) {
+          group.addEventListener('click', function () {
+            var box = group.querySelector('.check-box');
+            if (!box) return;
+
+            var isChecked = box.classList.toggle('is-checked');
+            box.setAttribute('aria-checked', isChecked ? 'true' : 'false');
+          });
+
+          var box = group.querySelector('.check-box');
+          if (box) {
+            box.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                group.click();
+              }
+            });
+          }
+        });
+      } catch (e) {
+        console.error('Checkbox init error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: RADIO BUTTONS                        //
+    // ============================================= //
+    (function initRadios() {
+      try {
+        document.querySelectorAll('[data-radio]').forEach(function (group) {
+          group.addEventListener('click', function () {
+            var radioName = group.getAttribute('data-radio');
+            var allInGroup = document.querySelectorAll('[data-radio="' + radioName + '"]');
+
+            allInGroup.forEach(function (g) {
+              var circle = g.querySelector('.radio-circle');
+              if (circle) {
+                circle.classList.remove('is-checked');
+                circle.setAttribute('aria-checked', 'false');
+              }
+            });
+
+            var thisCircle = group.querySelector('.radio-circle');
+            if (thisCircle) {
+              thisCircle.classList.add('is-checked');
+              thisCircle.setAttribute('aria-checked', 'true');
+            }
+          });
+
+          var circle = group.querySelector('.radio-circle');
+          if (circle) {
+            circle.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                group.click();
+              }
+            });
+          }
+        });
+      } catch (e) {
+        console.error('Radio init error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: SLIDER VALUES                        //
+    // ============================================= //
+    (function initSliders() {
+      try {
+        var waterSlider = document.getElementById('waterSlider');
+        var waterValue = document.getElementById('waterValue');
+        if (waterSlider && waterValue) {
+          waterSlider.addEventListener('input', function () {
+            waterValue.textContent = parseFloat(waterSlider.value).toFixed(1) + 'L';
+          });
+        }
+
+        var calSlider = document.getElementById('calSlider');
+        var calValue = document.getElementById('calValue');
+        if (calSlider && calValue) {
+          calSlider.addEventListener('input', function () {
+            calValue.textContent = parseInt(calSlider.value, 10).toLocaleString('pt-BR') + ' kcal';
+          });
+        }
+      } catch (e) {
+        console.error('Slider init error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: NUMBER STEPPER                       //
+    // ============================================= //
+    (function initNumberStepper() {
+      try {
+        var stepper = document.getElementById('numberStepper');
+        var valueDisplay = document.getElementById('stepperValue');
+        if (!stepper || !valueDisplay) return;
+
+        var currentValue = parseInt(valueDisplay.textContent, 10) || 5;
+        var minValue = 1;
+        var maxValue = 10;
+
+        stepper.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-action]');
+          if (!btn) return;
+
+          var action = btn.getAttribute('data-action');
+          if (action === 'increment' && currentValue < maxValue) {
+            currentValue++;
+          } else if (action === 'decrement' && currentValue > minValue) {
+            currentValue--;
+          }
+          valueDisplay.textContent = currentValue;
+        });
+      } catch (e) {
+        console.error('Number stepper error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: TAG INPUT                            //
+    // ============================================= //
+    (function initTagInput() {
+      try {
+        var container = document.getElementById('tagContainer');
+        var input = document.getElementById('tagInput');
+        if (!container || !input) return;
+
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            var value = input.value.trim();
+            if (!value) return;
+
+            var tag = document.createElement('span');
+            tag.className = 'tag';
+            tag.innerHTML = value + ' <button class="tag-remove" type="button" aria-label="Remover">\u00D7</button>';
+            container.insertBefore(tag, input);
+            input.value = '';
+          }
+
+          if (e.key === 'Backspace' && !input.value) {
+            var tags = container.querySelectorAll('.tag');
+            if (tags.length > 0) {
+              tags[tags.length - 1].remove();
+            }
+          }
+        });
+
+        container.addEventListener('click', function (e) {
+          var removeBtn = e.target.closest('.tag-remove');
+          if (removeBtn) {
+            var tag = removeBtn.closest('.tag');
+            if (tag) tag.remove();
+            return;
+          }
+          input.focus();
+        });
+      } catch (e) {
+        console.error('Tag input error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: NAVIGATION LIST                      //
+    // ============================================= //
+    (function initNavList() {
+      try {
+        var navList = document.getElementById('navListDemo');
+        if (!navList) return;
+
+        navList.addEventListener('click', function (e) {
+          var item = e.target.closest('[data-navitem]');
+          if (!item) return;
+
+          navList.querySelectorAll('[data-navitem]').forEach(function (i) {
+            i.classList.remove('is-active');
+          });
+          item.classList.add('is-active');
+        });
+      } catch (e) {
+        console.error('Nav list error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: TOAST CLOSE                          //
+    // ============================================= //
+    (function initToastClose() {
+      try {
+        document.querySelectorAll('.toast-close').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var toast = btn.closest('.toast');
+            if (!toast) return;
+
+            toast.style.transition = 'all 300ms cubic-bezier(0.16, 1, 0.3, 1)';
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(20px)';
+
+            setTimeout(function () {
+              toast.style.display = 'none';
+            }, 300);
+          });
+        });
+      } catch (e) {
+        console.error('Toast close error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: SMOOTH SCROLL FOR NAV LINKS          //
+    // ============================================= //
+    (function initSmoothScroll() {
+      try {
+        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+          anchor.addEventListener('click', function (e) {
+            var targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') return;
+
+            var target = document.querySelector(targetId);
+            if (!target) return;
+
+            e.preventDefault();
+            var offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          });
+        });
+      } catch (e) {
+        console.error('Smooth scroll error:', e);
+      }
+    })();
+
+    // ============================================= //
+    // SECTION: MOBILE NAV (placeholder behavior)    //
+    // ============================================= //
+    (function initMobileNav() {
+      try {
+        var mobileBtn = document.getElementById('mobileNav');
+        if (!mobileBtn) return;
+
+        mobileBtn.addEventListener('click', function () {
+          var navLinks = document.querySelector('.nav-links');
+          if (!navLinks) return;
+
+          var isVisible = navLinks.style.display === 'flex';
+          if (isVisible) {
+            navLinks.style.display = 'none';
+          } else {
+            navLinks.style.display = 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.background = 'var(--bg-primary)';
+            navLinks.style.borderBottom = '2px solid var(--border-primary)';
+            navLinks.style.padding = 'var(--space-4)';
+            navLinks.style.zIndex = 'var(--z-dropdown)';
+          }
+        });
+      } catch (e) {
+        console.error('Mobile nav error:', e);
+      }
+    })();
+  </script>
+</body>
+</html>

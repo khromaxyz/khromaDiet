@@ -1,5 +1,7 @@
-﻿import { ACTIVE_PROFILE_STORAGE_KEY, DRAFT_STORAGE_KEY, PROFILE_MAX_COUNT, PROFILE_STORAGE_KEY } from './constants';
-import type { DraftPayload, UserProfile } from './types';
+import { deepClone } from '@/lib/utils';
+
+import { ACTIVE_PROFILE_STORAGE_KEY, PROFILE_MAX_COUNT, PROFILE_STORAGE_KEY } from './constants';
+import type { UserProfile } from './types';
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;
 
@@ -19,15 +21,7 @@ const resolveStorage = (override?: Storage | null): Storage | null => {
   }
 };
 
-const deepClone = <T>(value: T): T => {
-  if (typeof structuredClone === 'function') {
-    return structuredClone(value);
-  }
-
-  return JSON.parse(JSON.stringify(value)) as T;
-};
-
-const parseJson = <T>(raw: string | null): T | null => {
+const parseJson = <T,>(raw: string | null): T | null => {
   if (!raw) {
     return null;
   }
@@ -55,14 +49,6 @@ const isUserProfile = (value: unknown): value is UserProfile => {
     isRecord(value.results) &&
     isRecord(value.summary)
   );
-};
-
-const isDraftPayload = (value: unknown): value is DraftPayload => {
-  if (!isRecord(value)) {
-    return false;
-  }
-
-  return isRecord(value.formData) && typeof value.currentStep === 'number' && typeof value.updatedAt === 'string';
 };
 
 const sortProfiles = (profiles: UserProfile[]): UserProfile[] =>
@@ -135,48 +121,6 @@ export const saveActiveProfileId = (id: string | null, storageOverride?: Storage
     }
 
     storage.setItem(ACTIVE_PROFILE_STORAGE_KEY, id);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-export const loadDraft = (storageOverride?: Storage | null): DraftPayload | null => {
-  const storage = resolveStorage(storageOverride);
-  if (!storage) {
-    return null;
-  }
-
-  const parsed = parseJson<unknown>(storage.getItem(DRAFT_STORAGE_KEY));
-  if (!isDraftPayload(parsed)) {
-    return null;
-  }
-
-  return deepClone(parsed);
-};
-
-export const saveDraft = (draft: DraftPayload, storageOverride?: Storage | null): boolean => {
-  const storage = resolveStorage(storageOverride);
-  if (!storage) {
-    return false;
-  }
-
-  try {
-    storage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-export const clearDraft = (storageOverride?: Storage | null): boolean => {
-  const storage = resolveStorage(storageOverride);
-  if (!storage) {
-    return false;
-  }
-
-  try {
-    storage.removeItem(DRAFT_STORAGE_KEY);
     return true;
   } catch {
     return false;

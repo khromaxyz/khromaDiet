@@ -1,4 +1,4 @@
-﻿export type GoalType = 'hard_cut' | 'mini_cut' | 'recomp' | 'maintenance' | 'lean_bulk' | 'dirty_bulk';
+export type GoalType = 'hard_cut' | 'mini_cut' | 'recomp' | 'maintenance' | 'lean_bulk' | 'dirty_bulk';
 
 export type SexType = 'male' | 'female';
 

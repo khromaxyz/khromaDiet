@@ -1,4 +1,4 @@
-﻿import type { GoalMetricMode, GoalProjectionResult, GoalType } from '../types';
+import type { GoalMetricMode, GoalProjectionResult, GoalType } from '../types';
 
 import { KCAL_PER_KG_FAT } from './constants';
 import { clamp, round, toOneDecimal } from './math';

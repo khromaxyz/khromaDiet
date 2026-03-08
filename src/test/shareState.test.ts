@@ -1,6 +1,6 @@
-﻿import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { initialFormData } from '../lib/constants/mockForm';
+import { initialFormData } from '@/features/form/config/formConfig';
 import { parseShareState, serializeShareState } from '../lib/shareState';
 
 describe('shareState payload compatibility', () => {

@@ -1,7 +1,7 @@
-﻿import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import App from '../App';
-import { formSteps } from '../lib/constants/steps';
+import { formSteps } from '@/features/form/config/formSteps';
 import { useDietForgeStore } from '../store/useDietForgeStore';
 
 const goToForm = async () => {

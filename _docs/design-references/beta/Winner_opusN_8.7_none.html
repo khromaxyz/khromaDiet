@@ -1,0 +1,3859 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KhromaDiet — Design System v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════
+     KHROMADIET DESIGN SYSTEM v1.0
+     Canonical Visual Reference — Neo-Brutalism Clean
+     ═══════════════════════════════════════════════════════════ */
+
+  /* ── DESIGN TOKENS ── */
+  :root {
+    /* ── Color: Core Palette ── */
+    --kd-white:        #FFFFFF;
+    --kd-black:        #0A0A0A;
+    --kd-black-pure:   #000000;
+
+    /* ── Color: Neutral Scale (Light) ── */
+    --kd-gray-50:      #FAFAFA;
+    --kd-gray-100:     #F4F4F5;
+    --kd-gray-200:     #E4E4E7;
+    --kd-gray-300:     #D4D4D8;
+    --kd-gray-400:     #A1A1AA;
+    --kd-gray-500:     #71717A;
+    --kd-gray-600:     #52525B;
+    --kd-gray-700:     #3F3F46;
+    --kd-gray-800:     #27272A;
+    --kd-gray-900:     #18181B;
+    --kd-gray-950:     #09090B;
+
+    /* ── Color: Accent — KhromaDiet Green ── */
+    --kd-green-50:     #ECFDF5;
+    --kd-green-100:    #D1FAE5;
+    --kd-green-200:    #A7F3D0;
+    --kd-green-300:    #6EE7B7;
+    --kd-green-400:    #34D399;
+    --kd-green-500:    #10B981;
+    --kd-green-600:    #059669;
+    --kd-green-700:    #047857;
+    --kd-green-800:    #065F46;
+    --kd-green-900:    #064E3B;
+
+    /* ── Color: Semantic ── */
+    --kd-error:        #EF4444;
+    --kd-error-soft:   #FEF2F2;
+    --kd-warning:      #F59E0B;
+    --kd-warning-soft: #FFFBEB;
+    --kd-success:      #10B981;
+    --kd-success-soft: #ECFDF5;
+    --kd-info:         #6366F1;
+    --kd-info-soft:    #EEF2FF;
+
+    /* ── Typography ── */
+    --font-display:    'Space Grotesk', system-ui, sans-serif;
+    --font-body:       'Inter', system-ui, sans-serif;
+    --font-mono:       'JetBrains Mono', 'SF Mono', monospace;
+
+    /* ── Type Scale (Major Third — 1.250) ── */
+    --text-xs:     0.694rem;    /* 11.1px */
+    --text-sm:     0.833rem;    /* 13.3px */
+    --text-base:   1rem;        /* 16px */
+    --text-md:     1.125rem;    /* 18px */
+    --text-lg:     1.25rem;     /* 20px */
+    --text-xl:     1.563rem;    /* 25px */
+    --text-2xl:    1.953rem;    /* 31.25px */
+    --text-3xl:    2.441rem;    /* 39px */
+    --text-4xl:    3.052rem;    /* 48.8px */
+    --text-5xl:    3.815rem;    /* 61px */
+    --text-6xl:    4.768rem;    /* 76.3px */
+    --text-7xl:    5.96rem;     /* 95.4px */
+
+    /* ── Line Heights ── */
+    --leading-none:    1;
+    --leading-tight:   1.15;
+    --leading-snug:    1.275;
+    --leading-normal:  1.5;
+    --leading-relaxed: 1.625;
+    --leading-loose:   1.8;
+
+    /* ── Letter Spacing ── */
+    --tracking-tighter: -0.04em;
+    --tracking-tight:   -0.025em;
+    --tracking-normal:   0em;
+    --tracking-wide:     0.025em;
+    --tracking-wider:    0.05em;
+    --tracking-widest:   0.1em;
+    --tracking-ultra:    0.16em;
+
+    /* ── Spacing Scale (8px base) ── */
+    --space-0:     0;
+    --space-1:     0.25rem;   /* 4px */
+    --space-2:     0.5rem;    /* 8px */
+    --space-3:     0.75rem;   /* 12px */
+    --space-4:     1rem;      /* 16px */
+    --space-5:     1.25rem;   /* 20px */
+    --space-6:     1.5rem;    /* 24px */
+    --space-8:     2rem;      /* 32px */
+    --space-10:    2.5rem;    /* 40px */
+    --space-12:    3rem;      /* 48px */
+    --space-16:    4rem;      /* 64px */
+    --space-20:    5rem;      /* 80px */
+    --space-24:    6rem;      /* 96px */
+    --space-32:    8rem;      /* 128px */
+    --space-40:    10rem;     /* 160px */
+    --space-48:    12rem;     /* 192px */
+
+    /* ── Border Radius ── */
+    --radius-none: 0;
+    --radius-sm:   4px;
+    --radius-md:   8px;
+    --radius-lg:   12px;
+    --radius-xl:   16px;
+    --radius-2xl:  20px;
+    --radius-full: 9999px;
+
+    /* ── Border Width ── */
+    --border-thin:   1px;
+    --border-medium: 2px;
+    --border-thick:  3px;
+    --border-heavy:  4px;
+
+    /* ── Elevation / Shadows ── */
+    --shadow-xs:   0 1px 2px rgba(0,0,0,0.04);
+    --shadow-sm:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md:   0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --shadow-lg:   0 10px 15px -3px rgba(0,0,0,0.06), 0 4px 6px -4px rgba(0,0,0,0.04);
+    --shadow-xl:   0 20px 25px -5px rgba(0,0,0,0.06), 0 8px 10px -6px rgba(0,0,0,0.04);
+    --shadow-2xl:  0 25px 50px -12px rgba(0,0,0,0.12);
+    --shadow-brutal: 4px 4px 0px var(--kd-black);
+    --shadow-brutal-sm: 2px 2px 0px var(--kd-black);
+    --shadow-brutal-lg: 6px 6px 0px var(--kd-black);
+    --shadow-brutal-green: 4px 4px 0px var(--kd-green-600);
+
+    /* ── Transition / Motion ── */
+    --ease-default:   cubic-bezier(0.25, 0.1, 0.25, 1);
+    --ease-in:        cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    --ease-out:       cubic-bezier(0.215, 0.61, 0.355, 1);
+    --ease-in-out:    cubic-bezier(0.645, 0.045, 0.355, 1);
+    --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-snap:      cubic-bezier(0.12, 0.8, 0.32, 1);
+
+    --duration-instant: 75ms;
+    --duration-fast:    150ms;
+    --duration-normal:  250ms;
+    --duration-slow:    400ms;
+    --duration-slower:  600ms;
+
+    /* ── Z-Index Scale ── */
+    --z-base:      0;
+    --z-raised:    10;
+    --z-dropdown:  100;
+    --z-sticky:    200;
+    --z-overlay:   300;
+    --z-modal:     400;
+    --z-toast:     500;
+    --z-max:       999;
+
+    /* ── Layout ── */
+    --max-width:     1280px;
+    --max-width-lg:  1440px;
+    --content-width: 720px;
+    --sidebar-width: 280px;
+    --nav-height:    72px;
+  }
+
+  /* ── THEME: LIGHT (Default) ── */
+  [data-theme="light"] {
+    --bg-primary:      var(--kd-white);
+    --bg-secondary:    var(--kd-gray-50);
+    --bg-tertiary:     var(--kd-gray-100);
+    --bg-elevated:     var(--kd-white);
+    --bg-inverse:      var(--kd-black);
+    --bg-accent:       var(--kd-green-500);
+    --bg-accent-soft:  var(--kd-green-50);
+
+    --text-primary:    var(--kd-gray-950);
+    --text-secondary:  var(--kd-gray-600);
+    --text-tertiary:   var(--kd-gray-400);
+    --text-inverse:    var(--kd-white);
+    --text-accent:     var(--kd-green-600);
+    --text-on-accent:  var(--kd-white);
+
+    --border-primary:  var(--kd-gray-200);
+    --border-strong:   var(--kd-black);
+    --border-accent:   var(--kd-green-500);
+
+    --surface-1:       var(--kd-white);
+    --surface-2:       var(--kd-gray-50);
+    --surface-3:       var(--kd-gray-100);
+    --surface-4:       var(--kd-gray-200);
+
+    --shadow-brutal-color: var(--kd-black);
+    --focus-ring:      0 0 0 3px rgba(16, 185, 129, 0.35);
+    --selection-bg:    var(--kd-green-100);
+    --selection-text:  var(--kd-green-900);
+
+    color-scheme: light;
+  }
+
+  /* ── THEME: DARK ── */
+  [data-theme="dark"] {
+    --bg-primary:      var(--kd-black);
+    --bg-secondary:    #0F0F0F;
+    --bg-tertiary:     #151515;
+    --bg-elevated:     #1A1A1A;
+    --bg-inverse:      var(--kd-white);
+    --bg-accent:       var(--kd-green-500);
+    --bg-accent-soft:  rgba(16, 185, 129, 0.08);
+
+    --text-primary:    #F5F5F5;
+    --text-secondary:  #999999;
+    --text-tertiary:   #666666;
+    --text-inverse:    var(--kd-black);
+    --text-accent:     var(--kd-green-400);
+    --text-on-accent:  var(--kd-black);
+
+    --border-primary:  #222222;
+    --border-strong:   #F5F5F5;
+    --border-accent:   var(--kd-green-500);
+
+    --surface-1:       #0F0F0F;
+    --surface-2:       #151515;
+    --surface-3:       #1A1A1A;
+    --surface-4:       #222222;
+
+    --shadow-brutal-color: rgba(255,255,255,0.15);
+    --shadow-xs:   0 1px 2px rgba(0,0,0,0.2);
+    --shadow-sm:   0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md:   0 4px 6px -1px rgba(0,0,0,0.35), 0 2px 4px -2px rgba(0,0,0,0.2);
+    --shadow-lg:   0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -4px rgba(0,0,0,0.2);
+    --shadow-xl:   0 20px 25px -5px rgba(0,0,0,0.5), 0 8px 10px -6px rgba(0,0,0,0.25);
+    --shadow-brutal: 4px 4px 0px var(--shadow-brutal-color);
+    --shadow-brutal-sm: 2px 2px 0px var(--shadow-brutal-color);
+    --shadow-brutal-lg: 6px 6px 0px var(--shadow-brutal-color);
+    --shadow-brutal-green: 4px 4px 0px var(--kd-green-700);
+
+    --focus-ring:      0 0 0 3px rgba(52, 211, 153, 0.3);
+    --selection-bg:    var(--kd-green-900);
+    --selection-text:  var(--kd-green-100);
+
+    color-scheme: dark;
+  }
+
+  /* ── RESET & BASE ── */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: var(--leading-normal);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color var(--duration-normal) var(--ease-default),
+                color var(--duration-normal) var(--ease-default);
+    overflow-x: hidden;
+  }
+
+  /* ── FOCUS STATES ── */
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  /* ── GLOBAL NAV ── */
+  .ds-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    background: var(--bg-primary);
+    border-bottom: var(--border-medium) solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-8);
+    z-index: var(--z-sticky);
+    transition: background-color var(--duration-normal) var(--ease-default),
+                border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .ds-nav__logo {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .ds-nav__logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-accent);
+    border-radius: var(--radius-sm);
+    border: var(--border-medium) solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--text-on-accent);
+  }
+
+  .ds-nav__version {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    border: var(--border-thin) solid var(--border-primary);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .ds-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    width: 44px;
+    height: 28px;
+    background: var(--surface-3);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    position: relative;
+    transition: background-color var(--duration-fast) var(--ease-default);
+  }
+
+  .theme-toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: var(--text-primary);
+    border-radius: 50%;
+    transition: transform var(--duration-normal) var(--ease-snap);
+  }
+
+  [data-theme="dark"] .theme-toggle::after {
+    transform: translateX(16px);
+    background: var(--kd-green-400);
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .ds-sidebar {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: var(--bg-secondary);
+    border-right: var(--border-medium) solid var(--border-strong);
+    overflow-y: auto;
+    padding: var(--space-6) 0;
+    z-index: var(--z-raised);
+    transition: background-color var(--duration-normal) var(--ease-default),
+                border-color var(--duration-normal) var(--ease-default),
+                transform var(--duration-slow) var(--ease-snap);
+  }
+
+  .ds-sidebar__section {
+    padding: 0 var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .ds-sidebar__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-ultra);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+    display: block;
+  }
+
+  .ds-sidebar__link {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    transition: all var(--duration-fast) var(--ease-default);
+    margin-bottom: 1px;
+  }
+
+  .ds-sidebar__link:hover {
+    color: var(--text-primary);
+    background: var(--surface-3);
+  }
+
+  .ds-sidebar__link.active {
+    color: var(--text-accent);
+    background: var(--bg-accent-soft);
+    font-weight: 600;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .ds-main {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--nav-height);
+    min-height: calc(100vh - var(--nav-height));
+  }
+
+  /* ── SECTION ── */
+  .ds-section {
+    padding: var(--space-16) var(--space-12);
+    border-bottom: var(--border-thin) solid var(--border-primary);
+    max-width: 1100px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out);
+  }
+
+  .ds-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ds-section:last-child {
+    border-bottom: none;
+  }
+
+  .ds-section__header {
+    margin-bottom: var(--space-12);
+  }
+
+  .ds-section__number {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-ultra);
+    text-transform: uppercase;
+    color: var(--text-accent);
+    margin-bottom: var(--space-3);
+    display: block;
+  }
+
+  .ds-section__title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tighter);
+    line-height: var(--leading-tight);
+    color: var(--text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .ds-section__desc {
+    font-size: var(--text-md);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 640px;
+  }
+
+  /* ── SUBSECTION ── */
+  .ds-subsection {
+    margin-bottom: var(--space-16);
+  }
+
+  .ds-subsection:last-child {
+    margin-bottom: 0;
+  }
+
+  .ds-subsection__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: var(--border-thin) solid var(--border-primary);
+  }
+
+  .ds-subsection__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-4);
+    display: block;
+  }
+
+  /* ── TOKEN GRID ── */
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .token-card {
+    border: var(--border-medium) solid var(--border-primary);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .token-card:hover {
+    border-color: var(--border-strong);
+  }
+
+  .token-card__preview {
+    height: 72px;
+    width: 100%;
+  }
+
+  .token-card__info {
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface-2);
+  }
+
+  .token-card__name {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .token-card__value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+  }
+
+  /* ── COLOR SWATCH ROW ── */
+  .swatch-row {
+    display: flex;
+    gap: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: var(--border-medium) solid var(--border-strong);
+    margin-bottom: var(--space-6);
+  }
+
+  .swatch {
+    flex: 1;
+    aspect-ratio: 1;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    position: relative;
+  }
+
+  .swatch span {
+    background: inherit;
+    mix-blend-mode: difference;
+    color: white;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* ── TYPOGRAPHY SPECIMENS ── */
+  .type-specimen {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: var(--border-thin) solid var(--border-primary);
+  }
+
+  .type-specimen:last-child {
+    border-bottom: none;
+  }
+
+  .type-specimen__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .type-specimen__meta-item {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .type-specimen__sample {
+    color: var(--text-primary);
+  }
+
+  /* ── COMPONENT SHOWCASE ── */
+  .component-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .component-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .component-box {
+    background: var(--surface-2);
+    border: var(--border-medium) solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+  }
+
+  .component-box__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-4);
+    display: block;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     COMPONENT LIBRARY
+     ═══════════════════════════════════════════════════════════ */
+
+  /* ── BUTTONS ── */
+  .kd-btn {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+    border: var(--border-medium) solid var(--border-strong);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    transition: all var(--duration-fast) var(--ease-snap);
+    text-decoration: none;
+    position: relative;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* Size variants */
+  .kd-btn--sm {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-xs);
+    border-radius: var(--radius-sm);
+  }
+
+  .kd-btn--md {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+    border-radius: var(--radius-md);
+  }
+
+  .kd-btn--lg {
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-base);
+    border-radius: var(--radius-md);
+  }
+
+  .kd-btn--xl {
+    padding: var(--space-5) var(--space-10);
+    font-size: var(--text-md);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Style variants */
+  .kd-btn--primary {
+    background: var(--bg-accent);
+    color: var(--text-on-accent);
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .kd-btn--primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .kd-btn--primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .kd-btn--secondary {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .kd-btn--secondary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .kd-btn--secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .kd-btn--ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .kd-btn--ghost:hover {
+    background: var(--surface-3);
+    border-color: var(--border-primary);
+  }
+
+  .kd-btn--inverse {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-brutal-green);
+  }
+
+  .kd-btn--inverse:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--kd-green-600);
+  }
+
+  .kd-btn--inverse:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .kd-btn--danger {
+    background: var(--kd-error);
+    color: white;
+    border-color: var(--kd-error);
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .kd-btn:disabled, .kd-btn[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ── LINKS ── */
+  .kd-link {
+    color: var(--text-accent);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: var(--border-medium) solid currentColor;
+    padding-bottom: 1px;
+    transition: all var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-link:hover {
+    color: var(--kd-green-700);
+    border-bottom-color: transparent;
+  }
+
+  [data-theme="dark"] .kd-link:hover {
+    color: var(--kd-green-300);
+  }
+
+  /* ── INPUT FIELDS ── */
+  .kd-input {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 400;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: var(--border-medium) solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    width: 100%;
+    transition: border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .kd-input:hover {
+    border-color: var(--border-strong);
+  }
+
+  .kd-input:focus {
+    outline: none;
+    border-color: var(--border-accent);
+    box-shadow: var(--focus-ring);
+  }
+
+  .kd-input--error {
+    border-color: var(--kd-error);
+  }
+
+  .kd-input--error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+    border-color: var(--kd-error);
+  }
+
+  .kd-input--brutal {
+    border-width: var(--border-medium);
+    border-color: var(--border-strong);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .kd-input--brutal:focus {
+    box-shadow: var(--shadow-brutal);
+    border-color: var(--border-accent);
+  }
+
+  /* ── TEXTAREA ── */
+  .kd-textarea {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: var(--border-medium) solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+    transition: border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-textarea:focus {
+    outline: none;
+    border-color: var(--border-accent);
+    box-shadow: var(--focus-ring);
+  }
+
+  /* ── SELECT ── */
+  .kd-select {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: var(--border-medium) solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-10) var(--space-3) var(--space-4);
+    width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2371717A' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-select:focus {
+    outline: none;
+    border-color: var(--border-accent);
+    box-shadow: var(--focus-ring);
+  }
+
+  /* ── LABEL ── */
+  .kd-label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-label__optional {
+    font-weight: 400;
+    color: var(--text-tertiary);
+    font-size: var(--text-xs);
+  }
+
+  .kd-helper {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    margin-top: var(--space-1);
+  }
+
+  .kd-error-msg {
+    font-size: var(--text-xs);
+    color: var(--kd-error);
+    margin-top: var(--space-1);
+    font-weight: 500;
+  }
+
+  /* ── CHECKBOX ── */
+  .kd-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    user-select: none;
+  }
+
+  .kd-checkbox__input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--bg-primary);
+    cursor: pointer;
+    position: relative;
+    transition: all var(--duration-fast) var(--ease-snap);
+    flex-shrink: 0;
+  }
+
+  .kd-checkbox__input:checked {
+    background: var(--bg-accent);
+    border-color: var(--bg-accent);
+  }
+
+  .kd-checkbox__input:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--text-on-accent);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .kd-checkbox__input:focus-visible {
+    box-shadow: var(--focus-ring);
+  }
+
+  /* ── RADIO ── */
+  .kd-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    user-select: none;
+  }
+
+  .kd-radio__input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: 50%;
+    background: var(--bg-primary);
+    cursor: pointer;
+    position: relative;
+    transition: all var(--duration-fast) var(--ease-snap);
+    flex-shrink: 0;
+  }
+
+  .kd-radio__input:checked {
+    border-color: var(--bg-accent);
+  }
+
+  .kd-radio__input:checked::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bg-accent);
+  }
+
+  .kd-radio__input:focus-visible {
+    box-shadow: var(--focus-ring);
+  }
+
+  /* ── TOGGLE / SWITCH ── */
+  .kd-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+  }
+
+  .kd-switch__track {
+    width: 48px;
+    height: 28px;
+    background: var(--surface-4);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-full);
+    position: relative;
+    transition: all var(--duration-fast) var(--ease-snap);
+    flex-shrink: 0;
+  }
+
+  .kd-switch__thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: var(--text-primary);
+    border-radius: 50%;
+    transition: all var(--duration-normal) var(--ease-snap);
+  }
+
+  .kd-switch__input {
+    display: none;
+  }
+
+  .kd-switch__input:checked + .kd-switch__track {
+    background: var(--bg-accent);
+    border-color: var(--bg-accent);
+  }
+
+  .kd-switch__input:checked + .kd-switch__track .kd-switch__thumb {
+    transform: translateX(20px);
+    background: var(--kd-white);
+  }
+
+  /* ── SLIDER / RANGE ── */
+  .kd-slider {
+    width: 100%;
+    appearance: none;
+    height: 6px;
+    background: var(--surface-4);
+    border-radius: var(--radius-full);
+    outline: none;
+    cursor: pointer;
+    border: var(--border-thin) solid var(--border-primary);
+  }
+
+  .kd-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: var(--bg-accent);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform var(--duration-fast) var(--ease-snap);
+  }
+
+  .kd-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  .kd-slider::-webkit-slider-thumb:active {
+    transform: scale(0.95);
+  }
+
+  /* ── BADGE ── */
+  .kd-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .kd-badge--default {
+    background: var(--surface-3);
+    color: var(--text-secondary);
+    border: var(--border-thin) solid var(--border-primary);
+  }
+
+  .kd-badge--accent {
+    background: var(--bg-accent-soft);
+    color: var(--text-accent);
+    border: var(--border-thin) solid var(--border-accent);
+  }
+
+  .kd-badge--solid {
+    background: var(--bg-accent);
+    color: var(--text-on-accent);
+    border: var(--border-thin) solid var(--bg-accent);
+  }
+
+  .kd-badge--error {
+    background: var(--kd-error-soft);
+    color: var(--kd-error);
+    border: var(--border-thin) solid var(--kd-error);
+  }
+
+  .kd-badge--warning {
+    background: var(--kd-warning-soft);
+    color: var(--kd-warning);
+    border: var(--border-thin) solid var(--kd-warning);
+  }
+
+  .kd-badge--brutal {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-2);
+  }
+
+  /* ── CHIP ── */
+  .kd-chip {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    border: var(--border-medium) solid var(--border-primary);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: all var(--duration-fast) var(--ease-default);
+    user-select: none;
+  }
+
+  .kd-chip:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-2);
+  }
+
+  .kd-chip.active {
+    background: var(--bg-accent);
+    color: var(--text-on-accent);
+    border-color: var(--bg-accent);
+  }
+
+  /* ── TABS ── */
+  .kd-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: var(--border-medium) solid var(--border-strong);
+  }
+
+  .kd-tab {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: var(--space-3) var(--space-6);
+    cursor: pointer;
+    border: none;
+    background: none;
+    position: relative;
+    transition: color var(--duration-fast) var(--ease-default);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+  }
+
+  .kd-tab:hover {
+    color: var(--text-primary);
+  }
+
+  .kd-tab.active {
+    color: var(--text-accent);
+    border-bottom-color: var(--bg-accent);
+    font-weight: 600;
+  }
+
+  /* ── CARD ── */
+  .kd-card {
+    background: var(--surface-1);
+    border: var(--border-medium) solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-card--elevated {
+    box-shadow: var(--shadow-md);
+  }
+
+  .kd-card--brutal {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-brutal);
+    border-radius: var(--radius-md);
+  }
+
+  .kd-card--brutal:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal-lg);
+  }
+
+  .kd-card--interactive:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .kd-card__header {
+    padding: var(--space-6);
+    border-bottom: var(--border-thin) solid var(--border-primary);
+  }
+
+  .kd-card__body {
+    padding: var(--space-6);
+  }
+
+  .kd-card__footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: var(--border-thin) solid var(--border-primary);
+    background: var(--surface-2);
+  }
+
+  /* ── METRIC CARD (KhromaDiet-specific) ── */
+  .kd-metric {
+    background: var(--surface-1);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-brutal-sm);
+    transition: all var(--duration-fast) var(--ease-snap);
+  }
+
+  .kd-metric:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .kd-metric__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-metric__value {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+    line-height: var(--leading-none);
+  }
+
+  .kd-metric__unit {
+    font-size: var(--text-lg);
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: var(--space-1);
+  }
+
+  .kd-metric__delta {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    margin-top: var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .kd-metric__delta--up {
+    color: var(--kd-green-600);
+  }
+
+  .kd-metric__delta--down {
+    color: var(--kd-error);
+  }
+
+  /* ── MACRO BAR (KhromaDiet-specific) ── */
+  .kd-macro-bar {
+    background: var(--surface-2);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .kd-macro-bar__item {
+    flex: 1;
+  }
+
+  .kd-macro-bar__label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-ultra);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-1);
+  }
+
+  .kd-macro-bar__value {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .kd-macro-bar__sub {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .kd-macro-bar__track {
+    height: 6px;
+    background: var(--surface-4);
+    border-radius: var(--radius-full);
+    margin-top: var(--space-2);
+    overflow: hidden;
+    border: var(--border-thin) solid var(--border-primary);
+  }
+
+  .kd-macro-bar__fill {
+    height: 100%;
+    background: var(--bg-accent);
+    border-radius: var(--radius-full);
+    transition: width var(--duration-slow) var(--ease-out);
+  }
+
+  .kd-macro-bar__divider {
+    width: 1px;
+    height: 48px;
+    background: var(--border-primary);
+    flex-shrink: 0;
+  }
+
+  /* ── PROGRESS RING ── */
+  .kd-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+
+  .kd-ring svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+  }
+
+  .kd-ring__bg {
+    fill: none;
+    stroke: var(--surface-4);
+    stroke-width: 8;
+  }
+
+  .kd-ring__fill {
+    fill: none;
+    stroke: var(--bg-accent);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset var(--duration-slower) var(--ease-out);
+  }
+
+  .kd-ring__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .kd-ring__value {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    display: block;
+    line-height: 1;
+  }
+
+  .kd-ring__unit {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* ── TABLE ── */
+  .kd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .kd-table th {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: var(--border-medium) solid var(--border-strong);
+    background: var(--surface-2);
+  }
+
+  .kd-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: var(--border-thin) solid var(--border-primary);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  .kd-table tr:hover td {
+    background: var(--surface-2);
+  }
+
+  .kd-table .num {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    text-align: right;
+  }
+
+  /* ── TOAST ── */
+  .kd-toast {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface-1);
+    box-shadow: var(--shadow-brutal-sm);
+    max-width: 420px;
+    font-size: var(--text-sm);
+  }
+
+  .kd-toast--success {
+    border-left: var(--border-heavy) solid var(--kd-green-500);
+  }
+
+  .kd-toast--error {
+    border-left: var(--border-heavy) solid var(--kd-error);
+  }
+
+  .kd-toast--warning {
+    border-left: var(--border-heavy) solid var(--kd-warning);
+  }
+
+  .kd-toast--info {
+    border-left: var(--border-heavy) solid var(--kd-info);
+  }
+
+  .kd-toast__icon {
+    font-size: var(--text-lg);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .kd-toast__content {
+    flex: 1;
+  }
+
+  .kd-toast__title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .kd-toast__msg {
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    line-height: var(--leading-relaxed);
+  }
+
+  .kd-toast__close {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    font-size: var(--text-lg);
+    line-height: 1;
+    padding: 0;
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-toast__close:hover {
+    color: var(--text-primary);
+  }
+
+  /* ── MODAL ── */
+  .kd-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-normal) var(--ease-default);
+    backdrop-filter: blur(4px);
+  }
+
+  .kd-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .kd-modal {
+    background: var(--bg-primary);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-brutal-lg);
+    max-width: 520px;
+    width: calc(100% - var(--space-8));
+    transform: scale(0.95) translateY(20px);
+    transition: transform var(--duration-normal) var(--ease-snap);
+    overflow: hidden;
+  }
+
+  .kd-modal-overlay.active .kd-modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .kd-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: var(--border-medium) solid var(--border-primary);
+  }
+
+  .kd-modal__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  .kd-modal__body {
+    padding: var(--space-6);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .kd-modal__footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: var(--border-thin) solid var(--border-primary);
+    display: flex;
+    gap: var(--space-3);
+    justify-content: flex-end;
+    background: var(--surface-2);
+  }
+
+  /* ── EMPTY STATE ── */
+  .kd-empty {
+    padding: var(--space-16) var(--space-8);
+    text-align: center;
+    border: var(--border-medium) dashed var(--border-primary);
+    border-radius: var(--radius-lg);
+    background: var(--surface-2);
+  }
+
+  .kd-empty__icon {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+    opacity: 0.3;
+  }
+
+  .kd-empty__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-empty__desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    max-width: 320px;
+    margin: 0 auto var(--space-6);
+  }
+
+  /* ── SECTION SHELL ── */
+  .kd-shell {
+    background: var(--surface-2);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .kd-shell__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    border-bottom: var(--border-medium) solid var(--border-strong);
+    background: var(--surface-1);
+  }
+
+  .kd-shell__bar-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .kd-shell__bar-actions {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .kd-shell__content {
+    padding: var(--space-8);
+  }
+
+  /* ── SEARCH ── */
+  .kd-search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .kd-search__icon {
+    position: absolute;
+    left: var(--space-4);
+    color: var(--text-tertiary);
+    pointer-events: none;
+    font-size: var(--text-base);
+  }
+
+  .kd-search__input {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: var(--border-medium) solid var(--border-primary);
+    border-radius: var(--radius-full);
+    padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10);
+    width: 100%;
+    transition: border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-search__input:focus {
+    outline: none;
+    border-color: var(--border-accent);
+    box-shadow: var(--focus-ring);
+  }
+
+  .kd-search__kbd {
+    position: absolute;
+    right: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    background: var(--surface-3);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    border: var(--border-thin) solid var(--border-primary);
+    pointer-events: none;
+  }
+
+  /* ── DASHBOARD CHART PLACEHOLDER ── */
+  .kd-chart {
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface-1);
+    overflow: hidden;
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .kd-chart__header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: var(--border-thin) solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .kd-chart__title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .kd-chart__body {
+    padding: var(--space-6);
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-2);
+    min-height: 200px;
+  }
+
+  .kd-chart__bar {
+    flex: 1;
+    background: var(--bg-accent);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: var(--border-thin) solid var(--border-accent);
+    transition: opacity var(--duration-fast) var(--ease-default);
+    position: relative;
+    min-width: 16px;
+  }
+
+  .kd-chart__bar:hover {
+    opacity: 0.8;
+  }
+
+  .kd-chart__bar-label {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+
+  /* ── PROJECTION CARD (KhromaDiet-specific) ── */
+  .kd-projection {
+    background: var(--surface-1);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .kd-projection__header {
+    padding: var(--space-5) var(--space-6);
+    border-bottom: var(--border-thin) solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .kd-projection__title {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  .kd-projection__timeline {
+    padding: var(--space-6);
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-1);
+  }
+
+  .kd-projection__point {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .kd-projection__bar {
+    width: 100%;
+    background: var(--bg-accent-soft);
+    border: var(--border-thin) solid var(--border-accent);
+    border-radius: var(--radius-sm);
+    position: relative;
+  }
+
+  .kd-projection__point-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-tertiary);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ── COMPARISON ROW (KhromaDiet-specific) ── */
+  .kd-compare {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-6);
+    align-items: center;
+    padding: var(--space-6);
+    background: var(--surface-2);
+    border: var(--border-medium) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+  }
+
+  .kd-compare__vs {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--text-tertiary);
+    background: var(--surface-4);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--border-medium) solid var(--border-strong);
+  }
+
+  .kd-compare__side {
+    text-align: center;
+  }
+
+  .kd-compare__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-compare__value {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* ── SPACING DEMO ── */
+  .spacing-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .spacing-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .spacing-item__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    width: 80px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .spacing-item__bar {
+    height: 12px;
+    background: var(--bg-accent);
+    border: var(--border-thin) solid var(--border-accent);
+    border-radius: var(--radius-sm);
+    transition: width var(--duration-slow) var(--ease-out);
+  }
+
+  .spacing-item__px {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+  }
+
+  /* ── RADIUS DEMO ── */
+  .radius-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .radius-item {
+    width: 80px;
+    height: 80px;
+    background: var(--surface-3);
+    border: var(--border-medium) solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-secondary);
+    transition: background-color var(--duration-fast) var(--ease-default);
+  }
+
+  .radius-item:hover {
+    background: var(--bg-accent-soft);
+  }
+
+  /* ── SHADOW DEMO ── */
+  .shadow-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  .shadow-item {
+    width: 120px;
+    height: 80px;
+    background: var(--surface-1);
+    border: var(--border-thin) solid var(--border-primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-secondary);
+  }
+
+  /* ── STEP INDICATOR (Form-ready) ── */
+  .kd-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .kd-step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .kd-step__dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: var(--border-medium) solid var(--border-primary);
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    transition: all var(--duration-fast) var(--ease-snap);
+  }
+
+  .kd-step.active .kd-step__dot {
+    background: var(--bg-accent);
+    border-color: var(--bg-accent);
+    color: var(--text-on-accent);
+  }
+
+  .kd-step.completed .kd-step__dot {
+    background: var(--bg-accent);
+    border-color: var(--bg-accent);
+    color: var(--text-on-accent);
+  }
+
+  .kd-step__line {
+    width: 40px;
+    height: 2px;
+    background: var(--border-primary);
+    flex-shrink: 0;
+  }
+
+  .kd-step.completed + .kd-step .kd-step__line,
+  .kd-step.completed .kd-step__line {
+    background: var(--bg-accent);
+  }
+
+  .kd-step__label {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--text-tertiary);
+    display: none;
+  }
+
+  /* ── TREND INDICATOR ── */
+  .kd-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+  }
+
+  .kd-trend--up {
+    background: var(--kd-green-50);
+    color: var(--kd-green-700);
+  }
+
+  .kd-trend--down {
+    background: var(--kd-error-soft);
+    color: var(--kd-error);
+  }
+
+  .kd-trend--flat {
+    background: var(--surface-3);
+    color: var(--text-secondary);
+  }
+
+  [data-theme="dark"] .kd-trend--up {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--kd-green-400);
+  }
+
+  [data-theme="dark"] .kd-trend--down {
+    background: rgba(239, 68, 68, 0.12);
+    color: #F87171;
+  }
+
+  /* ── SPARKLINE (CSS-only mini chart) ── */
+  .kd-sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 32px;
+  }
+
+  .kd-sparkline__bar {
+    flex: 1;
+    background: var(--bg-accent);
+    border-radius: 1px;
+    min-width: 4px;
+    opacity: 0.6;
+    transition: opacity var(--duration-fast) var(--ease-default);
+  }
+
+  .kd-sparkline__bar:last-child {
+    opacity: 1;
+  }
+
+  .kd-sparkline__bar:hover {
+    opacity: 1;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .ds-sidebar {
+      transform: translateX(-100%);
+    }
+
+    .ds-sidebar.open {
+      transform: translateX(0);
+    }
+
+    .ds-main {
+      margin-left: 0;
+    }
+
+    .ds-section {
+      padding: var(--space-10) var(--space-6);
+    }
+
+    .component-grid-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ds-section {
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .component-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .kd-macro-bar {
+      flex-direction: column;
+    }
+
+    .kd-macro-bar__divider {
+      width: 100%;
+      height: 1px;
+    }
+
+    .kd-compare {
+      grid-template-columns: 1fr;
+    }
+
+    .kd-compare__vs {
+      margin: 0 auto;
+    }
+  }
+
+  /* ── MOBILE NAV TOGGLE ── */
+  .ds-nav__menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: var(--text-lg);
+    padding: var(--space-2);
+  }
+
+  @media (max-width: 1024px) {
+    .ds-nav__menu-btn {
+      display: block;
+    }
+  }
+
+  /* ── ANIMATION KEYFRAMES ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-16px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .animate-stagger > * {
+    opacity: 0;
+    animation: fadeInUp 0.5s var(--ease-out) forwards;
+  }
+
+  .animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .animate-stagger > *:nth-child(2) { animation-delay: 60ms; }
+  .animate-stagger > *:nth-child(3) { animation-delay: 120ms; }
+  .animate-stagger > *:nth-child(4) { animation-delay: 180ms; }
+  .animate-stagger > *:nth-child(5) { animation-delay: 240ms; }
+  .animate-stagger > *:nth-child(6) { animation-delay: 300ms; }
+  .animate-stagger > *:nth-child(7) { animation-delay: 360ms; }
+  .animate-stagger > *:nth-child(8) { animation-delay: 420ms; }
+
+  /* ── UTILITY ── */
+  .font-display { font-family: var(--font-display); }
+  .font-body { font-family: var(--font-body); }
+  .font-mono { font-family: var(--font-mono); }
+  .text-accent { color: var(--text-accent); }
+  .text-secondary { color: var(--text-secondary); }
+  .text-tertiary { color: var(--text-tertiary); }
+  .mt-2 { margin-top: var(--space-2); }
+  .mt-4 { margin-top: var(--space-4); }
+  .mt-6 { margin-top: var(--space-6); }
+  .mt-8 { margin-top: var(--space-8); }
+  .mb-2 { margin-bottom: var(--space-2); }
+  .mb-4 { margin-bottom: var(--space-4); }
+  .mb-6 { margin-bottom: var(--space-6); }
+  .mb-8 { margin-bottom: var(--space-8); }
+  .gap-4 { gap: var(--space-4); }
+  .gap-6 { gap: var(--space-6); }
+  .flex { display: flex; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .inline-flex { display: inline-flex; }
+  .flex-wrap { flex-wrap: wrap; }
+
+  /* Scroll padding for nav */
+  html {
+    scroll-padding-top: calc(var(--nav-height) + var(--space-8));
+  }
+
+  /* Print hidden */
+  @media print {
+    .ds-nav, .ds-sidebar { display: none; }
+    .ds-main { margin-left: 0; margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════════════════════ -->
+<nav class="ds-nav">
+  <div class="ds-nav__logo">
+    <button class="ds-nav__menu-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <div class="ds-nav__logo-mark">K</div>
+    KhromaDiet
+    <span class="ds-nav__version">DS v1.0</span>
+  </div>
+  <div class="ds-nav__actions">
+    <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wide);">DESIGN SYSTEM</span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"></button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SIDEBAR
+     ═══════════════════════════════════════════════════════════ -->
+<aside class="ds-sidebar" id="sidebar">
+  <div class="ds-sidebar__section">
+    <span class="ds-sidebar__label">Foundations</span>
+    <a href="#principles" class="ds-sidebar__link active">Princípios</a>
+    <a href="#colors" class="ds-sidebar__link">Paleta Cromática</a>
+    <a href="#typography" class="ds-sidebar__link">Tipografia</a>
+    <a href="#spacing" class="ds-sidebar__link">Espaçamento</a>
+    <a href="#surfaces" class="ds-sidebar__link">Superfícies & Elevação</a>
+    <a href="#borders" class="ds-sidebar__link">Bordas & Raios</a>
+    <a href="#motion" class="ds-sidebar__link">Motion</a>
+  </div>
+  <div class="ds-sidebar__section">
+    <span class="ds-sidebar__label">Components</span>
+    <a href="#buttons" class="ds-sidebar__link">Botões</a>
+    <a href="#inputs" class="ds-sidebar__link">Campos & Forms</a>
+    <a href="#controls" class="ds-sidebar__link">Controls</a>
+    <a href="#badges" class="ds-sidebar__link">Badges & Chips</a>
+    <a href="#tabs" class="ds-sidebar__link">Tabs & Nav</a>
+    <a href="#cards" class="ds-sidebar__link">Cards</a>
+    <a href="#tables" class="ds-sidebar__link">Tabelas</a>
+    <a href="#feedback" class="ds-sidebar__link">Feedback</a>
+    <a href="#modals" class="ds-sidebar__link">Modais</a>
+    <a href="#shells" class="ds-sidebar__link">Shells & Layouts</a>
+  </div>
+  <div class="ds-sidebar__section">
+    <span class="ds-sidebar__label">Product Patterns</span>
+    <a href="#metrics" class="ds-sidebar__link">Métricas</a>
+    <a href="#macros" class="ds-sidebar__link">Macros & Dados</a>
+    <a href="#charts" class="ds-sidebar__link">Visualizações</a>
+    <a href="#projections" class="ds-sidebar__link">Projeções</a>
+    <a href="#accessibility" class="ds-sidebar__link">Acessibilidade</a>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════════════════════════════ -->
+<main class="ds-main">
+
+  <!-- ── HERO / MANIFESTO ── -->
+  <section class="ds-section" id="hero" style="padding-top:var(--space-20);padding-bottom:var(--space-20);border-bottom:var(--border-medium) solid var(--border-strong);">
+    <div style="max-width:800px;">
+      <span class="ds-section__number">Sistema de Design</span>
+      <h1 style="font-family:var(--font-display);font-size:var(--text-6xl);font-weight:700;letter-spacing:var(--tracking-tighter);line-height:var(--leading-tight);color:var(--text-primary);margin-bottom:var(--space-8);">
+        Khroma<span style="color:var(--text-accent)">Diet</span>
+      </h1>
+      <p style="font-size:var(--text-xl);color:var(--text-secondary);line-height:var(--leading-relaxed);max-width:640px;margin-bottom:var(--space-8);">
+        Referência canônica de linguagem visual. Neo-Brutalismo Clean aplicado a health-tech com precisão clínica, sofisticação silenciosa e energia saudável.
+      </p>
+      <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;">
+        <span class="kd-badge kd-badge--brutal">NEO-BRUTALISM</span>
+        <span class="kd-badge kd-badge--brutal">CLEAN</span>
+        <span class="kd-badge kd-badge--brutal">PREMIUM</span>
+        <span class="kd-badge kd-badge--brutal">HEALTH-TECH</span>
+        <span class="kd-badge kd-badge--accent">v1.0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       01 — PRINCÍPIOS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="principles">
+    <div class="ds-section__header">
+      <span class="ds-section__number">01 — Fundamentos</span>
+      <h2 class="ds-section__title">Princípios de Design</h2>
+      <p class="ds-section__desc">Cada decisão visual no KhromaDiet nasce destes princípios. Eles não são aspiracionais — são regras operacionais.</p>
+    </div>
+
+    <div class="component-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-ultra);text-transform:uppercase;margin-bottom:var(--space-3);">01</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">Clareza Radical</h3>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Cada elemento comunica sem ambiguidade. A hierarquia visual é tão clara que o olho nunca hesita. Informação nutricional exige precisão — o design a reflete.</p>
+        </div>
+      </div>
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-ultra);text-transform:uppercase;margin-bottom:var(--space-3);">02</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">Força Sem Agressividade</h3>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Bordas definidas, contrastes fortes, presença estrutural. Mas sempre com tato humano. Neo-brutalismo refinado — nunca bruto, sempre decisivo.</p>
+        </div>
+      </div>
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-ultra);text-transform:uppercase;margin-bottom:var(--space-3);">03</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">Disciplina Cromática</h3>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Verde é o único acento. Preto e branco carregam a estrutura. Sem dispersão. A identidade nasce da restrição, não da abundância.</p>
+        </div>
+      </div>
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-ultra);text-transform:uppercase;margin-bottom:var(--space-3);">04</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">Silêncio Intencional</h3>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Densidade sparse. Os elementos respiram. O espaço vazio não é preguiça — é confiança. Cada margem e padding comunica controle e sofisticação.</p>
+        </div>
+      </div>
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-ultra);text-transform:uppercase;margin-bottom:var(--space-3);">05</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">Motion com Propósito</h3>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Animação existe para reforçar hierarquia e qualidade tátil. Rápida, seca, calibrada. Nunca ornamental, nunca caricatural. O produto respira, não dança.</p>
+        </div>
+      </div>
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-ultra);text-transform:uppercase;margin-bottom:var(--space-3);">06</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">Produto, Não Template</h3>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Cada componente nasce da necessidade do KhromaDiet. Blocos de macro, métricas, projeções — tudo orientado ao domínio nutricional. Nada genérico sobrevive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       02 — PALETA CROMÁTICA
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="colors">
+    <div class="ds-section__header">
+      <span class="ds-section__number">02 — Tokens</span>
+      <h2 class="ds-section__title">Paleta Cromática</h2>
+      <p class="ds-section__desc">Disciplina absoluta. Branco luminoso ou preto abissal na estrutura. Verde vivo como único acento cromático. Sem desvios.</p>
+    </div>
+
+    <!-- Neutral Scale -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Escala Neutra</h3>
+      <div class="swatch-row">
+        <div class="swatch" style="background:var(--kd-white);"><span>White<br>#FFF</span></div>
+        <div class="swatch" style="background:var(--kd-gray-50);"><span>50<br>#FAFAFA</span></div>
+        <div class="swatch" style="background:var(--kd-gray-100);"><span>100<br>#F4F4F5</span></div>
+        <div class="swatch" style="background:var(--kd-gray-200);"><span>200<br>#E4E4E7</span></div>
+        <div class="swatch" style="background:var(--kd-gray-300);"><span>300<br>#D4D4D8</span></div>
+        <div class="swatch" style="background:var(--kd-gray-400);"><span>400<br>#A1A1AA</span></div>
+        <div class="swatch" style="background:var(--kd-gray-500);"><span>500<br>#71717A</span></div>
+        <div class="swatch" style="background:var(--kd-gray-600);"><span>600<br>#52525B</span></div>
+        <div class="swatch" style="background:var(--kd-gray-700);"><span>700<br>#3F3F46</span></div>
+        <div class="swatch" style="background:var(--kd-gray-800);"><span>800<br>#27272A</span></div>
+        <div class="swatch" style="background:var(--kd-gray-900);"><span>900<br>#18181B</span></div>
+        <div class="swatch" style="background:var(--kd-gray-950);"><span>950<br>#09090B</span></div>
+        <div class="swatch" style="background:var(--kd-black);"><span>Black<br>#0A0A0A</span></div>
+      </div>
+    </div>
+
+    <!-- Green Accent -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Acento — KhromaDiet Green</h3>
+      <div class="swatch-row">
+        <div class="swatch" style="background:var(--kd-green-50);"><span>50</span></div>
+        <div class="swatch" style="background:var(--kd-green-100);"><span>100</span></div>
+        <div class="swatch" style="background:var(--kd-green-200);"><span>200</span></div>
+        <div class="swatch" style="background:var(--kd-green-300);"><span>300</span></div>
+        <div class="swatch" style="background:var(--kd-green-400);"><span>400</span></div>
+        <div class="swatch" style="background:var(--kd-green-500);"><span>500<br>Primary</span></div>
+        <div class="swatch" style="background:var(--kd-green-600);"><span>600</span></div>
+        <div class="swatch" style="background:var(--kd-green-700);"><span>700</span></div>
+        <div class="swatch" style="background:var(--kd-green-800);"><span>800</span></div>
+        <div class="swatch" style="background:var(--kd-green-900);"><span>900</span></div>
+      </div>
+    </div>
+
+    <!-- Semantic -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Semânticas</h3>
+      <div class="component-row">
+        <div style="flex:1;min-width:140px;">
+          <div style="height:48px;background:var(--kd-success);border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-sm);margin-bottom:var(--space-2);"></div>
+          <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-secondary);">Success #10B981</span>
+        </div>
+        <div style="flex:1;min-width:140px;">
+          <div style="height:48px;background:var(--kd-error);border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-sm);margin-bottom:var(--space-2);"></div>
+          <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-secondary);">Error #EF4444</span>
+        </div>
+        <div style="flex:1;min-width:140px;">
+          <div style="height:48px;background:var(--kd-warning);border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-sm);margin-bottom:var(--space-2);"></div>
+          <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-secondary);">Warning #F59E0B</span>
+        </div>
+        <div style="flex:1;min-width:140px;">
+          <div style="height:48px;background:var(--kd-info);border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-sm);margin-bottom:var(--space-2);"></div>
+          <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-secondary);">Info #6366F1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme tokens -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Tokens Temáticos</h3>
+      <div style="overflow-x:auto;">
+        <table class="kd-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Light Mode</th>
+              <th>Dark Mode</th>
+              <th>Uso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--bg-primary</td><td class="font-mono" style="font-size:var(--text-xs);">#FFFFFF</td><td class="font-mono" style="font-size:var(--text-xs);">#0A0A0A</td><td style="font-size:var(--text-xs);">Fundo principal</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--bg-secondary</td><td class="font-mono" style="font-size:var(--text-xs);">#FAFAFA</td><td class="font-mono" style="font-size:var(--text-xs);">#0F0F0F</td><td style="font-size:var(--text-xs);">Fundos recuados</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--bg-elevated</td><td class="font-mono" style="font-size:var(--text-xs);">#FFFFFF</td><td class="font-mono" style="font-size:var(--text-xs);">#1A1A1A</td><td style="font-size:var(--text-xs);">Cards, modais</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--text-primary</td><td class="font-mono" style="font-size:var(--text-xs);">#09090B</td><td class="font-mono" style="font-size:var(--text-xs);">#F5F5F5</td><td style="font-size:var(--text-xs);">Texto principal</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--text-secondary</td><td class="font-mono" style="font-size:var(--text-xs);">#52525B</td><td class="font-mono" style="font-size:var(--text-xs);">#999999</td><td style="font-size:var(--text-xs);">Texto auxiliar</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--text-accent</td><td class="font-mono" style="font-size:var(--text-xs);">#059669</td><td class="font-mono" style="font-size:var(--text-xs);">#34D399</td><td style="font-size:var(--text-xs);">Links, destaques</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--border-strong</td><td class="font-mono" style="font-size:var(--text-xs);">#0A0A0A</td><td class="font-mono" style="font-size:var(--text-xs);">#F5F5F5</td><td style="font-size:var(--text-xs);">Bordas brutalistas</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">--bg-accent</td><td class="font-mono" style="font-size:var(--text-xs);">#10B981</td><td class="font-mono" style="font-size:var(--text-xs);">#10B981</td><td style="font-size:var(--text-xs);">CTAs, foco, energia</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       03 — TIPOGRAFIA
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="typography">
+    <div class="ds-section__header">
+      <span class="ds-section__number">03 — Tipografia</span>
+      <h2 class="ds-section__title">Sistema Tipográfico</h2>
+      <p class="ds-section__desc">Três famílias com papéis precisos. Space Grotesk para presença e impacto. Inter para legibilidade e conforto. JetBrains Mono para dados e tokens.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Famílias</h3>
+      <div class="component-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:var(--space-10);">
+        <div class="kd-card kd-card--brutal">
+          <div class="kd-card__body">
+            <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-wider);text-transform:uppercase;">Display</span>
+            <div style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;letter-spacing:var(--tracking-tighter);margin:var(--space-4) 0;">Space Grotesk</div>
+            <p style="font-family:var(--font-display);font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Headlines, títulos, métricas, valores numéricos de destaque. Presença geométrica com caráter humanista.</p>
+          </div>
+        </div>
+        <div class="kd-card kd-card--brutal">
+          <div class="kd-card__body">
+            <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-wider);text-transform:uppercase;">Body</span>
+            <div style="font-family:var(--font-body);font-size:var(--text-3xl);font-weight:700;letter-spacing:var(--tracking-tighter);margin:var(--space-4) 0;">Inter</div>
+            <p style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Corpo de texto, labels, descrições, interfaces. Legibilidade excepcional em todas as densidades e tamanhos.</p>
+          </div>
+        </div>
+        <div class="kd-card kd-card--brutal">
+          <div class="kd-card__body">
+            <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-wider);text-transform:uppercase;">Mono</span>
+            <div style="font-family:var(--font-mono);font-size:var(--text-3xl);font-weight:700;letter-spacing:var(--tracking-tighter);margin:var(--space-4) 0;">JetBrains</div>
+            <p style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Dados numéricos, unidades, tokens, rótulos técnicos, badges, códigos. Precisão clínica.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Escala Tipográfica</h3>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-7xl</span>
+          <span class="type-specimen__meta-item">5.96rem / 95px</span>
+          <span class="type-specimen__meta-item">Display · 700</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-display);font-size:var(--text-7xl);font-weight:700;letter-spacing:var(--tracking-tighter);line-height:var(--leading-none);">2,847</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-6xl</span>
+          <span class="type-specimen__meta-item">4.768rem / 76px</span>
+          <span class="type-specimen__meta-item">Display · 700</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-display);font-size:var(--text-6xl);font-weight:700;letter-spacing:var(--tracking-tighter);line-height:var(--leading-none);">KhromaDiet</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-5xl</span>
+          <span class="type-specimen__meta-item">3.815rem / 61px</span>
+          <span class="type-specimen__meta-item">Display · 700</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-display);font-size:var(--text-5xl);font-weight:700;letter-spacing:var(--tracking-tighter);line-height:var(--leading-tight);">Calcule seus macros</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-4xl</span>
+          <span class="type-specimen__meta-item">3.052rem / 49px</span>
+          <span class="type-specimen__meta-item">Display · 700</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;letter-spacing:var(--tracking-tighter);line-height:var(--leading-tight);">Precisão nutricional</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-3xl</span>
+          <span class="type-specimen__meta-item">2.441rem / 39px</span>
+          <span class="type-specimen__meta-item">Display · 700</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;letter-spacing:var(--tracking-tighter);line-height:var(--leading-tight);">Resumo do seu perfil</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-2xl</span>
+          <span class="type-specimen__meta-item">1.953rem / 31px</span>
+          <span class="type-specimen__meta-item">Display · 600</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:600;letter-spacing:var(--tracking-tight);line-height:var(--leading-snug);">Dashboard de acompanhamento</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-xl</span>
+          <span class="type-specimen__meta-item">1.563rem / 25px</span>
+          <span class="type-specimen__meta-item">Display · 600</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:600;letter-spacing:var(--tracking-tight);line-height:var(--leading-snug);">Distribuição de macronutrientes</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-lg</span>
+          <span class="type-specimen__meta-item">1.25rem / 20px</span>
+          <span class="type-specimen__meta-item">Body · 600</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-body);font-size:var(--text-lg);font-weight:600;line-height:var(--leading-snug);">Seu gasto energético diário foi calculado com base em 14 variáveis.</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-base</span>
+          <span class="type-specimen__meta-item">1rem / 16px</span>
+          <span class="type-specimen__meta-item">Body · 400</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-body);font-size:var(--text-base);font-weight:400;line-height:var(--leading-relaxed);">O TDEE (Total Daily Energy Expenditure) representa a quantidade total de calorias que seu corpo gasta em um dia, incluindo metabolismo basal, atividade física e efeito térmico dos alimentos.</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-sm</span>
+          <span class="type-specimen__meta-item">0.833rem / 13px</span>
+          <span class="type-specimen__meta-item">Body · 400</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-body);font-size:var(--text-sm);font-weight:400;line-height:var(--leading-relaxed);color:var(--text-secondary);">Valores calculados com base na fórmula de Mifflin-St Jeor, ajustados pelo fator de atividade selecionado e objetivo nutricional.</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-specimen__meta">
+          <span class="type-specimen__meta-item">text-xs</span>
+          <span class="type-specimen__meta-item">0.694rem / 11px</span>
+          <span class="type-specimen__meta-item">Mono · 600</span>
+        </div>
+        <div class="type-specimen__sample" style="font-family:var(--font-mono);font-size:var(--text-xs);font-weight:600;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--text-tertiary);">Proteína · 148g · 30% · 592 kcal</div>
+      </div>
+    </div>
+
+    <!-- Numeric specimens -->
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Números & Dados</h3>
+      <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-6);line-height:var(--leading-relaxed);">Métricas numéricas usam Space Grotesk para impacto e JetBrains Mono para dados tabulares. O contraste entre ambos cria hierarquia sem esforço.</p>
+
+      <div class="component-row" style="gap:var(--space-8);flex-wrap:wrap;">
+        <div>
+          <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;display:block;margin-bottom:var(--space-2);">Metric Display</span>
+          <span style="font-family:var(--font-display);font-size:var(--text-5xl);font-weight:700;letter-spacing:var(--tracking-tight);">2,184<span style="font-size:var(--text-xl);color:var(--text-secondary);font-weight:400;margin-left:4px;">kcal</span></span>
+        </div>
+        <div>
+          <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;display:block;margin-bottom:var(--space-2);">Tabular Data</span>
+          <span style="font-family:var(--font-mono);font-size:var(--text-2xl);font-weight:600;letter-spacing:var(--tracking-normal);">P 148g · C 246g · G 68g</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       04 — ESPAÇAMENTO
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="spacing">
+    <div class="ds-section__header">
+      <span class="ds-section__number">04 — Layout</span>
+      <h2 class="ds-section__title">Espaçamento & Grid</h2>
+      <p class="ds-section__desc">Base de 8px. Densidade sparse. Margens generosas, paddings amplos, silêncio entre blocos. Cada espaço é deliberado.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Escala de Espaçamento</h3>
+      <div class="spacing-demo">
+        <div class="spacing-item"><span class="spacing-item__label">space-1</span><div class="spacing-item__bar" style="width:4px;"></div><span class="spacing-item__px">4px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-2</span><div class="spacing-item__bar" style="width:8px;"></div><span class="spacing-item__px">8px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-3</span><div class="spacing-item__bar" style="width:12px;"></div><span class="spacing-item__px">12px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-4</span><div class="spacing-item__bar" style="width:16px;"></div><span class="spacing-item__px">16px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-6</span><div class="spacing-item__bar" style="width:24px;"></div><span class="spacing-item__px">24px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-8</span><div class="spacing-item__bar" style="width:32px;"></div><span class="spacing-item__px">32px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-10</span><div class="spacing-item__bar" style="width:40px;"></div><span class="spacing-item__px">40px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-12</span><div class="spacing-item__bar" style="width:48px;"></div><span class="spacing-item__px">48px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-16</span><div class="spacing-item__bar" style="width:64px;"></div><span class="spacing-item__px">64px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-20</span><div class="spacing-item__bar" style="width:80px;"></div><span class="spacing-item__px">80px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-24</span><div class="spacing-item__bar" style="width:96px;"></div><span class="spacing-item__px">96px</span></div>
+        <div class="spacing-item"><span class="spacing-item__label">space-32</span><div class="spacing-item__bar" style="width:128px;"></div><span class="spacing-item__px">128px</span></div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Regras de Densidade</h3>
+      <div class="component-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="kd-card" style="border-color:var(--border-primary);">
+          <div class="kd-card__body" style="padding:var(--space-12);">
+            <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-wider);">SPARSE</span>
+            <p style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;margin-top:var(--space-4);">Seções de página</p>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-top:var(--space-2);">padding: 64px+</p>
+          </div>
+        </div>
+        <div class="kd-card" style="border-color:var(--border-primary);">
+          <div class="kd-card__body" style="padding:var(--space-6);">
+            <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-wider);">COMFORTABLE</span>
+            <p style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;margin-top:var(--space-4);">Cards & Painéis</p>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-top:var(--space-2);">padding: 24–32px</p>
+          </div>
+        </div>
+        <div class="kd-card" style="border-color:var(--border-primary);">
+          <div class="kd-card__body" style="padding:var(--space-3) var(--space-4);">
+            <span class="font-mono" style="font-size:var(--text-xs);color:var(--text-accent);letter-spacing:var(--tracking-wider);">COMPACT</span>
+            <p style="font-family:var(--font-display);font-size:var(--text-base);font-weight:600;margin-top:var(--space-2);">Tabelas & Listas</p>
+            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-top:var(--space-1);">padding: 12–16px</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       05 — SUPERFÍCIES & ELEVAÇÃO
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="surfaces">
+    <div class="ds-section__header">
+      <span class="ds-section__number">05 — Materialidade</span>
+      <h2 class="ds-section__title">Superfícies & Elevação</h2>
+      <p class="ds-section__desc">Quatro níveis de superfície mais sombras brutais e convencionais. Presença física sem glassmorphism. Solidez industrial com tato humano.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Níveis de Superfície</h3>
+      <div class="component-row" style="gap:var(--space-4);">
+        <div style="flex:1;min-width:150px;min-height:100px;background:var(--surface-1);border:var(--border-medium) solid var(--border-primary);border-radius:var(--radius-md);padding:var(--space-4);display:flex;flex-direction:column;justify-content:flex-end;">
+          <span class="font-mono" style="font-size:var(--text-xs);font-weight:600;">Surface 1</span>
+          <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);">Base / Cards</span>
+        </div>
+        <div style="flex:1;min-width:150px;min-height:100px;background:var(--surface-2);border:var(--border-medium) solid var(--border-primary);border-radius:var(--radius-md);padding:var(--space-4);display:flex;flex-direction:column;justify-content:flex-end;">
+          <span class="font-mono" style="font-size:var(--text-xs);font-weight:600;">Surface 2</span>
+          <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);">Recuado / Sidebar</span>
+        </div>
+        <div style="flex:1;min-width:150px;min-height:100px;background:var(--surface-3);border:var(--border-medium) solid var(--border-primary);border-radius:var(--radius-md);padding:var(--space-4);display:flex;flex-direction:column;justify-content:flex-end;">
+          <span class="font-mono" style="font-size:var(--text-xs);font-weight:600;">Surface 3</span>
+          <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);">Nested / Hover</span>
+        </div>
+        <div style="flex:1;min-width:150px;min-height:100px;background:var(--surface-4);border:var(--border-medium) solid var(--border-primary);border-radius:var(--radius-md);padding:var(--space-4);display:flex;flex-direction:column;justify-content:flex-end;">
+          <span class="font-mono" style="font-size:var(--text-xs);font-weight:600;">Surface 4</span>
+          <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);">Divisores / Tracks</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Sombras</h3>
+      <div class="shadow-demo">
+        <div class="shadow-item" style="box-shadow:var(--shadow-xs);">xs</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-sm);">sm</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-md);">md</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-lg);">lg</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-xl);">xl</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-2xl);">2xl</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-brutal-sm);border:var(--border-medium) solid var(--border-strong);">brutal-sm</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-brutal);border:var(--border-medium) solid var(--border-strong);">brutal</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-brutal-lg);border:var(--border-medium) solid var(--border-strong);">brutal-lg</div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-brutal-green);border:var(--border-medium) solid var(--border-strong);">brutal-green</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       06 — BORDAS & RAIOS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="borders">
+    <div class="ds-section__header">
+      <span class="ds-section__number">06 — Forma</span>
+      <h2 class="ds-section__title">Bordas & Raios</h2>
+      <p class="ds-section__desc">Três espessuras de borda. Sete níveis de raio. Clareza brutalista nas arestas, suavidade controlada nos cantos.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Espessuras de Borda</h3>
+      <div class="component-row" style="gap:var(--space-6);">
+        <div style="width:120px;height:80px;border:var(--border-thin) solid var(--border-strong);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-secondary);">1px thin</div>
+        <div style="width:120px;height:80px;border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-secondary);">2px medium</div>
+        <div style="width:120px;height:80px;border:var(--border-thick) solid var(--border-strong);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-secondary);">3px thick</div>
+        <div style="width:120px;height:80px;border:var(--border-heavy) solid var(--border-strong);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-secondary);">4px heavy</div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Border Radius</h3>
+      <div class="radius-demo">
+        <div class="radius-item" style="border-radius:var(--radius-none);">0</div>
+        <div class="radius-item" style="border-radius:var(--radius-sm);">4px</div>
+        <div class="radius-item" style="border-radius:var(--radius-md);">8px</div>
+        <div class="radius-item" style="border-radius:var(--radius-lg);">12px</div>
+        <div class="radius-item" style="border-radius:var(--radius-xl);">16px</div>
+        <div class="radius-item" style="border-radius:var(--radius-2xl);">20px</div>
+        <div class="radius-item" style="border-radius:var(--radius-full);">full</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       07 — MOTION
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="motion">
+    <div class="ds-section__header">
+      <span class="ds-section__number">07 — Dinâmica</span>
+      <h2 class="ds-section__title">Motion & Transição</h2>
+      <p class="ds-section__desc">Vida sem espetáculo. Microinterações convincentes, hovers secos, transições que comunicam resposta imediata e calibração precisa.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Curvas de Easing</h3>
+      <div style="overflow-x:auto;">
+        <table class="kd-table">
+          <thead>
+            <tr><th>Token</th><th>Curva</th><th>Uso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">ease-default</td><td class="font-mono" style="font-size:var(--text-xs);">0.25, 0.1, 0.25, 1</td><td style="font-size:var(--text-xs);">Transições gerais, cor, opacidade</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">ease-out</td><td class="font-mono" style="font-size:var(--text-xs);">0.215, 0.61, 0.355, 1</td><td style="font-size:var(--text-xs);">Entradas, reveals, aparições</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">ease-snap</td><td class="font-mono" style="font-size:var(--text-xs);">0.12, 0.8, 0.32, 1</td><td style="font-size:var(--text-xs);">Switches, toggles, clicks rápidos</td></tr>
+            <tr><td class="font-mono" style="font-size:var(--text-xs);">ease-spring</td><td class="font-mono" style="font-size:var(--text-xs);">0.34, 1.56, 0.64, 1</td><td style="font-size:var(--text-xs);">Microinterações táteis sutis</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Durações</h3>
+      <div class="component-row" style="gap:var(--space-4);flex-wrap:wrap;">
+        <div class="kd-card" style="border-color:var(--border-primary);flex:1;min-width:140px;">
+          <div class="kd-card__body" style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;">75<span style="font-size:var(--text-sm);color:var(--text-secondary);">ms</span></div>
+            <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);letter-spacing:var(--tracking-wider);">INSTANT</span>
+          </div>
+        </div>
+        <div class="kd-card" style="border-color:var(--border-primary);flex:1;min-width:140px;">
+          <div class="kd-card__body" style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;">150<span style="font-size:var(--text-sm);color:var(--text-secondary);">ms</span></div>
+            <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);letter-spacing:var(--tracking-wider);">FAST</span>
+          </div>
+        </div>
+        <div class="kd-card" style="border-color:var(--border-primary);flex:1;min-width:140px;">
+          <div class="kd-card__body" style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;">250<span style="font-size:var(--text-sm);color:var(--text-secondary);">ms</span></div>
+            <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);letter-spacing:var(--tracking-wider);">NORMAL</span>
+          </div>
+        </div>
+        <div class="kd-card" style="border-color:var(--border-primary);flex:1;min-width:140px;">
+          <div class="kd-card__body" style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;">400<span style="font-size:var(--text-sm);color:var(--text-secondary);">ms</span></div>
+            <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);letter-spacing:var(--tracking-wider);">SLOW</span>
+          </div>
+        </div>
+        <div class="kd-card" style="border-color:var(--border-primary);flex:1;min-width:140px;">
+          <div class="kd-card__body" style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;">600<span style="font-size:var(--text-sm);color:var(--text-secondary);">ms</span></div>
+            <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);letter-spacing:var(--tracking-wider);">SLOWER</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Demonstração Interativa</h3>
+      <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-4);">Passe o mouse sobre os elementos abaixo para sentir o comportamento de motion definido.</p>
+      <div class="component-row" style="gap:var(--space-4);">
+        <button class="kd-btn kd-btn--primary kd-btn--lg">Hover: Brutal Lift</button>
+        <button class="kd-btn kd-btn--secondary kd-btn--lg">Hover: Shadow Push</button>
+        <button class="kd-btn kd-btn--inverse kd-btn--lg">Hover: Green Shadow</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       08 — BOTÕES
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="buttons">
+    <div class="ds-section__header">
+      <span class="ds-section__number">08 — Componentes</span>
+      <h2 class="ds-section__title">Botões</h2>
+      <p class="ds-section__desc">Sólidos, táteis, com peso brutalista. O CTA principal usa green com shadow brutal. Hierarquia clara entre primary, secondary, ghost e inverse.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Variantes de Estilo</h3>
+      <div class="component-row" style="gap:var(--space-4);flex-wrap:wrap;">
+        <button class="kd-btn kd-btn--primary kd-btn--md">Primary</button>
+        <button class="kd-btn kd-btn--secondary kd-btn--md">Secondary</button>
+        <button class="kd-btn kd-btn--ghost kd-btn--md">Ghost</button>
+        <button class="kd-btn kd-btn--inverse kd-btn--md">Inverse</button>
+        <button class="kd-btn kd-btn--danger kd-btn--md">Danger</button>
+        <button class="kd-btn kd-btn--primary kd-btn--md" disabled>Disabled</button>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Tamanhos</h3>
+      <div class="component-row" style="gap:var(--space-4);align-items:center;flex-wrap:wrap;">
+        <button class="kd-btn kd-btn--primary kd-btn--sm">Small</button>
+        <button class="kd-btn kd-btn--primary kd-btn--md">Medium</button>
+        <button class="kd-btn kd-btn--primary kd-btn--lg">Large</button>
+        <button class="kd-btn kd-btn--primary kd-btn--xl">Extra Large</button>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">CTA do Produto</h3>
+      <div style="padding:var(--space-10);background:var(--surface-2);border:var(--border-medium) solid var(--border-primary);border-radius:var(--radius-lg);text-align:center;">
+        <p style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:600;margin-bottom:var(--space-6);">Pronto para calcular seus macros?</p>
+        <button class="kd-btn kd-btn--primary kd-btn--xl" style="font-size:var(--text-md);">Calcular TDEE →</button>
+        <p style="font-size:var(--text-xs);color:var(--text-tertiary);margin-top:var(--space-4);">14 perguntas · 2 minutos · Resultado imediato</p>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Links</h3>
+      <div class="component-row" style="gap:var(--space-6);">
+        <a href="#" class="kd-link">Link primário</a>
+        <a href="#" class="kd-link" style="color:var(--text-primary);">Link neutro</a>
+        <a href="#" style="font-size:var(--text-sm);color:var(--text-secondary);text-decoration:none;transition:color var(--duration-fast) var(--ease-default);">Link sutil →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       09 — CAMPOS & FORMS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="inputs">
+    <div class="ds-section__header">
+      <span class="ds-section__number">09 — Formulários</span>
+      <h2 class="ds-section__title">Campos & Inputs</h2>
+      <p class="ds-section__desc">Prontos para as 14 perguntas do formulário KhromaDiet. Dois estilos: clean e brutal. Foco em clareza e feedback imediato.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Input Padrão</h3>
+      <div class="component-grid-2">
+        <div>
+          <label class="kd-label">Idade</label>
+          <input class="kd-input" type="number" placeholder="Ex: 28" value="">
+          <span class="kd-helper">Digite sua idade em anos completos.</span>
+        </div>
+        <div>
+          <label class="kd-label">Peso <span class="kd-label__optional">(kg)</span></label>
+          <input class="kd-input" type="number" placeholder="Ex: 72.5">
+        </div>
+        <div>
+          <label class="kd-label">Altura <span class="kd-label__optional">(cm)</span></label>
+          <input class="kd-input kd-input--brutal" type="number" placeholder="Ex: 175" value="175">
+          <span class="kd-helper">Estilo brutal — bordas fortes e shadow.</span>
+        </div>
+        <div>
+          <label class="kd-label">Email</label>
+          <input class="kd-input kd-input--error" type="email" value="invalido@">
+          <span class="kd-error-msg">Formato de email inválido.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Select</h3>
+      <div style="max-width:400px;">
+        <label class="kd-label">Nível de atividade</label>
+        <select class="kd-select">
+          <option>Selecione...</option>
+          <option>Sedentário (pouca ou nenhuma atividade)</option>
+          <option>Levemente ativo (1-3 dias/semana)</option>
+          <option>Moderadamente ativo (3-5 dias/semana)</option>
+          <option>Muito ativo (6-7 dias/semana)</option>
+          <option>Extremamente ativo (atleta)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Textarea</h3>
+      <div style="max-width:500px;">
+        <label class="kd-label">Observações <span class="kd-label__optional">(opcional)</span></label>
+        <textarea class="kd-textarea" placeholder="Restrições alimentares, alergias, preferências..."></textarea>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Search</h3>
+      <div style="max-width:400px;">
+        <div class="kd-search">
+          <span class="kd-search__icon">⌕</span>
+          <input class="kd-search__input" type="search" placeholder="Buscar alimento...">
+          <span class="kd-search__kbd">⌘K</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       10 — CONTROLS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="controls">
+    <div class="ds-section__header">
+      <span class="ds-section__number">10 — Interação</span>
+      <h2 class="ds-section__title">Controls</h2>
+      <p class="ds-section__desc">Checkboxes, radios, switches e sliders com identidade brutalista clean. Todos com foco acessível e estados visuais claros.</p>
+    </div>
+
+    <div class="component-grid-2">
+      <div class="component-box">
+        <span class="component-box__label">Checkboxes</span>
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <label class="kd-checkbox">
+            <input type="checkbox" class="kd-checkbox__input" checked>
+            Incluir suplementação
+          </label>
+          <label class="kd-checkbox">
+            <input type="checkbox" class="kd-checkbox__input">
+            Ajustar para déficit calórico
+          </label>
+          <label class="kd-checkbox">
+            <input type="checkbox" class="kd-checkbox__input" checked>
+            Considerar efeito térmico
+          </label>
+        </div>
+      </div>
+
+      <div class="component-box">
+        <span class="component-box__label">Radios</span>
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <label class="kd-radio">
+            <input type="radio" name="goal" class="kd-radio__input" checked>
+            Perder gordura
+          </label>
+          <label class="kd-radio">
+            <input type="radio" name="goal" class="kd-radio__input">
+            Manter peso
+          </label>
+          <label class="kd-radio">
+            <input type="radio" name="goal" class="kd-radio__input">
+            Ganhar massa
+          </label>
+        </div>
+      </div>
+
+      <div class="component-box">
+        <span class="component-box__label">Switches</span>
+        <div style="display:flex;flex-direction:column;gap:var(--space-5);">
+          <label class="kd-switch">
+            <input type="checkbox" class="kd-switch__input" checked>
+            <div class="kd-switch__track"><div class="kd-switch__thumb"></div></div>
+            Modo avançado
+          </label>
+          <label class="kd-switch">
+            <input type="checkbox" class="kd-switch__input">
+            <div class="kd-switch__track"><div class="kd-switch__thumb"></div></div>
+            Incluir fibras
+          </label>
+        </div>
+      </div>
+
+      <div class="component-box">
+        <span class="component-box__label">Slider</span>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-2);">
+            <label class="kd-label" style="margin-bottom:0;">Intensidade do treino</label>
+            <span class="font-mono" style="font-size:var(--text-sm);font-weight:600;color:var(--text-accent);" id="sliderVal">70%</span>
+          </div>
+          <input type="range" class="kd-slider" min="0" max="100" value="70" oninput="document.getElementById('sliderVal').textContent=this.value+'%'">
+          <div style="display:flex;justify-content:space-between;margin-top:var(--space-1);">
+            <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);">Leve</span>
+            <span class="font-mono" style="font-size:9px;color:var(--text-tertiary);">Intenso</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection mt-8">
+      <h3 class="ds-subsection__title">Step Indicator</h3>
+      <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-6);">Progresso do formulário de 14 perguntas.</p>
+      <div class="kd-steps" style="flex-wrap:wrap;gap:var(--space-1);">
+        <div class="kd-step completed"><div class="kd-step__dot">✓</div></div>
+        <div class="kd-step completed"><div class="kd-step__line"></div><div class="kd-step__dot">✓</div></div>
+        <div class="kd-step completed"><div class="kd-step__line"></div><div class="kd-step__dot">✓</div></div>
+        <div class="kd-step completed"><div class="kd-step__line"></div><div class="kd-step__dot">✓</div></div>
+        <div class="kd-step completed"><div class="kd-step__line"></div><div class="kd-step__dot">✓</div></div>
+        <div class="kd-step active"><div class="kd-step__line"></div><div class="kd-step__dot">6</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">7</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">8</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">9</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">10</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">11</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">12</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">13</div></div>
+        <div class="kd-step"><div class="kd-step__line"></div><div class="kd-step__dot">14</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       11 — BADGES & CHIPS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="badges">
+    <div class="ds-section__header">
+      <span class="ds-section__number">11 — Indicadores</span>
+      <h2 class="ds-section__title">Badges & Chips</h2>
+      <p class="ds-section__desc">Micromarcadores de estado, categoria e seleção. Disciplina formal no uso de cor e tipografia mono.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Badges</h3>
+      <div class="component-row" style="gap:var(--space-3);flex-wrap:wrap;">
+        <span class="kd-badge kd-badge--default">Default</span>
+        <span class="kd-badge kd-badge--accent">Accent</span>
+        <span class="kd-badge kd-badge--solid">Solid</span>
+        <span class="kd-badge kd-badge--error">Error</span>
+        <span class="kd-badge kd-badge--warning">Warning</span>
+        <span class="kd-badge kd-badge--brutal">Brutal</span>
+      </div>
+      <div class="component-row mt-4" style="gap:var(--space-3);flex-wrap:wrap;">
+        <span class="kd-badge kd-badge--accent">● Online</span>
+        <span class="kd-badge kd-badge--solid">PRO</span>
+        <span class="kd-badge kd-badge--default">Beta</span>
+        <span class="kd-badge kd-badge--brutal">v1.0</span>
+        <span class="kd-badge kd-badge--error">Déficit</span>
+        <span class="kd-badge kd-badge--accent">Superávit</span>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Chips (Selecionáveis)</h3>
+      <div class="component-row" style="gap:var(--space-3);flex-wrap:wrap;">
+        <span class="kd-chip active">Proteína</span>
+        <span class="kd-chip">Carboidrato</span>
+        <span class="kd-chip active">Gordura</span>
+        <span class="kd-chip">Fibra</span>
+        <span class="kd-chip">Água</span>
+        <span class="kd-chip">Micronutrientes</span>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Trends</h3>
+      <div class="component-row" style="gap:var(--space-3);flex-wrap:wrap;">
+        <span class="kd-trend kd-trend--up">↑ +12%</span>
+        <span class="kd-trend kd-trend--down">↓ -5.3%</span>
+        <span class="kd-trend kd-trend--flat">→ 0%</span>
+        <span class="kd-trend kd-trend--up">↑ +248 kcal</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       12 — TABS & NAV
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="tabs">
+    <div class="ds-section__header">
+      <span class="ds-section__number">12 — Navegação</span>
+      <h2 class="ds-section__title">Tabs & Navegação</h2>
+      <p class="ds-section__desc">Navegação horizontal com tab ativa marcada por acento verde. Pesos tipográficos definem estado sem ruído visual.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Tabs</h3>
+      <div class="kd-tabs" style="margin-bottom:var(--space-6);">
+        <button class="kd-tab active">Resumo</button>
+        <button class="kd-tab">Macros</button>
+        <button class="kd-tab">Projeções</button>
+        <button class="kd-tab">Histórico</button>
+        <button class="kd-tab">Configurações</button>
+      </div>
+      <div style="padding:var(--space-6);background:var(--surface-2);border:var(--border-thin) solid var(--border-primary);border-radius:0 0 var(--radius-md) var(--radius-md);border-top:none;">
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);">Conteúdo da tab "Resumo" — visão geral do cálculo TDEE com métricas principais e distribuição de macros.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       13 — CARDS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="cards">
+    <div class="ds-section__header">
+      <span class="ds-section__number">13 — Containers</span>
+      <h2 class="ds-section__title">Cards</h2>
+      <p class="ds-section__desc">Três variantes: padrão, elevated e brutal. Cards são os blocos fundamentais de informação. Cada variante tem peso visual e uso definido.</p>
+    </div>
+
+    <div class="component-grid">
+      <div class="kd-card">
+        <div class="kd-card__header">
+          <span style="font-family:var(--font-display);font-weight:600;">Card Padrão</span>
+        </div>
+        <div class="kd-card__body">
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Borda sutil, sem sombra. Para informação secundária ou listas de conteúdo. Limpo, silencioso.</p>
+        </div>
+        <div class="kd-card__footer">
+          <span style="font-size:var(--text-xs);color:var(--text-tertiary);">border-primary · no shadow</span>
+        </div>
+      </div>
+
+      <div class="kd-card kd-card--elevated">
+        <div class="kd-card__header">
+          <span style="font-family:var(--font-display);font-weight:600;">Card Elevated</span>
+        </div>
+        <div class="kd-card__body">
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Sombra suave de elevação. Para elementos que precisam de destaque sem agressividade brutalista.</p>
+        </div>
+        <div class="kd-card__footer">
+          <span style="font-size:var(--text-xs);color:var(--text-tertiary);">shadow-md · elevated</span>
+        </div>
+      </div>
+
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__header">
+          <span style="font-family:var(--font-display);font-weight:600;">Card Brutal</span>
+        </div>
+        <div class="kd-card__body">
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">Borda forte, shadow brutal. Para elementos de destaque, métricas importantes, CTAs contextuais.</p>
+        </div>
+        <div class="kd-card__footer">
+          <span style="font-size:var(--text-xs);color:var(--text-tertiary);">border-strong · shadow-brutal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       14 — TABELAS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="tables">
+    <div class="ds-section__header">
+      <span class="ds-section__number">14 — Dados</span>
+      <h2 class="ds-section__title">Tabelas</h2>
+      <p class="ds-section__desc">Informação nutricional densa com legibilidade total. Headers mono uppercase, valores tabulares alinhados, hover rows para scanning.</p>
+    </div>
+
+    <div style="overflow-x:auto;border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-md);">
+      <table class="kd-table">
+        <thead>
+          <tr>
+            <th>Nutriente</th>
+            <th>Meta Diária</th>
+            <th>Consumido</th>
+            <th class="num">Restante</th>
+            <th class="num">%</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Proteína</td>
+            <td class="num">148g</td>
+            <td class="num">112g</td>
+            <td class="num" style="color:var(--text-accent);">36g</td>
+            <td class="num">76%</td>
+            <td><span class="kd-trend kd-trend--up">↑ On track</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Carboidratos</td>
+            <td class="num">246g</td>
+            <td class="num">198g</td>
+            <td class="num" style="color:var(--text-accent);">48g</td>
+            <td class="num">80%</td>
+            <td><span class="kd-trend kd-trend--up">↑ On track</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Gorduras</td>
+            <td class="num">68g</td>
+            <td class="num">72g</td>
+            <td class="num" style="color:var(--kd-error);">-4g</td>
+            <td class="num">106%</td>
+            <td><span class="kd-trend kd-trend--down">↓ Excedido</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Fibras</td>
+            <td class="num">30g</td>
+            <td class="num">18g</td>
+            <td class="num" style="color:var(--kd-warning);">12g</td>
+            <td class="num">60%</td>
+            <td><span class="kd-trend kd-trend--flat">→ Atenção</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Calorias</td>
+            <td class="num">2,184 kcal</td>
+            <td class="num">1,856 kcal</td>
+            <td class="num" style="color:var(--text-accent);">328 kcal</td>
+            <td class="num">85%</td>
+            <td><span class="kd-trend kd-trend--up">↑ On track</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       15 — FEEDBACK
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="feedback">
+    <div class="ds-section__header">
+      <span class="ds-section__number">15 — Feedback</span>
+      <h2 class="ds-section__title">Toasts & States</h2>
+      <p class="ds-section__desc">Comunicação de sistema: sucesso, erro, aviso e informação. Borda lateral semântica, shadow brutal, tipografia precisa.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Toasts</h3>
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+        <div class="kd-toast kd-toast--success">
+          <span class="kd-toast__icon">✓</span>
+          <div class="kd-toast__content">
+            <div class="kd-toast__title">Cálculo concluído</div>
+            <div class="kd-toast__msg">Seu TDEE foi calculado com sucesso. Veja seus resultados.</div>
+          </div>
+          <button class="kd-toast__close">×</button>
+        </div>
+
+        <div class="kd-toast kd-toast--error">
+          <span class="kd-toast__icon">✕</span>
+          <div class="kd-toast__content">
+            <div class="kd-toast__title">Dados incompletos</div>
+            <div class="kd-toast__msg">Preencha todos os campos obrigatórios antes de prosseguir.</div>
+          </div>
+          <button class="kd-toast__close">×</button>
+        </div>
+
+        <div class="kd-toast kd-toast--warning">
+          <span class="kd-toast__icon">⚠</span>
+          <div class="kd-toast__content">
+            <div class="kd-toast__title">Déficit muito agressivo</div>
+            <div class="kd-toast__msg">Um déficit calórico acima de 25% pode comprometer a massa muscular.</div>
+          </div>
+          <button class="kd-toast__close">×</button>
+        </div>
+
+        <div class="kd-toast kd-toast--info">
+          <span class="kd-toast__icon">ℹ</span>
+          <div class="kd-toast__content">
+            <div class="kd-toast__title">Dica nutricional</div>
+            <div class="kd-toast__msg">Distribuir proteína ao longo do dia melhora a síntese muscular.</div>
+          </div>
+          <button class="kd-toast__close">×</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Empty State</h3>
+      <div class="kd-empty">
+        <div class="kd-empty__icon">📊</div>
+        <div class="kd-empty__title">Nenhum dado ainda</div>
+        <div class="kd-empty__desc">Complete o formulário para ver seus resultados nutricionais aqui.</div>
+        <button class="kd-btn kd-btn--primary kd-btn--md">Iniciar cálculo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       16 — MODAIS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="modals">
+    <div class="ds-section__header">
+      <span class="ds-section__number">16 — Overlays</span>
+      <h2 class="ds-section__title">Modais</h2>
+      <p class="ds-section__desc">Overlay com backdrop blur + modal com shadow brutal. Entrada com scale + translateY para sensação tátil.</p>
+    </div>
+
+    <div>
+      <button class="kd-btn kd-btn--primary kd-btn--md" onclick="document.getElementById('demoModal').classList.add('active')">Abrir Modal</button>
+    </div>
+
+    <!-- Static demo -->
+    <div class="mt-8">
+      <div class="kd-modal" style="position:relative;transform:none;">
+        <div class="kd-modal__header">
+          <span class="kd-modal__title">Confirmar dados</span>
+          <button class="kd-toast__close" style="font-size:var(--text-xl);">×</button>
+        </div>
+        <div class="kd-modal__body">
+          Seus dados serão salvos e utilizados para o cálculo de TDEE. Deseja prosseguir com as informações fornecidas? Você pode editar a qualquer momento.
+        </div>
+        <div class="kd-modal__footer">
+          <button class="kd-btn kd-btn--ghost kd-btn--sm">Cancelar</button>
+          <button class="kd-btn kd-btn--primary kd-btn--sm">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Modal -->
+  <div class="kd-modal-overlay" id="demoModal" onclick="if(event.target===this)this.classList.remove('active')">
+    <div class="kd-modal">
+      <div class="kd-modal__header">
+        <span class="kd-modal__title">Confirmar recálculo</span>
+        <button class="kd-toast__close" style="font-size:var(--text-xl);" onclick="document.getElementById('demoModal').classList.remove('active')">×</button>
+      </div>
+      <div class="kd-modal__body">
+        Recalcular seu TDEE irá atualizar todas as projeções e metas. Os dados anteriores serão mantidos no histórico.
+      </div>
+      <div class="kd-modal__footer">
+        <button class="kd-btn kd-btn--ghost kd-btn--sm" onclick="document.getElementById('demoModal').classList.remove('active')">Cancelar</button>
+        <button class="kd-btn kd-btn--primary kd-btn--sm" onclick="document.getElementById('demoModal').classList.remove('active')">Recalcular</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       17 — SHELLS & LAYOUTS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="shells">
+    <div class="ds-section__header">
+      <span class="ds-section__number">17 — Estrutura</span>
+      <h2 class="ds-section__title">Shells & Layout</h2>
+      <p class="ds-section__desc">Containers estruturais com barra de título, ações e área de conteúdo. Base para seções de Summary e Dashboard.</p>
+    </div>
+
+    <div class="kd-shell">
+      <div class="kd-shell__bar">
+        <div class="kd-shell__bar-title">Distribuição de Macronutrientes</div>
+        <div class="kd-shell__bar-actions">
+          <span class="kd-badge kd-badge--accent">Atualizado</span>
+          <button class="kd-btn kd-btn--ghost kd-btn--sm">⟲</button>
+        </div>
+      </div>
+      <div class="kd-shell__content">
+        <div class="kd-macro-bar">
+          <div class="kd-macro-bar__item">
+            <div class="kd-macro-bar__label">Proteína</div>
+            <div class="kd-macro-bar__value">148<span class="kd-macro-bar__sub">g</span></div>
+            <div class="kd-macro-bar__sub">592 kcal · 30%</div>
+            <div class="kd-macro-bar__track"><div class="kd-macro-bar__fill" style="width:76%;"></div></div>
+          </div>
+          <div class="kd-macro-bar__divider"></div>
+          <div class="kd-macro-bar__item">
+            <div class="kd-macro-bar__label">Carboidratos</div>
+            <div class="kd-macro-bar__value">246<span class="kd-macro-bar__sub">g</span></div>
+            <div class="kd-macro-bar__sub">984 kcal · 50%</div>
+            <div class="kd-macro-bar__track"><div class="kd-macro-bar__fill" style="width:80%;"></div></div>
+          </div>
+          <div class="kd-macro-bar__divider"></div>
+          <div class="kd-macro-bar__item">
+            <div class="kd-macro-bar__label">Gorduras</div>
+            <div class="kd-macro-bar__value">68<span class="kd-macro-bar__sub">g</span></div>
+            <div class="kd-macro-bar__sub">612 kcal · 20%</div>
+            <div class="kd-macro-bar__track"><div class="kd-macro-bar__fill" style="width:100%;background:var(--kd-error);"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       18 — MÉTRICAS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="metrics">
+    <div class="ds-section__header">
+      <span class="ds-section__number">18 — Produto</span>
+      <h2 class="ds-section__title">Blocos de Métricas</h2>
+      <p class="ds-section__desc">Cards de dados numéricos com display tipográfico forte, labels mono e indicadores de tendência. Componente central do Dashboard.</p>
+    </div>
+
+    <div class="component-grid" style="grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));">
+      <div class="kd-metric">
+        <div class="kd-metric__label">TDEE</div>
+        <div class="kd-metric__value">2,184<span class="kd-metric__unit">kcal</span></div>
+        <div class="kd-metric__delta kd-metric__delta--up">↑ +3.2% vs semana anterior</div>
+      </div>
+
+      <div class="kd-metric">
+        <div class="kd-metric__label">TMB</div>
+        <div class="kd-metric__value">1,672<span class="kd-metric__unit">kcal</span></div>
+        <div class="kd-metric__delta kd-metric__delta--up">↑ Estável</div>
+      </div>
+
+      <div class="kd-metric">
+        <div class="kd-metric__label">Peso Atual</div>
+        <div class="kd-metric__value">72.5<span class="kd-metric__unit">kg</span></div>
+        <div class="kd-metric__delta kd-metric__delta--down">↓ -0.8kg em 2 semanas</div>
+      </div>
+
+      <div class="kd-metric">
+        <div class="kd-metric__label">Meta Calórica</div>
+        <div class="kd-metric__value">1,856<span class="kd-metric__unit">kcal</span></div>
+        <div class="kd-metric__delta" style="color:var(--text-tertiary);">→ Déficit de 15%</div>
+      </div>
+    </div>
+
+    <!-- Metric with ring -->
+    <div class="mt-8">
+      <div class="kd-card kd-card--brutal" style="display:inline-flex;align-items:center;gap:var(--space-8);padding:var(--space-8);">
+        <div class="kd-ring">
+          <svg viewBox="0 0 120 120">
+            <circle class="kd-ring__bg" cx="60" cy="60" r="50"></circle>
+            <circle class="kd-ring__fill" cx="60" cy="60" r="50"
+              stroke-dasharray="314.16"
+              stroke-dashoffset="62.83"></circle>
+          </svg>
+          <div class="kd-ring__label">
+            <span class="kd-ring__value">80%</span>
+            <span class="kd-ring__unit">Consumido</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2);">Meta diária</div>
+          <div style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;">1,856<span style="font-size:var(--text-lg);color:var(--text-secondary);font-weight:400;"> / 2,184 kcal</span></div>
+          <div style="margin-top:var(--space-3);display:flex;gap:var(--space-4);">
+            <span class="kd-trend kd-trend--up">↑ On track</span>
+            <span class="kd-badge kd-badge--accent">328 kcal restantes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       19 — MACROS & DADOS
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="macros">
+    <div class="ds-section__header">
+      <span class="ds-section__number">19 — Nutrição</span>
+      <h2 class="ds-section__title">Macros & Dados</h2>
+      <p class="ds-section__desc">Padrões específicos para exibição de macronutrientes, comparações e sparklines. Linguagem visual do domínio nutricional.</p>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Comparação</h3>
+      <div class="kd-compare">
+        <div class="kd-compare__side">
+          <div class="kd-compare__label">Atual</div>
+          <div class="kd-compare__value">72.5<span style="font-size:var(--text-base);color:var(--text-secondary);font-weight:400;">kg</span></div>
+        </div>
+        <div class="kd-compare__vs">VS</div>
+        <div class="kd-compare__side">
+          <div class="kd-compare__label">Meta</div>
+          <div class="kd-compare__value" style="color:var(--text-accent);">68.0<span style="font-size:var(--text-base);color:var(--text-secondary);font-weight:400;">kg</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <h3 class="ds-subsection__title">Sparklines</h3>
+      <div class="component-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+        <div class="kd-card kd-card--brutal">
+          <div class="kd-card__body">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-3);">
+              <div>
+                <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;">Calorias</div>
+                <div style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;">1,856</div>
+              </div>
+              <span class="kd-trend kd-trend--up">↑ 5%</span>
+            </div>
+            <div class="kd-sparkline">
+              <div class="kd-sparkline__bar" style="height:40%;"></div>
+              <div class="kd-sparkline__bar" style="height:55%;"></div>
+              <div class="kd-sparkline__bar" style="height:45%;"></div>
+              <div class="kd-sparkline__bar" style="height:70%;"></div>
+              <div class="kd-sparkline__bar" style="height:60%;"></div>
+              <div class="kd-sparkline__bar" style="height:75%;"></div>
+              <div class="kd-sparkline__bar" style="height:85%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kd-card kd-card--brutal">
+          <div class="kd-card__body">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-3);">
+              <div>
+                <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;">Proteína</div>
+                <div style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;">112g</div>
+              </div>
+              <span class="kd-trend kd-trend--up">↑ 12%</span>
+            </div>
+            <div class="kd-sparkline">
+              <div class="kd-sparkline__bar" style="height:30%;"></div>
+              <div class="kd-sparkline__bar" style="height:50%;"></div>
+              <div class="kd-sparkline__bar" style="height:65%;"></div>
+              <div class="kd-sparkline__bar" style="height:55%;"></div>
+              <div class="kd-sparkline__bar" style="height:80%;"></div>
+              <div class="kd-sparkline__bar" style="height:70%;"></div>
+              <div class="kd-sparkline__bar" style="height:90%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kd-card kd-card--brutal">
+          <div class="kd-card__body">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-3);">
+              <div>
+                <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;">Peso</div>
+                <div style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;">72.5kg</div>
+              </div>
+              <span class="kd-trend kd-trend--down">↓ 1.1%</span>
+            </div>
+            <div class="kd-sparkline">
+              <div class="kd-sparkline__bar" style="height:95%;"></div>
+              <div class="kd-sparkline__bar" style="height:90%;"></div>
+              <div class="kd-sparkline__bar" style="height:85%;"></div>
+              <div class="kd-sparkline__bar" style="height:82%;"></div>
+              <div class="kd-sparkline__bar" style="height:78%;"></div>
+              <div class="kd-sparkline__bar" style="height:75%;"></div>
+              <div class="kd-sparkline__bar" style="height:70%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       20 — VISUALIZAÇÕES
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="charts">
+    <div class="ds-section__header">
+      <span class="ds-section__number">20 — Gráficos</span>
+      <h2 class="ds-section__title">Visualizações</h2>
+      <p class="ds-section__desc">Padrões para gráficos de barras, distribuições e visualizações de dados nutricionais. Containers com header, body e interação.</p>
+    </div>
+
+    <div class="component-grid-2">
+      <div class="kd-chart">
+        <div class="kd-chart__header">
+          <span class="kd-chart__title">Consumo Semanal (kcal)</span>
+          <span class="kd-badge kd-badge--default">7 dias</span>
+        </div>
+        <div class="kd-chart__body" style="padding-bottom:var(--space-10);">
+          <div class="kd-chart__bar" style="height:65%;"><span class="kd-chart__bar-label">Seg</span></div>
+          <div class="kd-chart__bar" style="height:80%;"><span class="kd-chart__bar-label">Ter</span></div>
+          <div class="kd-chart__bar" style="height:55%;"><span class="kd-chart__bar-label">Qua</span></div>
+          <div class="kd-chart__bar" style="height:90%;"><span class="kd-chart__bar-label">Qui</span></div>
+          <div class="kd-chart__bar" style="height:75%;"><span class="kd-chart__bar-label">Sex</span></div>
+          <div class="kd-chart__bar" style="height:60%;"><span class="kd-chart__bar-label">Sáb</span></div>
+          <div class="kd-chart__bar" style="height:85%;opacity:1;"><span class="kd-chart__bar-label">Dom</span></div>
+        </div>
+      </div>
+
+      <div class="kd-chart">
+        <div class="kd-chart__header">
+          <span class="kd-chart__title">Distribuição de Macros</span>
+          <span class="kd-badge kd-badge--accent">Hoje</span>
+        </div>
+        <div class="kd-chart__body" style="flex-direction:column;align-items:stretch;gap:var(--space-4);min-height:auto;padding:var(--space-6);">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-1);">
+              <span style="font-size:var(--text-sm);font-weight:500;">Proteína</span>
+              <span class="font-mono" style="font-size:var(--text-xs);font-weight:600;">30%</span>
+            </div>
+            <div style="height:12px;background:var(--surface-4);border-radius:var(--radius-full);overflow:hidden;border:var(--border-thin) solid var(--border-primary);">
+              <div style="height:100%;width:30%;background:var(--bg-accent);border-radius:var(--radius-full);"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-1);">
+              <span style="font-size:var(--text-sm);font-weight:500;">Carboidratos</span>
+              <span class="font-mono" style="font-size:var(--text-xs);font-weight:600;">50%</span>
+            </div>
+            <div style="height:12px;background:var(--surface-4);border-radius:var(--radius-full);overflow:hidden;border:var(--border-thin) solid var(--border-primary);">
+              <div style="height:100%;width:50%;background:var(--bg-accent);border-radius:var(--radius-full);opacity:0.7;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-1);">
+              <span style="font-size:var(--text-sm);font-weight:500;">Gorduras</span>
+              <span class="font-mono" style="font-size:var(--text-xs);font-weight:600;">20%</span>
+            </div>
+            <div style="height:12px;background:var(--surface-4);border-radius:var(--radius-full);overflow:hidden;border:var(--border-thin) solid var(--border-primary);">
+              <div style="height:100%;width:20%;background:var(--bg-accent);border-radius:var(--radius-full);opacity:0.5;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       21 — PROJEÇÕES
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="projections">
+    <div class="ds-section__header">
+      <span class="ds-section__number">21 — Projeções</span>
+      <h2 class="ds-section__title">Projeções & Tendências</h2>
+      <p class="ds-section__desc">Componentes para visualização temporal: peso projetado, metas futuras, tendências de composição corporal. Linguagem de previsão confiável.</p>
+    </div>
+
+    <div class="kd-projection" style="margin-bottom:var(--space-6);">
+      <div class="kd-projection__header">
+        <span class="kd-projection__title">Projeção de Peso — 12 semanas</span>
+        <div style="display:flex;gap:var(--space-3);">
+          <span class="kd-badge kd-badge--accent">-4.5 kg estimado</span>
+          <span class="kd-badge kd-badge--default">0.375 kg/semana</span>
+        </div>
+      </div>
+      <div class="kd-projection__timeline">
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:100px;background:var(--bg-accent);opacity:0.9;"></div>
+          <span class="kd-projection__point-label">Sem 1<br><strong>72.1</strong></span>
+        </div>
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:94px;background:var(--bg-accent);opacity:0.85;"></div>
+          <span class="kd-projection__point-label">Sem 2<br><strong>71.7</strong></span>
+        </div>
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:88px;background:var(--bg-accent);opacity:0.8;"></div>
+          <span class="kd-projection__point-label">Sem 3<br><strong>71.4</strong></span>
+        </div>
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:82px;background:var(--bg-accent);opacity:0.75;"></div>
+          <span class="kd-projection__point-label">Sem 4<br><strong>71.0</strong></span>
+        </div>
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:76px;background:var(--bg-accent);opacity:0.7;"></div>
+          <span class="kd-projection__point-label">Sem 6<br><strong>70.3</strong></span>
+        </div>
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:70px;background:var(--bg-accent);opacity:0.65;"></div>
+          <span class="kd-projection__point-label">Sem 8<br><strong>69.5</strong></span>
+        </div>
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:64px;background:var(--bg-accent);opacity:0.6;"></div>
+          <span class="kd-projection__point-label">Sem 10<br><strong>68.8</strong></span>
+        </div>
+        <div class="kd-projection__point">
+          <div class="kd-projection__bar" style="height:58px;background:var(--bg-accent);opacity:0.55;border:var(--border-medium) solid var(--border-accent);"></div>
+          <span class="kd-projection__point-label" style="color:var(--text-accent);font-weight:700;">Sem 12<br><strong>68.0</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trend cards -->
+    <div class="component-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body" style="text-align:center;">
+          <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;margin-bottom:var(--space-3);">Tempo Estimado</div>
+          <div style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;color:var(--text-accent);">12</div>
+          <div style="font-family:var(--font-display);font-size:var(--text-base);font-weight:500;color:var(--text-secondary);">semanas</div>
+        </div>
+      </div>
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body" style="text-align:center;">
+          <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;margin-bottom:var(--space-3);">Déficit Diário</div>
+          <div style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;">328</div>
+          <div style="font-family:var(--font-display);font-size:var(--text-base);font-weight:500;color:var(--text-secondary);">kcal/dia</div>
+        </div>
+      </div>
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body" style="text-align:center;">
+          <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;margin-bottom:var(--space-3);">Perda Semanal</div>
+          <div style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;">0.37</div>
+          <div style="font-family:var(--font-display);font-size:var(--text-base);font-weight:500;color:var(--text-secondary);">kg/semana</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       22 — ACESSIBILIDADE
+       ══════════════════════════════════════════════ -->
+  <section class="ds-section" id="accessibility">
+    <div class="ds-section__header">
+      <span class="ds-section__number">22 — Standards</span>
+      <h2 class="ds-section__title">Acessibilidade & Responsividade</h2>
+      <p class="ds-section__desc">Diretrizes incorporadas ao sistema, não adicionadas depois. WCAG 2.1 AA mínimo. Mobile-first. Respostas táteis em todas as superfícies.</p>
+    </div>
+
+    <div class="component-grid-2">
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-4);">Contraste</h3>
+          <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div style="width:40px;height:40px;background:var(--bg-primary);border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--text-sm);color:var(--text-primary);">Aa</div>
+              <div>
+                <div style="font-size:var(--text-sm);font-weight:500;">Texto principal</div>
+                <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);">≥ 15.4:1 — AAA ✓</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div style="width:40px;height:40px;background:var(--bg-accent);border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--text-sm);color:var(--text-on-accent);">Aa</div>
+              <div>
+                <div style="font-size:var(--text-sm);font-weight:500;">Texto em accent</div>
+                <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);">≥ 4.6:1 — AA ✓</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div style="width:40px;height:40px;background:var(--bg-primary);border:var(--border-medium) solid var(--border-strong);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:var(--text-sm);color:var(--text-secondary);">Aa</div>
+              <div>
+                <div style="font-size:var(--text-sm);font-weight:500;">Texto secundário</div>
+                <div class="font-mono" style="font-size:var(--text-xs);color:var(--text-tertiary);">≥ 5.7:1 — AA ✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kd-card kd-card--brutal">
+        <div class="kd-card__body">
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-4);">Regras do Sistema</h3>
+          <div style="display:flex;flex-direction:column;gap:var(--space-3);font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);">
+            <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> Foco visível em todos os interativos via <code class="font-mono" style="font-size:var(--text-xs);background:var(--surface-3);padding:1px 4px;border-radius:3px;">:focus-visible</code></div>
+            <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> Touch targets mínimo 44×44px</div>
+            <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> Semântica HTML5 em todos os componentes</div>
+            <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> ARIA labels em controles interativos</div>
+            <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> Reduz motion via <code class="font-mono" style="font-size:var(--text-xs);background:var(--surface-3);padding:1px 4px;border-radius:3px;">prefers-reduced-motion</code></div>
+            <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> Breakpoints: 640px · 768px · 1024px · 1280px</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════════════ -->
+  <footer style="padding:var(--space-16) var(--space-12);text-align:center;border-top:var(--border-medium) solid var(--border-strong);">
+    <div style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;letter-spacing:var(--tracking-tighter);margin-bottom:var(--space-4);">Khroma<span style="color:var(--text-accent);">Diet</span></div>
+    <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-tertiary);letter-spacing:var(--tracking-wider);text-transform:uppercase;">Design System v1.0 — Referência Canônica — Neo-Brutalism Clean</p>
+    <p style="font-size:var(--text-sm);color:var(--text-tertiary);margin-top:var(--space-4);">Fundação visual oficial. Cada componente, token e regra neste sistema existe para orientar implementação real.</p>
+  </footer>
+
+</main>
+
+<script>
+  // ── Theme Toggle ──
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+    localStorage.setItem('kd-theme', html.getAttribute('data-theme'));
+  }
+
+  // Restore saved theme
+  (function() {
+    const saved = localStorage.getItem('kd-theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+
+  // ── Sidebar Toggle (mobile) ──
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // Close sidebar on link click (mobile)
+  document.querySelectorAll('.ds-sidebar__link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 1024) {
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    });
+  });
+
+  // ── Intersection Observer for Sections ──
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+
+        // Update sidebar active link
+        const id = entry.target.id;
+        if (id) {
+          document.querySelectorAll('.ds-sidebar__link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '-10% 0px -10% 0px'
+  });
+
+  document.querySelectorAll('.ds-section').forEach(section => {
+    sectionObserver.observe(section);
+  });
+
+  // ── Tab interaction ──
+  document.querySelectorAll('.kd-tabs').forEach(tabGroup => {
+    tabGroup.querySelectorAll('.kd-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabGroup.querySelectorAll('.kd-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  });
+
+  // ── Chip interaction ──
+  document.querySelectorAll('.kd-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+  });
+
+  // ── Reduced Motion ──
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.style.setProperty('--duration-fast', '0ms');
+    document.documentElement.style.setProperty('--duration-normal', '0ms');
+    document.documentElement.style.setProperty('--duration-slow', '0ms');
+    document.documentElement.style.setProperty('--duration-slower', '0ms');
+    // Make all sections visible immediately
+    document.querySelectorAll('.ds-section').forEach(s => {
+      s.style.opacity = '1';
+      s.style.transform = 'none';
+      s.style.transition = 'none';
+    });
+  }
+
+  // ── Keyboard shortcut for theme ──
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'd') {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+</script>
+
+</body>
+</html>

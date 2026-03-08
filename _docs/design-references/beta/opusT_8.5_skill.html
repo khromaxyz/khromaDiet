@@ -1,0 +1,4937 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KhromaDiet — Design System v1.0</title>
+<style>
+/* ============================================= */
+/* RESET & BASE                                  */
+/* ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; font-size: 16px; }
+body { font-family: var(--font-body); background: var(--color-bg-primary); color: var(--color-text-primary); line-height: var(--leading-normal); transition: background var(--dur-slow) var(--ease-out), color var(--dur-slow) var(--ease-out); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+::selection { background: var(--color-accent); color: var(--color-bg-primary); }
+
+/* ============================================= */
+/* DESIGN TOKENS — LIGHT MODE (DEFAULT)          */
+/* ============================================= */
+:root {
+  /* ——— Color: Backgrounds ——— */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F6F6F6;
+  --color-bg-tertiary: #EDEDED;
+  --color-bg-elevated: #FFFFFF;
+  --color-bg-sunken: #F0F0F0;
+  --color-bg-inverse: #0A0A0A;
+  --color-bg-overlay: rgba(10, 10, 10, 0.55);
+  --color-bg-code: #F4F4F4;
+
+  /* ——— Color: Text ——— */
+  --color-text-primary: #0A0A0A;
+  --color-text-secondary: #4A4A4A;
+  --color-text-tertiary: #8C8C8C;
+  --color-text-disabled: #B8B8B8;
+  --color-text-inverse: #FAFAFA;
+  --color-text-on-accent: #0A0A0A;
+
+  /* ——— Color: Accent (Green) ——— */
+  --color-accent: #00DC82;
+  --color-accent-hover: #00C474;
+  --color-accent-active: #00AD68;
+  --color-accent-subtle: rgba(0, 220, 130, 0.08);
+  --color-accent-muted: rgba(0, 220, 130, 0.16);
+  --color-accent-light: #E0FFF0;
+
+  /* ——— Color: Semantic ——— */
+  --color-success: #00DC82;
+  --color-success-bg: #E0FFF0;
+  --color-error: #E5484D;
+  --color-error-bg: #FFF0F0;
+  --color-warning: #F5A623;
+  --color-warning-bg: #FFF8E6;
+  --color-info: #0A0A0A;
+  --color-info-bg: #F0F0F0;
+
+  /* ——— Color: Borders ——— */
+  --color-border: #E2E2E2;
+  --color-border-strong: #0A0A0A;
+  --color-border-subtle: #F0F0F0;
+  --color-border-focus: #00DC82;
+  --color-border-error: #E5484D;
+
+  /* ——— Color: Shadows ——— */
+  --shadow-color: #0A0A0A;
+  --shadow-color-soft: rgba(0, 0, 0, 0.08);
+
+  /* ——— Typography ——— */
+  --font-display: "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "SF Pro Text", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SFMono-Regular", "SF Mono", "Cascadia Code", "Fira Code", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --text-2xs: 0.625rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.3125rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.375rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.75rem;
+  --text-8xl: 6rem;
+
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tighter: -0.04em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.06em;
+  --tracking-widest: 0.1em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+  --weight-black: 900;
+
+  /* ——— Spacing ——— */
+  --sp-0: 0;
+  --sp-px: 1px;
+  --sp-0-5: 2px;
+  --sp-1: 4px;
+  --sp-1-5: 6px;
+  --sp-2: 8px;
+  --sp-2-5: 10px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 28px;
+  --sp-8: 32px;
+  --sp-9: 36px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-14: 56px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+  --sp-28: 112px;
+  --sp-32: 128px;
+  --sp-40: 160px;
+  --sp-48: 192px;
+
+  /* ——— Border Radius ——— */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* ——— Shadows: Brutalist (Offset) ——— */
+  --shadow-brutal-xs: 1px 1px 0 var(--shadow-color);
+  --shadow-brutal-sm: 2px 2px 0 var(--shadow-color);
+  --shadow-brutal-md: 3px 3px 0 var(--shadow-color);
+  --shadow-brutal-lg: 5px 5px 0 var(--shadow-color);
+  --shadow-brutal-xl: 7px 7px 0 var(--shadow-color);
+
+  /* ——— Shadows: Soft (Elevation) ——— */
+  --shadow-soft-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-soft-sm: 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-soft-md: 0 4px 14px rgba(0,0,0,0.08);
+  --shadow-soft-lg: 0 8px 28px rgba(0,0,0,0.1);
+  --shadow-soft-xl: 0 14px 44px rgba(0,0,0,0.13);
+
+  /* ——— Motion ——— */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --dur-instant: 80ms;
+  --dur-fast: 130ms;
+  --dur-normal: 220ms;
+  --dur-slow: 360ms;
+  --dur-slower: 500ms;
+
+  /* ——— Z-Index ——— */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* ——— Layout ——— */
+  --sidebar-width: 260px;
+  --header-height: 64px;
+  --max-content: 920px;
+  --page-gutter: 40px;
+}
+
+/* ============================================= */
+/* DESIGN TOKENS — DARK MODE                     */
+/* ============================================= */
+[data-theme="dark"] {
+  --color-bg-primary: #09090B;
+  --color-bg-secondary: #111113;
+  --color-bg-tertiary: #1A1A1E;
+  --color-bg-elevated: #141416;
+  --color-bg-sunken: #0D0D0F;
+  --color-bg-inverse: #FAFAFA;
+  --color-bg-overlay: rgba(0, 0, 0, 0.7);
+  --color-bg-code: #1A1A1E;
+
+  --color-text-primary: #ECECEF;
+  --color-text-secondary: #A0A0A8;
+  --color-text-tertiary: #62626B;
+  --color-text-disabled: #404048;
+  --color-text-inverse: #09090B;
+  --color-text-on-accent: #09090B;
+
+  --color-accent: #00E88A;
+  --color-accent-hover: #00F596;
+  --color-accent-active: #00DC82;
+  --color-accent-subtle: rgba(0, 232, 138, 0.08);
+  --color-accent-muted: rgba(0, 232, 138, 0.18);
+  --color-accent-light: #0A2918;
+
+  --color-success: #00E88A;
+  --color-success-bg: #0A2918;
+  --color-error: #FF6369;
+  --color-error-bg: #2A0F10;
+  --color-warning: #FFB224;
+  --color-warning-bg: #2A1D08;
+  --color-info: #ECECEF;
+  --color-info-bg: #1A1A1E;
+
+  --color-border: #27272B;
+  --color-border-strong: #ECECEF;
+  --color-border-subtle: #1A1A1E;
+  --color-border-focus: #00E88A;
+
+  --shadow-color: rgba(236, 236, 239, 0.7);
+  --shadow-color-soft: rgba(0, 0, 0, 0.4);
+
+  --shadow-brutal-xs: 1px 1px 0 var(--shadow-color);
+  --shadow-brutal-sm: 2px 2px 0 var(--shadow-color);
+  --shadow-brutal-md: 3px 3px 0 var(--shadow-color);
+  --shadow-brutal-lg: 5px 5px 0 var(--shadow-color);
+  --shadow-brutal-xl: 7px 7px 0 var(--shadow-color);
+
+  --shadow-soft-xs: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-soft-sm: 0 2px 6px rgba(0,0,0,0.35);
+  --shadow-soft-md: 0 4px 14px rgba(0,0,0,0.4);
+  --shadow-soft-lg: 0 8px 28px rgba(0,0,0,0.45);
+  --shadow-soft-xl: 0 14px 44px rgba(0,0,0,0.5);
+}
+
+/* ============================================= */
+/* LAYOUT STRUCTURE                              */
+/* ============================================= */
+.ds-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.ds-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--color-bg-secondary);
+  border-right: 2px solid var(--color-border);
+  overflow-y: auto;
+  z-index: var(--z-sticky);
+  transition: transform var(--dur-slow) var(--ease-out), background var(--dur-slow) var(--ease-out), border-color var(--dur-slow) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-sidebar::-webkit-scrollbar { width: 4px; }
+.ds-sidebar::-webkit-scrollbar-track { background: transparent; }
+.ds-sidebar::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+
+.ds-sidebar__header {
+  padding: var(--sp-6) var(--sp-6) var(--sp-5);
+  border-bottom: 2px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.ds-sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.ds-sidebar__logo-mark {
+  width: 34px;
+  height: 34px;
+  background: var(--color-accent);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-black);
+  color: var(--color-text-on-accent);
+  box-shadow: var(--shadow-brutal-xs);
+}
+
+.ds-sidebar__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ds-sidebar__logo-name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.2;
+}
+
+.ds-sidebar__logo-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.ds-sidebar__nav {
+  flex: 1;
+  padding: var(--sp-4) var(--sp-3);
+  overflow-y: auto;
+}
+
+.ds-sidebar__group {
+  margin-bottom: var(--sp-5);
+}
+
+.ds-sidebar__group-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  padding: var(--sp-2) var(--sp-3) var(--sp-1-5);
+}
+
+.ds-sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2-5);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+  user-select: none;
+}
+
+.ds-sidebar__link:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-tertiary);
+}
+
+.ds-sidebar__link.is-active {
+  color: var(--color-text-primary);
+  background: var(--color-accent-subtle);
+  font-weight: var(--weight-semibold);
+}
+
+.ds-sidebar__link.is-active::before {
+  content: "";
+  width: 3px;
+  height: 16px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  margin-right: var(--sp-1);
+  flex-shrink: 0;
+}
+
+.ds-sidebar__footer {
+  padding: var(--sp-4) var(--sp-6);
+  border-top: 2px solid var(--color-border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ds-theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+  user-select: none;
+}
+
+.ds-theme-toggle:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.ds-theme-toggle__icon { font-size: var(--text-base); }
+
+.ds-sidebar__version {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  background: var(--color-bg-tertiary);
+  padding: var(--sp-1) var(--sp-2);
+  border-radius: var(--radius-sm);
+}
+
+/* ——— Mobile Menu Toggle ——— */
+.ds-mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: var(--color-bg-secondary);
+  border-bottom: 2px solid var(--color-border);
+  z-index: var(--z-sticky);
+  padding: 0 var(--sp-5);
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--dur-slow) var(--ease-out);
+}
+
+.ds-mobile-header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2-5);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.ds-mobile-header__logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--color-accent);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: var(--weight-black);
+  color: var(--color-text-on-accent);
+}
+
+.ds-burger {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.ds-burger:hover { border-color: var(--color-border-strong); }
+
+.ds-burger__line {
+  width: 16px;
+  height: 2px;
+  background: var(--color-text-primary);
+  border-radius: 1px;
+  transition: all var(--dur-normal) var(--ease-out);
+}
+
+.ds-burger.is-open .ds-burger__line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.ds-burger.is-open .ds-burger__line:nth-child(2) { opacity: 0; }
+.ds-burger.is-open .ds-burger__line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.ds-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-overlay);
+  z-index: calc(var(--z-sticky) - 1);
+  opacity: 0;
+  transition: opacity var(--dur-normal) var(--ease-out);
+}
+
+.ds-sidebar-overlay.is-visible { opacity: 1; }
+
+/* ——— Main Content ——— */
+.ds-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  min-height: 100vh;
+  transition: margin var(--dur-slow) var(--ease-out);
+}
+
+.ds-main__inner {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: var(--sp-16) var(--page-gutter) var(--sp-32);
+}
+
+/* ——— Sections ——— */
+.ds-section {
+  margin-bottom: var(--sp-32);
+  scroll-margin-top: var(--sp-8);
+}
+
+.ds-section__header {
+  margin-bottom: var(--sp-12);
+  padding-bottom: var(--sp-8);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.ds-section__overline {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-3);
+}
+
+.ds-section__title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--sp-4);
+}
+
+.ds-section__description {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 640px;
+}
+
+/* ——— Subsections ——— */
+.ds-subsection {
+  margin-bottom: var(--sp-16);
+}
+
+.ds-subsection__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--sp-2);
+}
+
+.ds-subsection__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--sp-6);
+  max-width: 560px;
+  line-height: var(--leading-normal);
+}
+
+/* ——— Showcase Grid ——— */
+.ds-showcase {
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-8);
+  position: relative;
+}
+
+.ds-showcase--flush { padding: 0; overflow: hidden; }
+
+.ds-showcase--dark {
+  background: #09090B;
+  border-color: #27272B;
+  color: #ECECEF;
+}
+
+.ds-showcase__label {
+  position: absolute;
+  top: calc(-1 * var(--sp-3));
+  left: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-tertiary);
+  background: var(--color-bg-secondary);
+  padding: var(--sp-0-5) var(--sp-2);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+}
+
+.ds-grid {
+  display: grid;
+  gap: var(--sp-6);
+}
+
+.ds-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.ds-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.ds-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.ds-grid--5 { grid-template-columns: repeat(5, 1fr); }
+.ds-grid--auto { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+
+.ds-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  align-items: flex-start;
+}
+
+.ds-flex--center { align-items: center; }
+.ds-flex--col { flex-direction: column; }
+.ds-flex--gap-2 { gap: var(--sp-2); }
+.ds-flex--gap-3 { gap: var(--sp-3); }
+.ds-flex--gap-6 { gap: var(--sp-6); }
+.ds-flex--gap-8 { gap: var(--sp-8); }
+
+/* ============================================= */
+/* SECTION: HERO / INTRO                         */
+/* ============================================= */
+.ds-hero {
+  margin-bottom: var(--sp-32);
+  padding-bottom: var(--sp-16);
+  border-bottom: 3px solid var(--color-border-strong);
+}
+
+.ds-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-on-accent);
+  background: var(--color-accent);
+  border: 2px solid var(--color-border-strong);
+  padding: var(--sp-1-5) var(--sp-3);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-brutal-xs);
+  margin-bottom: var(--sp-8);
+}
+
+.ds-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  font-weight: var(--weight-black);
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin-bottom: var(--sp-6);
+}
+
+.ds-hero__title span { color: var(--color-accent); }
+
+.ds-hero__subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 600px;
+  margin-bottom: var(--sp-10);
+}
+
+.ds-hero__meta {
+  display: flex;
+  gap: var(--sp-8);
+  flex-wrap: wrap;
+}
+
+.ds-hero__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.ds-hero__meta-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.ds-hero__meta-value {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+/* ============================================= */
+/* SECTION: COLOR SYSTEM                         */
+/* ============================================= */
+.ds-color-swatch {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.ds-color-swatch:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.ds-color-swatch__preview {
+  height: 80px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.ds-color-swatch__info {
+  padding: var(--sp-3) var(--sp-3);
+  background: var(--color-bg-primary);
+}
+
+.ds-color-swatch__name {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--sp-0-5);
+}
+
+.ds-color-swatch__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+}
+
+.ds-color-swatch__token {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-text-tertiary);
+  margin-top: var(--sp-1);
+  word-break: break-all;
+}
+
+.ds-color-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ds-color-row:last-child { border-bottom: none; }
+
+.ds-color-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.ds-color-row__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  min-width: 160px;
+}
+
+.ds-color-row__token {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  flex: 1;
+}
+
+.ds-color-row__hex {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  min-width: 80px;
+  text-align: right;
+}
+
+/* ============================================= */
+/* SECTION: TYPOGRAPHY                           */
+/* ============================================= */
+.ds-type-specimen {
+  padding: var(--sp-6) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ds-type-specimen:last-child { border-bottom: none; }
+
+.ds-type-specimen__meta {
+  display: flex;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.ds-type-specimen__tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-text-tertiary);
+  background: var(--color-bg-tertiary);
+  padding: var(--sp-0-5) var(--sp-2);
+  border-radius: var(--radius-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.ds-type-sample--display {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-tight);
+}
+
+.ds-type-sample--body {
+  font-family: var(--font-body);
+  line-height: var(--leading-normal);
+}
+
+.ds-type-sample--mono {
+  font-family: var(--font-mono);
+  line-height: var(--leading-normal);
+}
+
+/* ============================================= */
+/* SECTION: SPACING                              */
+/* ============================================= */
+.ds-spacing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-2) 0;
+}
+
+.ds-spacing-bar {
+  height: 24px;
+  background: var(--color-accent-muted);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-xs);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.ds-spacing-bar:hover {
+  background: var(--color-accent);
+}
+
+.ds-spacing-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.ds-spacing-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  min-width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ============================================= */
+/* SECTION: BORDERS & RADIUS                     */
+/* ============================================= */
+.ds-radius-box {
+  width: 80px;
+  height: 80px;
+  background: var(--color-accent-muted);
+  border: 2px solid var(--color-border-strong);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: var(--sp-2);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.ds-radius-box:hover {
+  background: var(--color-accent);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal-xs);
+}
+
+.ds-radius-box__label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-text-secondary);
+}
+
+.ds-radius-box:hover .ds-radius-box__label { color: var(--color-text-on-accent); }
+
+/* ============================================= */
+/* SECTION: SHADOWS                              */
+/* ============================================= */
+.ds-shadow-box {
+  width: 100%;
+  height: 80px;
+  background: var(--color-bg-elevated);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+/* ============================================= */
+/* COMPONENT: BUTTONS                            */
+/* ============================================= */
+.kd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-normal);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: all var(--dur-fast) var(--ease-out);
+  position: relative;
+  text-decoration: none;
+  outline: none;
+}
+
+.kd-btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Sizes */
+.kd-btn--sm {
+  font-size: var(--text-xs);
+  padding: var(--sp-1-5) var(--sp-3);
+  height: 32px;
+}
+
+.kd-btn--md {
+  font-size: var(--text-sm);
+  padding: var(--sp-2) var(--sp-5);
+  height: 40px;
+}
+
+.kd-btn--lg {
+  font-size: var(--text-base);
+  padding: var(--sp-3) var(--sp-7);
+  height: 48px;
+}
+
+.kd-btn--xl {
+  font-size: var(--text-md);
+  padding: var(--sp-4) var(--sp-8);
+  height: 56px;
+}
+
+/* Primary */
+.kd-btn--primary {
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.kd-btn--primary:hover {
+  background: var(--color-accent-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal-md);
+}
+
+.kd-btn--primary:active {
+  transform: translate(1px, 1px);
+  box-shadow: var(--shadow-brutal-xs);
+  background: var(--color-accent-active);
+}
+
+/* Secondary */
+.kd-btn--secondary {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.kd-btn--secondary:hover {
+  background: var(--color-bg-secondary);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal-md);
+}
+
+.kd-btn--secondary:active {
+  transform: translate(1px, 1px);
+  box-shadow: var(--shadow-brutal-xs);
+}
+
+/* Ghost */
+.kd-btn--ghost {
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.kd-btn--ghost:hover {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-border);
+}
+
+.kd-btn--ghost:active {
+  background: var(--color-bg-sunken);
+}
+
+/* Outline */
+.kd-btn--outline {
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+  box-shadow: none;
+}
+
+.kd-btn--outline:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-brutal-xs);
+  transform: translate(-1px, -1px);
+}
+
+.kd-btn--outline:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+/* Destructive */
+.kd-btn--destructive {
+  background: var(--color-error);
+  color: #FFFFFF;
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.kd-btn--destructive:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal-md);
+  filter: brightness(1.1);
+}
+
+.kd-btn--destructive:active {
+  transform: translate(1px, 1px);
+  box-shadow: var(--shadow-brutal-xs);
+}
+
+/* Accent outline */
+.kd-btn--accent-outline {
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: none;
+}
+
+.kd-btn--accent-outline:hover {
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  box-shadow: var(--shadow-brutal-sm);
+  transform: translate(-1px, -1px);
+}
+
+/* Disabled */
+.kd-btn:disabled, .kd-btn--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Loading */
+.kd-btn--loading {
+  pointer-events: none;
+  color: transparent !important;
+}
+
+.kd-btn--loading::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-border-strong);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: kd-spin 0.6s linear infinite;
+}
+
+@keyframes kd-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Icon button */
+.kd-btn--icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.kd-btn--icon.kd-btn--sm { width: 32px; height: 32px; }
+.kd-btn--icon.kd-btn--lg { width: 48px; height: 48px; }
+
+/* ============================================= */
+/* COMPONENT: FORM INPUTS                        */
+/* ============================================= */
+.kd-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1-5);
+}
+
+.kd-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-normal);
+}
+
+.kd-label__required {
+  color: var(--color-error);
+  margin-left: var(--sp-0-5);
+}
+
+.kd-helper {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.kd-helper--error { color: var(--color-error); }
+.kd-helper--success { color: var(--color-success); }
+
+.kd-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--sp-4);
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  outline: none;
+}
+
+.kd-input::placeholder {
+  color: var(--color-text-disabled);
+}
+
+.kd-input:hover {
+  border-color: var(--color-text-tertiary);
+}
+
+.kd-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-muted);
+}
+
+.kd-input--error {
+  border-color: var(--color-error);
+}
+
+.kd-input--error:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(229, 72, 77, 0.15);
+}
+
+.kd-input--success {
+  border-color: var(--color-success);
+}
+
+.kd-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-bg-sunken);
+}
+
+.kd-input--brutal {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-brutal-xs);
+}
+
+.kd-input--brutal:focus {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+/* Select */
+.kd-select-wrapper {
+  position: relative;
+}
+
+.kd-select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: var(--sp-4);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.kd-select {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--sp-10) 0 var(--sp-4);
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.kd-select:hover { border-color: var(--color-text-tertiary); }
+
+.kd-select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-muted);
+}
+
+/* Textarea */
+.kd-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  line-height: var(--leading-normal);
+}
+
+.kd-textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-muted);
+}
+
+/* Checkbox */
+.kd-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2-5);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--text-sm);
+}
+
+.kd-checkbox__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kd-checkbox__box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--dur-fast) var(--ease-out);
+  background: var(--color-bg-primary);
+}
+
+.kd-checkbox__input:checked + .kd-checkbox__box {
+  background: var(--color-accent);
+  border-color: var(--color-border-strong);
+}
+
+.kd-checkbox__input:checked + .kd-checkbox__box::after {
+  content: "";
+  width: 5px;
+  height: 9px;
+  border-right: 2.5px solid var(--color-text-on-accent);
+  border-bottom: 2.5px solid var(--color-text-on-accent);
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.kd-checkbox__input:focus-visible + .kd-checkbox__box {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.kd-checkbox:hover .kd-checkbox__box {
+  border-color: var(--color-accent);
+}
+
+/* Radio */
+.kd-radio {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2-5);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--text-sm);
+}
+
+.kd-radio__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kd-radio__circle {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border-strong);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--dur-fast) var(--ease-out);
+  background: var(--color-bg-primary);
+}
+
+.kd-radio__input:checked + .kd-radio__circle {
+  border-color: var(--color-accent);
+}
+
+.kd-radio__input:checked + .kd-radio__circle::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: var(--color-accent);
+  border-radius: 50%;
+}
+
+.kd-radio__input:focus-visible + .kd-radio__circle {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.kd-radio:hover .kd-radio__circle { border-color: var(--color-accent); }
+
+/* Toggle / Switch */
+.kd-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--text-sm);
+}
+
+.kd-toggle__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kd-toggle__track {
+  width: 44px;
+  height: 24px;
+  background: var(--color-bg-tertiary);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  position: relative;
+  transition: background var(--dur-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.kd-toggle__thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border-strong);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--dur-normal) var(--ease-spring);
+}
+
+.kd-toggle__input:checked + .kd-toggle__track {
+  background: var(--color-accent);
+}
+
+.kd-toggle__input:checked + .kd-toggle__track .kd-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.kd-toggle__input:focus-visible + .kd-toggle__track {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Range / Slider */
+.kd-slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+
+.kd-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--color-accent);
+  border: 2px solid var(--color-border-strong);
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: var(--shadow-brutal-xs);
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+
+.kd-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.kd-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.kd-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--color-accent);
+  border: 2px solid var(--color-border-strong);
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: var(--shadow-brutal-xs);
+}
+
+/* Search */
+.kd-search {
+  position: relative;
+}
+
+.kd-search__icon {
+  position: absolute;
+  left: var(--sp-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.kd-search__input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--sp-4) 0 var(--sp-10);
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.kd-search__input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-muted);
+}
+
+.kd-search__input::placeholder { color: var(--color-text-disabled); }
+
+.kd-search__shortcut {
+  position: absolute;
+  right: var(--sp-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  background: var(--color-bg-tertiary);
+  padding: var(--sp-0-5) var(--sp-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  pointer-events: none;
+}
+
+/* ============================================= */
+/* COMPONENT: BADGES & CHIPS                     */
+/* ============================================= */
+.kd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: var(--sp-1) var(--sp-2-5);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  border: 1.5px solid;
+}
+
+.kd-badge--default {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+.kd-badge--accent {
+  background: var(--color-accent-muted);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.kd-badge--success {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.kd-badge--error {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.kd-badge--warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.kd-badge--solid {
+  background: var(--color-border-strong);
+  color: var(--color-text-inverse);
+  border-color: var(--color-border-strong);
+}
+
+.kd-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1-5);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  padding: var(--sp-1-5) var(--sp-3);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border);
+  background: var(--color-bg-primary);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+  user-select: none;
+}
+
+.kd-chip:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-brutal-xs);
+  transform: translate(-1px, -1px);
+}
+
+.kd-chip.is-selected {
+  background: var(--color-accent);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-on-accent);
+  font-weight: var(--weight-semibold);
+}
+
+.kd-chip__close {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.kd-chip__close:hover { opacity: 1; }
+
+/* ============================================= */
+/* COMPONENT: TABS                               */
+/* ============================================= */
+.kd-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.kd-tabs__list {
+  display: flex;
+  border-bottom: 2px solid var(--color-border);
+  gap: 0;
+  overflow-x: auto;
+}
+
+.kd-tabs__tab {
+  padding: var(--sp-3) var(--sp-5);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.kd-tabs__tab:hover {
+  color: var(--color-text-primary);
+}
+
+.kd-tabs__tab.is-active {
+  color: var(--color-text-primary);
+  font-weight: var(--weight-semibold);
+  border-bottom-color: var(--color-accent);
+}
+
+.kd-tabs__panel {
+  display: none;
+  padding: var(--sp-6) 0;
+}
+
+.kd-tabs__panel.is-active { display: block; }
+
+/* Boxed tabs variant */
+.kd-tabs--boxed .kd-tabs__list {
+  border-bottom: none;
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-1);
+  gap: var(--sp-1);
+}
+
+.kd-tabs--boxed .kd-tabs__tab {
+  border-bottom: none;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0;
+  padding: var(--sp-2) var(--sp-4);
+}
+
+.kd-tabs--boxed .kd-tabs__tab.is-active {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft-xs);
+}
+
+/* ============================================= */
+/* COMPONENT: CARDS                              */
+/* ============================================= */
+.kd-card {
+  background: var(--color-bg-elevated);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.kd-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-md);
+}
+
+.kd-card__header {
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.kd-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.kd-card__body {
+  padding: var(--sp-6);
+}
+
+.kd-card__footer {
+  padding: var(--sp-4) var(--sp-6);
+  border-top: 2px solid var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+/* Card: Flat variant */
+.kd-card--flat {
+  border-color: var(--color-border);
+  box-shadow: none;
+}
+
+.kd-card--flat:hover {
+  border-color: var(--color-border-strong);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+/* Card: Accent */
+.kd-card--accent {
+  border-color: var(--color-accent);
+}
+
+.kd-card--accent .kd-card__header {
+  background: var(--color-accent-subtle);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ============================================= */
+/* COMPONENT: TABLE                              */
+/* ============================================= */
+.kd-table-wrapper {
+  overflow-x: auto;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.kd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.kd-table th {
+  text-align: left;
+  padding: var(--sp-3) var(--sp-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-secondary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  background: var(--color-bg-secondary);
+  border-bottom: 2px solid var(--color-border-strong);
+  white-space: nowrap;
+}
+
+.kd-table td {
+  padding: var(--sp-3) var(--sp-5);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.kd-table tr:last-child td { border-bottom: none; }
+
+.kd-table tr:hover td {
+  background: var(--color-accent-subtle);
+}
+
+.kd-table td.kd-table__mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.kd-table td.kd-table__num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ============================================= */
+/* COMPONENT: MODAL                              */
+/* ============================================= */
+.kd-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-normal) var(--ease-out), visibility var(--dur-normal) var(--ease-out);
+  padding: var(--sp-6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.kd-modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.kd-modal {
+  background: var(--color-bg-elevated);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-brutal-xl);
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: scale(0.95) translateY(10px);
+  transition: transform var(--dur-slow) var(--ease-spring);
+}
+
+.kd-modal-overlay.is-open .kd-modal {
+  transform: scale(1) translateY(0);
+}
+
+.kd-modal__header {
+  padding: var(--sp-6) var(--sp-6) var(--sp-4);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.kd-modal__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.kd-modal__close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-md);
+  color: var(--color-text-tertiary);
+  transition: all var(--dur-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.kd-modal__close:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.kd-modal__body {
+  padding: 0 var(--sp-6) var(--sp-6);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.kd-modal__footer {
+  padding: var(--sp-4) var(--sp-6);
+  border-top: 2px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-3);
+  background: var(--color-bg-secondary);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+
+/* ============================================= */
+/* COMPONENT: TOAST                              */
+/* ============================================= */
+.kd-toast-container {
+  position: fixed;
+  bottom: var(--sp-6);
+  right: var(--sp-6);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  pointer-events: none;
+}
+
+.kd-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--color-bg-elevated);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-brutal-md);
+  min-width: 320px;
+  max-width: 420px;
+  pointer-events: auto;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all var(--dur-slow) var(--ease-spring);
+}
+
+.kd-toast.is-visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.kd-toast__icon {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  border: 1.5px solid;
+}
+
+.kd-toast--success .kd-toast__icon {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.kd-toast--error .kd-toast__icon {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.kd-toast--warning .kd-toast__icon {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.kd-toast--info .kd-toast__icon {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+  border-color: var(--color-border);
+}
+
+.kd-toast__content { flex: 1; }
+
+.kd-toast__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--sp-0-5);
+}
+
+.kd-toast__message {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.kd-toast__close {
+  color: var(--color-text-tertiary);
+  font-size: var(--text-md);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.kd-toast__close:hover { color: var(--color-text-primary); }
+
+/* ============================================= */
+/* COMPONENT: FEEDBACK / ALERT STATES            */
+/* ============================================= */
+.kd-alert {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border: 2px solid;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.kd-alert__icon {
+  flex-shrink: 0;
+  font-size: var(--text-lg);
+  line-height: 1.3;
+}
+
+.kd-alert__content { flex: 1; }
+
+.kd-alert__title {
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--sp-1);
+}
+
+.kd-alert--success {
+  background: var(--color-success-bg);
+  border-color: var(--color-success);
+  color: var(--color-text-primary);
+}
+
+.kd-alert--error {
+  background: var(--color-error-bg);
+  border-color: var(--color-error);
+  color: var(--color-text-primary);
+}
+
+.kd-alert--warning {
+  background: var(--color-warning-bg);
+  border-color: var(--color-warning);
+  color: var(--color-text-primary);
+}
+
+.kd-alert--info {
+  background: var(--color-info-bg);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+/* ============================================= */
+/* COMPONENT: EMPTY STATE                        */
+/* ============================================= */
+.kd-empty {
+  text-align: center;
+  padding: var(--sp-16) var(--sp-8);
+}
+
+.kd-empty__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--sp-6);
+  background: var(--color-accent-subtle);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-3xl);
+}
+
+.kd-empty__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--sp-2);
+}
+
+.kd-empty__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  max-width: 320px;
+  margin: 0 auto var(--sp-6);
+  line-height: var(--leading-normal);
+}
+
+/* ============================================= */
+/* COMPONENT: LOADING / SKELETON                 */
+/* ============================================= */
+.kd-skeleton {
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.kd-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-bg-secondary),
+    transparent
+  );
+  animation: kd-shimmer 1.5s infinite;
+}
+
+@keyframes kd-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.kd-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: kd-spin 0.7s linear infinite;
+}
+
+.kd-spinner--sm { width: 16px; height: 16px; border-width: 2px; }
+.kd-spinner--lg { width: 36px; height: 36px; border-width: 3px; }
+
+/* ============================================= */
+/* PRODUCT PATTERNS: METRIC CARD                 */
+/* ============================================= */
+.kd-metric {
+  background: var(--color-bg-elevated);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.kd-metric:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-md);
+}
+
+.kd-metric__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+}
+
+.kd-metric__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.kd-metric__icon {
+  width: 28px;
+  height: 28px;
+  background: var(--color-accent-subtle);
+  border: 1.5px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+}
+
+.kd-metric__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-none);
+  margin-bottom: var(--sp-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.kd-metric__unit {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-tertiary);
+  margin-left: var(--sp-1);
+}
+
+.kd-metric__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  margin-top: var(--sp-2);
+}
+
+.kd-metric__delta--up { color: var(--color-success); }
+.kd-metric__delta--down { color: var(--color-error); }
+
+/* ============================================= */
+/* PRODUCT PATTERNS: MACRO BAR                   */
+/* ============================================= */
+.kd-macro-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.kd-macro-bar__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.kd-macro-bar__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.kd-macro-bar__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.kd-macro-bar__values {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+
+.kd-macro-bar__grams {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.kd-macro-bar__pct {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.kd-macro-bar__track {
+  height: 10px;
+  background: var(--color-bg-tertiary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.kd-macro-bar__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--dur-slower) var(--ease-out);
+}
+
+.kd-macro-bar__fill--protein { background: var(--color-accent); }
+.kd-macro-bar__fill--carbs { background: var(--color-border-strong); }
+.kd-macro-bar__fill--fat { background: var(--color-text-tertiary); }
+
+/* ============================================= */
+/* PRODUCT PATTERNS: DONUT / RING CHART          */
+/* ============================================= */
+.kd-donut {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.kd-donut__svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.kd-donut__circle {
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: round;
+  transition: stroke-dasharray var(--dur-slower) var(--ease-out);
+}
+
+.kd-donut__bg {
+  stroke: var(--color-bg-tertiary);
+}
+
+.kd-donut__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.kd-donut__center-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tighter);
+  line-height: 1;
+}
+
+.kd-donut__center-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-top: var(--sp-1);
+}
+
+/* ============================================= */
+/* PRODUCT PATTERNS: MINI CHART (BAR)            */
+/* ============================================= */
+.kd-mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 48px;
+}
+
+.kd-mini-chart__bar {
+  flex: 1;
+  background: var(--color-accent-muted);
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  border: 1px solid var(--color-accent);
+  min-width: 6px;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.kd-mini-chart__bar:hover {
+  background: var(--color-accent);
+}
+
+.kd-mini-chart__bar.is-highlight {
+  background: var(--color-accent);
+}
+
+/* ============================================= */
+/* PRODUCT PATTERNS: COMPARISON BLOCK            */
+/* ============================================= */
+.kd-comparison {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.kd-comparison__side {
+  padding: var(--sp-6);
+  text-align: center;
+}
+
+.kd-comparison__side:first-child {
+  background: var(--color-bg-secondary);
+}
+
+.kd-comparison__divider {
+  width: 2px;
+  background: var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.kd-comparison__vs {
+  position: absolute;
+  background: var(--color-border-strong);
+  color: var(--color-text-inverse);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-bold);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: var(--tracking-wide);
+}
+
+.kd-comparison__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-2);
+}
+
+.kd-comparison__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.kd-comparison__desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--sp-1);
+}
+
+/* ============================================= */
+/* PRODUCT PATTERNS: PROJECTION / TIMELINE       */
+/* ============================================= */
+.kd-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: var(--sp-8);
+}
+
+.kd-timeline::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.kd-timeline__item {
+  position: relative;
+  padding: var(--sp-4) 0;
+}
+
+.kd-timeline__dot {
+  position: absolute;
+  left: calc(-1 * var(--sp-8) + 4px);
+  top: var(--sp-5);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-strong);
+  background: var(--color-bg-primary);
+  z-index: 1;
+}
+
+.kd-timeline__dot.is-active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.kd-timeline__dot.is-completed {
+  background: var(--color-accent);
+  border-color: var(--color-border-strong);
+}
+
+.kd-timeline__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-1);
+}
+
+.kd-timeline__title {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  margin-bottom: var(--sp-1);
+}
+
+.kd-timeline__desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================= */
+/* PRODUCT PATTERNS: SECTION SHELL               */
+/* ============================================= */
+.kd-shell {
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.kd-shell__header {
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--color-bg-secondary);
+  border-bottom: 2px solid var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.kd-shell__title {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.kd-shell__body {
+  padding: var(--sp-6);
+}
+
+.kd-shell__footer {
+  padding: var(--sp-4) var(--sp-6);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-sunken);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================= */
+/* COMPONENT: NAVIGATION / BREADCRUMB            */
+/* ============================================= */
+.kd-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-sm);
+}
+
+.kd-breadcrumb__item {
+  color: var(--color-text-tertiary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.kd-breadcrumb__item:hover { color: var(--color-text-primary); }
+
+.kd-breadcrumb__item.is-current {
+  color: var(--color-text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.kd-breadcrumb__sep {
+  color: var(--color-text-disabled);
+  font-size: var(--text-xs);
+}
+
+/* Pagination */
+.kd-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.kd-pagination__btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+
+.kd-pagination__btn:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.kd-pagination__btn.is-active {
+  background: var(--color-accent);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-on-accent);
+  font-weight: var(--weight-bold);
+  box-shadow: var(--shadow-brutal-xs);
+}
+
+/* ============================================= */
+/* COMPONENT: TOOLTIP                            */
+/* ============================================= */
+.kd-tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.kd-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: var(--color-bg-inverse);
+  color: var(--color-text-inverse);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  padding: var(--sp-1-5) var(--sp-3);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: all var(--dur-fast) var(--ease-out);
+  z-index: var(--z-tooltip);
+}
+
+.kd-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--color-bg-inverse);
+}
+
+.kd-tooltip-wrapper:hover .kd-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ============================================= */
+/* COMPONENT: PROGRESS                           */
+/* ============================================= */
+.kd-progress {
+  height: 8px;
+  background: var(--color-bg-tertiary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.kd-progress__fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+/* ============================================= */
+/* COMPONENT: DIVIDER                            */
+/* ============================================= */
+.kd-divider {
+  border: none;
+  height: 2px;
+  background: var(--color-border);
+  margin: var(--sp-8) 0;
+}
+
+.kd-divider--strong {
+  background: var(--color-border-strong);
+}
+
+/* ============================================= */
+/* COMPONENT: CODE / TOKEN DISPLAY               */
+/* ============================================= */
+.kd-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--color-bg-code);
+  padding: var(--sp-0-5) var(--sp-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.kd-code-block {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--color-bg-code);
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  overflow-x: auto;
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================= */
+/* UTILITY: ANIMATIONS                           */
+/* ============================================= */
+@keyframes kd-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes kd-slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kd-slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kd-scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes kd-staggerIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.kd-animate-in {
+  animation: kd-slideUp var(--dur-slow) var(--ease-out) both;
+}
+
+.kd-stagger > * {
+  opacity: 0;
+  animation: kd-staggerIn var(--dur-slow) var(--ease-out) both;
+}
+
+.kd-stagger > *:nth-child(1) { animation-delay: 60ms; }
+.kd-stagger > *:nth-child(2) { animation-delay: 120ms; }
+.kd-stagger > *:nth-child(3) { animation-delay: 180ms; }
+.kd-stagger > *:nth-child(4) { animation-delay: 240ms; }
+.kd-stagger > *:nth-child(5) { animation-delay: 300ms; }
+.kd-stagger > *:nth-child(6) { animation-delay: 360ms; }
+.kd-stagger > *:nth-child(7) { animation-delay: 420ms; }
+.kd-stagger > *:nth-child(8) { animation-delay: 480ms; }
+.kd-stagger > *:nth-child(9) { animation-delay: 540ms; }
+.kd-stagger > *:nth-child(10) { animation-delay: 600ms; }
+.kd-stagger > *:nth-child(11) { animation-delay: 660ms; }
+.kd-stagger > *:nth-child(12) { animation-delay: 720ms; }
+
+/* ============================================= */
+/* RESPONSIVE                                    */
+/* ============================================= */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+    --page-gutter: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --page-gutter: 20px;
+  }
+
+  .ds-mobile-header { display: flex; }
+
+  .ds-sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+    top: 0;
+    z-index: calc(var(--z-sticky) + 1);
+  }
+
+  .ds-sidebar.is-open { transform: translateX(0); }
+  .ds-sidebar-overlay.is-open { display: block; }
+
+  .ds-main {
+    margin-left: 0;
+    padding-top: var(--header-height);
+  }
+
+  .ds-main__inner {
+    padding-top: var(--sp-10);
+    padding-bottom: var(--sp-20);
+  }
+
+  .ds-hero__title { font-size: var(--text-4xl); }
+  .ds-section__title { font-size: var(--text-3xl); }
+  .ds-grid--2, .ds-grid--3, .ds-grid--4, .ds-grid--5 { grid-template-columns: 1fr; }
+
+  .kd-comparison { grid-template-columns: 1fr; }
+  .kd-comparison__divider {
+    width: 100%;
+    height: 2px;
+  }
+  .kd-comparison__vs {
+    position: static;
+    margin: 0 auto;
+    transform: translateY(-50%);
+  }
+
+  .kd-toast-container {
+    left: var(--sp-4);
+    right: var(--sp-4);
+    bottom: var(--sp-4);
+  }
+  .kd-toast { min-width: auto; width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .ds-hero__title { font-size: var(--text-3xl); }
+  .ds-hero__meta { flex-direction: column; gap: var(--sp-4); }
+  .ds-showcase { padding: var(--sp-5); }
+  .kd-metric__value { font-size: var(--text-3xl); }
+}
+
+/* ============================================= */
+/* SCROLLBAR STYLING                             */
+/* ============================================= */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg-secondary); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-bg-secondary);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
+
+/* ============================================= */
+/* PRINT                                         */
+/* ============================================= */
+@media print {
+  .ds-sidebar, .ds-mobile-header, .ds-sidebar-overlay { display: none !important; }
+  .ds-main { margin-left: 0 !important; }
+  .kd-toast-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- MOBILE HEADER                                 -->
+<!-- ============================================= -->
+<header class="ds-mobile-header" role="banner">
+  <div class="ds-mobile-header__logo">
+    <div class="ds-mobile-header__logo-mark" aria-hidden="true">KD</div>
+    <span>Design System</span>
+  </div>
+  <button class="ds-burger" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span class="ds-burger__line"></span>
+    <span class="ds-burger__line"></span>
+    <span class="ds-burger__line"></span>
+  </button>
+</header>
+
+<!-- ============================================= -->
+<!-- SIDEBAR OVERLAY                               -->
+<!-- ============================================= -->
+<div class="ds-sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+<!-- ============================================= -->
+<!-- LAYOUT                                        -->
+<!-- ============================================= -->
+<div class="ds-layout">
+
+  <!-- ============================================= -->
+  <!-- SIDEBAR NAVIGATION                            -->
+  <!-- ============================================= -->
+  <aside class="ds-sidebar" id="sidebar" role="navigation" aria-label="Design system navigation">
+    <div class="ds-sidebar__header">
+      <div class="ds-sidebar__logo">
+        <div class="ds-sidebar__logo-mark" aria-hidden="true">KD</div>
+        <div class="ds-sidebar__logo-text">
+          <span class="ds-sidebar__logo-name">KhromaDiet</span>
+          <span class="ds-sidebar__logo-label">Design System</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="ds-sidebar__nav">
+      <div class="ds-sidebar__group">
+        <div class="ds-sidebar__group-label">Foundations</div>
+        <a class="ds-sidebar__link is-active" href="#colors" data-nav>Colors</a>
+        <a class="ds-sidebar__link" href="#typography" data-nav>Typography</a>
+        <a class="ds-sidebar__link" href="#spacing" data-nav>Spacing</a>
+        <a class="ds-sidebar__link" href="#borders" data-nav>Borders & Radius</a>
+        <a class="ds-sidebar__link" href="#shadows" data-nav>Shadows & Elevation</a>
+        <a class="ds-sidebar__link" href="#motion" data-nav>Motion</a>
+      </div>
+      <div class="ds-sidebar__group">
+        <div class="ds-sidebar__group-label">Components</div>
+        <a class="ds-sidebar__link" href="#buttons" data-nav>Buttons</a>
+        <a class="ds-sidebar__link" href="#forms" data-nav>Form Controls</a>
+        <a class="ds-sidebar__link" href="#badges" data-nav>Badges & Chips</a>
+        <a class="ds-sidebar__link" href="#tabs" data-nav>Tabs</a>
+        <a class="ds-sidebar__link" href="#cards" data-nav>Cards</a>
+        <a class="ds-sidebar__link" href="#tables" data-nav>Tables</a>
+        <a class="ds-sidebar__link" href="#navigation" data-nav>Navigation</a>
+        <a class="ds-sidebar__link" href="#feedback" data-nav>Feedback</a>
+        <a class="ds-sidebar__link" href="#modal" data-nav>Modal</a>
+        <a class="ds-sidebar__link" href="#toast" data-nav>Toast</a>
+        <a class="ds-sidebar__link" href="#states" data-nav>States</a>
+      </div>
+      <div class="ds-sidebar__group">
+        <div class="ds-sidebar__group-label">Product</div>
+        <a class="ds-sidebar__link" href="#metrics" data-nav>Metric Cards</a>
+        <a class="ds-sidebar__link" href="#macros" data-nav>Macro Visualization</a>
+        <a class="ds-sidebar__link" href="#dashboard" data-nav>Dashboard Shell</a>
+        <a class="ds-sidebar__link" href="#comparison" data-nav>Comparisons</a>
+        <a class="ds-sidebar__link" href="#projections" data-nav>Projections</a>
+      </div>
+    </nav>
+
+    <div class="ds-sidebar__footer">
+      <button class="ds-theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="ds-theme-toggle__icon" id="themeIcon">☀</span>
+        <span id="themeLabel">Light</span>
+      </button>
+      <span class="ds-sidebar__version">v1.0</span>
+    </div>
+  </aside>
+
+  <!-- ============================================= -->
+  <!-- MAIN CONTENT                                  -->
+  <!-- ============================================= -->
+  <main class="ds-main" role="main">
+    <div class="ds-main__inner">
+
+      <!-- ============================================= -->
+      <!-- HERO                                          -->
+      <!-- ============================================= -->
+      <section class="ds-hero kd-animate-in">
+        <div class="ds-hero__badge">
+          <span>●</span> Canonical Reference
+        </div>
+        <h1 class="ds-hero__title">
+          Khroma<span>Diet</span><br>Design System
+        </h1>
+        <p class="ds-hero__subtitle">
+          The living visual foundation for KhromaDiet. Neo-Brutalism Clean — structural force, clinical clarity, and health-forward energy in every token, component, and pattern.
+        </p>
+        <div class="ds-hero__meta">
+          <div class="ds-hero__meta-item">
+            <span class="ds-hero__meta-label">Direction</span>
+            <span class="ds-hero__meta-value">Neo-Brutalism Clean</span>
+          </div>
+          <div class="ds-hero__meta-item">
+            <span class="ds-hero__meta-label">Density</span>
+            <span class="ds-hero__meta-value">Sparse / Generous</span>
+          </div>
+          <div class="ds-hero__meta-item">
+            <span class="ds-hero__meta-label">Accent</span>
+            <span class="ds-hero__meta-value" style="color: var(--color-accent);">■ #00DC82</span>
+          </div>
+          <div class="ds-hero__meta-item">
+            <span class="ds-hero__meta-label">Status</span>
+            <span class="ds-hero__meta-value">Production Ready</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: COLOR SYSTEM                         -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="colors">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Foundation 01</div>
+          <h2 class="ds-section__title">Color System</h2>
+          <p class="ds-section__description">
+            A strict, disciplined palette. White dominance in light mode, abyssal black in dark mode. Vivid green as the sole chromatic accent — reserved for CTAs, focus, interaction highlights, and energy points.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Core Accent</h3>
+          <p class="ds-subsection__desc">The green is the singular voice of energy in the system. Used sparingly but powerfully.</p>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--5" style="gap: var(--sp-4);">
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: #00DC82;"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Accent</div>
+                  <div class="ds-color-swatch__value">#00DC82</div>
+                  <div class="ds-color-swatch__token">--color-accent</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: #00C474;"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Accent Hover</div>
+                  <div class="ds-color-swatch__value">#00C474</div>
+                  <div class="ds-color-swatch__token">--color-accent-hover</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: #00AD68;"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Accent Active</div>
+                  <div class="ds-color-swatch__value">#00AD68</div>
+                  <div class="ds-color-swatch__token">--color-accent-active</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: rgba(0,220,130,0.16); border: 2px dashed #00DC82;"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Accent Muted</div>
+                  <div class="ds-color-swatch__value">16% opacity</div>
+                  <div class="ds-color-swatch__token">--color-accent-muted</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: rgba(0,220,130,0.08); border: 2px dashed #00DC82;"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Accent Subtle</div>
+                  <div class="ds-color-swatch__value">8% opacity</div>
+                  <div class="ds-color-swatch__token">--color-accent-subtle</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Backgrounds</h3>
+          <p class="ds-subsection__desc">Surfaces layered with intention. Primary is the canvas, secondary structures, tertiary recedes.</p>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--4" style="gap: var(--sp-4);">
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-bg-primary); border-bottom: 2px solid var(--color-border);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Primary</div>
+                  <div class="ds-color-swatch__value">Canvas</div>
+                  <div class="ds-color-swatch__token">--color-bg-primary</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-bg-secondary);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Secondary</div>
+                  <div class="ds-color-swatch__value">Structure</div>
+                  <div class="ds-color-swatch__token">--color-bg-secondary</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-bg-tertiary);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Tertiary</div>
+                  <div class="ds-color-swatch__value">Recede</div>
+                  <div class="ds-color-swatch__token">--color-bg-tertiary</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-bg-elevated); box-shadow: var(--shadow-soft-md);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Elevated</div>
+                  <div class="ds-color-swatch__value">Floating</div>
+                  <div class="ds-color-swatch__token">--color-bg-elevated</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Text</h3>
+          <p class="ds-subsection__desc">Four levels of text hierarchy, each semantically distinct.</p>
+          <div class="ds-showcase">
+            <div style="display: flex; flex-direction: column; gap: var(--sp-5);">
+              <div class="ds-color-row">
+                <div class="ds-color-dot" style="background: var(--color-text-primary);"></div>
+                <span class="ds-color-row__name">Primary</span>
+                <span class="ds-color-row__token">--color-text-primary</span>
+                <span class="ds-color-row__hex">Headlines, body</span>
+              </div>
+              <div class="ds-color-row">
+                <div class="ds-color-dot" style="background: var(--color-text-secondary);"></div>
+                <span class="ds-color-row__name">Secondary</span>
+                <span class="ds-color-row__token">--color-text-secondary</span>
+                <span class="ds-color-row__hex">Descriptions</span>
+              </div>
+              <div class="ds-color-row">
+                <div class="ds-color-dot" style="background: var(--color-text-tertiary);"></div>
+                <span class="ds-color-row__name">Tertiary</span>
+                <span class="ds-color-row__token">--color-text-tertiary</span>
+                <span class="ds-color-row__hex">Captions, hints</span>
+              </div>
+              <div class="ds-color-row">
+                <div class="ds-color-dot" style="background: var(--color-text-disabled); border-style: dashed;"></div>
+                <span class="ds-color-row__name">Disabled</span>
+                <span class="ds-color-row__token">--color-text-disabled</span>
+                <span class="ds-color-row__hex">Inactive</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Semantic</h3>
+          <p class="ds-subsection__desc">Functional colors for states and feedback. Green doubles as success.</p>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--4" style="gap: var(--sp-4);">
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-success);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Success</div>
+                  <div class="ds-color-swatch__value">#00DC82</div>
+                  <div class="ds-color-swatch__token">--color-success</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-error);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Error</div>
+                  <div class="ds-color-swatch__value">#E5484D</div>
+                  <div class="ds-color-swatch__token">--color-error</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-warning);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Warning</div>
+                  <div class="ds-color-swatch__value">#F5A623</div>
+                  <div class="ds-color-swatch__token">--color-warning</div>
+                </div>
+              </div>
+              <div class="ds-color-swatch">
+                <div class="ds-color-swatch__preview" style="background: var(--color-info);"></div>
+                <div class="ds-color-swatch__info">
+                  <div class="ds-color-swatch__name">Info</div>
+                  <div class="ds-color-swatch__value">#0A0A0A</div>
+                  <div class="ds-color-swatch__token">--color-info</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: TYPOGRAPHY                           -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="typography">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Foundation 02</div>
+          <h2 class="ds-section__title">Typography</h2>
+          <p class="ds-section__description">
+            Three stacks with distinct purpose. Display for impact, body for clarity, mono for data precision. Tight tracking on headlines, generous leading on body. Every weight earns its place.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Display Scale</h3>
+          <p class="ds-subsection__desc">SF Pro Display / system-ui. Headlines with presence — tight, black, confident.</p>
+          <div class="ds-showcase">
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">8xl · 96px · Black · -0.04em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-8xl); font-weight: var(--weight-black); letter-spacing: -0.04em; line-height: 1;">KhromaDiet</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">7xl · 76px · Black · -0.04em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-7xl); font-weight: var(--weight-black); letter-spacing: -0.04em; line-height: 1.02;">Your TDEE</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">6xl · 60px · Black · -0.04em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-6xl); font-weight: var(--weight-black); letter-spacing: -0.04em; line-height: 1.05;">2,847 kcal</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">5xl · 48px · Extrabold · -0.03em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-5xl); font-weight: var(--weight-extrabold); letter-spacing: -0.03em; line-height: var(--leading-tight);">Macro Distribution</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">4xl · 38px · Bold · -0.02em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-4xl); font-weight: var(--weight-bold); letter-spacing: -0.02em; line-height: var(--leading-tight);">Personal Summary</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">3xl · 30px · Bold · -0.02em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-3xl); font-weight: var(--weight-bold); letter-spacing: -0.02em; line-height: var(--leading-snug);">Weekly Projection</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">2xl · 24px · Bold · -0.02em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-2xl); font-weight: var(--weight-bold); letter-spacing: -0.02em; line-height: var(--leading-snug);">Nutritional Breakdown</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">xl · 21px · Semibold · -0.01em</span>
+              </div>
+              <div class="ds-type-sample--display" style="font-size: var(--text-xl); font-weight: var(--weight-semibold); letter-spacing: -0.01em; line-height: var(--leading-snug);">Activity Multiplier</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Body Scale</h3>
+          <p class="ds-subsection__desc">Optimized for reading. Comfortable sizing, generous line-height, clear hierarchy through weight.</p>
+          <div class="ds-showcase">
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">lg · 18px · Regular · 1.55</span>
+              </div>
+              <div class="ds-type-sample--body" style="font-size: var(--text-lg); max-width: 600px;">Your Total Daily Energy Expenditure represents the number of calories your body burns in a complete day, accounting for metabolic rate and physical activity.</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">base · 15px · Regular · 1.55</span>
+              </div>
+              <div class="ds-type-sample--body" style="font-size: var(--text-base); max-width: 560px;">Based on the Mifflin-St Jeor equation calibrated with your biometric data, we estimate a basal metabolic rate that serves as the foundation for all caloric projections.</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">sm · 13px · Regular · 1.55</span>
+              </div>
+              <div class="ds-type-sample--body" style="font-size: var(--text-sm); color: var(--color-text-secondary); max-width: 520px;">Macronutrient ratios are calculated using a balanced approach: proteins prioritized for muscle preservation, carbohydrates calibrated for energy demands, and fats maintained for hormonal health.</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">xs · 12px · Medium · 1.5</span>
+              </div>
+              <div class="ds-type-sample--body" style="font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--color-text-tertiary);">Last updated 3 minutes ago · Recalculate anytime</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Mono Scale</h3>
+          <p class="ds-subsection__desc">Data, metrics, tokens, labels. Tabular numerals for alignment. The technical voice of the product.</p>
+          <div class="ds-showcase">
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">4xl · Mono · Black · Tabular</span>
+              </div>
+              <div class="ds-type-sample--mono" style="font-size: var(--text-4xl); font-weight: var(--weight-black); letter-spacing: -0.02em; font-variant-numeric: tabular-nums;">2,847</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">2xl · Mono · Bold · Tabular</span>
+              </div>
+              <div class="ds-type-sample--mono" style="font-size: var(--text-2xl); font-weight: var(--weight-bold); font-variant-numeric: tabular-nums;">178g · 312g · 94g</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">sm · Mono · Semibold · Labels</span>
+              </div>
+              <div class="ds-type-sample--mono" style="font-size: var(--text-sm); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-wide);">PROTEIN · CARBS · FAT · FIBER · TDEE · BMR</div>
+            </div>
+            <div class="ds-type-specimen">
+              <div class="ds-type-specimen__meta">
+                <span class="ds-type-specimen__tag">2xs · Mono · Semibold · Micro</span>
+              </div>
+              <div class="ds-type-sample--mono" style="font-size: var(--text-2xs); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-text-tertiary);">--color-accent · --sp-8 · --radius-lg · --dur-normal</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: SPACING                              -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="spacing">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Foundation 03</div>
+          <h2 class="ds-section__title">Spacing</h2>
+          <p class="ds-section__description">
+            A 4px base unit scaled progressively. Generous by default — the system breathes. Density is sparse, margins are wide, padding is ample.
+          </p>
+        </div>
+
+        <div class="ds-showcase">
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-1</span>
+            <div class="ds-spacing-bar" style="width: 4px;"></div>
+            <span class="ds-spacing-value">4px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-2</span>
+            <div class="ds-spacing-bar" style="width: 8px;"></div>
+            <span class="ds-spacing-value">8px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-3</span>
+            <div class="ds-spacing-bar" style="width: 12px;"></div>
+            <span class="ds-spacing-value">12px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-4</span>
+            <div class="ds-spacing-bar" style="width: 16px;"></div>
+            <span class="ds-spacing-value">16px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-5</span>
+            <div class="ds-spacing-bar" style="width: 20px;"></div>
+            <span class="ds-spacing-value">20px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-6</span>
+            <div class="ds-spacing-bar" style="width: 24px;"></div>
+            <span class="ds-spacing-value">24px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-8</span>
+            <div class="ds-spacing-bar" style="width: 32px;"></div>
+            <span class="ds-spacing-value">32px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-10</span>
+            <div class="ds-spacing-bar" style="width: 40px;"></div>
+            <span class="ds-spacing-value">40px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-12</span>
+            <div class="ds-spacing-bar" style="width: 48px;"></div>
+            <span class="ds-spacing-value">48px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-16</span>
+            <div class="ds-spacing-bar" style="width: 64px;"></div>
+            <span class="ds-spacing-value">64px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-20</span>
+            <div class="ds-spacing-bar" style="width: 80px;"></div>
+            <span class="ds-spacing-value">80px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-24</span>
+            <div class="ds-spacing-bar" style="width: 96px;"></div>
+            <span class="ds-spacing-value">96px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-32</span>
+            <div class="ds-spacing-bar" style="width: 128px;"></div>
+            <span class="ds-spacing-value">128px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-40</span>
+            <div class="ds-spacing-bar" style="width: 160px;"></div>
+            <span class="ds-spacing-value">160px</span>
+          </div>
+          <div class="ds-spacing-row">
+            <span class="ds-spacing-label">--sp-48</span>
+            <div class="ds-spacing-bar" style="width: 192px;"></div>
+            <span class="ds-spacing-value">192px</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: BORDERS & RADIUS                     -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="borders">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Foundation 04</div>
+          <h2 class="ds-section__title">Borders & Radius</h2>
+          <p class="ds-section__description">
+            Borders are structural, not decorative. 2px is the standard for interactive elements, creating the Neo-Brutalist frame. Radius stays tight — geometric confidence with just enough softness to feel human.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Border Weights</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex" style="gap: var(--sp-8);">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: var(--sp-3);">
+                <div style="width: 100px; height: 60px; border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-bg-primary);"></div>
+                <span style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary);">1px · Subtle</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; gap: var(--sp-3);">
+                <div style="width: 100px; height: 60px; border: 2px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-bg-primary);"></div>
+                <span style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary);">2px · Standard</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; gap: var(--sp-3);">
+                <div style="width: 100px; height: 60px; border: 3px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-bg-primary);"></div>
+                <span style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary);">3px · Heavy</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Radius Scale</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex" style="gap: var(--sp-6); flex-wrap: wrap;">
+              <div class="ds-radius-box" style="border-radius: var(--radius-none);">
+                <span class="ds-radius-box__label">0</span>
+              </div>
+              <div class="ds-radius-box" style="border-radius: var(--radius-xs);">
+                <span class="ds-radius-box__label">2px</span>
+              </div>
+              <div class="ds-radius-box" style="border-radius: var(--radius-sm);">
+                <span class="ds-radius-box__label">4px</span>
+              </div>
+              <div class="ds-radius-box" style="border-radius: var(--radius-md);">
+                <span class="ds-radius-box__label">6px</span>
+              </div>
+              <div class="ds-radius-box" style="border-radius: var(--radius-lg);">
+                <span class="ds-radius-box__label">10px</span>
+              </div>
+              <div class="ds-radius-box" style="border-radius: var(--radius-xl);">
+                <span class="ds-radius-box__label">14px</span>
+              </div>
+              <div class="ds-radius-box" style="border-radius: var(--radius-2xl);">
+                <span class="ds-radius-box__label">20px</span>
+              </div>
+              <div class="ds-radius-box" style="border-radius: var(--radius-full);">
+                <span class="ds-radius-box__label">Full</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: SHADOWS & ELEVATION                  -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="shadows">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Foundation 05</div>
+          <h2 class="ds-section__title">Shadows & Elevation</h2>
+          <p class="ds-section__description">
+            Two shadow systems: Brutalist offset shadows for interactive elements and structural emphasis. Soft shadows for ambient elevation and floating surfaces.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Brutalist Shadows</h3>
+          <p class="ds-subsection__desc">Hard-edged offset. The signature of the Neo-Brutalism system. Used on buttons, cards, interactive elements.</p>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--5" style="gap: var(--sp-6);">
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-brutal-xs);">XS</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-brutal-sm);">SM</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-brutal-md);">MD</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-brutal-lg);">LG</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-brutal-xl);">XL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Soft Shadows</h3>
+          <p class="ds-subsection__desc">Ambient elevation. Used for dropdowns, modals, floating panels. Subtle depth without Brutalist personality.</p>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--5" style="gap: var(--sp-6);">
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-soft-xs); border-color: var(--color-border);">XS</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-soft-sm); border-color: var(--color-border);">SM</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-soft-md); border-color: var(--color-border);">MD</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-soft-lg); border-color: var(--color-border);">LG</div>
+              <div class="ds-shadow-box" style="box-shadow: var(--shadow-soft-xl); border-color: var(--color-border);">XL</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: MOTION                               -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="motion">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Foundation 06</div>
+          <h2 class="ds-section__title">Motion</h2>
+          <p class="ds-section__description">
+            Life, not spectacle. Fast, dry hovers. Smooth entrances with considered stagger. Spring easing for playful micro-interactions. Every animation reinforces hierarchy and quality.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Easing Curves</h3>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--2" style="gap: var(--sp-6);">
+              <div style="display: flex; flex-direction: column; gap: var(--sp-2);">
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: var(--weight-semibold);">ease-out</span>
+                <span style="font-family: var(--font-mono); font-size: 9px; color: var(--color-text-tertiary);">cubic-bezier(0.16, 1, 0.3, 1)</span>
+                <div style="height: 8px; background: var(--color-bg-tertiary); border-radius: var(--radius-full); border: 1px solid var(--color-border); overflow: hidden;">
+                  <div class="motion-demo-bar" data-ease="ease-out" style="width: 0%; height: 100%; background: var(--color-accent); border-radius: var(--radius-full); transition: width 800ms cubic-bezier(0.16,1,0.3,1);"></div>
+                </div>
+                <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">Primary. Most transitions.</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--sp-2);">
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: var(--weight-semibold);">ease-spring</span>
+                <span style="font-family: var(--font-mono); font-size: 9px; color: var(--color-text-tertiary);">cubic-bezier(0.34, 1.56, 0.64, 1)</span>
+                <div style="height: 8px; background: var(--color-bg-tertiary); border-radius: var(--radius-full); border: 1px solid var(--color-border); overflow: hidden;">
+                  <div class="motion-demo-bar" data-ease="ease-spring" style="width: 0%; height: 100%; background: var(--color-accent); border-radius: var(--radius-full); transition: width 800ms cubic-bezier(0.34,1.56,0.64,1);"></div>
+                </div>
+                <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">Toggles, switches, playful micro-interactions.</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--sp-2);">
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: var(--weight-semibold);">ease-in-out</span>
+                <span style="font-family: var(--font-mono); font-size: 9px; color: var(--color-text-tertiary);">cubic-bezier(0.45, 0, 0.55, 1)</span>
+                <div style="height: 8px; background: var(--color-bg-tertiary); border-radius: var(--radius-full); border: 1px solid var(--color-border); overflow: hidden;">
+                  <div class="motion-demo-bar" data-ease="ease-in-out" style="width: 0%; height: 100%; background: var(--color-accent); border-radius: var(--radius-full); transition: width 800ms cubic-bezier(0.45,0,0.55,1);"></div>
+                </div>
+                <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">Background transitions, mode changes.</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--sp-2);">
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: var(--weight-semibold);">linear</span>
+                <span style="font-family: var(--font-mono); font-size: 9px; color: var(--color-text-tertiary);">linear</span>
+                <div style="height: 8px; background: var(--color-bg-tertiary); border-radius: var(--radius-full); border: 1px solid var(--color-border); overflow: hidden;">
+                  <div class="motion-demo-bar" data-ease="linear" style="width: 0%; height: 100%; background: var(--color-accent); border-radius: var(--radius-full); transition: width 800ms linear;"></div>
+                </div>
+                <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">Spinners, progress, continuous loops.</span>
+              </div>
+            </div>
+            <div style="margin-top: var(--sp-6); text-align: center;">
+              <button class="kd-btn kd-btn--secondary kd-btn--sm" onclick="playMotionDemo()">Play All Curves</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Duration Scale</h3>
+          <div class="ds-showcase">
+            <div style="display: flex; flex-direction: column; gap: var(--sp-4);">
+              <div class="ds-color-row">
+                <span class="ds-color-row__name" style="min-width: 100px; font-family: var(--font-mono); font-size: var(--text-xs);">--dur-instant</span>
+                <span class="ds-color-row__token">80ms</span>
+                <span class="ds-color-row__hex">Color shifts, opacity</span>
+              </div>
+              <div class="ds-color-row">
+                <span class="ds-color-row__name" style="min-width: 100px; font-family: var(--font-mono); font-size: var(--text-xs);">--dur-fast</span>
+                <span class="ds-color-row__token">130ms</span>
+                <span class="ds-color-row__hex">Hover, focus, active</span>
+              </div>
+              <div class="ds-color-row">
+                <span class="ds-color-row__name" style="min-width: 100px; font-family: var(--font-mono); font-size: var(--text-xs);">--dur-normal</span>
+                <span class="ds-color-row__token">220ms</span>
+                <span class="ds-color-row__hex">Toggles, expanding</span>
+              </div>
+              <div class="ds-color-row">
+                <span class="ds-color-row__name" style="min-width: 100px; font-family: var(--font-mono); font-size: var(--text-xs);">--dur-slow</span>
+                <span class="ds-color-row__token">360ms</span>
+                <span class="ds-color-row__hex">Panels, modals, reveals</span>
+              </div>
+              <div class="ds-color-row">
+                <span class="ds-color-row__name" style="min-width: 100px; font-family: var(--font-mono); font-size: var(--text-xs);">--dur-slower</span>
+                <span class="ds-color-row__token">500ms</span>
+                <span class="ds-color-row__hex">Complex animations, charts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: BUTTONS                              -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="buttons">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 01</div>
+          <h2 class="ds-section__title">Buttons</h2>
+          <p class="ds-section__description">
+            Solid, weighted, responsive. Every button has a brutalist shadow that reacts to interaction — press in on click, lift on hover. Six variants, four sizes, and full state coverage.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Variants</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex" style="gap: var(--sp-4); flex-wrap: wrap;">
+              <button class="kd-btn kd-btn--primary kd-btn--md">Primary Action</button>
+              <button class="kd-btn kd-btn--secondary kd-btn--md">Secondary</button>
+              <button class="kd-btn kd-btn--outline kd-btn--md">Outline</button>
+              <button class="kd-btn kd-btn--ghost kd-btn--md">Ghost</button>
+              <button class="kd-btn kd-btn--accent-outline kd-btn--md">Accent Outline</button>
+              <button class="kd-btn kd-btn--destructive kd-btn--md">Destructive</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Sizes</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex ds-flex--center" style="gap: var(--sp-4);">
+              <button class="kd-btn kd-btn--primary kd-btn--sm">Small</button>
+              <button class="kd-btn kd-btn--primary kd-btn--md">Medium</button>
+              <button class="kd-btn kd-btn--primary kd-btn--lg">Large</button>
+              <button class="kd-btn kd-btn--primary kd-btn--xl">Extra Large</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">States</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex" style="gap: var(--sp-4); flex-wrap: wrap;">
+              <button class="kd-btn kd-btn--primary kd-btn--md">Default</button>
+              <button class="kd-btn kd-btn--primary kd-btn--md" disabled>Disabled</button>
+              <button class="kd-btn kd-btn--primary kd-btn--md kd-btn--loading">Loading</button>
+              <button class="kd-btn kd-btn--secondary kd-btn--md" disabled>Disabled</button>
+              <button class="kd-btn kd-btn--secondary kd-btn--md kd-btn--loading">Loading</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">With Icons</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex" style="gap: var(--sp-4); flex-wrap: wrap;">
+              <button class="kd-btn kd-btn--primary kd-btn--md">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>
+                Add Meal
+              </button>
+              <button class="kd-btn kd-btn--secondary kd-btn--md">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12l3-3 2 2 4-4 3 3"/><rect x="1" y="1" width="14" height="14" rx="2"/></svg>
+                View Chart
+              </button>
+              <button class="kd-btn kd-btn--outline kd-btn--md">
+                Export
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 1v9M3 6l4 4 4-4M1 12h12"/></svg>
+              </button>
+              <button class="kd-btn kd-btn--secondary kd-btn--icon kd-btn--md" aria-label="Settings">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="9" r="3"/><path d="M9 1v2M9 15v2M1 9h2M15 9h2M3.3 3.3l1.4 1.4M13.3 13.3l1.4 1.4M3.3 14.7l1.4-1.4M13.3 4.7l1.4-1.4"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: FORM CONTROLS                        -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="forms">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 02</div>
+          <h2 class="ds-section__title">Form Controls</h2>
+          <p class="ds-section__description">
+            Every input the product needs, from text fields to toggles. All states resolved — default, hover, focus, error, success, disabled. The form is where the product conversation happens; every control must feel precise and trustworthy.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Text Inputs</h3>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--2" style="gap: var(--sp-6);">
+              <div class="kd-field">
+                <label class="kd-label" for="input-default">Full Name</label>
+                <input class="kd-input" id="input-default" type="text" placeholder="Enter your full name">
+                <span class="kd-helper">As it appears on your profile</span>
+              </div>
+              <div class="kd-field">
+                <label class="kd-label" for="input-required">Age<span class="kd-label__required">*</span></label>
+                <input class="kd-input" id="input-required" type="number" placeholder="e.g., 28" min="1" max="120">
+                <span class="kd-helper">Required for TDEE calculation</span>
+              </div>
+              <div class="kd-field">
+                <label class="kd-label" for="input-error">Weight (kg)</label>
+                <input class="kd-input kd-input--error" id="input-error" type="number" value="-5">
+                <span class="kd-helper kd-helper--error">Weight must be a positive number</span>
+              </div>
+              <div class="kd-field">
+                <label class="kd-label" for="input-success">Height (cm)</label>
+                <input class="kd-input kd-input--success" id="input-success" type="number" value="175">
+                <span class="kd-helper kd-helper--success">Valid height recorded</span>
+              </div>
+              <div class="kd-field">
+                <label class="kd-label" for="input-disabled">Email</label>
+                <input class="kd-input" id="input-disabled" type="email" value="user@khromadiet.com" disabled>
+                <span class="kd-helper">Locked after verification</span>
+              </div>
+              <div class="kd-field">
+                <label class="kd-label" for="input-brutal">Target Weight (kg)</label>
+                <input class="kd-input kd-input--brutal" id="input-brutal" type="number" placeholder="Your goal weight">
+                <span class="kd-helper">Brutalist variant for emphasis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Select & Textarea</h3>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--2" style="gap: var(--sp-6);">
+              <div class="kd-field">
+                <label class="kd-label" for="select-activity">Activity Level<span class="kd-label__required">*</span></label>
+                <div class="kd-select-wrapper">
+                  <select class="kd-select" id="select-activity">
+                    <option value="" disabled selected>Select your activity level</option>
+                    <option value="sedentary">Sedentary (office job, little exercise)</option>
+                    <option value="light">Lightly Active (1-3 days/week)</option>
+                    <option value="moderate">Moderately Active (3-5 days/week)</option>
+                    <option value="active">Very Active (6-7 days/week)</option>
+                    <option value="extreme">Extremely Active (athlete, physical job)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="kd-field">
+                <label class="kd-label" for="select-goal">Dietary Goal</label>
+                <div class="kd-select-wrapper">
+                  <select class="kd-select" id="select-goal">
+                    <option value="lose">Lose Weight (-500 kcal deficit)</option>
+                    <option value="maintain" selected>Maintain Weight</option>
+                    <option value="gain">Gain Weight (+300 kcal surplus)</option>
+                    <option value="recomp">Body Recomposition</option>
+                  </select>
+                </div>
+              </div>
+              <div class="kd-field" style="grid-column: 1 / -1;">
+                <label class="kd-label" for="textarea-notes">Notes</label>
+                <textarea class="kd-textarea" id="textarea-notes" placeholder="Any dietary restrictions, allergies, or preferences..." rows="4"></textarea>
+                <span class="kd-helper">Optional — helps personalize recommendations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Checkbox, Radio & Toggle</h3>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--3" style="gap: var(--sp-8);">
+              <div style="display: flex; flex-direction: column; gap: var(--sp-4);">
+                <span style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary); letter-spacing: var(--tracking-widest); text-transform: uppercase;">Checkboxes</span>
+                <label class="kd-checkbox">
+                  <input class="kd-checkbox__input" type="checkbox" checked>
+                  <span class="kd-checkbox__box"></span>
+                  Include fiber tracking
+                </label>
+                <label class="kd-checkbox">
+                  <input class="kd-checkbox__input" type="checkbox">
+                  <span class="kd-checkbox__box"></span>
+                  Track water intake
+                </label>
+                <label class="kd-checkbox">
+                  <input class="kd-checkbox__input" type="checkbox" checked>
+                  <span class="kd-checkbox__box"></span>
+                  Show micro-nutrients
+                </label>
+                <label class="kd-checkbox">
+                  <input class="kd-checkbox__input" type="checkbox" disabled>
+                  <span class="kd-checkbox__box" style="opacity: 0.4;"></span>
+                  <span style="opacity: 0.4;">Premium analytics</span>
+                </label>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--sp-4);">
+                <span style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary); letter-spacing: var(--tracking-widest); text-transform: uppercase;">Radios</span>
+                <label class="kd-radio">
+                  <input class="kd-radio__input" type="radio" name="formula" checked>
+                  <span class="kd-radio__circle"></span>
+                  Mifflin-St Jeor
+                </label>
+                <label class="kd-radio">
+                  <input class="kd-radio__input" type="radio" name="formula">
+                  <span class="kd-radio__circle"></span>
+                  Harris-Benedict
+                </label>
+                <label class="kd-radio">
+                  <input class="kd-radio__input" type="radio" name="formula">
+                  <span class="kd-radio__circle"></span>
+                  Katch-McArdle
+                </label>
+                <label class="kd-radio">
+                  <input class="kd-radio__input" type="radio" name="formula">
+                  <span class="kd-radio__circle"></span>
+                  Cunningham
+                </label>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--sp-5);">
+                <span style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary); letter-spacing: var(--tracking-widest); text-transform: uppercase;">Toggles</span>
+                <label class="kd-toggle">
+                  <input class="kd-toggle__input" type="checkbox" checked>
+                  <span class="kd-toggle__track">
+                    <span class="kd-toggle__thumb"></span>
+                  </span>
+                  Dark mode
+                </label>
+                <label class="kd-toggle">
+                  <input class="kd-toggle__input" type="checkbox">
+                  <span class="kd-toggle__track">
+                    <span class="kd-toggle__thumb"></span>
+                  </span>
+                  Metric units
+                </label>
+                <label class="kd-toggle">
+                  <input class="kd-toggle__input" type="checkbox" checked>
+                  <span class="kd-toggle__track">
+                    <span class="kd-toggle__thumb"></span>
+                  </span>
+                  Auto-recalculate
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Slider & Search</h3>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--2" style="gap: var(--sp-8);">
+              <div class="kd-field">
+                <label class="kd-label">Body Fat Percentage</label>
+                <div style="display: flex; align-items: center; gap: var(--sp-4);">
+                  <input class="kd-slider" type="range" min="5" max="50" value="18" id="slider-demo" oninput="document.getElementById('slider-val').textContent = this.value + '%'">
+                  <span id="slider-val" style="font-family: var(--font-mono); font-size: var(--text-sm); font-weight: var(--weight-bold); min-width: 40px; text-align: right;">18%</span>
+                </div>
+                <span class="kd-helper">Estimated range: 10-35% typical</span>
+              </div>
+              <div class="kd-field">
+                <label class="kd-label">Search</label>
+                <div class="kd-search">
+                  <svg class="kd-search__icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M12 12l4 4"/></svg>
+                  <input class="kd-search__input" type="search" placeholder="Search foods, nutrients...">
+                  <span class="kd-search__shortcut">⌘K</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: BADGES & CHIPS                       -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="badges">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 03</div>
+          <h2 class="ds-section__title">Badges & Chips</h2>
+          <p class="ds-section__description">
+            Micro-labels for status, categories, and selection. Badges are static indicators. Chips are interactive — selectable and dismissible.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Badges</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex" style="gap: var(--sp-3); flex-wrap: wrap;">
+              <span class="kd-badge kd-badge--default">Default</span>
+              <span class="kd-badge kd-badge--accent">Active</span>
+              <span class="kd-badge kd-badge--success">● Optimal</span>
+              <span class="kd-badge kd-badge--error">Over Limit</span>
+              <span class="kd-badge kd-badge--warning">Attention</span>
+              <span class="kd-badge kd-badge--solid">v1.0</span>
+              <span class="kd-badge kd-badge--accent">TDEE</span>
+              <span class="kd-badge kd-badge--default">BMR</span>
+              <span class="kd-badge kd-badge--success">On Track</span>
+              <span class="kd-badge kd-badge--warning">Deficit</span>
+              <span class="kd-badge kd-badge--error">● Surplus</span>
+              <span class="kd-badge kd-badge--solid">PRO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Chips</h3>
+          <div class="ds-showcase">
+            <div class="ds-flex" style="gap: var(--sp-3); flex-wrap: wrap;">
+              <span class="kd-chip is-selected">Protein</span>
+              <span class="kd-chip is-selected">Carbs</span>
+              <span class="kd-chip is-selected">Fat</span>
+              <span class="kd-chip">Fiber</span>
+              <span class="kd-chip">Sodium</span>
+              <span class="kd-chip">Sugar</span>
+              <span class="kd-chip">Iron</span>
+              <span class="kd-chip">Calcium</span>
+              <span class="kd-chip">Vitamin D<span class="kd-chip__close">×</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: TABS                                 -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="tabs">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 04</div>
+          <h2 class="ds-section__title">Tabs</h2>
+          <p class="ds-section__description">
+            Content organization through horizontal tabs. Two variants: underline (default) and boxed (segmented control). Clean transitions between panels.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Underline Tabs</h3>
+          <div class="ds-showcase">
+            <div class="kd-tabs" data-tabs="underline-demo">
+              <div class="kd-tabs__list" role="tablist">
+                <button class="kd-tabs__tab is-active" role="tab" data-tab="overview">Overview</button>
+                <button class="kd-tabs__tab" role="tab" data-tab="macros">Macros</button>
+                <button class="kd-tabs__tab" role="tab" data-tab="micros">Micronutrients</button>
+                <button class="kd-tabs__tab" role="tab" data-tab="history">History</button>
+              </div>
+              <div class="kd-tabs__panel is-active" data-panel="overview">
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Your daily nutritional overview with TDEE, BMR, and caloric targets displayed in a unified view. Metrics update in real-time as inputs change.</p>
+              </div>
+              <div class="kd-tabs__panel" data-panel="macros">
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Detailed macronutrient breakdown: protein, carbohydrates, and fats with gram targets and percentage distribution. Includes fiber and sugar sub-tracking.</p>
+              </div>
+              <div class="kd-tabs__panel" data-panel="micros">
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Micronutrient targets based on your profile: vitamins, minerals, and trace elements with RDA percentages and recommended food sources.</p>
+              </div>
+              <div class="kd-tabs__panel" data-panel="history">
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Historical trend data showing how your metrics have evolved over time. Weekly, monthly, and quarterly views available.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Boxed Tabs (Segmented)</h3>
+          <div class="ds-showcase">
+            <div class="kd-tabs kd-tabs--boxed" data-tabs="boxed-demo">
+              <div class="kd-tabs__list" role="tablist">
+                <button class="kd-tabs__tab is-active" role="tab" data-tab="daily">Daily</button>
+                <button class="kd-tabs__tab" role="tab" data-tab="weekly">Weekly</button>
+                <button class="kd-tabs__tab" role="tab" data-tab="monthly">Monthly</button>
+              </div>
+              <div class="kd-tabs__panel is-active" data-panel="daily">
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Daily caloric target: <strong>2,847 kcal</strong>. Current intake: 1,920 kcal. Remaining: 927 kcal.</p>
+              </div>
+              <div class="kd-tabs__panel" data-panel="weekly">
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Weekly average: <strong>2,650 kcal/day</strong>. Total: 18,550 kcal. Adherence: 93%.</p>
+              </div>
+              <div class="kd-tabs__panel" data-panel="monthly">
+                <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Monthly average: <strong>2,720 kcal/day</strong>. Projected weight change: -0.45 kg.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: CARDS                                -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="cards">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 05</div>
+          <h2 class="ds-section__title">Cards</h2>
+          <p class="ds-section__description">
+            Containers with brutalist borders and offset shadows. Three variants: standard (strong border), flat (subtle border), and accent (green-highlighted). Cards lift on hover, press on active.
+          </p>
+        </div>
+
+        <div class="ds-showcase">
+          <div class="ds-grid ds-grid--3" style="gap: var(--sp-6);">
+            <div class="kd-card">
+              <div class="kd-card__header">
+                <span class="kd-card__title">Standard Card</span>
+                <span class="kd-badge kd-badge--default">Default</span>
+              </div>
+              <div class="kd-card__body">
+                <p style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-normal);">Strong 2px border with brutalist shadow. Primary container for structured content blocks.</p>
+              </div>
+              <div class="kd-card__footer">
+                <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">Updated 2 min ago</span>
+              </div>
+            </div>
+
+            <div class="kd-card kd-card--flat">
+              <div class="kd-card__header" style="border-bottom-color: var(--color-border);">
+                <span class="kd-card__title">Flat Card</span>
+                <span class="kd-badge kd-badge--accent">Active</span>
+              </div>
+              <div class="kd-card__body">
+                <p style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-normal);">Subtle border for secondary content. Gains brutalist shadow on hover for interactive feel.</p>
+              </div>
+              <div class="kd-card__footer" style="border-top-color: var(--color-border);">
+                <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">3 items tracked</span>
+              </div>
+            </div>
+
+            <div class="kd-card kd-card--accent">
+              <div class="kd-card__header">
+                <span class="kd-card__title">Accent Card</span>
+                <span class="kd-badge kd-badge--success">● Optimal</span>
+              </div>
+              <div class="kd-card__body">
+                <p style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-normal);">Green-bordered for highlighted content. Accent header background draws attention to priority information.</p>
+              </div>
+              <div class="kd-card__footer" style="border-top-color: var(--color-accent);">
+                <span style="font-size: var(--text-xs); color: var(--color-accent);">Goal achieved ✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: TABLE                                -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="tables">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 06</div>
+          <h2 class="ds-section__title">Tables</h2>
+          <p class="ds-section__description">
+            Data tables with mono-spaced numbers, hover rows, and clean alignment. Designed for nutritional data density — calories, macros, percentages, comparisons.
+          </p>
+        </div>
+
+        <div class="ds-showcase" style="padding: 0;">
+          <div class="kd-table-wrapper">
+            <table class="kd-table">
+              <thead>
+                <tr>
+                  <th>Nutrient</th>
+                  <th>Daily Target</th>
+                  <th>Current</th>
+                  <th>Remaining</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Calories</td>
+                  <td class="kd-table__mono">2,847 kcal</td>
+                  <td class="kd-table__mono">1,920 kcal</td>
+                  <td class="kd-table__mono">927 kcal</td>
+                  <td><span class="kd-badge kd-badge--warning">67%</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Protein</td>
+                  <td class="kd-table__mono">178g</td>
+                  <td class="kd-table__mono">142g</td>
+                  <td class="kd-table__mono">36g</td>
+                  <td><span class="kd-badge kd-badge--success">80%</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Carbohydrates</td>
+                  <td class="kd-table__mono">312g</td>
+                  <td class="kd-table__mono">198g</td>
+                  <td class="kd-table__mono">114g</td>
+                  <td><span class="kd-badge kd-badge--warning">63%</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Fat</td>
+                  <td class="kd-table__mono">94g</td>
+                  <td class="kd-table__mono">68g</td>
+                  <td class="kd-table__mono">26g</td>
+                  <td><span class="kd-badge kd-badge--success">72%</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Fiber</td>
+                  <td class="kd-table__mono">32g</td>
+                  <td class="kd-table__mono">14g</td>
+                  <td class="kd-table__mono">18g</td>
+                  <td><span class="kd-badge kd-badge--error">44%</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: var(--weight-semibold);">Sodium</td>
+                  <td class="kd-table__mono">2,300mg</td>
+                  <td class="kd-table__mono">1,580mg</td>
+                  <td class="kd-table__mono">720mg</td>
+                  <td><span class="kd-badge kd-badge--success">69%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: NAVIGATION                           -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="navigation">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 07</div>
+          <h2 class="ds-section__title">Navigation</h2>
+          <p class="ds-section__description">
+            Breadcrumbs for wayfinding, pagination for data traversal. Clean, mono-spaced, with clear active states.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Breadcrumb</h3>
+          <div class="ds-showcase">
+            <nav class="kd-breadcrumb" aria-label="Breadcrumb">
+              <a class="kd-breadcrumb__item" href="#">Dashboard</a>
+              <span class="kd-breadcrumb__sep">/</span>
+              <a class="kd-breadcrumb__item" href="#">Profile</a>
+              <span class="kd-breadcrumb__sep">/</span>
+              <a class="kd-breadcrumb__item" href="#">Settings</a>
+              <span class="kd-breadcrumb__sep">/</span>
+              <span class="kd-breadcrumb__item is-current" aria-current="page">Nutrition Goals</span>
+            </nav>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Pagination</h3>
+          <div class="ds-showcase">
+            <nav class="kd-pagination" aria-label="Pagination">
+              <button class="kd-pagination__btn" aria-label="Previous">‹</button>
+              <button class="kd-pagination__btn is-active" aria-current="page">1</button>
+              <button class="kd-pagination__btn">2</button>
+              <button class="kd-pagination__btn">3</button>
+              <button class="kd-pagination__btn">4</button>
+              <button class="kd-pagination__btn">5</button>
+              <button class="kd-pagination__btn" aria-label="Next">›</button>
+            </nav>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Progress Bar</h3>
+          <div class="ds-showcase">
+            <div style="display: flex; flex-direction: column; gap: var(--sp-6);">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-2);">
+                  <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold);">Questions Completed</span>
+                  <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-secondary);">9 / 14</span>
+                </div>
+                <div class="kd-progress">
+                  <div class="kd-progress__fill" style="width: 64%;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-2);">
+                  <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold);">Daily Caloric Target</span>
+                  <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-secondary);">1,920 / 2,847 kcal</span>
+                </div>
+                <div class="kd-progress">
+                  <div class="kd-progress__fill" style="width: 67%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: FEEDBACK                             -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="feedback">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 08</div>
+          <h2 class="ds-section__title">Feedback & Alerts</h2>
+          <p class="ds-section__description">
+            Inline feedback for form validation, system messages, and status communication. Four semantic levels with consistent structure.
+          </p>
+        </div>
+
+        <div class="ds-showcase">
+          <div style="display: flex; flex-direction: column; gap: var(--sp-4);">
+            <div class="kd-alert kd-alert--success">
+              <span class="kd-alert__icon">✓</span>
+              <div class="kd-alert__content">
+                <div class="kd-alert__title">Calculation Complete</div>
+                <div>Your TDEE has been calculated as 2,847 kcal/day based on the Mifflin-St Jeor equation with moderate activity adjustment.</div>
+              </div>
+            </div>
+            <div class="kd-alert kd-alert--error">
+              <span class="kd-alert__icon">✕</span>
+              <div class="kd-alert__content">
+                <div class="kd-alert__title">Invalid Input</div>
+                <div>Body fat percentage must be between 3% and 60%. Please enter a valid value to continue with Katch-McArdle formula.</div>
+              </div>
+            </div>
+            <div class="kd-alert kd-alert--warning">
+              <span class="kd-alert__icon">!</span>
+              <div class="kd-alert__content">
+                <div class="kd-alert__title">High Deficit Detected</div>
+                <div>Your caloric deficit exceeds 1,000 kcal/day. This may not be sustainable long-term and could impact metabolic health.</div>
+              </div>
+            </div>
+            <div class="kd-alert kd-alert--info">
+              <span class="kd-alert__icon">i</span>
+              <div class="kd-alert__content">
+                <div class="kd-alert__title">About TDEE</div>
+                <div>Total Daily Energy Expenditure is an estimate. Individual results may vary based on genetics, hormonal factors, and metabolic adaptation.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: MODAL                                -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="modal">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 09</div>
+          <h2 class="ds-section__title">Modal</h2>
+          <p class="ds-section__description">
+            Centered overlay dialog with backdrop blur. Brutalist shadow and border. Spring-animated entrance. Closes on overlay click, escape key, or close button.
+          </p>
+        </div>
+
+        <div class="ds-showcase">
+          <button class="kd-btn kd-btn--primary kd-btn--md" onclick="openModal()">Open Modal</button>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: TOAST                                -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="toast">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 10</div>
+          <h2 class="ds-section__title">Toast Notifications</h2>
+          <p class="ds-section__description">
+            Non-blocking, auto-dismissing notifications. Slide in from right with spring easing. Four semantic variants. Stacks vertically.
+          </p>
+        </div>
+
+        <div class="ds-showcase">
+          <div class="ds-flex" style="gap: var(--sp-3); flex-wrap: wrap;">
+            <button class="kd-btn kd-btn--primary kd-btn--sm" onclick="showToast('success', 'Saved Successfully', 'Your nutritional profile has been updated.')">Success Toast</button>
+            <button class="kd-btn kd-btn--destructive kd-btn--sm" onclick="showToast('error', 'Calculation Error', 'Unable to compute TDEE. Check your inputs.')">Error Toast</button>
+            <button class="kd-btn kd-btn--secondary kd-btn--sm" onclick="showToast('warning', 'High Deficit', 'Caloric deficit exceeds recommended range.')">Warning Toast</button>
+            <button class="kd-btn kd-btn--outline kd-btn--sm" onclick="showToast('info', 'Tip', 'Add body fat % for more accurate calculations.')">Info Toast</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: STATES                               -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="states">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Component 11</div>
+          <h2 class="ds-section__title">States</h2>
+          <p class="ds-section__description">
+            Empty, loading, and skeleton patterns. Every view must have a graceful zero-data state and a loading state that maintains layout stability.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Empty State</h3>
+          <div class="ds-showcase">
+            <div class="kd-empty">
+              <div class="kd-empty__icon" aria-hidden="true">📊</div>
+              <h3 class="kd-empty__title">No Data Yet</h3>
+              <p class="kd-empty__desc">Complete the 14-question form to generate your personalized nutritional analysis and macro breakdown.</p>
+              <button class="kd-btn kd-btn--primary kd-btn--md">Start Questionnaire</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Loading / Skeleton</h3>
+          <div class="ds-showcase">
+            <div class="ds-grid ds-grid--3" style="gap: var(--sp-6);">
+              <div style="padding: var(--sp-5); border: 2px solid var(--color-border); border-radius: var(--radius-lg);">
+                <div class="kd-skeleton" style="width: 60%; height: 12px; margin-bottom: var(--sp-3);"></div>
+                <div class="kd-skeleton" style="width: 40%; height: 32px; margin-bottom: var(--sp-3);"></div>
+                <div class="kd-skeleton" style="width: 80%; height: 10px;"></div>
+              </div>
+              <div style="padding: var(--sp-5); border: 2px solid var(--color-border); border-radius: var(--radius-lg);">
+                <div class="kd-skeleton" style="width: 50%; height: 12px; margin-bottom: var(--sp-3);"></div>
+                <div class="kd-skeleton" style="width: 35%; height: 32px; margin-bottom: var(--sp-3);"></div>
+                <div class="kd-skeleton" style="width: 70%; height: 10px;"></div>
+              </div>
+              <div style="padding: var(--sp-5); border: 2px solid var(--color-border); border-radius: var(--radius-lg);">
+                <div class="kd-skeleton" style="width: 55%; height: 12px; margin-bottom: var(--sp-3);"></div>
+                <div class="kd-skeleton" style="width: 45%; height: 32px; margin-bottom: var(--sp-3);"></div>
+                <div class="kd-skeleton" style="width: 65%; height: 10px;"></div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--sp-4); margin-top: var(--sp-8);">
+              <div class="kd-spinner kd-spinner--sm"></div>
+              <span style="font-size: var(--text-sm); color: var(--color-text-tertiary);">Small spinner</span>
+              <div class="kd-spinner"></div>
+              <span style="font-size: var(--text-sm); color: var(--color-text-tertiary);">Default spinner</span>
+              <div class="kd-spinner kd-spinner--lg"></div>
+              <span style="font-size: var(--text-sm); color: var(--color-text-tertiary);">Large spinner</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: METRIC CARDS                         -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="metrics">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Product Pattern 01</div>
+          <h2 class="ds-section__title">Metric Cards</h2>
+          <p class="ds-section__description">
+            The primary data display unit. Each metric card shows a label, large value, unit, and optional trend delta. Designed for TDEE, BMR, caloric targets, and macro totals.
+          </p>
+        </div>
+
+        <div class="ds-showcase">
+          <div class="ds-grid ds-grid--4" style="gap: var(--sp-5);">
+            <div class="kd-metric">
+              <div class="kd-metric__header">
+                <span class="kd-metric__label">TDEE</span>
+                <div class="kd-metric__icon">🔥</div>
+              </div>
+              <div class="kd-metric__value">2,847<span class="kd-metric__unit">kcal</span></div>
+              <div class="kd-metric__delta kd-metric__delta--up">↑ 3.2% from last week</div>
+            </div>
+            <div class="kd-metric">
+              <div class="kd-metric__header">
+                <span class="kd-metric__label">BMR</span>
+                <div class="kd-metric__icon">⚡</div>
+              </div>
+              <div class="kd-metric__value">1,780<span class="kd-metric__unit">kcal</span></div>
+              <div class="kd-metric__delta" style="color: var(--color-text-tertiary);">— Stable</div>
+            </div>
+            <div class="kd-metric">
+              <div class="kd-metric__header">
+                <span class="kd-metric__label">Protein</span>
+                <div class="kd-metric__icon" style="background: var(--color-accent-subtle); border-color: var(--color-accent);">P</div>
+              </div>
+              <div class="kd-metric__value">178<span class="kd-metric__unit">g/day</span></div>
+              <div class="kd-metric__delta kd-metric__delta--up">↑ 25% of total kcal</div>
+            </div>
+            <div class="kd-metric">
+              <div class="kd-metric__header">
+                <span class="kd-metric__label">Target</span>
+                <div class="kd-metric__icon">🎯</div>
+              </div>
+              <div class="kd-metric__value">2,347<span class="kd-metric__unit">kcal</span></div>
+              <div class="kd-metric__delta kd-metric__delta--down">↓ 500 deficit</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: MACRO VISUALIZATION                  -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="macros">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Product Pattern 02</div>
+          <h2 class="ds-section__title">Macro Visualization</h2>
+          <p class="ds-section__description">
+            Visual representations of macronutrient distribution. Bar charts, donut charts, and mini sparklines — all CSS-driven, no external dependencies.
+          </p>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Macro Progress Bars</h3>
+          <div class="ds-showcase">
+            <div class="kd-macro-bar" style="max-width: 520px;">
+              <div class="kd-macro-bar__item">
+                <div class="kd-macro-bar__header">
+                  <span class="kd-macro-bar__name">Protein</span>
+                  <div class="kd-macro-bar__values">
+                    <span class="kd-macro-bar__grams">178g</span>
+                    <span class="kd-macro-bar__pct">25%</span>
+                  </div>
+                </div>
+                <div class="kd-macro-bar__track">
+                  <div class="kd-macro-bar__fill kd-macro-bar__fill--protein" style="width: 80%;"></div>
+                </div>
+              </div>
+              <div class="kd-macro-bar__item">
+                <div class="kd-macro-bar__header">
+                  <span class="kd-macro-bar__name">Carbohydrates</span>
+                  <div class="kd-macro-bar__values">
+                    <span class="kd-macro-bar__grams">312g</span>
+                    <span class="kd-macro-bar__pct">44%</span>
+                  </div>
+                </div>
+                <div class="kd-macro-bar__track">
+                  <div class="kd-macro-bar__fill kd-macro-bar__fill--carbs" style="width: 63%;"></div>
+                </div>
+              </div>
+              <div class="kd-macro-bar__item">
+                <div class="kd-macro-bar__header">
+                  <span class="kd-macro-bar__name">Fat</span>
+                  <div class="kd-macro-bar__values">
+                    <span class="kd-macro-bar__grams">94g</span>
+                    <span class="kd-macro-bar__pct">30%</span>
+                  </div>
+                </div>
+                <div class="kd-macro-bar__track">
+                  <div class="kd-macro-bar__fill kd-macro-bar__fill--fat" style="width: 72%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-subsection">
+          <h3 class="ds-subsection__title">Donut Chart & Mini Chart</h3>
+          <div class="ds-showcase">
+            <div style="display: flex; gap: var(--sp-12); flex-wrap: wrap; align-items: center;">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: var(--sp-4);">
+                <div class="kd-donut">
+                  <svg class="kd-donut__svg" viewBox="0 0 120 120">
+                    <circle class="kd-donut__circle kd-donut__bg" cx="60" cy="60" r="50" stroke-dasharray="314 314"/>
+                    <circle class="kd-donut__circle" cx="60" cy="60" r="50" stroke="var(--color-text-tertiary)" stroke-dasharray="94.2 314" stroke-dashoffset="0"/>
+                    <circle class="kd-donut__circle" cx="60" cy="60" r="50" stroke="var(--color-border-strong)" stroke-dasharray="138.2 314" stroke-dashoffset="-94.2"/>
+                    <circle class="kd-donut__circle" cx="60" cy="60" r="50" stroke="var(--color-accent)" stroke-dasharray="78.5 314" stroke-dashoffset="-232.4"/>
+                  </svg>
+                  <div class="kd-donut__center">
+                    <span class="kd-donut__center-value">2,847</span>
+                    <span class="kd-donut__center-label">kcal/day</span>
+                  </div>
+                </div>
+                <div style="display: flex; gap: var(--sp-5); font-size: var(--text-xs);">
+                  <span style="display: flex; align-items: center; gap: var(--sp-1);"><span style="width: 10px; height: 10px; border-radius: 2px; background: var(--color-accent);"></span> Protein 25%</span>
+                  <span style="display: flex; align-items: center; gap: var(--sp-1);"><span style="width: 10px; height: 10px; border-radius: 2px; background: var(--color-border-strong);"></span> Carbs 44%</span>
+                  <span style="display: flex; align-items: center; gap: var(--sp-1);"><span style="width: 10px; height: 10px; border-radius: 2px; background: var(--color-text-tertiary);"></span> Fat 30%</span>
+                </div>
+              </div>
+              <div style="flex: 1; min-width: 200px;">
+                <div style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary); letter-spacing: var(--tracking-wider); text-transform: uppercase; margin-bottom: var(--sp-3);">Weekly Trend (kcal)</div>
+                <div class="kd-mini-chart">
+                  <div class="kd-mini-chart__bar" style="height: 65%;"></div>
+                  <div class="kd-mini-chart__bar" style="height: 80%;"></div>
+                  <div class="kd-mini-chart__bar" style="height: 55%;"></div>
+                  <div class="kd-mini-chart__bar" style="height: 90%;"></div>
+                  <div class="kd-mini-chart__bar" style="height: 75%;"></div>
+                  <div class="kd-mini-chart__bar" style="height: 45%;"></div>
+                  <div class="kd-mini-chart__bar is-highlight" style="height: 85%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: var(--sp-2); font-family: var(--font-mono); font-size: 9px; color: var(--color-text-tertiary);">
+                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: DASHBOARD SHELL                      -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="dashboard">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Product Pattern 03</div>
+          <h2 class="ds-section__title">Dashboard Shell</h2>
+          <p class="ds-section__description">
+            Section shells for structuring dashboard panels. Header + body + optional footer. Used for containing metric groups, charts, and summary views.
+          </p>
+        </div>
+
+        <div class="ds-showcase" style="padding: 0;">
+          <div class="kd-shell">
+            <div class="kd-shell__header">
+              <div style="display: flex; align-items: center; gap: var(--sp-3);">
+                <span class="kd-shell__title">Daily Nutritional Summary</span>
+                <span class="kd-badge kd-badge--success">● Live</span>
+              </div>
+              <div style="display: flex; gap: var(--sp-2);">
+                <button class="kd-btn kd-btn--ghost kd-btn--sm">Export</button>
+                <button class="kd-btn kd-btn--outline kd-btn--sm">Recalculate</button>
+              </div>
+            </div>
+            <div class="kd-shell__body">
+              <div class="ds-grid ds-grid--3" style="gap: var(--sp-4);">
+                <div class="kd-metric" style="border-color: var(--color-border);">
+                  <div class="kd-metric__header">
+                    <span class="kd-metric__label">Consumed</span>
+                  </div>
+                  <div class="kd-metric__value" style="font-size: var(--text-3xl);">1,920<span class="kd-metric__unit">kcal</span></div>
+                </div>
+                <div class="kd-metric" style="border-color: var(--color-border);">
+                  <div class="kd-metric__header">
+                    <span class="kd-metric__label">Remaining</span>
+                  </div>
+                  <div class="kd-metric__value" style="font-size: var(--text-3xl); color: var(--color-accent);">927<span class="kd-metric__unit">kcal</span></div>
+                </div>
+                <div class="kd-metric" style="border-color: var(--color-border);">
+                  <div class="kd-metric__header">
+                    <span class="kd-metric__label">Adherence</span>
+                  </div>
+                  <div class="kd-metric__value" style="font-size: var(--text-3xl);">67<span class="kd-metric__unit">%</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="kd-shell__footer">
+              <span>Last meal logged: Grilled chicken salad · 12:45 PM · 480 kcal</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: COMPARISONS                          -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="comparison">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Product Pattern 04</div>
+          <h2 class="ds-section__title">Comparisons</h2>
+          <p class="ds-section__description">
+            Side-by-side data comparison blocks. Used for current vs. target, formula comparison, and before/after scenarios.
+          </p>
+        </div>
+
+        <div class="ds-showcase" style="padding: 0;">
+          <div class="kd-comparison">
+            <div class="kd-comparison__side">
+              <div class="kd-comparison__label">Current Intake</div>
+              <div class="kd-comparison__value">1,920</div>
+              <div class="kd-comparison__desc">kcal consumed today</div>
+            </div>
+            <div class="kd-comparison__divider">
+              <div class="kd-comparison__vs">VS</div>
+            </div>
+            <div class="kd-comparison__side">
+              <div class="kd-comparison__label">TDEE Target</div>
+              <div class="kd-comparison__value" style="color: var(--color-accent);">2,847</div>
+              <div class="kd-comparison__desc">kcal daily target</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= -->
+      <!-- SECTION: PROJECTIONS                          -->
+      <!-- ============================================= -->
+      <section class="ds-section" id="projections">
+        <div class="ds-section__header">
+          <div class="ds-section__overline">Product Pattern 05</div>
+          <h2 class="ds-section__title">Projections & Timeline</h2>
+          <p class="ds-section__description">
+            Weight and body composition projections over time. Timeline patterns for goal tracking and milestone visualization.
+          </p>
+        </div>
+
+        <div class="ds-showcase">
+          <div class="ds-grid ds-grid--2" style="gap: var(--sp-8);">
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: var(--text-md); font-weight: var(--weight-bold); margin-bottom: var(--sp-5); letter-spacing: var(--tracking-tight);">Goal Timeline</h4>
+              <div class="kd-timeline">
+                <div class="kd-timeline__item">
+                  <div class="kd-timeline__dot is-completed"></div>
+                  <div class="kd-timeline__date">Week 0 — Start</div>
+                  <div class="kd-timeline__title">Initial Assessment</div>
+                  <div class="kd-timeline__desc">Weight: 85.0 kg · BF: 22% · BMR: 1,780 kcal</div>
+                </div>
+                <div class="kd-timeline__item">
+                  <div class="kd-timeline__dot is-completed"></div>
+                  <div class="kd-timeline__date">Week 4</div>
+                  <div class="kd-timeline__title">First Milestone</div>
+                  <div class="kd-timeline__desc">Weight: 83.2 kg · BF: 21% · On track (-1.8 kg)</div>
+                </div>
+                <div class="kd-timeline__item">
+                  <div class="kd-timeline__dot is-active"></div>
+                  <div class="kd-timeline__date">Week 8 — Current</div>
+                  <div class="kd-timeline__title">Mid-Point Check</div>
+                  <div class="kd-timeline__desc">Weight: 81.5 kg · BF: 19.5% · Ahead of schedule</div>
+                </div>
+                <div class="kd-timeline__item">
+                  <div class="kd-timeline__dot"></div>
+                  <div class="kd-timeline__date">Week 12</div>
+                  <div class="kd-timeline__title">Target Weight</div>
+                  <div class="kd-timeline__desc">Projected: 79.5 kg · BF: 18% · Goal weight</div>
+                </div>
+                <div class="kd-timeline__item">
+                  <div class="kd-timeline__dot"></div>
+                  <div class="kd-timeline__date">Week 16</div>
+                  <div class="kd-timeline__title">Maintenance Phase</div>
+                  <div class="kd-timeline__desc">Transition to maintenance calories · Recomp focus</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: var(--text-md); font-weight: var(--weight-bold); margin-bottom: var(--sp-5); letter-spacing: var(--tracking-tight);">Weight Projection</h4>
+              <div style="border: 2px solid var(--color-border-strong); border-radius: var(--radius-lg); padding: var(--sp-5);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-4);">
+                  <div>
+                    <div style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary); letter-spacing: var(--tracking-wider); text-transform: uppercase;">Current</div>
+                    <div style="font-family: var(--font-mono); font-size: var(--text-2xl); font-weight: var(--weight-black);">81.5<span style="font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-tertiary); margin-left: 2px;">kg</span></div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary); letter-spacing: var(--tracking-wider); text-transform: uppercase;">Goal</div>
+                    <div style="font-family: var(--font-mono); font-size: var(--text-2xl); font-weight: var(--weight-black); color: var(--color-accent);">79.5<span style="font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-tertiary); margin-left: 2px;">kg</span></div>
+                  </div>
+                </div>
+                <div class="kd-progress" style="height: 12px; margin-bottom: var(--sp-4);">
+                  <div class="kd-progress__fill" style="width: 64%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary);">
+                  <span>85.0 kg start</span>
+                  <span style="color: var(--color-accent); font-weight: var(--weight-semibold);">-3.5 kg lost</span>
+                  <span>-2.0 kg remaining</span>
+                </div>
+              </div>
+
+              <div style="margin-top: var(--sp-6); border: 2px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--sp-4);">
+                <div style="font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-text-tertiary); letter-spacing: var(--tracking-wider); text-transform: uppercase; margin-bottom: var(--sp-3);">Rate of Change</div>
+                <div style="display: flex; gap: var(--sp-6);">
+                  <div>
+                    <div style="font-family: var(--font-mono); font-size: var(--text-lg); font-weight: var(--weight-bold);">-0.44</div>
+                    <div style="font-size: var(--text-xs); color: var(--color-text-tertiary);">kg/week avg</div>
+                  </div>
+                  <div>
+                    <div style="font-family: var(--font-mono); font-size: var(--text-lg); font-weight: var(--weight-bold);">-1.9</div>
+                    <div style="font-size: var(--text-xs); color: var(--color-text-tertiary);">kg/month avg</div>
+                  </div>
+                  <div>
+                    <div style="font-family: var(--font-mono); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--color-accent);">~4.5</div>
+                    <div style="font-size: var(--text-xs); color: var(--color-text-tertiary);">weeks to goal</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ============================================= -->
+<!-- MODAL                                         -->
+<!-- ============================================= -->
+<div class="kd-modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="kd-modal">
+    <div class="kd-modal__header">
+      <h3 class="kd-modal__title" id="modal-title">Confirm Recalculation</h3>
+      <button class="kd-modal__close" onclick="closeModal()" aria-label="Close modal">×</button>
+    </div>
+    <div class="kd-modal__body">
+      <p>Recalculating your TDEE will update all macro targets and projections based on your latest inputs. This action cannot be undone.</p>
+      <div style="margin-top: var(--sp-4); padding: var(--sp-4); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-2);">
+          <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">Current TDEE</span>
+          <span style="font-family: var(--font-mono); font-size: var(--text-sm); font-weight: var(--weight-bold);">2,847 kcal</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="font-size: var(--text-xs); color: var(--color-text-tertiary);">Estimated New TDEE</span>
+          <span style="font-family: var(--font-mono); font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-accent);">2,910 kcal</span>
+        </div>
+      </div>
+    </div>
+    <div class="kd-modal__footer">
+      <button class="kd-btn kd-btn--ghost kd-btn--sm" onclick="closeModal()">Cancel</button>
+      <button class="kd-btn kd-btn--primary kd-btn--sm" onclick="closeModal()">Recalculate</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================= -->
+<!-- TOAST CONTAINER                               -->
+<!-- ============================================= -->
+<div class="kd-toast-container" id="toastContainer" aria-live="polite"></div>
+
+<!-- ============================================= -->
+<!-- JAVASCRIPT                                    -->
+<!-- ============================================= -->
+<script>
+// ============================================= //
+// THEME TOGGLE                                  //
+// ============================================= //
+(function initTheme() {
+  try {
+    var saved = localStorage.getItem('kd-theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    updateThemeUI();
+  } catch (e) {
+    console.error('Theme init error:', e);
+  }
+})();
+
+function toggleTheme() {
+  try {
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('kd-theme', next);
+    updateThemeUI();
+  } catch (e) {
+    console.error('Theme toggle error:', e);
+  }
+}
+
+function updateThemeUI() {
+  try {
+    var theme = document.documentElement.getAttribute('data-theme');
+    var icon = document.getElementById('themeIcon');
+    var label = document.getElementById('themeLabel');
+    if (icon && label) {
+      icon.textContent = theme === 'dark' ? '☾' : '☀';
+      label.textContent = theme === 'dark' ? 'Dark' : 'Light';
+    }
+  } catch (e) {
+    console.error('Theme UI update error:', e);
+  }
+}
+
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+// ============================================= //
+// MOBILE SIDEBAR                                //
+// ============================================= //
+var sidebar = document.getElementById('sidebar');
+var menuToggle = document.getElementById('menuToggle');
+var sidebarOverlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+  sidebar.classList.add('is-open');
+  sidebarOverlay.classList.add('is-open');
+  sidebarOverlay.style.display = 'block';
+  menuToggle.classList.add('is-open');
+  menuToggle.setAttribute('aria-expanded', 'true');
+  requestAnimationFrame(function() {
+    sidebarOverlay.classList.add('is-visible');
+  });
+}
+
+function closeSidebar() {
+  sidebar.classList.remove('is-open');
+  sidebarOverlay.classList.remove('is-visible');
+  menuToggle.classList.remove('is-open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  setTimeout(function() {
+    sidebarOverlay.classList.remove('is-open');
+    sidebarOverlay.style.display = 'none';
+  }, 220);
+}
+
+menuToggle.addEventListener('click', function() {
+  if (sidebar.classList.contains('is-open')) {
+    closeSidebar();
+  } else {
+    openSidebar();
+  }
+});
+
+sidebarOverlay.addEventListener('click', closeSidebar);
+
+// ============================================= //
+// SIDEBAR NAVIGATION — SCROLL SPY              //
+// ============================================= //
+var navLinks = document.querySelectorAll('[data-nav]');
+var sections = [];
+
+navLinks.forEach(function(link) {
+  var href = link.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    var section = document.getElementById(href.substring(1));
+    if (section) {
+      sections.push({ el: section, link: link });
+    }
+  }
+  link.addEventListener('click', function(e) {
+    if (window.innerWidth <= 768) {
+      closeSidebar();
+    }
+  });
+});
+
+var scrollSpyDebounce = null;
+
+function updateScrollSpy() {
+  if (scrollSpyDebounce) return;
+  scrollSpyDebounce = requestAnimationFrame(function() {
+    scrollSpyDebounce = null;
+    var scrollTop = window.scrollY + 120;
+    var activeIdx = 0;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.offsetTop <= scrollTop) {
+        activeIdx = i;
+      }
+    }
+    navLinks.forEach(function(l) { l.classList.remove('is-active'); });
+    if (sections[activeIdx]) {
+      sections[activeIdx].link.classList.add('is-active');
+    }
+  });
+}
+
+window.addEventListener('scroll', updateScrollSpy, { passive: true });
+updateScrollSpy();
+
+// ============================================= //
+// TABS                                          //
+// ============================================= //
+document.querySelectorAll('.kd-tabs').forEach(function(tabContainer) {
+  var tabs = tabContainer.querySelectorAll('.kd-tabs__tab');
+  var panels = tabContainer.querySelectorAll('.kd-tabs__panel');
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var targetPanel = tab.getAttribute('data-tab');
+      tabs.forEach(function(t) { t.classList.remove('is-active'); });
+      panels.forEach(function(p) { p.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+      var panel = tabContainer.querySelector('[data-panel="' + targetPanel + '"]');
+      if (panel) {
+        panel.classList.add('is-active');
+      }
+    });
+
+    tab.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        tab.click();
+      }
+    });
+  });
+});
+
+// ============================================= //
+// MODAL                                         //
+// ============================================= //
+var modalOverlay = document.getElementById('modalOverlay');
+
+function openModal() {
+  modalOverlay.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  var closeBtn = modalOverlay.querySelector('.kd-modal__close');
+  if (closeBtn) closeBtn.focus();
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+
+modalOverlay.addEventListener('click', function(e) {
+  if (e.target === modalOverlay) {
+    closeModal();
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && modalOverlay.classList.contains('is-open')) {
+    closeModal();
+  }
+});
+
+// ============================================= //
+// TOAST NOTIFICATIONS                           //
+// ============================================= //
+var toastCounter = 0;
+
+function showToast(type, title, message) {
+  try {
+    var container = document.getElementById('toastContainer');
+    var id = 'toast-' + (++toastCounter);
+    var iconMap = {
+      success: '✓',
+      error: '✕',
+      warning: '!',
+      info: 'i'
+    };
+
+    var toast = document.createElement('div');
+    toast.className = 'kd-toast kd-toast--' + type;
+    toast.id = id;
+    toast.setAttribute('role', 'alert');
+    toast.innerHTML =
+      '<div class="kd-toast__icon">' + (iconMap[type] || 'i') + '</div>' +
+      '<div class="kd-toast__content">' +
+        '<div class="kd-toast__title">' + title + '</div>' +
+        '<div class="kd-toast__message">' + message + '</div>' +
+      '</div>' +
+      '<button class="kd-toast__close" onclick="dismissToast(\'' + id + '\')" aria-label="Dismiss">×</button>';
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        toast.classList.add('is-visible');
+      });
+    });
+
+    setTimeout(function() {
+      dismissToast(id);
+    }, 4500);
+  } catch (e) {
+    console.error('Toast error:', e);
+  }
+}
+
+function dismissToast(id) {
+  try {
+    var toast = document.getElementById(id);
+    if (toast) {
+      toast.classList.remove('is-visible');
+      setTimeout(function() {
+        if (toast.parentNode) {
+          toast.parentNode.removeChild(toast);
+        }
+      }, 400);
+    }
+  } catch (e) {
+    console.error('Dismiss toast error:', e);
+  }
+}
+
+// ============================================= //
+// CHIPS — TOGGLE SELECTION                      //
+// ============================================= //
+document.querySelectorAll('.kd-chip').forEach(function(chip) {
+  chip.addEventListener('click', function(e) {
+    if (e.target.classList.contains('kd-chip__close')) {
+      chip.style.display = 'none';
+      return;
+    }
+    chip.classList.toggle('is-selected');
+  });
+});
+
+// ============================================= //
+// MOTION DEMO                                   //
+// ============================================= //
+function playMotionDemo() {
+  var bars = document.querySelectorAll('.motion-demo-bar');
+  bars.forEach(function(bar) {
+    bar.style.width = '0%';
+  });
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      bars.forEach(function(bar) {
+        bar.style.width = '85%';
+      });
+    });
+  });
+  setTimeout(function() {
+    bars.forEach(function(bar) {
+      bar.style.width = '0%';
+    });
+  }, 1600);
+}
+
+// ============================================= //
+// INTERSECTION OBSERVER — REVEAL ANIMATION      //
+// ============================================= //
+if ('IntersectionObserver' in window) {
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.ds-section').forEach(function(section) {
+    section.style.opacity = '0';
+    section.style.transform = 'translateY(20px)';
+    section.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+    revealObserver.observe(section);
+  });
+}
+
+// ============================================= //
+// PAGINATION — INTERACTIVE DEMO                 //
+// ============================================= //
+document.querySelectorAll('.kd-pagination__btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var siblings = btn.parentNode.querySelectorAll('.kd-pagination__btn');
+    siblings.forEach(function(s) { s.classList.remove('is-active'); });
+    if (btn.textContent !== '‹' && btn.textContent !== '›') {
+      btn.classList.add('is-active');
+    }
+  });
+});
+
+// ============================================= //
+// PREVENT DOUBLE-CLICK ON BUTTONS               //
+// ============================================= //
+document.querySelectorAll('.kd-btn--primary, .kd-btn--destructive').forEach(function(btn) {
+  if (btn.classList.contains('kd-btn--loading')) return;
+  var processing = false;
+  btn.addEventListener('click', function(e) {
+    if (processing) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    processing = true;
+    setTimeout(function() { processing = false; }, 300);
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿import type { GoalProjectionResult, ValidationIssue } from '../types';
+import type { GoalProjectionResult, ValidationIssue } from '../types';
 
 import type { FormData } from '../types';
 

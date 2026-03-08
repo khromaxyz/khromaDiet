@@ -1,4 +1,4 @@
-﻿export type ButtonVariant = 'primary' | 'secondary' | 'form-next' | 'form-back' | 'submit' | 'summary';
+export type ButtonVariant = 'primary' | 'secondary' | 'form-next' | 'form-back' | 'submit' | 'summary';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export type CardVariant = 'base' | 'goal' | 'kpi' | 'macro' | 'supp';

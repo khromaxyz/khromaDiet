@@ -1,5 +1,5 @@
-﻿import { validateInputs } from '../../lib/engine/validateInputs';
-import { initialFormData } from '../../lib/constants/mockForm';
+import { validateInputs } from '../../lib/engine/validateInputs';
+import { initialFormData } from '@/features/form/config/formConfig';
 
 describe('validateInputs', () => {
   it('flags low calorie target as blocking error', () => {

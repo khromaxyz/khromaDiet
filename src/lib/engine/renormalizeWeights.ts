@@ -1,4 +1,4 @@
-﻿import type { PrecisionPresenceMap, PrecisionState, PrecisionWeightsMap } from '../types';
+import type { PrecisionPresenceMap, PrecisionState, PrecisionWeightsMap } from '../types';
 
 import { BASE_PRECISION_WEIGHTS } from './constants';
 import { round } from './math';

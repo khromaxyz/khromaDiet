@@ -1,0 +1,3445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KhromaDiet — Design Language</title>
+<style>
+/* ============================================= */
+/* FOUNDATION: CSS Custom Properties             */
+/* ============================================= */
+:root {
+  /* — Color Tokens — */
+  --black: #0a0a0a;
+  --black-deep: #050505;
+  --black-soft: #1a1a1a;
+  --gray-950: #141414;
+  --gray-900: #1e1e1e;
+  --gray-800: #2a2a2a;
+  --gray-700: #3a3a3a;
+  --gray-600: #555555;
+  --gray-500: #717171;
+  --gray-400: #8e8e8e;
+  --gray-300: #b0b0b0;
+  --gray-200: #d4d4d4;
+  --gray-150: #e2e2e2;
+  --gray-100: #eeeeee;
+  --gray-50: #f7f7f7;
+  --white: #ffffff;
+  --white-off: #fafafa;
+
+  /* — Accent — */
+  --green: #00e05a;
+  --green-bright: #00ff66;
+  --green-muted: #00c44e;
+  --green-dark: #00a040;
+  --green-subtle: #e6fff0;
+  --green-subtle-dark: #0a2a14;
+  --green-ghost: rgba(0,224,90,0.08);
+  --green-ghost-dark: rgba(0,224,90,0.12);
+
+  /* — Semantic — */
+  --error: #e53e3e;
+  --error-bg: #fff5f5;
+  --warning: #d69e2e;
+  --warning-bg: #fffff0;
+  --success: #00e05a;
+  --success-bg: #e6fff0;
+
+  /* — Surface (Light) — */
+  --bg-primary: var(--white);
+  --bg-secondary: var(--gray-50);
+  --bg-tertiary: var(--gray-100);
+  --bg-elevated: var(--white);
+  --text-primary: var(--black);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-400);
+  --border-primary: var(--black);
+  --border-secondary: var(--gray-200);
+  --border-subtle: var(--gray-100);
+
+  /* — Spacing Scale — */
+  --s-2: 2px;
+  --s-4: 4px;
+  --s-6: 6px;
+  --s-8: 8px;
+  --s-12: 12px;
+  --s-16: 16px;
+  --s-20: 20px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-40: 40px;
+  --s-48: 48px;
+  --s-56: 56px;
+  --s-64: 64px;
+  --s-80: 80px;
+  --s-96: 96px;
+  --s-120: 120px;
+  --s-160: 160px;
+
+  /* — Radius — */
+  --r-none: 0;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 24px;
+  --r-full: 9999px;
+
+  /* — Shadows — */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
+  --shadow-brutal: 4px 4px 0 var(--black);
+  --shadow-brutal-sm: 2px 2px 0 var(--black);
+  --shadow-brutal-green: 4px 4px 0 var(--green);
+
+  /* — Typography — */
+  --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+
+  --fs-11: 0.6875rem;
+  --fs-12: 0.75rem;
+  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;
+  --fs-15: 0.9375rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+  --fs-28: 1.75rem;
+  --fs-32: 2rem;
+  --fs-40: 2.5rem;
+  --fs-48: 3rem;
+  --fs-56: 3.5rem;
+  --fs-64: 4rem;
+  --fs-72: 4.5rem;
+  --fs-80: 5rem;
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.15;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.65;
+
+  --ls-tight: -0.03em;
+  --ls-snug: -0.02em;
+  --ls-normal: -0.01em;
+  --ls-wide: 0.04em;
+  --ls-wider: 0.08em;
+  --ls-widest: 0.14em;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+  --fw-black: 900;
+
+  /* — Transitions — */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+
+  /* — Layout — */
+  --max-width: 1200px;
+  --max-width-narrow: 800px;
+  --max-width-tight: 600px;
+  --gutter: var(--s-24);
+}
+
+/* ============================================= */
+/* DARK MODE TOKENS                              */
+/* ============================================= */
+[data-theme="dark"] {
+  --bg-primary: var(--black-deep);
+  --bg-secondary: var(--gray-950);
+  --bg-tertiary: var(--gray-900);
+  --bg-elevated: var(--gray-900);
+  --text-primary: var(--white);
+  --text-secondary: var(--gray-400);
+  --text-tertiary: var(--gray-500);
+  --border-primary: var(--white);
+  --border-secondary: var(--gray-800);
+  --border-subtle: var(--gray-900);
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.5);
+  --shadow-brutal: 4px 4px 0 var(--white);
+  --shadow-brutal-sm: 2px 2px 0 var(--white);
+  --error-bg: #2a1010;
+  --warning-bg: #2a2510;
+  --success-bg: var(--green-subtle-dark);
+  --green-ghost: rgba(0,224,90,0.06);
+}
+
+/* ============================================= */
+/* RESET & BASE                                  */
+/* ============================================= */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-16);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color var(--duration-slow) var(--ease-out),
+              color var(--duration-slow) var(--ease-out);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--green);
+  color: var(--black);
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+input, select, textarea { font: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
+ul, ol { list-style: none; }
+
+/* ============================================= */
+/* UTILITY CLASSES                               */
+/* ============================================= */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.container--narrow {
+  max-width: var(--max-width-narrow);
+}
+
+.container--tight {
+  max-width: var(--max-width-tight);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================= */
+/* ANIMATION KEYFRAMES                           */
+/* ============================================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes barGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--duration-slower) var(--ease-out),
+              transform var(--duration-slower) var(--ease-out);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0ms; }
+.stagger-2 { transition-delay: 80ms; }
+.stagger-3 { transition-delay: 160ms; }
+.stagger-4 { transition-delay: 240ms; }
+.stagger-5 { transition-delay: 320ms; }
+.stagger-6 { transition-delay: 400ms; }
+
+/* ============================================= */
+/* NAVIGATION                                    */
+/* ============================================= */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--s-16) 0;
+  transition: background-color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out),
+              backdrop-filter var(--duration-normal) var(--ease-out);
+}
+
+.nav.is-scrolled {
+  background-color: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+[data-theme="dark"] .nav.is-scrolled {
+  background-color: rgba(5,5,5,0.88);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+  font-family: var(--font-display);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-tight);
+}
+
+.nav__logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--green);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-normal) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.nav__logo:hover .nav__logo-mark {
+  transform: rotate(-6deg) scale(1.08);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-32);
+}
+
+.nav__link {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--green);
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.nav__link:hover {
+  color: var(--text-primary);
+}
+
+.nav__link:hover::after {
+  width: 100%;
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-12);
+}
+
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-full);
+  border: 2px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-16);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              transform var(--duration-normal) var(--ease-spring),
+              background-color var(--duration-fast) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  border-color: var(--green);
+  background-color: var(--green-ghost);
+  transform: scale(1.08);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* ============================================= */
+/* HERO SECTION                                  */
+/* ============================================= */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--s-160) 0 var(--s-120);
+  position: relative;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  padding: var(--s-6) var(--s-16) var(--s-6) var(--s-8);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--r-full);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--s-40);
+  animation: fadeInUp 0.6s var(--ease-out) 0.1s both;
+  width: fit-content;
+}
+
+.hero__badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--green);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--fs-48), 8vw, var(--fs-80));
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.04em;
+  max-width: 900px;
+  animation: fadeInUp 0.6s var(--ease-out) 0.2s both;
+}
+
+.hero__title-accent {
+  color: var(--green);
+  position: relative;
+  display: inline-block;
+}
+
+.hero__subtitle {
+  font-size: clamp(var(--fs-16), 2vw, var(--fs-20));
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin-top: var(--s-24);
+  animation: fadeInUp 0.6s var(--ease-out) 0.35s both;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-16);
+  margin-top: var(--s-48);
+  animation: fadeInUp 0.6s var(--ease-out) 0.5s both;
+}
+
+/* ============================================= */
+/* BUTTONS                                       */
+/* ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-8);
+  font-family: var(--font-body);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-normal);
+  border-radius: var(--r-md);
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Primary */
+.btn--primary {
+  padding: var(--s-16) var(--s-32);
+  font-size: var(--fs-15);
+  background: var(--green);
+  color: var(--black);
+  border: 2px solid var(--black);
+  box-shadow: var(--shadow-brutal);
+}
+
+.btn--primary:hover {
+  box-shadow: 6px 6px 0 var(--black);
+  transform: translate(-2px, -2px);
+}
+
+.btn--primary:active {
+  box-shadow: 2px 2px 0 var(--black);
+  transform: translate(1px, 1px);
+}
+
+[data-theme="dark"] .btn--primary {
+  border-color: var(--white);
+  box-shadow: 4px 4px 0 var(--white);
+  color: var(--black);
+}
+
+[data-theme="dark"] .btn--primary:hover {
+  box-shadow: 6px 6px 0 var(--white);
+}
+
+[data-theme="dark"] .btn--primary:active {
+  box-shadow: 2px 2px 0 var(--white);
+}
+
+/* Secondary */
+.btn--secondary {
+  padding: var(--s-16) var(--s-32);
+  font-size: var(--fs-15);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-primary);
+  box-shadow: var(--shadow-brutal);
+}
+
+.btn--secondary:hover {
+  box-shadow: 6px 6px 0 var(--border-primary);
+  transform: translate(-2px, -2px);
+}
+
+.btn--secondary:active {
+  box-shadow: 2px 2px 0 var(--border-primary);
+  transform: translate(1px, 1px);
+}
+
+/* Ghost */
+.btn--ghost {
+  padding: var(--s-12) var(--s-24);
+  font-size: var(--fs-14);
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-secondary);
+}
+
+.btn--ghost:hover {
+  border-color: var(--green);
+  background: var(--green-ghost);
+  color: var(--green);
+}
+
+/* Small */
+.btn--sm {
+  padding: var(--s-8) var(--s-16);
+  font-size: var(--fs-13);
+}
+
+.btn--sm.btn--primary {
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.btn--sm.btn--primary:hover {
+  box-shadow: 3px 3px 0 var(--black);
+  transform: translate(-1px, -1px);
+}
+
+/* Icon Button */
+.btn--icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: var(--r-md);
+}
+
+/* Disabled */
+.btn:disabled, .btn.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================= */
+/* SECTION SYSTEM                                */
+/* ============================================= */
+.section {
+  padding: var(--s-120) 0;
+  position: relative;
+}
+
+.section--compact {
+  padding: var(--s-80) 0;
+}
+
+.section--alt {
+  background: var(--bg-secondary);
+}
+
+.section__label {
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: var(--s-16);
+  font-family: var(--font-mono);
+}
+
+.section__heading {
+  font-family: var(--font-display);
+  font-size: clamp(var(--fs-32), 4vw, var(--fs-48));
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  max-width: 700px;
+}
+
+.section__desc {
+  font-size: var(--fs-16);
+  line-height: var(--lh-relaxed);
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin-top: var(--s-16);
+}
+
+.section__header {
+  margin-bottom: var(--s-64);
+}
+
+/* ============================================= */
+/* DIVIDER                                       */
+/* ============================================= */
+.divider {
+  height: 1px;
+  background: var(--border-secondary);
+  border: none;
+  margin: 0;
+}
+
+.divider--strong {
+  height: 2px;
+  background: var(--border-primary);
+}
+
+/* ============================================= */
+/* TOKENS GRID (Color & Typography Preview)      */
+/* ============================================= */
+.tokens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--s-12);
+}
+
+.token-swatch {
+  aspect-ratio: 1;
+  border-radius: var(--r-md);
+  border: 2px solid var(--border-secondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--s-12);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--duration-normal) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.token-swatch:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.token-swatch__name {
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-mono);
+  letter-spacing: var(--ls-wide);
+}
+
+.token-swatch__value {
+  font-size: var(--fs-11);
+  font-family: var(--font-mono);
+  opacity: 0.7;
+  margin-top: var(--s-2);
+}
+
+/* ============================================= */
+/* CARDS                                         */
+/* ============================================= */
+.card {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: transform var(--duration-normal) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.card__body {
+  padding: var(--s-24);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-snug);
+}
+
+.card__text {
+  font-size: var(--fs-14);
+  line-height: var(--lh-relaxed);
+  color: var(--text-secondary);
+  margin-top: var(--s-8);
+}
+
+.card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+  font-size: var(--fs-12);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  margin-top: var(--s-16);
+}
+
+.card__tag {
+  display: inline-flex;
+  padding: var(--s-4) var(--s-8);
+  background: var(--green-ghost);
+  border: 1px solid var(--green);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  font-family: var(--font-mono);
+  color: var(--green-muted);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .card__tag {
+  color: var(--green);
+}
+
+/* ============================================= */
+/* FORM ELEMENTS                                 */
+/* ============================================= */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+
+.form-label {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--s-16);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--r-md);
+  font-size: var(--fs-16);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+  -webkit-appearance: none;
+}
+
+.form-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-input:hover {
+  border-color: var(--gray-400);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px var(--green-ghost);
+}
+
+.form-input.is-error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px rgba(229,62,62,0.08);
+}
+
+.form-input.is-success {
+  border-color: var(--success);
+  box-shadow: 0 0 0 4px rgba(0,224,90,0.08);
+}
+
+.form-hint {
+  font-size: var(--fs-12);
+  color: var(--text-tertiary);
+}
+
+.form-error {
+  font-size: var(--fs-12);
+  color: var(--error);
+  font-weight: var(--fw-medium);
+}
+
+.form-success {
+  font-size: var(--fs-12);
+  color: var(--success);
+  font-weight: var(--fw-medium);
+}
+
+/* Select */
+.form-select-wrap {
+  position: relative;
+}
+
+.form-select-wrap::after {
+  content: '';
+  position: absolute;
+  right: var(--s-16);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--text-secondary);
+  pointer-events: none;
+}
+
+.form-select {
+  width: 100%;
+  padding: var(--s-16);
+  padding-right: var(--s-48);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--r-md);
+  font-size: var(--fs-16);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px var(--green-ghost);
+}
+
+/* Checkbox / Radio */
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-12);
+  cursor: pointer;
+  position: relative;
+}
+
+.form-check input[type="checkbox"],
+.form-check input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid var(--border-primary);
+  background: var(--bg-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  margin-top: 1px;
+}
+
+.form-check input[type="checkbox"] {
+  border-radius: var(--r-sm);
+}
+
+.form-check input[type="radio"] {
+  border-radius: var(--r-full);
+}
+
+.form-check input[type="checkbox"]:checked,
+.form-check input[type="radio"]:checked {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.form-check input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 10px;
+  border: solid var(--black);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  margin: 2px auto 0;
+}
+
+.form-check input[type="radio"]:checked::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--black);
+  margin: 5px auto 0;
+}
+
+.form-check__label {
+  font-size: var(--fs-15);
+  line-height: 1.4;
+}
+
+.form-check__desc {
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  margin-top: var(--s-2);
+}
+
+/* Toggle Switch */
+.toggle {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle__track {
+  position: absolute;
+  inset: 0;
+  background: var(--gray-300);
+  border-radius: var(--r-full);
+  border: 2px solid var(--border-primary);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.toggle input:checked + .toggle__track {
+  background: var(--green);
+}
+
+.toggle__thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 20px;
+  height: 20px;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--r-full);
+  transition: transform var(--duration-normal) var(--ease-spring);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.toggle input:checked ~ .toggle__thumb {
+  transform: translateX(20px);
+}
+
+/* ============================================= */
+/* PROGRESS / STEPPER                            */
+/* ============================================= */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--r-full);
+  overflow: hidden;
+  border: 1px solid var(--border-secondary);
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: var(--r-full);
+  transition: width var(--duration-slower) var(--ease-out);
+  transform-origin: left;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.stepper__step {
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+}
+
+.stepper__dot {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-full);
+  border: 2px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  background: var(--bg-primary);
+  transition: all var(--duration-normal) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.stepper__step.is-active .stepper__dot {
+  border-color: var(--green);
+  background: var(--green);
+  color: var(--black);
+}
+
+.stepper__step.is-complete .stepper__dot {
+  border-color: var(--green);
+  background: var(--green);
+  color: var(--black);
+}
+
+.stepper__line {
+  width: 40px;
+  height: 2px;
+  background: var(--border-secondary);
+  flex-shrink: 0;
+  margin: 0 var(--s-4);
+}
+
+.stepper__step.is-complete + .stepper__line,
+.stepper__line.is-active {
+  background: var(--green);
+}
+
+.stepper__label {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-medium);
+  color: var(--text-tertiary);
+  display: none;
+}
+
+.stepper__step.is-active .stepper__label {
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* DASHBOARD / DATA COMPONENTS                   */
+/* ============================================= */
+.stat-card {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--r-lg);
+  padding: var(--s-24);
+  transition: border-color var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.stat-card:hover {
+  border-color: var(--border-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card__label {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.stat-card__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-40);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  margin-top: var(--s-8);
+}
+
+.stat-card__change {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  font-family: var(--font-mono);
+  margin-top: var(--s-8);
+  padding: var(--s-4) var(--s-8);
+  border-radius: var(--r-sm);
+}
+
+.stat-card__change--up {
+  color: var(--green-muted);
+  background: var(--green-ghost);
+}
+
+[data-theme="dark"] .stat-card__change--up {
+  color: var(--green);
+}
+
+.stat-card__change--down {
+  color: var(--error);
+  background: rgba(229,62,62,0.08);
+}
+
+/* Chart Bar */
+.chart-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-6);
+  height: 120px;
+  padding-top: var(--s-8);
+}
+
+.chart-bar__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.chart-bar__bar {
+  width: 100%;
+  background: var(--green);
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  border: 2px solid var(--border-primary);
+  border-bottom: none;
+  min-height: 4px;
+  transition: height var(--duration-slower) var(--ease-out);
+}
+
+.chart-bar__label {
+  font-size: var(--fs-11);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  font-weight: var(--fw-medium);
+}
+
+/* Horizontal Bar */
+.h-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+}
+
+.h-bar__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.h-bar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.h-bar__name {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+}
+
+.h-bar__value {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-mono);
+}
+
+.h-bar__track {
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--r-full);
+  overflow: hidden;
+  border: 1px solid var(--border-secondary);
+}
+
+.h-bar__fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: var(--r-full);
+  transition: width 1s var(--ease-out);
+  transform-origin: left;
+}
+
+/* ============================================= */
+/* TOAST / NOTIFICATION                          */
+/* ============================================= */
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-12);
+  padding: var(--s-16) var(--s-20);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--r-lg);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-lg);
+  max-width: 400px;
+}
+
+.toast--success {
+  border-left: 4px solid var(--green);
+}
+
+.toast--error {
+  border-left: 4px solid var(--error);
+}
+
+.toast--warning {
+  border-left: 4px solid var(--warning);
+}
+
+.toast__icon {
+  font-size: var(--fs-20);
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+.toast__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast__title {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+
+.toast__message {
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  margin-top: var(--s-4);
+  line-height: var(--lh-normal);
+}
+
+.toast__close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-14);
+  color: var(--text-tertiary);
+  transition: background var(--duration-fast),
+              color var(--duration-fast);
+}
+
+.toast__close:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* EMPTY STATE                                   */
+/* ============================================= */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--s-64) var(--s-24);
+  border: 2px dashed var(--border-secondary);
+  border-radius: var(--r-lg);
+}
+
+.empty-state__icon {
+  font-size: var(--fs-48);
+  margin-bottom: var(--s-16);
+  opacity: 0.3;
+}
+
+.empty-state__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-bold);
+}
+
+.empty-state__desc {
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
+  margin-top: var(--s-8);
+  max-width: 320px;
+}
+
+/* ============================================= */
+/* SKELETON / LOADING                            */
+/* ============================================= */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--r-md);
+}
+
+.skeleton--text {
+  height: 16px;
+  width: 100%;
+  margin-bottom: var(--s-8);
+}
+
+.skeleton--text-short {
+  height: 16px;
+  width: 60%;
+}
+
+.skeleton--heading {
+  height: 28px;
+  width: 80%;
+  margin-bottom: var(--s-12);
+}
+
+.skeleton--avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-full);
+}
+
+.skeleton--card {
+  height: 200px;
+  width: 100%;
+}
+
+/* ============================================= */
+/* BADGE / PILL                                  */
+/* ============================================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-12);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-mono);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  border-radius: var(--r-full);
+  border: 2px solid var(--border-primary);
+}
+
+.badge--green {
+  background: var(--green);
+  color: var(--black);
+  border-color: var(--green);
+}
+
+.badge--outline {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+/* ============================================= */
+/* SPECIFIC SECTIONS — APPLIED CONTEXTS          */
+/* ============================================= */
+
+/* — Type Showcase — */
+.type-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-48);
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--s-32);
+  align-items: baseline;
+  padding-bottom: var(--s-48);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.type-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.type-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.type-meta__size {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--green);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wider);
+}
+
+.type-meta__role {
+  font-size: var(--fs-12);
+  color: var(--text-tertiary);
+  font-weight: var(--fw-medium);
+}
+
+/* — Comparison Table — */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-24);
+}
+
+.compare-card {
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.compare-card.is-recommended {
+  border-color: var(--green);
+}
+
+.compare-card__header {
+  padding: var(--s-20) var(--s-24);
+  border-bottom: 2px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.compare-card.is-recommended .compare-card__header {
+  background: var(--green);
+  border-bottom-color: var(--green);
+}
+
+.compare-card__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-bold);
+}
+
+.compare-card.is-recommended .compare-card__name {
+  color: var(--black);
+}
+
+.compare-card__body {
+  padding: var(--s-24);
+}
+
+.compare-card__price {
+  font-family: var(--font-display);
+  font-size: var(--fs-40);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-tight);
+}
+
+.compare-card.is-recommended .compare-card__price {
+  color: var(--text-primary);
+}
+
+.compare-card__period {
+  font-size: var(--fs-14);
+  color: var(--text-tertiary);
+  font-weight: var(--fw-regular);
+}
+
+.compare-card__features {
+  margin-top: var(--s-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+}
+
+.compare-card__feature {
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+  font-size: var(--fs-14);
+}
+
+.compare-card__feature-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--fs-12);
+}
+
+/* — Dashboard Panel — */
+.dash-panel {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.dash-panel__header {
+  padding: var(--s-20) var(--s-24);
+  border-bottom: 1px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-panel__title {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.dash-panel__body {
+  padding: var(--s-24);
+}
+
+/* — Meal/Food List — */
+.food-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.food-item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-16);
+  padding: var(--s-16) 0;
+  border-bottom: 1px solid var(--border-secondary);
+  transition: background var(--duration-fast);
+}
+
+.food-item:last-child {
+  border-bottom: none;
+}
+
+.food-item__icon {
+  width: 44px;
+  height: 44px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-20);
+  flex-shrink: 0;
+}
+
+.food-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.food-item__name {
+  font-size: var(--fs-15);
+  font-weight: var(--fw-semibold);
+}
+
+.food-item__detail {
+  font-size: var(--fs-12);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  margin-top: var(--s-2);
+}
+
+.food-item__kcal {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.food-item__kcal-unit {
+  font-size: var(--fs-11);
+  color: var(--text-tertiary);
+  font-weight: var(--fw-regular);
+}
+
+/* ============================================= */
+/* FOOTER                                        */
+/* ============================================= */
+.footer {
+  padding: var(--s-64) 0 var(--s-32);
+  border-top: 2px solid var(--border-primary);
+}
+
+.footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.footer__brand {
+  font-family: var(--font-display);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-tight);
+}
+
+.footer__copy {
+  font-size: var(--fs-12);
+  color: var(--text-tertiary);
+  margin-top: var(--s-8);
+  font-family: var(--font-mono);
+}
+
+/* ============================================= */
+/* RESPONSIVE                                    */
+/* ============================================= */
+@media (max-width: 768px) {
+  :root {
+    --gutter: var(--s-16);
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .hero {
+    padding: var(--s-120) 0 var(--s-80);
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section {
+    padding: var(--s-80) 0;
+  }
+
+  .section__header {
+    margin-bottom: var(--s-40);
+  }
+
+  .type-row {
+    grid-template-columns: 1fr;
+    gap: var(--s-8);
+  }
+
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-24);
+  }
+
+  .stepper {
+    overflow-x: auto;
+    padding-bottom: var(--s-8);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: var(--fs-40);
+  }
+
+  .section__heading {
+    font-size: var(--fs-28);
+  }
+
+  .stat-card__value {
+    font-size: var(--fs-32);
+  }
+}
+
+/* ============================================= */
+/* INTERACTIVE STATES SHOWCASE                   */
+/* ============================================= */
+.states-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s-16);
+}
+
+.states-grid .btn {
+  width: 100%;
+}
+
+/* Tooltip */
+.tooltip-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-wrap .tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: var(--s-6) var(--s-12);
+  background: var(--black);
+  color: var(--white);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-medium);
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast),
+              transform var(--duration-fast) var(--ease-out);
+}
+
+[data-theme="dark"] .tooltip-wrap .tooltip {
+  background: var(--white);
+  color: var(--black);
+}
+
+.tooltip-wrap .tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--black);
+}
+
+[data-theme="dark"] .tooltip-wrap .tooltip::after {
+  border-top-color: var(--white);
+}
+
+.tooltip-wrap:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================= */
+/* LAYOUT HELPERS                                */
+/* ============================================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-16);
+}
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--s-24);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-20);
+}
+
+@media (max-width: 900px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-20);
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Macro ring (CSS only) */
+.macro-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--r-full);
+  background: conic-gradient(
+    var(--green) 0deg 130deg,
+    #3a3a3a 130deg 230deg,
+    var(--gray-300) 230deg 310deg,
+    var(--bg-tertiary) 310deg 360deg
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+[data-theme="dark"] .macro-ring {
+  background: conic-gradient(
+    var(--green) 0deg 130deg,
+    var(--gray-600) 130deg 230deg,
+    var(--gray-400) 230deg 310deg,
+    var(--gray-800) 310deg 360deg
+  );
+}
+
+.macro-ring__inner {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--r-full);
+  background: var(--bg-elevated);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.macro-ring__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-black);
+  line-height: 1;
+}
+
+.macro-ring__label {
+  font-size: var(--fs-11);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  margin-top: var(--s-4);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+}
+
+/* Macro legend */
+.macro-legend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+}
+
+.macro-legend__item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+}
+
+.macro-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--r-full);
+  flex-shrink: 0;
+}
+
+.macro-legend__name {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  flex: 1;
+}
+
+.macro-legend__val {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-mono);
+}
+
+/* ============================================= */
+/* SECTION SEPARATORS                            */
+/* ============================================= */
+.section-sep {
+  display: flex;
+  align-items: center;
+  gap: var(--s-16);
+  padding: var(--s-32) 0;
+}
+
+.section-sep__line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-secondary);
+}
+
+.section-sep__label {
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-mono);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+/* ============================================= */
+/* FORM STEP CONTEXT                             */
+/* ============================================= */
+.form-step {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--r-xl);
+  padding: var(--s-40);
+  box-shadow: var(--shadow-brutal);
+}
+
+.form-step__number {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: var(--s-4);
+}
+
+.form-step__question {
+  font-family: var(--font-display);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-snug);
+  margin-bottom: var(--s-24);
+}
+
+.form-step__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--s-32);
+  padding-top: var(--s-24);
+  border-top: 1px solid var(--border-secondary);
+}
+
+/* Option Cards (for form steps) */
+.option-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--s-12);
+}
+
+.option-card {
+  padding: var(--s-20) var(--s-16);
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--duration-fast) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-8);
+}
+
+.option-card:hover {
+  border-color: var(--text-primary);
+}
+
+.option-card.is-selected {
+  border-color: var(--green);
+  background: var(--green-ghost);
+  box-shadow: 0 0 0 1px var(--green);
+}
+
+.option-card__icon {
+  font-size: var(--fs-28);
+}
+
+.option-card__label {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+}
+
+.option-card__desc {
+  font-size: var(--fs-12);
+  color: var(--text-tertiary);
+}
+
+/* ============================================= */
+/* PROFILE SUMMARY CONTEXT                       */
+/* ============================================= */
+.profile-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-32);
+  align-items: start;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--r-full);
+  border: 3px solid var(--green);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-32);
+}
+
+.profile-info__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-snug);
+}
+
+.profile-info__meta {
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  margin-top: var(--s-4);
+  font-family: var(--font-mono);
+}
+
+.profile-stats {
+  display: flex;
+  gap: var(--s-24);
+  margin-top: var(--s-20);
+  flex-wrap: wrap;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-20);
+  font-weight: var(--fw-black);
+}
+
+.profile-stat__label {
+  font-size: var(--fs-11);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+}
+
+@media (max-width: 480px) {
+  .profile-summary {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .profile-stats {
+    justify-content: center;
+  }
+}
+</style>
+</head>
+
+<body data-theme="light">
+
+<!-- ============================================= -->
+<!-- NAVIGATION                                    -->
+<!-- ============================================= -->
+<nav class="nav" id="mainNav" role="navigation" aria-label="Navegação principal">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo" aria-label="KhromaDiet Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M7 0L14 7L7 14L0 7L7 0Z" fill="#0a0a0a"/>
+          </svg>
+        </div>
+        <span>KhromaDiet</span>
+      </a>
+
+      <div class="nav__links" role="menubar">
+        <a href="#foundation" class="nav__link" role="menuitem">Foundation</a>
+        <a href="#components" class="nav__link" role="menuitem">Components</a>
+        <a href="#form" class="nav__link" role="menuitem">Form</a>
+        <a href="#dashboard" class="nav__link" role="menuitem">Dashboard</a>
+        <a href="#states" class="nav__link" role="menuitem">States</a>
+      </div>
+
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro">
+          <span id="themeIcon">◐</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================= -->
+<!-- HERO                                          -->
+<!-- ============================================= -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero__badge">
+      <span class="hero__badge-dot" aria-hidden="true"></span>
+      Design Language v1.0
+    </div>
+
+    <h1 class="hero__title">
+      A linguagem<br>
+      visual da sua<br>
+      <span class="hero__title-accent">nutrição.</span>
+    </h1>
+
+    <p class="hero__subtitle">
+      Sistema de design oficial do KhromaDiet. Cada token, componente e decisão visual que sustenta a experiência do produto — vivo e aplicado.
+    </p>
+
+    <div class="hero__actions">
+      <button class="btn btn--primary" onclick="scrollToSection('foundation')">
+        Explorar fundação
+        <span aria-hidden="true">→</span>
+      </button>
+      <button class="btn btn--ghost" onclick="scrollToSection('dashboard')">
+        Ver dashboard
+      </button>
+    </div>
+  </div>
+</section>
+
+<hr class="divider divider--strong">
+
+<!-- ============================================= -->
+<!-- FOUNDATION: COLOR TOKENS                      -->
+<!-- ============================================= -->
+<section class="section" id="foundation">
+  <div class="container">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">01 — Chromatic Tokens</span>
+      <h2 class="section__heading">Disciplina cromática.<br>Três valores. Zero dispersão.</h2>
+      <p class="section__desc">
+        Branco, preto e verde. A sofisticação nasce do contraste e da contenção — não da variedade.
+      </p>
+    </div>
+
+    <div class="animate-on-scroll stagger-2">
+      <div class="tokens-grid" style="margin-bottom: var(--s-48);">
+        <div class="token-swatch" style="background: #ffffff; color: #0a0a0a; border-color: #e2e2e2;">
+          <span class="token-swatch__name">White</span>
+          <span class="token-swatch__value">#FFFFFF</span>
+        </div>
+        <div class="token-swatch" style="background: #fafafa; color: #0a0a0a; border-color: #e2e2e2;">
+          <span class="token-swatch__name">Off-White</span>
+          <span class="token-swatch__value">#FAFAFA</span>
+        </div>
+        <div class="token-swatch" style="background: #f7f7f7; color: #0a0a0a; border-color: #e2e2e2;">
+          <span class="token-swatch__name">Gray 50</span>
+          <span class="token-swatch__value">#F7F7F7</span>
+        </div>
+        <div class="token-swatch" style="background: #eeeeee; color: #0a0a0a; border-color: #d4d4d4;">
+          <span class="token-swatch__name">Gray 100</span>
+          <span class="token-swatch__value">#EEEEEE</span>
+        </div>
+        <div class="token-swatch" style="background: #d4d4d4; color: #0a0a0a; border-color: #b0b0b0;">
+          <span class="token-swatch__name">Gray 200</span>
+          <span class="token-swatch__value">#D4D4D4</span>
+        </div>
+        <div class="token-swatch" style="background: #8e8e8e; color: #ffffff;">
+          <span class="token-swatch__name">Gray 400</span>
+          <span class="token-swatch__value">#8E8E8E</span>
+        </div>
+        <div class="token-swatch" style="background: #555555; color: #ffffff;">
+          <span class="token-swatch__name">Gray 600</span>
+          <span class="token-swatch__value">#555555</span>
+        </div>
+        <div class="token-swatch" style="background: #2a2a2a; color: #ffffff;">
+          <span class="token-swatch__name">Gray 800</span>
+          <span class="token-swatch__value">#2A2A2A</span>
+        </div>
+        <div class="token-swatch" style="background: #1a1a1a; color: #ffffff;">
+          <span class="token-swatch__name">Black Soft</span>
+          <span class="token-swatch__value">#1A1A1A</span>
+        </div>
+        <div class="token-swatch" style="background: #0a0a0a; color: #ffffff;">
+          <span class="token-swatch__name">Black</span>
+          <span class="token-swatch__value">#0A0A0A</span>
+        </div>
+        <div class="token-swatch" style="background: #050505; color: #ffffff;">
+          <span class="token-swatch__name">Black Deep</span>
+          <span class="token-swatch__value">#050505</span>
+        </div>
+        <div class="token-swatch" style="background: #00e05a; color: #0a0a0a; border-color: #0a0a0a;">
+          <span class="token-swatch__name">Green</span>
+          <span class="token-swatch__value">#00E05A</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sep">
+      <div class="section-sep__line"></div>
+      <span class="section-sep__label">Accent in context</span>
+      <div class="section-sep__line"></div>
+    </div>
+
+    <div class="animate-on-scroll stagger-3" style="display: flex; gap: var(--s-16); flex-wrap: wrap; align-items: center; margin-top: var(--s-24);">
+      <span class="badge badge--green">Ativo</span>
+      <span class="badge badge--outline">Inativo</span>
+      <span class="badge badge--green">● Online</span>
+      <button class="btn btn--primary btn--sm">CTA verde</button>
+      <button class="btn btn--ghost btn--sm">Ghost</button>
+      <span style="display: inline-block; width: 48px; height: 6px; background: var(--green); border-radius: 9999px;"></span>
+      <span style="font-family: var(--font-mono); font-size: var(--fs-12); color: var(--green); font-weight: 700;">+12.4%</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ============================================= -->
+<!-- FOUNDATION: TYPOGRAPHY                        -->
+<!-- ============================================= -->
+<section class="section">
+  <div class="container">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">02 — Type System</span>
+      <h2 class="section__heading">Tipografia com presença<br>e legibilidade clínica.</h2>
+      <p class="section__desc">
+        Escala curada para impacto editorial, blocos funcionais, formulários e dados analíticos.
+      </p>
+    </div>
+
+    <div class="type-showcase animate-on-scroll stagger-2">
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">80 / 900</span>
+          <span class="type-meta__role">Display</span>
+        </div>
+        <div style="font-family: var(--font-display); font-size: clamp(var(--fs-48), 6vw, var(--fs-80)); font-weight: 900; line-height: var(--lh-tight); letter-spacing: -0.04em;">
+          Khroma
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">48 / 900</span>
+          <span class="type-meta__role">Hero heading</span>
+        </div>
+        <div style="font-family: var(--font-display); font-size: clamp(var(--fs-32), 4vw, var(--fs-48)); font-weight: 900; line-height: var(--lh-tight); letter-spacing: -0.03em;">
+          Sua nutrição,<br>sob controle total.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">32 / 700</span>
+          <span class="type-meta__role">Section heading</span>
+        </div>
+        <div style="font-family: var(--font-display); font-size: clamp(var(--fs-24), 3vw, var(--fs-32)); font-weight: 700; line-height: var(--lh-snug); letter-spacing: -0.02em;">
+          Resultados da semana — você está no caminho certo.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">20 / 600</span>
+          <span class="type-meta__role">Card title</span>
+        </div>
+        <div style="font-family: var(--font-display); font-size: var(--fs-20); font-weight: 600; line-height: var(--lh-snug); letter-spacing: -0.01em;">
+          Plano alimentar personalizado com base nos seus objetivos.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">16 / 400</span>
+          <span class="type-meta__role">Body</span>
+        </div>
+        <div style="font-size: var(--fs-16); font-weight: 400; line-height: var(--lh-relaxed); max-width: 540px; color: var(--text-secondary);">
+          Cada refeição registrada alimenta seu perfil nutricional. O sistema aprende com seus hábitos e adapta recomendações em tempo real para manter você progredindo com consistência.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">13 / 500</span>
+          <span class="type-meta__role">Caption / UI</span>
+        </div>
+        <div style="font-size: var(--fs-13); font-weight: 500; color: var(--text-secondary); line-height: var(--lh-normal);">
+          Última atualização há 3 minutos · Sincronizado com Apple Health
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">11 / 700</span>
+          <span class="type-meta__role">Overline / Label</span>
+        </div>
+        <div style="font-size: var(--fs-11); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--font-mono); color: var(--green);">
+          Macro Breakdown · Week 12 · Active Goal
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="type-meta__size">MONO 13</span>
+          <span class="type-meta__role">Data / Code</span>
+        </div>
+        <div style="font-size: var(--fs-13); font-family: var(--font-mono); font-weight: 500; color: var(--text-secondary);">
+          kcal: 1.847 · prot: 142g · carb: 198g · fat: 61g
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ============================================= -->
+<!-- COMPONENTS: BUTTONS & INTERACTIONS            -->
+<!-- ============================================= -->
+<section class="section section--alt" id="components">
+  <div class="container">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">03 — Interactive Elements</span>
+      <h2 class="section__heading">Componentes que<br>comunicam estado.</h2>
+      <p class="section__desc">
+        Cada botão, input e controle carrega intenção. Neo-brutalismo com conforto tátil e feedback imediato.
+      </p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="animate-on-scroll stagger-2" style="margin-bottom: var(--s-64);">
+      <div style="font-size: var(--fs-11); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--font-mono); color: var(--text-tertiary); margin-bottom: var(--s-20);">Buttons</div>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--s-16); align-items: center;">
+        <button class="btn btn--primary">
+          Começar agora
+          <span aria-hidden="true">→</span>
+        </button>
+        <button class="btn btn--secondary">
+          Ver detalhes
+        </button>
+        <button class="btn btn--ghost">
+          Cancelar
+        </button>
+        <button class="btn btn--primary btn--sm">Salvar</button>
+        <button class="btn btn--ghost btn--sm">Editar</button>
+        <button class="btn btn--primary" disabled>Indisponível</button>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="animate-on-scroll stagger-3" style="margin-bottom: var(--s-64);">
+      <div style="font-size: var(--fs-11); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--font-mono); color: var(--text-tertiary); margin-bottom: var(--s-20);">Badges & Tags</div>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--s-12); align-items: center;">
+        <span class="badge badge--green">Premium</span>
+        <span class="badge badge--outline">Free Trial</span>
+        <span class="badge badge--green">● Sync</span>
+        <span class="card__tag">Low Carb</span>
+        <span class="card__tag">High Protein</span>
+        <span class="card__tag">Vegan</span>
+      </div>
+    </div>
+
+    <!-- Toasts -->
+    <div class="animate-on-scroll stagger-4">
+      <div style="font-size: var(--fs-11); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--font-mono); color: var(--text-tertiary); margin-bottom: var(--s-20);">Notifications</div>
+      <div style="display: flex; flex-direction: column; gap: var(--s-16); max-width: 420px;">
+        <div class="toast toast--success">
+          <span class="toast__icon" aria-hidden="true">✓</span>
+          <div class="toast__content">
+            <div class="toast__title">Refeição registrada</div>
+            <div class="toast__message">Almoço adicionado com sucesso. 647 kcal computadas.</div>
+          </div>
+          <button class="toast__close" aria-label="Fechar notificação">✕</button>
+        </div>
+        <div class="toast toast--error">
+          <span class="toast__icon" aria-hidden="true">!</span>
+          <div class="toast__content">
+            <div class="toast__title">Limite excedido</div>
+            <div class="toast__message">Você ultrapassou a meta calórica diária em 230 kcal.</div>
+          </div>
+          <button class="toast__close" aria-label="Fechar notificação">✕</button>
+        </div>
+        <div class="toast toast--warning">
+          <span class="toast__icon" aria-hidden="true">⚠</span>
+          <div class="toast__content">
+            <div class="toast__title">Hidratação baixa</div>
+            <div class="toast__message">Você registrou apenas 800ml de água hoje.</div>
+          </div>
+          <button class="toast__close" aria-label="Fechar notificação">✕</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ============================================= -->
+<!-- CARDS IN CONTEXT                              -->
+<!-- ============================================= -->
+<section class="section">
+  <div class="container">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">04 — Content Surfaces</span>
+      <h2 class="section__heading">Cards como unidades<br>de informação viva.</h2>
+    </div>
+
+    <div class="cards-grid animate-on-scroll stagger-2">
+      <div class="card">
+        <div class="card__body">
+          <span class="card__tag" style="margin-bottom: var(--s-16);">Recomendado</span>
+          <h3 class="card__title">Plano Cutting</h3>
+          <p class="card__text">Déficit calórico controlado com preservação máxima de massa magra. Ideal para definição muscular progressiva.</p>
+          <div class="card__meta">
+            <span>12 semanas</span>
+            <span>·</span>
+            <span>1.800 kcal/dia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__body">
+          <span class="card__tag" style="margin-bottom: var(--s-16);">Popular</span>
+          <h3 class="card__title">Plano Manutenção</h3>
+          <p class="card__text">Equilíbrio calórico com foco em performance e bem-estar. Macros otimizados para energia estável ao longo do dia.</p>
+          <div class="card__meta">
+            <span>Contínuo</span>
+            <span>·</span>
+            <span>2.200 kcal/dia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__body">
+          <span class="card__tag" style="margin-bottom: var(--s-16);">Intensivo</span>
+          <h3 class="card__title">Plano Bulking</h3>
+          <p class="card__text">Superávit calórico estruturado para ganho de massa com controle de gordura corporal. Progressão semanal monitorada.</p>
+          <div class="card__meta">
+            <span>16 semanas</span>
+            <span>·</span>
+            <span>2.900 kcal/dia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison -->
+    <div style="margin-top: var(--s-80);">
+      <div class="section-sep">
+        <div class="section-sep__line"></div>
+        <span class="section-sep__label">Plan Comparison</span>
+        <div class="section-sep__line"></div>
+      </div>
+
+      <div class="compare-grid animate-on-scroll stagger-3" style="margin-top: var(--s-32);">
+        <div class="compare-card">
+          <div class="compare-card__header">
+            <span class="compare-card__name">Free</span>
+            <span class="badge badge--outline">Atual</span>
+          </div>
+          <div class="compare-card__body">
+            <div class="compare-card__price">R$0<span class="compare-card__period">/mês</span></div>
+            <div class="compare-card__features">
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>Registro de refeições básico</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>Contagem de calorias</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>3 metas simultâneas</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--text-tertiary);">—</span>
+                <span style="color: var(--text-tertiary);">Dashboard analítico</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--text-tertiary);">—</span>
+                <span style="color: var(--text-tertiary);">Planos personalizados</span>
+              </div>
+            </div>
+            <button class="btn btn--ghost" style="width: 100%; margin-top: var(--s-24);">Plano atual</button>
+          </div>
+        </div>
+
+        <div class="compare-card is-recommended">
+          <div class="compare-card__header">
+            <span class="compare-card__name">Pro</span>
+            <span class="badge badge--green" style="border-color: var(--black);">Recomendado</span>
+          </div>
+          <div class="compare-card__body">
+            <div class="compare-card__price">R$29<span class="compare-card__period">/mês</span></div>
+            <div class="compare-card__features">
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>Tudo do Free</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>Dashboard analítico completo</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>Planos nutricionais por IA</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>Metas ilimitadas</span>
+              </div>
+              <div class="compare-card__feature">
+                <span class="compare-card__feature-icon" style="color: var(--green);">✓</span>
+                <span>Relatórios semanais</span>
+              </div>
+            </div>
+            <button class="btn btn--primary" style="width: 100%; margin-top: var(--s-24);">Começar Pro →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider divider--strong">
+
+<!-- ============================================= -->
+<!-- FORM STEP CONTEXT                             -->
+<!-- ============================================= -->
+<section class="section section--alt" id="form">
+  <div class="container container--narrow">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">05 — Form Language</span>
+      <h2 class="section__heading">Formulário como conversa,<br>não burocracia.</h2>
+      <p class="section__desc">
+        14 etapas. Cada uma é clara, direta e visualmente generosa.
+      </p>
+    </div>
+
+    <!-- Stepper -->
+    <div class="animate-on-scroll stagger-2" style="margin-bottom: var(--s-40);">
+      <div class="stepper" role="progressbar" aria-valuenow="4" aria-valuemin="1" aria-valuemax="14">
+        <div class="stepper__step is-complete">
+          <div class="stepper__dot">✓</div>
+        </div>
+        <div class="stepper__line is-active"></div>
+        <div class="stepper__step is-complete">
+          <div class="stepper__dot">✓</div>
+        </div>
+        <div class="stepper__line is-active"></div>
+        <div class="stepper__step is-complete">
+          <div class="stepper__dot">✓</div>
+        </div>
+        <div class="stepper__line is-active"></div>
+        <div class="stepper__step is-active">
+          <div class="stepper__dot">4</div>
+        </div>
+        <div class="stepper__line"></div>
+        <div class="stepper__step">
+          <div class="stepper__dot">5</div>
+        </div>
+        <div class="stepper__line"></div>
+        <div class="stepper__step">
+          <div class="stepper__dot">6</div>
+        </div>
+        <div class="stepper__line"></div>
+        <div class="stepper__step">
+          <div class="stepper__dot">7</div>
+        </div>
+      </div>
+
+      <div class="progress-bar" style="margin-top: var(--s-16);" aria-label="Progresso: Etapa 4 de 14">
+        <div class="progress-bar__fill" style="width: 28.5%;"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: var(--s-8);">
+        <span style="font-size: var(--fs-11); font-family: var(--font-mono); color: var(--text-tertiary); font-weight: 600;">ETAPA 4 DE 14</span>
+        <span style="font-size: var(--fs-11); font-family: var(--font-mono); color: var(--green); font-weight: 700;">28%</span>
+      </div>
+    </div>
+
+    <!-- Form Step — Goal Selection -->
+    <div class="form-step animate-on-scroll stagger-3">
+      <div class="form-step__number">Etapa 04</div>
+      <h3 class="form-step__question">Qual é o seu objetivo principal?</h3>
+
+      <div class="option-cards" id="goalOptions">
+        <div class="option-card" data-value="lose" onclick="selectOption(this, 'goalOptions')">
+          <span class="option-card__icon">↓</span>
+          <span class="option-card__label">Perder peso</span>
+          <span class="option-card__desc">Déficit calórico</span>
+        </div>
+        <div class="option-card is-selected" data-value="maintain" onclick="selectOption(this, 'goalOptions')">
+          <span class="option-card__icon">◆</span>
+          <span class="option-card__label">Manter peso</span>
+          <span class="option-card__desc">Equilíbrio</span>
+        </div>
+        <div class="option-card" data-value="gain" onclick="selectOption(this, 'goalOptions')">
+          <span class="option-card__icon">↑</span>
+          <span class="option-card__label">Ganhar massa</span>
+          <span class="option-card__desc">Superávit</span>
+        </div>
+      </div>
+
+      <div class="form-step__footer">
+        <button class="btn btn--ghost btn--sm">← Voltar</button>
+        <button class="btn btn--primary btn--sm">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- Form Inputs Context -->
+    <div style="margin-top: var(--s-48);">
+      <div class="section-sep">
+        <div class="section-sep__line"></div>
+        <span class="section-sep__label">Input Patterns</span>
+        <div class="section-sep__line"></div>
+      </div>
+
+      <div class="form-step animate-on-scroll stagger-4" style="margin-top: var(--s-32);">
+        <div class="form-step__number">Etapa 07</div>
+        <h3 class="form-step__question">Dados biométricos</h3>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="inputAge">Idade</label>
+            <input type="number" id="inputAge" class="form-input" placeholder="28" value="28">
+            <span class="form-hint">Entre 16 e 80 anos</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputHeight">Altura (cm)</label>
+            <input type="number" id="inputHeight" class="form-input is-success" placeholder="175" value="175">
+            <span class="form-success">✓ Valor válido</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputWeight">Peso atual (kg)</label>
+            <input type="number" id="inputWeight" class="form-input is-error" placeholder="72.5" value="">
+            <span class="form-error">Peso é obrigatório</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="selectActivity">Nível de atividade</label>
+            <div class="form-select-wrap">
+              <select id="selectActivity" class="form-select">
+                <option value="" disabled>Selecione...</option>
+                <option value="sedentary">Sedentário</option>
+                <option value="light">Levemente ativo</option>
+                <option value="moderate" selected>Moderadamente ativo</option>
+                <option value="active">Muito ativo</option>
+                <option value="extreme">Extremamente ativo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toggles and Checkboxes -->
+        <div style="margin-top: var(--s-32); display: flex; flex-direction: column; gap: var(--s-20);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-size: var(--fs-15); font-weight: 600;">Ajuste automático de metas</div>
+              <div style="font-size: var(--fs-13); color: var(--text-secondary); margin-top: 2px;">Recalcular metas semanalmente com base no progresso</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="toggle__track"></span>
+              <span class="toggle__thumb"></span>
+            </label>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-size: var(--fs-15); font-weight: 600;">Lembretes de hidratação</div>
+              <div style="font-size: var(--fs-13); color: var(--text-secondary); margin-top: 2px;">Notificações a cada 2 horas durante o dia</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox">
+              <span class="toggle__track"></span>
+              <span class="toggle__thumb"></span>
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--s-32); border-top: 1px solid var(--border-secondary); padding-top: var(--s-24); display: flex; flex-direction: column; gap: var(--s-16);">
+          <label class="form-check">
+            <input type="checkbox" checked>
+            <div>
+              <div class="form-check__label">Restrições alimentares</div>
+              <div class="form-check__desc">Tenho alergias ou intolerâncias alimentares</div>
+            </div>
+          </label>
+          <label class="form-check">
+            <input type="radio" name="diet" checked>
+            <div>
+              <div class="form-check__label">Dieta onívora</div>
+              <div class="form-check__desc">Sem restrições por tipo de alimento</div>
+            </div>
+          </label>
+          <label class="form-check">
+            <input type="radio" name="diet">
+            <div>
+              <div class="form-check__label">Dieta vegetariana</div>
+              <div class="form-check__desc">Sem carnes, permite ovos e laticínios</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-step__footer">
+          <button class="btn btn--ghost btn--sm">← Voltar</button>
+          <button class="btn btn--primary btn--sm">Próximo →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider divider--strong">
+
+<!-- ============================================= -->
+<!-- PROFILE SUMMARY CONTEXT                       -->
+<!-- ============================================= -->
+<section class="section">
+  <div class="container container--narrow">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">06 — Profile Surface</span>
+      <h2 class="section__heading">O resumo do usuário<br>como espelho de dados.</h2>
+    </div>
+
+    <div class="animate-on-scroll stagger-2" style="background: var(--bg-elevated); border: 2px solid var(--border-primary); border-radius: var(--r-xl); padding: var(--s-40); box-shadow: var(--shadow-brutal);">
+      <div class="profile-summary">
+        <div class="profile-avatar" aria-hidden="true">M</div>
+        <div class="profile-info">
+          <div class="profile-info__name">Marina Costa</div>
+          <div class="profile-info__meta">28 anos · 168cm · Moderadamente ativa · Onívora</div>
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <span class="profile-stat__value">67.2<span style="font-size: var(--fs-14); font-weight: 500; color: var(--text-tertiary);">kg</span></span>
+              <span class="profile-stat__label">Peso atual</span>
+            </div>
+            <div class="profile-stat">
+              <span class="profile-stat__value">62.0<span style="font-size: var(--fs-14); font-weight: 500; color: var(--text-tertiary);">kg</span></span>
+              <span class="profile-stat__label">Meta</span>
+            </div>
+            <div class="profile-stat">
+              <span class="profile-stat__value" style="color: var(--green);">-3.8<span style="font-size: var(--fs-14); font-weight: 500;">kg</span></span>
+              <span class="profile-stat__label">Progresso</span>
+            </div>
+            <div class="profile-stat">
+              <span class="profile-stat__value">1.847<span style="font-size: var(--fs-14); font-weight: 500; color: var(--text-tertiary);">kcal</span></span>
+              <span class="profile-stat__label">Meta diária</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ============================================= -->
+<!-- DASHBOARD / ANALYTICS CONTEXT                 -->
+<!-- ============================================= -->
+<section class="section section--alt" id="dashboard">
+  <div class="container">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">07 — Analytics Layer</span>
+      <h2 class="section__heading">Dashboard que revela<br>padrões e progresso.</h2>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="stats-grid animate-on-scroll stagger-2">
+      <div class="stat-card">
+        <div class="stat-card__label">Calorias hoje</div>
+        <div class="stat-card__value">1.284</div>
+        <div class="stat-card__change stat-card__change--up">↑ 563 restantes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Proteína</div>
+        <div class="stat-card__value">98<span style="font-size: var(--fs-20); font-weight: 500;">g</span></div>
+        <div class="stat-card__change stat-card__change--up">69% da meta</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Água</div>
+        <div class="stat-card__value">1.6<span style="font-size: var(--fs-20); font-weight: 500;">L</span></div>
+        <div class="stat-card__change stat-card__change--down">↓ Abaixo da meta</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Streak</div>
+        <div class="stat-card__value">12<span style="font-size: var(--fs-20); font-weight: 500;">dias</span></div>
+        <div class="stat-card__change stat-card__change--up">Recorde pessoal!</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Panels -->
+    <div class="dashboard-grid animate-on-scroll stagger-3" style="margin-top: var(--s-24);">
+      <!-- Weekly Chart -->
+      <div class="dash-panel">
+        <div class="dash-panel__header">
+          <span class="dash-panel__title">Calorias · Semana</span>
+          <div style="display: flex; gap: var(--s-8);">
+            <button class="btn btn--ghost btn--sm" style="padding: var(--s-4) var(--s-12); font-size: var(--fs-11);">7D</button>
+            <button class="btn btn--ghost btn--sm" style="padding: var(--s-4) var(--s-12); font-size: var(--fs-11); border-color: var(--green); color: var(--green); background: var(--green-ghost);">30D</button>
+          </div>
+        </div>
+        <div class="dash-panel__body">
+          <div class="chart-bar" id="weeklyChart">
+            <div class="chart-bar__col">
+              <div class="chart-bar__bar" style="height: 75%;"></div>
+              <span class="chart-bar__label">Seg</span>
+            </div>
+            <div class="chart-bar__col">
+              <div class="chart-bar__bar" style="height: 88%;"></div>
+              <span class="chart-bar__label">Ter</span>
+            </div>
+            <div class="chart-bar__col">
+              <div class="chart-bar__bar" style="height: 62%;"></div>
+              <span class="chart-bar__label">Qua</span>
+            </div>
+            <div class="chart-bar__col">
+              <div class="chart-bar__bar" style="height: 95%;"></div>
+              <span class="chart-bar__label">Qui</span>
+            </div>
+            <div class="chart-bar__col">
+              <div class="chart-bar__bar" style="height: 80%;"></div>
+              <span class="chart-bar__label">Sex</span>
+            </div>
+            <div class="chart-bar__col">
+              <div class="chart-bar__bar" style="height: 45%;"></div>
+              <span class="chart-bar__label">Sáb</span>
+            </div>
+            <div class="chart-bar__col">
+              <div class="chart-bar__bar" style="height: 30%; opacity: 0.4; border-style: dashed;"></div>
+              <span class="chart-bar__label" style="color: var(--green);">Hoje</span>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: var(--s-16); padding-top: var(--s-12); border-top: 1px solid var(--border-secondary);">
+            <span style="font-size: var(--fs-12); font-family: var(--font-mono); color: var(--text-tertiary);">Média: 1.823 kcal</span>
+            <span style="font-size: var(--fs-12); font-family: var(--font-mono); color: var(--green); font-weight: 700;">Meta: 1.847 kcal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Macro Breakdown -->
+      <div class="dash-panel">
+        <div class="dash-panel__header">
+          <span class="dash-panel__title">Macros · Hoje</span>
+          <span class="badge badge--green" style="font-size: 9px;">Live</span>
+        </div>
+        <div class="dash-panel__body">
+          <div style="display: flex; align-items: center; gap: var(--s-24);">
+            <div class="macro-ring">
+              <div class="macro-ring__inner">
+                <span class="macro-ring__value">1.284</span>
+                <span class="macro-ring__label">kcal</span>
+              </div>
+            </div>
+            <div class="macro-legend">
+              <div class="macro-legend__item">
+                <span class="macro-legend__dot" style="background: var(--green);"></span>
+                <span class="macro-legend__name">Proteína</span>
+                <span class="macro-legend__val">98g</span>
+              </div>
+              <div class="macro-legend__item">
+                <span class="macro-legend__dot" style="background: var(--gray-700);"></span>
+                <span class="macro-legend__name">Carboidrato</span>
+                <span class="macro-legend__val">142g</span>
+              </div>
+              <div class="macro-legend__item">
+                <span class="macro-legend__dot" style="background: var(--gray-300);"></span>
+                <span class="macro-legend__name">Gordura</span>
+                <span class="macro-legend__val">38g</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="h-bar" style="margin-top: var(--s-24);">
+            <div class="h-bar__item">
+              <div class="h-bar__header">
+                <span class="h-bar__name">Proteína</span>
+                <span class="h-bar__value">98 / 142g</span>
+              </div>
+              <div class="h-bar__track">
+                <div class="h-bar__fill" style="width: 69%;"></div>
+              </div>
+            </div>
+            <div class="h-bar__item">
+              <div class="h-bar__header">
+                <span class="h-bar__name">Carboidrato</span>
+                <span class="h-bar__value">142 / 198g</span>
+              </div>
+              <div class="h-bar__track">
+                <div class="h-bar__fill" style="width: 72%; background: var(--gray-600);"></div>
+              </div>
+            </div>
+            <div class="h-bar__item">
+              <div class="h-bar__header">
+                <span class="h-bar__name">Gordura</span>
+                <span class="h-bar__value">38 / 61g</span>
+              </div>
+              <div class="h-bar__track">
+                <div class="h-bar__fill" style="width: 62%; background: var(--gray-400);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Food Log -->
+    <div class="dash-panel animate-on-scroll stagger-4" style="margin-top: var(--s-24);">
+      <div class="dash-panel__header">
+        <span class="dash-panel__title">Registro · Hoje</span>
+        <button class="btn btn--primary btn--sm">+ Adicionar</button>
+      </div>
+      <div class="dash-panel__body" style="padding: 0 var(--s-24);">
+        <div class="food-list">
+          <div class="food-item">
+            <div class="food-item__icon">🥣</div>
+            <div class="food-item__info">
+              <div class="food-item__name">Café da manhã</div>
+              <div class="food-item__detail">Aveia + banana + whey · 08:15</div>
+            </div>
+            <div class="food-item__kcal">412 <span class="food-item__kcal-unit">kcal</span></div>
+          </div>
+          <div class="food-item">
+            <div class="food-item__icon">🥗</div>
+            <div class="food-item__info">
+              <div class="food-item__name">Almoço</div>
+              <div class="food-item__detail">Frango grelhado + arroz + salada · 12:30</div>
+            </div>
+            <div class="food-item__kcal">647 <span class="food-item__kcal-unit">kcal</span></div>
+          </div>
+          <div class="food-item">
+            <div class="food-item__icon">🍎</div>
+            <div class="food-item__info">
+              <div class="food-item__name">Lanche</div>
+              <div class="food-item__detail">Maçã + pasta de amendoim · 15:45</div>
+            </div>
+            <div class="food-item__kcal">225 <span class="food-item__kcal-unit">kcal</span></div>
+          </div>
+          <div class="food-item" style="border-bottom: none; opacity: 0.4;">
+            <div class="food-item__icon" style="border-style: dashed;">🍽</div>
+            <div class="food-item__info">
+              <div class="food-item__name" style="color: var(--text-tertiary);">Jantar</div>
+              <div class="food-item__detail">Ainda não registrado</div>
+            </div>
+            <div class="food-item__kcal" style="color: var(--text-tertiary);">— <span class="food-item__kcal-unit">kcal</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ============================================= -->
+<!-- STATES: EMPTY, LOADING, SKELETON              -->
+<!-- ============================================= -->
+<section class="section" id="states">
+  <div class="container">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">08 — Interface States</span>
+      <h2 class="section__heading">Cada estado comunica<br>presença e inteligência.</h2>
+    </div>
+
+    <div class="dashboard-grid animate-on-scroll stagger-2">
+      <!-- Empty State -->
+      <div>
+        <div style="font-size: var(--fs-11); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--font-mono); color: var(--text-tertiary); margin-bottom: var(--s-16);">Empty State</div>
+        <div class="empty-state">
+          <div class="empty-state__icon" aria-hidden="true">📊</div>
+          <h4 class="empty-state__title">Nenhum dado ainda</h4>
+          <p class="empty-state__desc">Comece registrando sua primeira refeição para ver seu painel analítico ganhar vida.</p>
+          <button class="btn btn--primary btn--sm" style="margin-top: var(--s-20);">Registrar refeição →</button>
+        </div>
+      </div>
+
+      <!-- Loading / Skeleton -->
+      <div>
+        <div style="font-size: var(--fs-11); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--font-mono); color: var(--text-tertiary); margin-bottom: var(--s-16);">Loading Skeleton</div>
+        <div style="background: var(--bg-elevated); border: 2px solid var(--border-secondary); border-radius: var(--r-lg); padding: var(--s-24);">
+          <div style="display: flex; align-items: center; gap: var(--s-12); margin-bottom: var(--s-20);">
+            <div class="skeleton skeleton--avatar"></div>
+            <div style="flex: 1;">
+              <div class="skeleton skeleton--text" style="width: 50%;"></div>
+              <div class="skeleton skeleton--text-short" style="width: 35%;"></div>
+            </div>
+          </div>
+          <div class="skeleton skeleton--heading"></div>
+          <div class="skeleton skeleton--text"></div>
+          <div class="skeleton skeleton--text"></div>
+          <div class="skeleton skeleton--text-short"></div>
+          <div style="margin-top: var(--s-20);">
+            <div class="skeleton" style="height: 44px; width: 140px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ============================================= -->
+<!-- SPACING & RHYTHM SHOWCASE                     -->
+<!-- ============================================= -->
+<section class="section section--alt">
+  <div class="container container--narrow">
+    <div class="section__header animate-on-scroll">
+      <span class="section__label">09 — Spatial Rhythm</span>
+      <h2 class="section__heading">Espaçamento como<br>linguagem silenciosa.</h2>
+      <p class="section__desc">Escala de 4px. Cada intervalo é deliberado.</p>
+    </div>
+
+    <div class="animate-on-scroll stagger-2" style="display: flex; flex-direction: column; gap: var(--s-6);">
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">4px</span>
+        <div style="height: 8px; width: 4px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">8px</span>
+        <div style="height: 8px; width: 8px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">12px</span>
+        <div style="height: 8px; width: 12px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">16px</span>
+        <div style="height: 8px; width: 16px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">24px</span>
+        <div style="height: 8px; width: 24px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">32px</span>
+        <div style="height: 8px; width: 32px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">48px</span>
+        <div style="height: 8px; width: 48px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">64px</span>
+        <div style="height: 8px; width: 64px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">96px</span>
+        <div style="height: 8px; width: 96px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">120px</span>
+        <div style="height: 8px; width: 120px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--s-16);">
+        <span style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); width: 60px; text-align: right; flex-shrink: 0;">160px</span>
+        <div style="height: 8px; width: 160px; background: var(--green); border-radius: 1px;"></div>
+      </div>
+    </div>
+
+    <!-- Shadow Scale -->
+    <div style="margin-top: var(--s-80);">
+      <div class="section-sep">
+        <div class="section-sep__line"></div>
+        <span class="section-sep__label">Shadow & Elevation</span>
+        <div class="section-sep__line"></div>
+      </div>
+
+      <div class="animate-on-scroll stagger-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--s-20); margin-top: var(--s-32);">
+        <div style="background: var(--bg-elevated); padding: var(--s-24); border-radius: var(--r-md); text-align: center; box-shadow: var(--shadow-xs); border: 1px solid var(--border-secondary);">
+          <div style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); font-weight: 600;">XS</div>
+        </div>
+        <div style="background: var(--bg-elevated); padding: var(--s-24); border-radius: var(--r-md); text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--border-secondary);">
+          <div style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); font-weight: 600;">SM</div>
+        </div>
+        <div style="background: var(--bg-elevated); padding: var(--s-24); border-radius: var(--r-md); text-align: center; box-shadow: var(--shadow-md); border: 1px solid var(--border-secondary);">
+          <div style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); font-weight: 600;">MD</div>
+        </div>
+        <div style="background: var(--bg-elevated); padding: var(--s-24); border-radius: var(--r-md); text-align: center; box-shadow: var(--shadow-lg); border: 1px solid var(--border-secondary);">
+          <div style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); font-weight: 600;">LG</div>
+        </div>
+        <div style="background: var(--bg-elevated); padding: var(--s-24); border-radius: var(--r-md); text-align: center; box-shadow: var(--shadow-brutal); border: 2px solid var(--border-primary);">
+          <div style="font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-tertiary); font-weight: 600;">Brutal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider divider--strong">
+
+<!-- ============================================= -->
+<!-- CLOSING MANIFESTO                             -->
+<!-- ============================================= -->
+<section class="section">
+  <div class="container container--tight" style="text-align: center;">
+    <div class="animate-on-scroll">
+      <span class="section__label" style="display: block; text-align: center;">Design Language v1.0</span>
+      <h2 style="font-family: var(--font-display); font-size: clamp(var(--fs-32), 5vw, var(--fs-56)); font-weight: 900; line-height: var(--lh-tight); letter-spacing: -0.04em; margin-top: var(--s-16);">
+        Cada pixel<br>é uma decisão.<br>
+        <span style="color: var(--green);">Nenhum é acidente.</span>
+      </h2>
+      <p style="font-size: var(--fs-16); color: var(--text-secondary); max-width: 420px; margin: var(--s-24) auto 0; line-height: var(--lh-relaxed);">
+        Esta é a fundação visual oficial do KhromaDiet. Hero, Form, Summary e Dashboard nascem daqui.
+      </p>
+      <div style="margin-top: var(--s-40);">
+        <button class="btn btn--primary" onclick="scrollToSection('hero')">
+          Voltar ao início ↑
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- FOOTER                                        -->
+<!-- ============================================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <div class="footer__brand">KhromaDiet</div>
+        <div class="footer__copy">Design Language v1.0 · Foundation Reference</div>
+      </div>
+      <div style="font-size: var(--fs-12); font-family: var(--font-mono); color: var(--text-tertiary);">
+        Built with zero dependencies
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================= -->
+<!-- JAVASCRIPT                                    -->
+<!-- ============================================= -->
+<script>
+// ============================================= //
+// THEME TOGGLE                                  //
+// ============================================= //
+(function() {
+  var toggle = document.getElementById('themeToggle');
+  var icon = document.getElementById('themeIcon');
+  var html = document.documentElement;
+  var body = document.body;
+
+  var stored = localStorage.getItem('khromadiet-theme');
+  if (stored === 'dark') {
+    body.setAttribute('data-theme', 'dark');
+    icon.textContent = '◑';
+  }
+
+  toggle.addEventListener('click', function() {
+    try {
+      var current = body.getAttribute('data-theme');
+      if (current === 'dark') {
+        body.setAttribute('data-theme', 'light');
+        icon.textContent = '◐';
+        localStorage.setItem('khromadiet-theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        icon.textContent = '◑';
+        localStorage.setItem('khromadiet-theme', 'dark');
+      }
+    } catch (e) {
+      console.error('Theme toggle error:', e);
+    }
+  });
+})();
+
+// ============================================= //
+// SCROLL-BASED NAV                              //
+// ============================================= //
+(function() {
+  var nav = document.getElementById('mainNav');
+  var scrolled = false;
+
+  function checkScroll() {
+    var shouldBeScrolled = window.scrollY > 40;
+    if (shouldBeScrolled !== scrolled) {
+      scrolled = shouldBeScrolled;
+      if (scrolled) {
+        nav.classList.add('is-scrolled');
+      } else {
+        nav.classList.remove('is-scrolled');
+      }
+    }
+  }
+
+  var scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (scrollTimeout) return;
+    scrollTimeout = requestAnimationFrame(function() {
+      checkScroll();
+      scrollTimeout = null;
+    });
+  }, { passive: true });
+
+  checkScroll();
+})();
+
+// ============================================= //
+// SCROLL TO SECTION                             //
+// ============================================= //
+function scrollToSection(id) {
+  try {
+    var el = document.getElementById(id);
+    if (el) {
+      var offset = 80;
+      var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  } catch (e) {
+    console.error('Scroll error:', e);
+  }
+}
+
+// ============================================= //
+// INTERSECTION OBSERVER — SCROLL ANIMATIONS     //
+// ============================================= //
+(function() {
+  try {
+    var elements = document.querySelectorAll('.animate-on-scroll');
+    if (!elements.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    elements.forEach(function(el) {
+      observer.observe(el);
+    });
+  } catch (e) {
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+      el.classList.add('is-visible');
+    });
+    console.error('Observer error:', e);
+  }
+})();
+
+// ============================================= //
+// OPTION CARD SELECTION                         //
+// ============================================= //
+function selectOption(card, groupId) {
+  try {
+    var group = document.getElementById(groupId);
+    if (!group) return;
+    var cards = group.querySelectorAll('.option-card');
+    cards.forEach(function(c) {
+      c.classList.remove('is-selected');
+    });
+    card.classList.add('is-selected');
+  } catch (e) {
+    console.error('Selection error:', e);
+  }
+}
+
+// ============================================= //
+// TOAST CLOSE                                   //
+// ============================================= //
+(function() {
+  document.addEventListener('click', function(e) {
+    var closeBtn = e.target.closest('.toast__close');
+    if (!closeBtn) return;
+    try {
+      var toast = closeBtn.closest('.toast');
+      if (toast) {
+        toast.style.transition = 'opacity 200ms ease, transform 200ms ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(20px)';
+        setTimeout(function() {
+          toast.style.display = 'none';
+        }, 200);
+      }
+    } catch (e) {
+      console.error('Toast close error:', e);
+    }
+  });
+})();
+
+// ============================================= //
+// ANIMATED PROGRESS BARS ON SCROLL              //
+// ============================================= //
+(function() {
+  try {
+    var fills = document.querySelectorAll('.h-bar__fill');
+    if (!fills.length) return;
+
+    fills.forEach(function(fill) {
+      var targetWidth = fill.style.width;
+      fill.style.width = '0';
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            setTimeout(function() {
+              fill.style.width = targetWidth;
+            }, 300);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(fill);
+    });
+  } catch (e) {
+    console.error('Progress animation error:', e);
+  }
+})();
+
+// ============================================= //
+// CHART BAR ANIMATION ON SCROLL                 //
+// ============================================= //
+(function() {
+  try {
+    var chart = document.getElementById('weeklyChart');
+    if (!chart) return;
+
+    var bars = chart.querySelectorAll('.chart-bar__bar');
+    var heights = [];
+    bars.forEach(function(bar) {
+      heights.push(bar.style.height);
+      bar.style.height = '0';
+    });
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          bars.forEach(function(bar, i) {
+            setTimeout(function() {
+              bar.style.height = heights[i];
+            }, i * 80 + 200);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(chart);
+  } catch (e) {
+    console.error('Chart animation error:', e);
+  }
+})();
+
+// ============================================= //
+// KEYBOARD ACCESSIBILITY — ESC TO BLUR          //
+// ============================================= //
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var active = document.activeElement;
+    if (active && active !== document.body) {
+      active.blur();
+    }
+  }
+});
+</script>
+
+</body>
+</html>

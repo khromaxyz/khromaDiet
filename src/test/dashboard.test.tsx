@@ -2,8 +2,8 @@ import { act, fireEvent, render, screen, waitFor, within } from '@testing-librar
 import { vi } from 'vitest';
 
 import App from '../App';
-import { MealsSlide } from '../components/screens/dashboard/sections/presentation/MealsSlide';
-import { ProjectionSlide } from '../components/screens/dashboard/sections/presentation/ProjectionSlide';
+import { MealsSlide } from '../features/dashboard/components/presentation/MealsSlide';
+import { ProjectionSlide } from '../features/dashboard/components/presentation/ProjectionSlide';
 import { useDietForgeStore } from '../store/useDietForgeStore';
 
 declare global {
@@ -860,7 +860,7 @@ describe('Dashboard presentation mode', () => {
       expect(valWorkouts?.textContent?.trim()).toBe('5');
     }
 
-    const miniCut = simulatorRoot.querySelector<HTMLElement>('.objective-option[data-obj=\"mini-cut\"]');
+    const miniCut = simulatorRoot.querySelector<HTMLElement>('.objective-option[data-obj="mini-cut"]');
     expect(miniCut).not.toBeNull();
     if (miniCut) {
       fireEvent.click(miniCut);
@@ -868,7 +868,7 @@ describe('Dashboard presentation mode', () => {
       expect(miniCut.getAttribute('aria-checked')).toBe('true');
     }
 
-    const ecaOption = simulatorRoot.querySelector<HTMLElement>('.thermo-option[data-thermo=\"eca\"]');
+    const ecaOption = simulatorRoot.querySelector<HTMLElement>('.thermo-option[data-thermo="eca"]');
     const warning = simulatorRoot.querySelector<HTMLElement>('#thermo-warning');
     expect(ecaOption).not.toBeNull();
     expect(warning).not.toBeNull();
@@ -911,7 +911,7 @@ describe('Dashboard presentation mode', () => {
         expect(simulatorRoot.querySelector('#val-workouts')?.textContent?.trim()).toBe('4');
       });
       await waitFor(() => {
-        const hardCut = simulatorRoot.querySelector<HTMLElement>('.objective-option[data-obj=\"hard-cut\"]');
+        const hardCut = simulatorRoot.querySelector<HTMLElement>('.objective-option[data-obj="hard-cut"]');
         expect(hardCut?.classList.contains('selected')).toBe(true);
       });
     }

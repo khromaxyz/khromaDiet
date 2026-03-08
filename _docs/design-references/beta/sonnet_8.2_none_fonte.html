@@ -1,0 +1,4987 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KhromaDiet — Design System v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     KHROMADIET DESIGN SYSTEM v1.0
+     Neo-Brutalismo Clean — Health-Tech Premium
+     ============================================================ */
+
+  /* ── TOKENS ─────────────────────────────────────────────── */
+  :root {
+    /* Core Palette */
+    --kd-green: #2DCC6F;
+    --kd-green-vivid: #00E56B;
+    --kd-green-muted: #1FA854;
+    --kd-green-dim: rgba(45, 204, 111, 0.12);
+    --kd-green-glow: rgba(45, 204, 111, 0.25);
+
+    /* Light Mode Surfaces */
+    --bg-base: #FAFAF8;
+    --bg-surface: #FFFFFF;
+    --bg-surface-2: #F4F4F0;
+    --bg-surface-3: #EBEBЕ5;
+    --bg-invert: #0A0A0A;
+
+    /* Light Mode Text */
+    --text-primary: #0A0A0A;
+    --text-secondary: #3A3A36;
+    --text-tertiary: #787870;
+    --text-ghost: #B0B0A8;
+    --text-invert: #FAFAF8;
+    --text-accent: #1FA854;
+
+    /* Light Mode Borders */
+    --border-strong: #0A0A0A;
+    --border-default: #D4D4CC;
+    --border-subtle: #EAEAE4;
+    --border-accent: #2DCC6F;
+
+    /* Elevation — Light */
+    --shadow-xs: 2px 2px 0px #0A0A0A;
+    --shadow-sm: 3px 3px 0px #0A0A0A;
+    --shadow-md: 4px 4px 0px #0A0A0A;
+    --shadow-lg: 6px 6px 0px #0A0A0A;
+    --shadow-xl: 8px 8px 0px #0A0A0A;
+    --shadow-accent: 4px 4px 0px #2DCC6F;
+    --shadow-soft: 0 4px 24px rgba(10,10,10,0.06), 0 1px 4px rgba(10,10,10,0.04);
+    --shadow-float: 0 8px 40px rgba(10,10,10,0.10), 0 2px 8px rgba(10,10,10,0.06);
+
+    /* Spacing Scale */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-20: 80px;
+    --space-24: 96px;
+    --space-32: 128px;
+
+    /* Radius */
+    --radius-none: 0px;
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-full: 9999px;
+
+    /* Typography */
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-ui: 'Inter', system-ui, sans-serif;
+    --font-mono: 'DM Mono', 'Courier New', monospace;
+
+    /* Motion */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --dur-fast: 120ms;
+    --dur-base: 200ms;
+    --dur-slow: 320ms;
+    --dur-enter: 480ms;
+
+    /* Grid */
+    --container-max: 1280px;
+    --gutter: clamp(20px, 4vw, 64px);
+    --col-gap: 24px;
+  }
+
+  /* ── DARK MODE TOKENS ─────────────────────────────────── */
+  html.dark {
+    --bg-base: #080808;
+    --bg-surface: #111110;
+    --bg-surface-2: #1A1A18;
+    --bg-surface-3: #242422;
+    --bg-invert: #FAFAF8;
+
+    --text-primary: #F0F0EC;
+    --text-secondary: #C8C8C0;
+    --text-tertiary: #888880;
+    --text-ghost: #484844;
+    --text-invert: #0A0A0A;
+    --text-accent: #2DCC6F;
+
+    --border-strong: #F0F0EC;
+    --border-default: #2C2C28;
+    --border-subtle: #1E1E1C;
+    --border-accent: #2DCC6F;
+
+    --shadow-xs: 2px 2px 0px rgba(240,240,236,0.12);
+    --shadow-sm: 3px 3px 0px rgba(240,240,236,0.10);
+    --shadow-md: 4px 4px 0px rgba(240,240,236,0.08);
+    --shadow-lg: 6px 6px 0px rgba(240,240,236,0.08);
+    --shadow-xl: 8px 8px 0px rgba(240,240,236,0.08);
+    --shadow-accent: 4px 4px 0px rgba(45,204,111,0.4);
+    --shadow-soft: 0 4px 24px rgba(0,0,0,0.32), 0 1px 4px rgba(0,0,0,0.24);
+    --shadow-float: 0 8px 40px rgba(0,0,0,0.48), 0 2px 8px rgba(0,0,0,0.32);
+  }
+
+  /* ── RESET & BASE ─────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-ui);
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.6;
+    transition: background var(--dur-slow) var(--ease-in-out),
+                color var(--dur-slow) var(--ease-in-out);
+    overflow-x: hidden;
+  }
+
+  /* ── PAGE LAYOUT ──────────────────────────────────────── */
+  .ds-page {
+    min-height: 100vh;
+  }
+
+  .ds-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-surface);
+    border-bottom: 1.5px solid var(--border-default);
+    padding: 0 var(--gutter);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .ds-nav-wordmark {
+    font-family: var(--font-ui);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ds-nav-wordmark-accent {
+    color: var(--kd-green);
+  }
+
+  .ds-nav-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-default);
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    text-transform: uppercase;
+  }
+
+  .ds-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Theme Toggle */
+  .theme-toggle {
+    width: 40px;
+    height: 24px;
+    background: var(--bg-surface-2);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    position: relative;
+    transition: all var(--dur-base) var(--ease-out);
+    outline: none;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    background: var(--text-primary);
+    border-radius: var(--radius-full);
+    transition: transform var(--dur-base) var(--ease-spring),
+                background var(--dur-base) var(--ease-out);
+  }
+
+  html.dark .theme-toggle::after {
+    transform: translateX(16px);
+    background: var(--kd-green);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--kd-green);
+  }
+
+  /* Sidebar TOC */
+  .ds-shell {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 56px);
+  }
+
+  .ds-sidebar {
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    border-right: 1.5px solid var(--border-default);
+    padding: 32px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-default) transparent;
+  }
+
+  .ds-sidebar::-webkit-scrollbar { width: 4px; }
+  .ds-sidebar::-webkit-scrollbar-track { background: transparent; }
+  .ds-sidebar::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
+
+  .ds-toc-section {
+    margin-bottom: 28px;
+  }
+
+  .ds-toc-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    padding: 0 8px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .ds-toc-link {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 450;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    padding: 5px 8px;
+    border-radius: var(--radius-sm);
+    transition: all var(--dur-fast) var(--ease-out);
+    letter-spacing: -0.01em;
+  }
+
+  .ds-toc-link:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface-2);
+  }
+
+  .ds-toc-link.active {
+    color: var(--text-accent);
+    background: var(--kd-green-dim);
+    font-weight: 500;
+  }
+
+  /* Main Content */
+  .ds-content {
+    padding: var(--space-16) var(--gutter) var(--space-32);
+    max-width: 960px;
+  }
+
+  /* Section Headers */
+  .ds-section {
+    margin-bottom: var(--space-24);
+    scroll-margin-top: 80px;
+  }
+
+  .ds-section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: var(--space-10);
+    padding-bottom: var(--space-6);
+    border-bottom: 1.5px solid var(--border-default);
+  }
+
+  .ds-section-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--kd-green);
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .ds-section-title {
+    font-family: var(--font-ui);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .ds-section-desc {
+    font-size: 13.5px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* Subsection */
+  .ds-sub {
+    margin-bottom: var(--space-10);
+  }
+
+  .ds-sub-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-4);
+  }
+
+  /* ── HERO / INTRO ─────────────────────────────────────── */
+  .ds-intro {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-12) var(--space-12);
+    margin-bottom: var(--space-16);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ds-intro::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--kd-green);
+  }
+
+  .ds-intro-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--kd-green);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ds-intro-eyebrow::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background: var(--kd-green);
+  }
+
+  .ds-intro-headline {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .ds-intro-headline em {
+    color: var(--kd-green);
+    font-style: normal;
+  }
+
+  .ds-intro-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin-bottom: 28px;
+  }
+
+  .ds-intro-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── COLOR SYSTEM ─────────────────────────────────────── */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .color-swatch {
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .color-swatch-preview {
+    height: 64px;
+    width: 100%;
+  }
+
+  .color-swatch-info {
+    padding: 8px 10px;
+    background: var(--bg-surface);
+  }
+
+  .color-swatch-name {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .color-swatch-value {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+  }
+
+  .color-swatch-role {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-ghost);
+    display: block;
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── TYPOGRAPHY ───────────────────────────────────────── */
+  .type-specimen {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin-bottom: 12px;
+  }
+
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .type-meta span {
+    color: var(--text-tertiary);
+  }
+
+  /* Type Scale Specimens */
+  .ts-display {
+    font-family: var(--font-display);
+    font-size: 56px;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  .ts-h1 {
+    font-family: var(--font-ui);
+    font-size: 40px;
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+  }
+
+  .ts-h2 {
+    font-family: var(--font-ui);
+    font-size: 28px;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .ts-h3 {
+    font-family: var(--font-ui);
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+  }
+
+  .ts-h4 {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  .ts-body-lg {
+    font-family: var(--font-ui);
+    font-size: 17px;
+    line-height: 1.7;
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
+
+  .ts-body {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
+
+  .ts-body-sm {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-tertiary);
+  }
+
+  .ts-caption {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text-ghost);
+  }
+
+  .ts-mono-lg {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .ts-mono {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-tertiary);
+  }
+
+  .ts-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  /* ── SPACING SCALE ────────────────────────────────────── */
+  .spacing-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .spacing-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    width: 60px;
+    flex-shrink: 0;
+  }
+
+  .spacing-bar-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .spacing-bar {
+    background: var(--kd-green);
+    height: 8px;
+    border-radius: 1px;
+    opacity: 0.7;
+  }
+
+  .spacing-px {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-ghost);
+    flex-shrink: 0;
+  }
+
+  /* ── RADIUS SCALE ─────────────────────────────────────── */
+  .radius-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .radius-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .radius-box {
+    width: 64px;
+    height: 64px;
+    background: var(--bg-surface-2);
+    border: 1.5px solid var(--border-default);
+  }
+
+  .radius-name {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-tertiary);
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ELEVATION / SHADOW ───────────────────────────────── */
+  .elevation-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+  }
+
+  .elevation-card {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .elevation-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+
+  /* ── BUTTONS ──────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--dur-fast) var(--ease-out);
+    position: relative;
+    white-space: nowrap;
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Primary */
+  .btn-primary {
+    background: var(--kd-green);
+    color: #0A0A0A;
+    border-color: var(--kd-green);
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary:hover {
+    background: var(--kd-green-vivid);
+    border-color: var(--kd-green-vivid);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--kd-green);
+    outline-offset: 3px;
+  }
+
+  /* Secondary */
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-surface-2);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-xs);
+  }
+
+  /* Ghost */
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+    font-size: 14px;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+  }
+
+  .btn-ghost:hover {
+    background: var(--bg-surface-2);
+    color: var(--text-primary);
+  }
+
+  /* Danger */
+  .btn-danger {
+    background: transparent;
+    color: #E53E3E;
+    border-color: #E53E3E;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: 4px 4px 0px #E53E3E;
+  }
+
+  .btn-danger:hover {
+    background: rgba(229, 62, 62, 0.08);
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0px #E53E3E;
+  }
+
+  /* Sizes */
+  .btn-xs {
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-sm {
+    font-size: 12.5px;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-lg {
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    letter-spacing: -0.02em;
+  }
+
+  .btn-xl {
+    font-size: 18px;
+    padding: 20px 40px;
+    border-radius: var(--radius-xl);
+    box-shadow: 8px 8px 0px #0A0A0A;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+
+  html.dark .btn-xl {
+    box-shadow: 8px 8px 0px rgba(45,204,111,0.4);
+  }
+
+  /* Icon button */
+  .btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    font-size: 16px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  .btn-icon:hover {
+    background: var(--bg-surface-2);
+    border-color: var(--border-strong);
+  }
+
+  /* Disabled */
+  .btn:disabled, .btn[aria-disabled="true"] {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ── FORM ELEMENTS ────────────────────────────────────── */
+  .kd-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .kd-label-hint {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-ghost);
+    margin-left: 6px;
+  }
+
+  .kd-input {
+    width: 100%;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 11px 14px;
+    outline: none;
+    transition: all var(--dur-fast) var(--ease-out);
+    appearance: none;
+    -webkit-appearance: none;
+    line-height: 1.5;
+  }
+
+  .kd-input::placeholder {
+    color: var(--text-ghost);
+    font-weight: 400;
+  }
+
+  .kd-input:hover {
+    border-color: var(--border-strong);
+  }
+
+  .kd-input:focus {
+    border-color: var(--kd-green);
+    box-shadow: 0 0 0 3px var(--kd-green-dim);
+  }
+
+  .kd-input.error {
+    border-color: #E53E3E;
+    box-shadow: 0 0 0 3px rgba(229,62,62,0.1);
+  }
+
+  .kd-input.success {
+    border-color: var(--kd-green);
+  }
+
+  .kd-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-surface-2);
+  }
+
+  .kd-helper {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+  .kd-helper.error { color: #E53E3E; }
+  .kd-helper.success { color: var(--kd-green-muted); }
+
+  .kd-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23787870' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  /* Input Group */
+  .kd-input-group {
+    position: relative;
+    display: flex;
+  }
+
+  .kd-input-addon {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: var(--bg-surface-2);
+    border: 1.5px solid var(--border-default);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+  }
+
+  .kd-input-addon:first-child {
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+    border-right: none;
+  }
+
+  .kd-input-addon:last-child {
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    border-left: none;
+  }
+
+  .kd-input-group .kd-input {
+    border-radius: 0;
+    flex: 1;
+  }
+
+  .kd-input-group .kd-input:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+  .kd-input-group .kd-input:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+
+  /* Textarea */
+  .kd-textarea {
+    resize: vertical;
+    min-height: 96px;
+    line-height: 1.65;
+  }
+
+  /* ── TOGGLE / SWITCH ──────────────────────────────────── */
+  .kd-switch-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .kd-switch {
+    position: relative;
+    width: 44px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  .kd-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .kd-switch-track {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-surface-2);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-full);
+    transition: all var(--dur-base) var(--ease-out);
+    cursor: pointer;
+  }
+
+  .kd-switch-thumb {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 14px;
+    height: 14px;
+    background: var(--text-tertiary);
+    border-radius: var(--radius-full);
+    transition: transform var(--dur-base) var(--ease-spring),
+                background var(--dur-base) var(--ease-out);
+  }
+
+  .kd-switch input:checked ~ .kd-switch-track {
+    background: var(--kd-green);
+    border-color: var(--kd-green);
+  }
+
+  .kd-switch input:checked ~ .kd-switch-track .kd-switch-thumb {
+    transform: translateX(18px);
+    background: #0A0A0A;
+  }
+
+  .kd-switch input:focus-visible ~ .kd-switch-track {
+    outline: 2px solid var(--kd-green);
+    outline-offset: 2px;
+  }
+
+  .kd-switch-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  /* ── CHECKBOX / RADIO ─────────────────────────────────── */
+  .kd-check-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .kd-check {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .kd-check input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .kd-check-box {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-xs);
+    transition: all var(--dur-fast) var(--ease-out);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kd-check input:checked ~ .kd-check-box {
+    background: var(--kd-green);
+    border-color: var(--kd-green);
+  }
+
+  .kd-check-box::after {
+    content: '';
+    width: 9px;
+    height: 5px;
+    border-left: 1.5px solid #0A0A0A;
+    border-bottom: 1.5px solid #0A0A0A;
+    transform: rotate(-45deg) scale(0);
+    transition: transform var(--dur-fast) var(--ease-spring);
+    position: relative;
+    top: -1px;
+  }
+
+  .kd-check input:checked ~ .kd-check-box::after {
+    transform: rotate(-45deg) scale(1);
+  }
+
+  .kd-check input:focus-visible ~ .kd-check-box {
+    outline: 2px solid var(--kd-green);
+    outline-offset: 2px;
+  }
+
+  .kd-check-label {
+    font-size: 13px;
+    font-weight: 450;
+    color: var(--text-secondary);
+  }
+
+  .kd-radio .kd-check-box {
+    border-radius: var(--radius-full);
+  }
+
+  .kd-radio .kd-check-box::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border: none;
+    border-radius: var(--radius-full);
+    background: #0A0A0A;
+    transform: scale(0);
+    transition: transform var(--dur-fast) var(--ease-spring);
+    top: 0;
+  }
+
+  .kd-radio input:checked ~ .kd-check-box::after {
+    transform: scale(1);
+  }
+
+  /* ── SLIDER ───────────────────────────────────────────── */
+  .kd-slider-wrap {
+    padding: 4px 0;
+  }
+
+  .kd-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--border-default);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .kd-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--bg-surface);
+    border: 2px solid var(--kd-green);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-fast) var(--ease-spring),
+                box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .kd-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 6px var(--kd-green-dim);
+  }
+
+  .kd-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--bg-surface);
+    border: 2px solid var(--kd-green);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .kd-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .kd-slider-labels span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-ghost);
+  }
+
+  /* ── BADGES / CHIPS ───────────────────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 3px 9px;
+    border-radius: var(--radius-xs);
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .badge-default {
+    background: var(--bg-surface-2);
+    color: var(--text-secondary);
+    border-color: var(--border-default);
+  }
+
+  .badge-green {
+    background: var(--kd-green-dim);
+    color: var(--kd-green-muted);
+    border-color: rgba(45,204,111,0.25);
+  }
+
+  html.dark .badge-green {
+    color: var(--kd-green);
+  }
+
+  .badge-accent {
+    background: var(--kd-green);
+    color: #0A0A0A;
+  }
+
+  .badge-error {
+    background: rgba(229,62,62,0.1);
+    color: #E53E3E;
+    border-color: rgba(229,62,62,0.2);
+  }
+
+  .badge-warn {
+    background: rgba(214,158,46,0.1);
+    color: #B7881A;
+    border-color: rgba(214,158,46,0.2);
+  }
+
+  html.dark .badge-warn { color: #E6A820; }
+
+  .badge-mono {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-full);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
+  }
+
+  .chip:hover {
+    border-color: var(--kd-green);
+    color: var(--text-primary);
+    background: var(--kd-green-dim);
+  }
+
+  .chip.active {
+    background: var(--kd-green);
+    border-color: var(--kd-green);
+    color: #0A0A0A;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ── TABS ─────────────────────────────────────────────── */
+  .kd-tabs {
+    border-bottom: 1.5px solid var(--border-default);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .kd-tabs::-webkit-scrollbar { display: none; }
+
+  .kd-tab {
+    font-family: var(--font-ui);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    padding: 10px 18px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease-out);
+    outline: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1.5px;
+  }
+
+  .kd-tab:hover { color: var(--text-primary); }
+
+  .kd-tab.active {
+    color: var(--text-primary);
+    font-weight: 600;
+    border-bottom-color: var(--kd-green);
+  }
+
+  .kd-tab:focus-visible {
+    outline: 2px solid var(--kd-green);
+    outline-offset: -2px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+
+  /* Pill Tabs */
+  .kd-tabs-pill {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-surface-2);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 4px;
+  }
+
+  .kd-tab-pill {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    padding: 7px 16px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
+    outline: none;
+  }
+
+  .kd-tab-pill:hover { color: var(--text-primary); }
+
+  .kd-tab-pill.active {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-weight: 600;
+    border: 1.5px solid var(--border-default);
+    box-shadow: var(--shadow-xs);
+  }
+
+  /* ── CARDS ────────────────────────────────────────────── */
+  .kd-card {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: all var(--dur-base) var(--ease-out);
+  }
+
+  .kd-card-brutal {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  .kd-card-brutal:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .kd-card-elevated {
+    box-shadow: var(--shadow-float);
+    border-color: var(--border-subtle);
+  }
+
+  .kd-card-accent {
+    border-color: var(--kd-green);
+    box-shadow: var(--shadow-accent);
+  }
+
+  .kd-card-accent:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--kd-green);
+  }
+
+  .kd-card-invert {
+    background: var(--bg-invert);
+    border-color: var(--bg-invert);
+    color: var(--text-invert);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .kd-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .kd-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  .kd-card-subtitle {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  /* ── METRIC CARDS ─────────────────────────────────────── */
+  .metric-card {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric-card-accent-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--kd-green);
+  }
+
+  .metric-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+
+  .metric-value {
+    font-family: var(--font-mono);
+    font-size: 36px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-unit {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-tertiary);
+    margin-left: 4px;
+    font-weight: 400;
+  }
+
+  .metric-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--kd-green-muted);
+    margin-top: 8px;
+  }
+
+  html.dark .metric-delta { color: var(--kd-green); }
+
+  .metric-delta.negative {
+    color: #E53E3E;
+  }
+
+  /* ── MACRO BAR ────────────────────────────────────────── */
+  .macro-ring-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .macro-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .macro-bar-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    width: 72px;
+    flex-shrink: 0;
+  }
+
+  .macro-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-surface-2);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .macro-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width var(--dur-slow) var(--ease-out);
+  }
+
+  .macro-bar-fill.protein { background: var(--kd-green); }
+  .macro-bar-fill.carbs { background: var(--text-primary); opacity: 0.7; }
+  .macro-bar-fill.fat { background: var(--text-tertiary); }
+
+  .macro-bar-val {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    width: 52px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── PROGRESS RING ────────────────────────────────────── */
+  .progress-ring-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .progress-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+
+  .progress-ring svg {
+    transform: rotate(-90deg);
+  }
+
+  .progress-ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* ── CHART PLACEHOLDER ────────────────────────────────── */
+  .chart-shell {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    overflow: hidden;
+  }
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .chart-area {
+    height: 160px;
+    position: relative;
+  }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 100%;
+  }
+
+  .chart-bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .chart-bar {
+    width: 100%;
+    background: var(--bg-surface-2);
+    border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+    transition: background var(--dur-fast) var(--ease-out);
+    cursor: pointer;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .chart-bar:hover { background: var(--kd-green-dim); border-color: var(--kd-green); }
+  .chart-bar.active { background: var(--kd-green); border-color: var(--kd-green); }
+  html.dark .chart-bar.active { background: var(--kd-green); }
+
+  .chart-bar-x {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-ghost);
+    letter-spacing: 0.04em;
+  }
+
+  .chart-line-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ── TOAST / ALERTS ───────────────────────────────────── */
+  .toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-float);
+    max-width: 360px;
+  }
+
+  .toast-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .toast-content {}
+
+  .toast-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .toast-body {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+
+  .toast-success { border-color: var(--kd-green); box-shadow: var(--shadow-accent); }
+  .toast-error { border-color: #E53E3E; box-shadow: 4px 4px 0px #E53E3E; }
+  .toast-warn { border-color: #E6A820; box-shadow: 4px 4px 0px #E6A820; }
+  .toast-info { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+
+  /* ── TABLE ────────────────────────────────────────────── */
+  .kd-table-wrap {
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .kd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .kd-table thead {
+    background: var(--bg-surface-2);
+    border-bottom: 1.5px solid var(--border-default);
+  }
+
+  .kd-table th {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding: 10px 16px;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .kd-table th:last-child { text-align: right; }
+  .kd-table td:last-child { text-align: right; }
+
+  .kd-table td {
+    padding: 12px 16px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .kd-table tr:last-child td { border-bottom: none; }
+
+  .kd-table tbody tr {
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+
+  .kd-table tbody tr:hover {
+    background: var(--bg-surface-2);
+  }
+
+  .kd-table .mono-cell {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+
+  /* ── MODAL ────────────────────────────────────────────── */
+  .modal-backdrop {
+    background: rgba(10,10,10,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  html.dark .modal-backdrop {
+    background: rgba(0,0,0,0.8);
+  }
+
+  .modal-backdrop.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 480px;
+    transform: translateY(12px) scale(0.98);
+    transition: transform var(--dur-base) var(--ease-out),
+                opacity var(--dur-base) var(--ease-out);
+    opacity: 0;
+  }
+
+  .modal-backdrop.open .modal {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  .modal-header {
+    padding: 24px 24px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .modal-close {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-tertiary);
+    transition: all var(--dur-fast) var(--ease-out);
+    flex-shrink: 0;
+  }
+
+  .modal-close:hover {
+    background: var(--bg-surface-3);
+    color: var(--text-primary);
+  }
+
+  .modal-body {
+    padding: 16px 24px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .modal-footer {
+    padding: 0 24px 24px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  /* ── EMPTY STATE ──────────────────────────────────────── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+    text-align: center;
+    border: 1.5px dashed var(--border-default);
+    border-radius: var(--radius-lg);
+  }
+
+  .empty-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+
+  .empty-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .empty-body {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    max-width: 280px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  /* ── FEEDBACK / STATES ────────────────────────────────── */
+  .state-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    border: 1.5px solid;
+  }
+
+  .state-pill .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+  }
+
+  .state-pill.loading {
+    color: var(--text-tertiary);
+    border-color: var(--border-default);
+    background: var(--bg-surface-2);
+  }
+
+  .state-pill.loading .dot {
+    background: var(--text-tertiary);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  .state-pill.success {
+    color: var(--kd-green-muted);
+    border-color: rgba(45,204,111,0.3);
+    background: var(--kd-green-dim);
+  }
+
+  html.dark .state-pill.success { color: var(--kd-green); }
+
+  .state-pill.success .dot { background: var(--kd-green); }
+
+  .state-pill.error {
+    color: #E53E3E;
+    border-color: rgba(229,62,62,0.3);
+    background: rgba(229,62,62,0.08);
+  }
+
+  .state-pill.error .dot { background: #E53E3E; }
+
+  .state-pill.warning {
+    color: #B7881A;
+    border-color: rgba(214,158,46,0.3);
+    background: rgba(214,158,46,0.08);
+  }
+
+  html.dark .state-pill.warning { color: #E6A820; }
+  .state-pill.warning .dot { background: #E6A820; }
+
+  /* ── SECTION SHELL ────────────────────────────────────── */
+  .section-shell {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .section-shell-header {
+    padding: 20px 28px;
+    border-bottom: 1.5px solid var(--border-default);
+    background: var(--bg-surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-shell-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .section-shell-body {
+    padding: 28px;
+  }
+
+  /* ── QUESTION CARD (Form pattern) ─────────────────────── */
+  .q-card {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    padding: 32px 36px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+
+  .q-step {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--kd-green);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .q-step-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--border-default);
+    border-radius: 1px;
+    overflow: hidden;
+    max-width: 120px;
+  }
+
+  .q-step-fill {
+    height: 100%;
+    background: var(--kd-green);
+    border-radius: 1px;
+  }
+
+  .q-question {
+    font-family: var(--font-ui);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 24px;
+  }
+
+  /* ── DASHBOARD SHELL ──────────────────────────────────── */
+  .dash-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--col-gap);
+  }
+
+  @media (max-width: 800px) {
+    .dash-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .dash-grid { grid-template-columns: 1fr; }
+  }
+
+  .dash-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--col-gap);
+  }
+
+  @media (max-width: 600px) {
+    .dash-grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ── NUTRITION SPECIFICS ──────────────────────────────── */
+  .calorie-ring-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+  }
+
+  .calorie-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+
+  .calorie-ring svg { transform: rotate(-90deg); }
+
+  .calorie-ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .calorie-ring-val {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .calorie-ring-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+  }
+
+  .macro-legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .macro-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .macro-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Projection Card */
+  .projection-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .projection-row:last-child { border-bottom: none; }
+
+  .projection-label {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .projection-val {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .projection-val.positive { color: var(--kd-green-muted); }
+  html.dark .projection-val.positive { color: var(--kd-green); }
+  .projection-val.negative { color: #E53E3E; }
+
+  /* ── SEARCH ───────────────────────────────────────────── */
+  .kd-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .kd-search-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--text-ghost);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  .kd-search {
+    padding-left: 36px;
+    padding-right: 16px;
+  }
+
+  .kd-search-clear {
+    position: absolute;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    transition: all var(--dur-fast) var(--ease-out);
+  }
+
+  .kd-search-clear:hover {
+    background: var(--bg-surface-3);
+    color: var(--text-primary);
+  }
+
+  /* ── COMPONENT GRID HELPERS ───────────────────────────── */
+  .comp-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .comp-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .comp-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-bottom: 8px;
+  }
+
+  /* ── MOTION DEMO ──────────────────────────────────────── */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes staggerIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  .anim-enter {
+    animation: slideInUp var(--dur-enter) var(--ease-out) both;
+  }
+
+  .anim-enter-1 { animation-delay: 60ms; }
+  .anim-enter-2 { animation-delay: 120ms; }
+  .anim-enter-3 { animation-delay: 180ms; }
+  .anim-enter-4 { animation-delay: 240ms; }
+  .anim-enter-5 { animation-delay: 300ms; }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-default);
+    border-top-color: var(--kd-green);
+    border-radius: var(--radius-full);
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--bg-surface-2) 0%,
+      var(--bg-surface-3) 50%,
+      var(--bg-surface-2) 100%
+    );
+    background-size: 800px 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── MOTION EXAMPLES ──────────────────────────────────── */
+  .motion-demo {
+    background: var(--bg-surface-2);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .motion-box {
+    width: 48px;
+    height: 48px;
+    background: var(--kd-green);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all var(--dur-base) var(--ease-out);
+  }
+
+  .motion-box:hover {
+    transform: translate(-2px, -2px) scale(1.04);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .motion-box:active {
+    transform: translate(1px, 1px) scale(0.97);
+    box-shadow: var(--shadow-xs);
+  }
+
+  /* ── ACCESSIBILITY ────────────────────────────────────── */
+  *:focus-visible {
+    outline: 2px solid var(--kd-green);
+    outline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* High contrast check */
+  @media (prefers-contrast: high) {
+    :root {
+      --border-default: #0A0A0A;
+      --border-subtle: #3A3A36;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .ds-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .ds-sidebar {
+      display: none;
+    }
+
+    .ds-content {
+      padding: var(--space-8) var(--space-6) var(--space-20);
+    }
+
+    .ds-intro {
+      padding: var(--space-8);
+    }
+
+    .ds-intro-headline {
+      font-size: clamp(28px, 8vw, 40px);
+    }
+  }
+
+  /* ── UTILITY ──────────────────────────────────────────── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 520px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+  }
+
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .gap-2 { gap: 8px; }
+  .gap-3 { gap: 12px; }
+  .gap-4 { gap: 16px; }
+  .w-full { width: 100%; }
+  .mt-2 { margin-top: 8px; }
+  .mt-4 { margin-top: 16px; }
+  .mt-6 { margin-top: 24px; }
+  .mb-4 { margin-bottom: 16px; }
+  .mb-6 { margin-bottom: 24px; }
+
+  /* ── TOKEN BLOCK ──────────────────────────────────────── */
+  .token-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    gap: 16px;
+  }
+
+  .token-row:last-child { border-bottom: none; }
+
+  .token-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--kd-green-muted);
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  html.dark .token-name { color: var(--kd-green); }
+
+  .token-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    flex: 1;
+  }
+
+  .token-preview {
+    flex-shrink: 0;
+  }
+
+  /* ── GRID RULER ───────────────────────────────────────── */
+  .grid-ruler {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--col-gap);
+    margin-bottom: 8px;
+  }
+
+  .grid-col {
+    height: 32px;
+    background: rgba(45,204,111,0.08);
+    border: 1px solid rgba(45,204,111,0.2);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .grid-col-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    color: var(--kd-green-muted);
+    opacity: 0.6;
+  }
+
+  html.dark .grid-col-label { color: var(--kd-green); }
+
+  /* ── DIVIDER ──────────────────────────────────────────── */
+  .kd-divider {
+    border: none;
+    border-top: 1.5px solid var(--border-default);
+    margin: var(--space-8) 0;
+  }
+
+  .kd-divider-subtle {
+    border-top-width: 1px;
+    border-color: var(--border-subtle);
+  }
+
+  /* Section anchor offset */
+  section[id] { scroll-margin-top: 72px; }
+
+  /* ── PRINCIPLES CARD ──────────────────────────────────── */
+  .principle-card {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    position: relative;
+  }
+
+  .principle-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--kd-green);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .principle-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--kd-green);
+    margin-bottom: 8px;
+  }
+
+  .principle-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .principle-body {
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    line-height: 1.65;
+  }
+
+  /* ── COMPARISON TABLE ─────────────────────────────────── */
+  .comparison-cell-good {
+    color: var(--kd-green-muted);
+    font-weight: 600;
+  }
+
+  html.dark .comparison-cell-good { color: var(--kd-green); }
+
+  .comparison-cell-bad {
+    color: var(--text-ghost);
+    text-decoration: line-through;
+  }
+
+  /* ── DO / DONT ────────────────────────────────────────── */
+  .do-dont-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 540px) {
+    .do-dont-grid { grid-template-columns: 1fr; }
+  }
+
+  .do-box {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--kd-green);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    box-shadow: 3px 3px 0px var(--kd-green);
+  }
+
+  .dont-box {
+    background: var(--bg-surface);
+    border: 1.5px solid #E53E3E;
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    box-shadow: 3px 3px 0px #E53E3E;
+  }
+
+  .do-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--kd-green-muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  html.dark .do-label { color: var(--kd-green); }
+
+  .dont-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #E53E3E;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .do-dont-text {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── INLINE CODE ──────────────────────────────────────── */
+  code {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-default);
+    padding: 1px 5px;
+    border-radius: var(--radius-xs);
+    color: var(--kd-green-muted);
+  }
+
+  html.dark code { color: var(--kd-green); }
+
+  /* ── PROGRESS STEPS ───────────────────────────────────── */
+  .steps-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--border-default);
+    background: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    transition: all var(--dur-base) var(--ease-out);
+  }
+
+  .step-dot.done {
+    background: var(--kd-green);
+    border-color: var(--kd-green);
+    color: #0A0A0A;
+  }
+
+  .step-dot.current {
+    border-color: var(--kd-green);
+    color: var(--kd-green);
+    box-shadow: 0 0 0 4px var(--kd-green-dim);
+  }
+
+  .step-connector {
+    flex: 1;
+    height: 1.5px;
+    background: var(--border-default);
+    min-width: 24px;
+    max-width: 48px;
+  }
+
+  .step-connector.done { background: var(--kd-green); }
+
+  .step-text {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-ghost);
+    white-space: nowrap;
+  }
+
+  .step-text.current { color: var(--text-primary); font-weight: 600; }
+  .step-text.done { color: var(--text-tertiary); }
+
+  /* ── FORMULA BLOCK ────────────────────────────────────── */
+  .formula-block {
+    background: var(--bg-invert);
+    color: var(--text-invert);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.8;
+    border: 1.5px solid var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  .formula-comment {
+    color: var(--text-ghost);
+    font-size: 11px;
+  }
+
+  html.dark .formula-block { background: var(--bg-surface-2); border-color: var(--border-default); }
+  html.dark .formula-block { color: var(--text-primary); }
+
+  .formula-accent { color: var(--kd-green); }
+  html.dark .formula-accent { color: var(--kd-green-vivid); }
+
+  /* ── HERO PATTERN PREVIEW ─────────────────────────────── */
+  .hero-preview {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .hero-preview-inner {
+    padding: 48px 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .hero-preview-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--kd-green);
+    border: 1.5px solid rgba(45,204,111,0.3);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    width: fit-content;
+    background: var(--kd-green-dim);
+  }
+
+  .hero-preview-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  .hero-preview-h1 em {
+    font-style: normal;
+    color: var(--kd-green);
+  }
+
+  .hero-preview-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 480px;
+    font-weight: 400;
+  }
+
+  .hero-preview-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-preview-stat-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .hero-preview-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero-preview-stat-val {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-preview-stat-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+  }
+
+  /* ── SUMMARY PREVIEW ──────────────────────────────────── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .summary-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── FORM QUESTION OPTIONS ────────────────────────────── */
+  .option-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .option-card {
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out);
+    background: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .option-card:hover {
+    border-color: var(--kd-green);
+    background: var(--kd-green-dim);
+  }
+
+  .option-card.selected {
+    border-color: var(--kd-green);
+    background: var(--kd-green-dim);
+    box-shadow: var(--shadow-accent);
+  }
+
+  .option-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    width: 32px;
+    text-align: center;
+  }
+
+  .option-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .option-sub {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  /* ── LOADING STATE ────────────────────────────────────── */
+  .skeleton-line {
+    height: 14px;
+    margin-bottom: 8px;
+  }
+
+  .skeleton-line:last-child { margin-bottom: 0; }
+
+  .skeleton-short { width: 40%; }
+  .skeleton-mid { width: 70%; }
+  .skeleton-full { width: 100%; }
+
+  /* ─────────────────────────────────────────────────────── */
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ──────────────────────────────────────────── -->
+<header class="ds-nav" role="banner">
+  <div class="ds-nav-wordmark">
+    <span>Khroma<span class="ds-nav-wordmark-accent">Diet</span></span>
+    <span class="ds-nav-tag">Design System v1.0</span>
+  </div>
+  <div class="ds-nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" title="Alternar tema"></button>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-ghost);letter-spacing:0.06em;">
+      NEO-BRUTALISMO CLEAN
+    </div>
+  </div>
+</header>
+
+<div class="ds-page">
+  <div class="ds-shell">
+
+    <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+    <aside class="ds-sidebar" aria-label="Navegação do Design System">
+
+      <div class="ds-toc-section">
+        <span class="ds-toc-label">Fundação</span>
+        <a href="#intro" class="ds-toc-link active">Manifesto Visual</a>
+        <a href="#principles" class="ds-toc-link">Princípios</a>
+        <a href="#tokens" class="ds-toc-link">Design Tokens</a>
+        <a href="#color" class="ds-toc-link">Sistema de Cor</a>
+        <a href="#typography" class="ds-toc-link">Tipografia</a>
+      </div>
+
+      <div class="ds-toc-section">
+        <span class="ds-toc-label">Layout</span>
+        <a href="#grid" class="ds-toc-link">Grid & Spacing</a>
+        <a href="#radius" class="ds-toc-link">Bordas & Raios</a>
+        <a href="#elevation" class="ds-toc-link">Elevação & Sombras</a>
+        <a href="#surfaces" class="ds-toc-link">Superfícies</a>
+      </div>
+
+      <div class="ds-toc-section">
+        <span class="ds-toc-label">Componentes</span>
+        <a href="#buttons" class="ds-toc-link">Botões</a>
+        <a href="#forms" class="ds-toc-link">Formulários</a>
+        <a href="#controls" class="ds-toc-link">Controles</a>
+        <a href="#badges" class="ds-toc-link">Badges & Chips</a>
+        <a href="#tabs" class="ds-toc-link">Tabs</a>
+        <a href="#cards" class="ds-toc-link">Cards</a>
+        <a href="#feedback" class="ds-toc-link">Feedback</a>
+        <a href="#overlays" class="ds-toc-link">Overlays</a>
+        <a href="#data" class="ds-toc-link">Tabelas</a>
+      </div>
+
+      <div class="ds-toc-section">
+        <span class="ds-toc-label">Produto</span>
+        <a href="#metrics" class="ds-toc-link">Métricas</a>
+        <a href="#charts" class="ds-toc-link">Gráficos</a>
+        <a href="#nutrition" class="ds-toc-link">Nutrição</a>
+        <a href="#patterns" class="ds-toc-link">Padrões UI</a>
+      </div>
+
+      <div class="ds-toc-section">
+        <span class="ds-toc-label">Sistema</span>
+        <a href="#motion" class="ds-toc-link">Motion</a>
+        <a href="#modes" class="ds-toc-link">Light / Dark</a>
+        <a href="#accessibility" class="ds-toc-link">Acessibilidade</a>
+        <a href="#responsive" class="ds-toc-link">Responsividade</a>
+        <a href="#preview" class="ds-toc-link">Padrões de Seção</a>
+      </div>
+
+    </aside>
+
+    <!-- ── MAIN CONTENT ──────────────────────────────────────── -->
+    <main class="ds-content" id="main-content">
+
+      <!-- INTRO -->
+      <section class="ds-section" id="intro">
+        <div class="ds-intro anim-enter">
+          <div class="ds-intro-eyebrow">KhromaDiet / Design System / v1.0</div>
+          <h1 class="ds-intro-headline">A referência canônica<br>do <em>KhromaDiet.</em></h1>
+          <p class="ds-intro-body">
+            Este documento governa toda a linguagem visual do produto. Cada token, componente e padrão aqui definido é a régua oficial para Hero, Form, Summary e Dashboard. Neo-Brutalismo Clean: força estrutural, contraste deliberado, acabamento de software maduro.
+          </p>
+          <div class="ds-intro-meta">
+            <span class="badge badge-green badge-mono">Neo-Brutalismo Clean</span>
+            <span class="badge badge-default badge-mono">Health-Tech Premium</span>
+            <span class="badge badge-default badge-mono">Light + Dark Mode</span>
+            <span class="badge badge-default badge-mono">WCAG 2.1 AA</span>
+            <span class="badge badge-default badge-mono">Responsive-first</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRINCIPLES -->
+      <section class="ds-section" id="principles">
+        <div class="ds-section-header">
+          <span class="ds-section-num">01</span>
+          <h2 class="ds-section-title">Princípios de Linguagem</h2>
+        </div>
+        <p class="ds-section-desc">Seis princípios não-negociáveis que regem toda decisão visual. Se uma escolha viola um desses princípios, ela está errada.</p>
+
+        <div class="grid-3 mt-6">
+          <div class="principle-card anim-enter anim-enter-1">
+            <div class="principle-num">P.01</div>
+            <div class="principle-title">Força Estrutural</div>
+            <p class="principle-body">Bordas têm peso. Contornos têm intenção. Superfícies têm presença. Nada flutua sem razão.</p>
+          </div>
+          <div class="principle-card anim-enter anim-enter-2">
+            <div class="principle-num">P.02</div>
+            <div class="principle-title">Precisão Clínica</div>
+            <p class="principle-body">Números, métricas e rótulos respiram com exatidão. Cada dado é legível à primeira vista.</p>
+          </div>
+          <div class="principle-card anim-enter anim-enter-3">
+            <div class="principle-num">P.03</div>
+            <div class="principle-title">Silêncio Intencional</div>
+            <p class="principle-body">Espaço em branco é conteúdo. Margem é decisão. Densidade é sparse por escolha, não por descuido.</p>
+          </div>
+          <div class="principle-card anim-enter anim-enter-4">
+            <div class="principle-num">P.04</div>
+            <div class="principle-title">Disciplina Cromática</div>
+            <p class="principle-body">Um único acento. Verde vivo para energia, foco e ação. Sem deriva. Sem exceção decorativa.</p>
+          </div>
+          <div class="principle-card anim-enter anim-enter-5">
+            <div class="principle-num">P.05</div>
+            <div class="principle-title">Tato Humano</div>
+            <p class="principle-body">Brutalismo sem agressividade. Rigor sem frieza. O sistema é preciso e, ao mesmo tempo, acessível.</p>
+          </div>
+          <div class="principle-card anim-enter">
+            <div class="principle-num">P.06</div>
+            <div class="principle-title">Motion como Hierarquia</div>
+            <p class="principle-body">Animação existe para orientar, confirmar e responder. Nunca para decorar ou impressionar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- COLOR -->
+      <section class="ds-section" id="color">
+        <div class="ds-section-header">
+          <span class="ds-section-num">02</span>
+          <h2 class="ds-section-title">Sistema de Cor</h2>
+        </div>
+        <p class="ds-section-desc">Paleta estrita e disciplinada. Branco dominante no claro, preto abissal no escuro, verde como único acento cromático.</p>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Acento Principal</div>
+          <div class="color-grid" style="grid-template-columns: repeat(3,1fr);">
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#2DCC6F;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Green</span>
+                <span class="color-swatch-value">#2DCC6F</span>
+                <span class="color-swatch-role">CTA · Focus · Accent</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#00E56B;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Green Vivid</span>
+                <span class="color-swatch-value">#00E56B</span>
+                <span class="color-swatch-role">Hover · Active State</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#1FA854;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Green Muted</span>
+                <span class="color-swatch-value">#1FA854</span>
+                <span class="color-swatch-role">Text on Light · Icons</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Light Mode — Superfícies</div>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#FAFAF8;border-bottom:1px solid #EAEAE4;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Base</span>
+                <span class="color-swatch-value">#FAFAF8</span>
+                <span class="color-swatch-role">bg-base</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#FFFFFF;border-bottom:1px solid #EAEAE4;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Surface</span>
+                <span class="color-swatch-value">#FFFFFF</span>
+                <span class="color-swatch-role">bg-surface · Cards</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#F4F4F0;border-bottom:1px solid #EAEAE4;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Surface 2</span>
+                <span class="color-swatch-value">#F4F4F0</span>
+                <span class="color-swatch-role">Inputs · Headers</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#0A0A0A;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Invert</span>
+                <span class="color-swatch-value">#0A0A0A</span>
+                <span class="color-swatch-role">Borders · Inverted</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Dark Mode — Superfícies</div>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#080808;border:1px solid #2C2C28;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Base</span>
+                <span class="color-swatch-value">#080808</span>
+                <span class="color-swatch-role">bg-base dark</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#111110;border:1px solid #2C2C28;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Surface</span>
+                <span class="color-swatch-value">#111110</span>
+                <span class="color-swatch-role">bg-surface dark</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#1A1A18;border:1px solid #2C2C28;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Surface 2</span>
+                <span class="color-swatch-value">#1A1A18</span>
+                <span class="color-swatch-role">Inputs dark</span>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch-preview" style="background:#242422;border:1px solid #2C2C28;"></div>
+              <div class="color-swatch-info">
+                <span class="color-swatch-name">Surface 3</span>
+                <span class="color-swatch-value">#242422</span>
+                <span class="color-swatch-role">Hover states dark</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Escala Textual</div>
+          <div class="kd-card">
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div style="width:80px;font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);letter-spacing:0.06em;">PRIMARY</div>
+                <div style="font-size:15px;font-weight:500;color:var(--text-primary);">Texto primário — 100% opacidade</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div style="width:80px;font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);letter-spacing:0.06em;">SECONDARY</div>
+                <div style="font-size:15px;font-weight:400;color:var(--text-secondary);">Texto secundário — corpo e descrições</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div style="width:80px;font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);letter-spacing:0.06em;">TERTIARY</div>
+                <div style="font-size:15px;color:var(--text-tertiary);">Texto terciário — metadados, labels</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div style="width:80px;font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);letter-spacing:0.06em;">GHOST</div>
+                <div style="font-size:15px;color:var(--text-ghost);">Texto fantasma — desabilitado, placeholder</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div style="width:80px;font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);letter-spacing:0.06em;">ACCENT</div>
+                <div style="font-size:15px;font-weight:600;color:var(--text-accent);">Texto acento — links, valores positivos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Do / Don't — Uso de Cor</div>
+          <div class="do-dont-grid">
+            <div class="do-box">
+              <div class="do-label">✓ Faça</div>
+              <p class="do-dont-text">Use verde exclusivamente em CTAs primários, estados de foco, valores positivos, confirmações e pontos de energia visual. Reserve-o para o que importa.</p>
+            </div>
+            <div class="dont-box">
+              <div class="dont-label">✗ Evite</div>
+              <p class="do-dont-text">Nunca use azul, roxo, dourado, coral ou outras famílias cromáticas. Criatividade aparece na composição, não na dispersão de cor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TYPOGRAPHY -->
+      <section class="ds-section" id="typography">
+        <div class="ds-section-header">
+          <span class="ds-section-num">03</span>
+          <h2 class="ds-section-title">Tipografia</h2>
+        </div>
+        <p class="ds-section-desc">Três famílias tipográficas, cada uma com papel preciso. O sistema é curado com critério editorial — não decorativo.</p>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Famílias</div>
+          <div class="grid-3">
+            <div class="kd-card">
+              <div class="ds-sub-title" style="margin-bottom:12px;">Display</div>
+              <div style="font-family:'Instrument Serif',Georgia,serif;font-size:32px;line-height:1.1;font-style:italic;color:var(--text-primary);">Instrument Serif</div>
+              <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.6;">Headlines de alto impacto. Presença imediata. Contraste com Inter cria hierarquia inevitável, não genérica.</p>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);margin-top:8px;letter-spacing:0.06em;">DISPLAY · HERO · FEATURED</div>
+            </div>
+            <div class="kd-card">
+              <div class="ds-sub-title" style="margin-bottom:12px;">Interface</div>
+              <div style="font-family:'Inter',sans-serif;font-size:26px;font-weight:700;letter-spacing:-0.04em;color:var(--text-primary);">Inter</div>
+              <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.6;">UI, corpo, labels, botões. Silenciosamente premium. Legibilidade clínica em qualquer peso.</p>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);margin-top:8px;letter-spacing:0.06em;">UI · BODY · LABELS · BUTTONS</div>
+            </div>
+            <div class="kd-card">
+              <div class="ds-sub-title" style="margin-bottom:12px;">Mono</div>
+              <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;letter-spacing:-0.02em;color:var(--text-primary);">DM Mono</div>
+              <p style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.6;">Números, métricas, tokens, fórmulas, códigos. Precisão analítica. Não é só funcional — tem caráter.</p>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-ghost);margin-top:8px;letter-spacing:0.06em;">DATA · METRICS · CODE · MONO</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Escala Tipográfica</div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>Display / Instrument Serif Italic</span>
+              <span>56px / 1.0lh / -0.03em</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Hero headline</span>
+            </div>
+            <div class="ts-display">A ciência do seu corpo.</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>H1 / Inter 800</span>
+              <span>40px / 1.05lh / -0.04em</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Page title</span>
+            </div>
+            <div class="ts-h1">Seus resultados completos</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>H2 / Inter 700</span>
+              <span>28px / 1.15lh / -0.03em</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Section title</span>
+            </div>
+            <div class="ts-h2">Distribuição de Macronutrientes</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>H3 / Inter 600</span>
+              <span>20px / 1.25lh / -0.025em</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Card title, group header</span>
+            </div>
+            <div class="ts-h3">Projeção de 30 dias</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>H4 / Inter 600</span>
+              <span>15px / 1.4lh / -0.01em</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Sub-header, form label</span>
+            </div>
+            <div class="ts-h4">Nível de Atividade Física</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>Body Large / Inter 400</span>
+              <span>17px / 1.7lh</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Intro text, key explanations</span>
+            </div>
+            <div class="ts-body-lg">Com base nas suas respostas, calculamos seu gasto energético diário total e distribuímos seus macros de forma personalizada.</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>Body / Inter 400</span>
+              <span>15px / 1.65lh</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Default body text</span>
+            </div>
+            <div class="ts-body">A equação de Harris-Benedict revisada por Mifflin-St Jeor estima seu metabolismo basal. Aplicamos o fator de atividade e o ajuste de meta para chegar ao seu alvo diário.</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>Body Small / Inter 400</span>
+              <span>13px / 1.6lh</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Helper text, footnotes</span>
+            </div>
+            <div class="ts-body-sm">Os valores são estimativas baseadas em equações validadas. Consulte um nutricionista para ajustes individuais.</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>Mono Large / DM Mono 500</span>
+              <span>28px / -0.02em</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Key metrics, TDEE, calorie values</span>
+            </div>
+            <div class="ts-mono-lg">2.847 kcal/dia</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>Label / Inter 600</span>
+              <span>10px / 0.1em tracking / Uppercase</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Section labels, table headers, eyebrows</span>
+            </div>
+            <div class="ts-label">Gasto Energético Total</div>
+          </div>
+
+          <div class="type-specimen">
+            <div class="type-meta">
+              <span>Caption / Inter 500</span>
+              <span>11px / 0.02em tracking</span>
+              <span style="color:var(--kd-green-muted);">ROLE: Micro text, timestamps</span>
+            </div>
+            <div class="ts-caption">Calculado em 14 jan 2025 às 14h32 — Mifflin-St Jeor</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOKENS -->
+      <section class="ds-section" id="tokens">
+        <div class="ds-section-header">
+          <span class="ds-section-num">04</span>
+          <h2 class="ds-section-title">Design Tokens</h2>
+        </div>
+        <p class="ds-section-desc">Variáveis CSS que formam a fonte única da verdade. Todo componente consome tokens — nunca valores hardcoded.</p>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Tokens de Cor</div>
+          <div class="kd-card">
+            <div class="token-row">
+              <span class="token-name">--kd-green</span>
+              <span class="token-value">#2DCC6F</span>
+              <div style="width:24px;height:24px;background:#2DCC6F;border-radius:4px;border:1px solid rgba(0,0,0,0.1);"></div>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--bg-base</span>
+              <span class="token-value">#FAFAF8 / #080808</span>
+              <span class="badge badge-default badge-mono">contextual</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--bg-surface</span>
+              <span class="token-value">#FFFFFF / #111110</span>
+              <span class="badge badge-default badge-mono">contextual</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--text-primary</span>
+              <span class="token-value">#0A0A0A / #F0F0EC</span>
+              <span class="badge badge-default badge-mono">contextual</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--border-strong</span>
+              <span class="token-value">#0A0A0A / #F0F0EC</span>
+              <span class="badge badge-default badge-mono">contextual</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--border-default</span>
+              <span class="token-value">#D4D4CC / #2C2C28</span>
+              <span class="badge badge-default badge-mono">contextual</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-4">
+          <div class="ds-sub-title">Tokens de Motion</div>
+          <div class="kd-card">
+            <div class="token-row">
+              <span class="token-name">--dur-fast</span>
+              <span class="token-value">120ms</span>
+              <span style="font-size:11px;color:var(--text-ghost);">hovers, microinterações</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--dur-base</span>
+              <span class="token-value">200ms</span>
+              <span style="font-size:11px;color:var(--text-ghost);">transições de estado</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--dur-slow</span>
+              <span class="token-value">320ms</span>
+              <span style="font-size:11px;color:var(--text-ghost);">abertura de painéis</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--dur-enter</span>
+              <span class="token-value">480ms</span>
+              <span style="font-size:11px;color:var(--text-ghost);">entrada de seção</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--ease-out</span>
+              <span class="token-value">cubic-bezier(0.16, 1, 0.3, 1)</span>
+              <span style="font-size:11px;color:var(--text-ghost);">default</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">--ease-spring</span>
+              <span class="token-value">cubic-bezier(0.34, 1.56, 0.64, 1)</span>
+              <span style="font-size:11px;color:var(--text-ghost);">toggles, chips</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GRID & SPACING -->
+      <section class="ds-section" id="grid">
+        <div class="ds-section-header">
+          <span class="ds-section-num">05</span>
+          <h2 class="ds-section-title">Grid & Spacing</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Grid de 12 Colunas</div>
+          <div class="grid-ruler">
+            <div class="grid-col"><span class="grid-col-label">1</span></div>
+            <div class="grid-col"><span class="grid-col-label">2</span></div>
+            <div class="grid-col"><span class="grid-col-label">3</span></div>
+            <div class="grid-col"><span class="grid-col-label">4</span></div>
+            <div class="grid-col"><span class="grid-col-label">5</span></div>
+            <div class="grid-col"><span class="grid-col-label">6</span></div>
+            <div class="grid-col"><span class="grid-col-label">7</span></div>
+            <div class="grid-col"><span class="grid-col-label">8</span></div>
+            <div class="grid-col"><span class="grid-col-label">9</span></div>
+            <div class="grid-col"><span class="grid-col-label">10</span></div>
+            <div class="grid-col"><span class="grid-col-label">11</span></div>
+            <div class="grid-col"><span class="grid-col-label">12</span></div>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-ghost);margin-top:8px;">
+            max-width: 1280px · gutter: clamp(20px, 4vw, 64px) · gap: 24px
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Escala de Espaçamento</div>
+          <div class="kd-card">
+            <div class="spacing-grid">
+              <div class="spacing-row"><span class="spacing-label">space-1</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px;"></div><span class="spacing-px">4px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-2</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px;"></div><span class="spacing-px">8px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-3</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:12px;"></div><span class="spacing-px">12px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-4</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:16px;"></div><span class="spacing-px">16px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-6</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px;"></div><span class="spacing-px">24px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-8</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px;"></div><span class="spacing-px">32px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-10</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:40px;"></div><span class="spacing-px">40px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-12</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px;"></div><span class="spacing-px">48px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-16</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:64px;"></div><span class="spacing-px">64px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-20</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:80px;"></div><span class="spacing-px">80px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-24</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:96px;"></div><span class="spacing-px">96px</span></div></div>
+              <div class="spacing-row"><span class="spacing-label">space-32</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:128px;"></div><span class="spacing-px">128px</span></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RADIUS & BORDERS -->
+      <section class="ds-section" id="radius">
+        <div class="ds-section-header">
+          <span class="ds-section-num">06</span>
+          <h2 class="ds-section-title">Bordas & Raios</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Escala de Border-Radius</div>
+          <div class="radius-grid">
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:0px;"></div>
+              <div class="radius-name">none<br>0px</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:2px;"></div>
+              <div class="radius-name">xs<br>2px</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:4px;"></div>
+              <div class="radius-name">sm<br>4px</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:6px;"></div>
+              <div class="radius-name">md<br>6px</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:8px;"></div>
+              <div class="radius-name">lg<br>8px</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:12px;"></div>
+              <div class="radius-name">xl<br>12px</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:16px;"></div>
+              <div class="radius-name">2xl<br>16px</div>
+            </div>
+            <div class="radius-item">
+              <div class="radius-box" style="border-radius:9999px;width:48px;height:48px;"></div>
+              <div class="radius-name">full<br>∞</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Peso de Borda</div>
+          <div class="kd-card">
+            <div class="token-row">
+              <span class="token-name">Estrutural / Strong</span>
+              <span class="token-value">1.5px · var(--border-strong)</span>
+              <span style="font-size:11px;color:var(--text-ghost);">Cards brutalistas, shells, modais</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Default</span>
+              <span class="token-value">1.5px · var(--border-default)</span>
+              <span style="font-size:11px;color:var(--text-ghost);">Inputs, cards normais, dividers</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Sutil</span>
+              <span class="token-value">1px · var(--border-subtle)</span>
+              <span style="font-size:11px;color:var(--text-ghost);">Separadores internos, table rows</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Acento</span>
+              <span class="token-value">1.5–2px · var(--kd-green)</span>
+              <span style="font-size:11px;color:var(--text-ghost);">Focus ring, card selecionado, tabs ativas</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ELEVATION -->
+      <section class="ds-section" id="elevation">
+        <div class="ds-section-header">
+          <span class="ds-section-num">07</span>
+          <h2 class="ds-section-title">Elevação & Sombras</h2>
+        </div>
+        <p class="ds-section-desc">Sistema brutalista de sombras sólidas no claro. No escuro, sombras translúcidas que preservam a identidade abissal.</p>
+
+        <div class="elevation-grid mt-6">
+          <div>
+            <div class="elevation-card" style="box-shadow:none;">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--text-ghost);">Aa</div>
+              <div class="elevation-label">Flat / None</div>
+            </div>
+          </div>
+          <div>
+            <div class="elevation-card" style="box-shadow:var(--shadow-xs);">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--text-primary);">Aa</div>
+              <div class="elevation-label">XS: 2×2</div>
+            </div>
+          </div>
+          <div>
+            <div class="elevation-card" style="box-shadow:var(--shadow-sm);">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--text-primary);">Aa</div>
+              <div class="elevation-label">SM: 3×3</div>
+            </div>
+          </div>
+          <div>
+            <div class="elevation-card" style="box-shadow:var(--shadow-md);">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--text-primary);">Aa</div>
+              <div class="elevation-label">MD: 4×4</div>
+            </div>
+          </div>
+          <div>
+            <div class="elevation-card" style="box-shadow:var(--shadow-lg);">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--text-primary);">Aa</div>
+              <div class="elevation-label">LG: 6×6</div>
+            </div>
+          </div>
+          <div>
+            <div class="elevation-card" style="box-shadow:var(--shadow-xl);">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--text-primary);">Aa</div>
+              <div class="elevation-label">XL: 8×8</div>
+            </div>
+          </div>
+          <div>
+            <div class="elevation-card" style="box-shadow:var(--shadow-accent);">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--kd-green-muted);">Aa</div>
+              <div class="elevation-label" style="color:var(--kd-green-muted);">Accent</div>
+            </div>
+          </div>
+          <div>
+            <div class="elevation-card" style="box-shadow:var(--shadow-float);">
+              <div style="font-family:var(--font-mono);font-size:20px;color:var(--text-primary);">Aa</div>
+              <div class="elevation-label">Float</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SURFACES -->
+      <section class="ds-section" id="surfaces">
+        <div class="ds-section-header">
+          <span class="ds-section-num">08</span>
+          <h2 class="ds-section-title">Superfícies</h2>
+        </div>
+        <p class="ds-section-desc">Camadas de profundidade com presença própria. Sem glassmorphism genérico. Solidez e clareza brutalista.</p>
+
+        <div class="grid-2 mt-6">
+          <div>
+            <div class="comp-label">bg-base</div>
+            <div style="background:var(--bg-base);border:1.5px solid var(--border-default);border-radius:var(--radius-lg);padding:24px;font-size:13px;color:var(--text-tertiary);">Fundo da página. Camada zero.</div>
+          </div>
+          <div>
+            <div class="comp-label">bg-surface</div>
+            <div style="background:var(--bg-surface);border:1.5px solid var(--border-default);border-radius:var(--radius-lg);padding:24px;font-size:13px;color:var(--text-tertiary);box-shadow:var(--shadow-soft);">Cards, painéis, modais. Camada 1.</div>
+          </div>
+          <div>
+            <div class="comp-label">bg-surface-2</div>
+            <div style="background:var(--bg-surface-2);border:1.5px solid var(--border-default);border-radius:var(--radius-lg);padding:24px;font-size:13px;color:var(--text-tertiary);">Inputs, headers internos. Camada 2.</div>
+          </div>
+          <div>
+            <div class="comp-label">bg-surface-3</div>
+            <div style="background:var(--bg-surface-3);border:1.5px solid var(--border-default);border-radius:var(--radius-lg);padding:24px;font-size:13px;color:var(--text-tertiary);">Hover states, seleções. Camada 3.</div>
+          </div>
+          <div>
+            <div class="comp-label">bg-invert</div>
+            <div style="background:var(--bg-invert);border:1.5px solid var(--border-strong);border-radius:var(--radius-lg);padding:24px;font-size:13px;color:var(--text-invert);box-shadow:var(--shadow-md);">Invertido — fórmulas, callouts fortes.</div>
+          </div>
+          <div>
+            <div class="comp-label">accent surface</div>
+            <div style="background:var(--kd-green-dim);border:1.5px solid rgba(45,204,111,0.3);border-radius:var(--radius-lg);padding:24px;font-size:13px;color:var(--kd-green-muted);">Destaque de ação — confirmação, foco.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUTTONS -->
+      <section class="ds-section" id="buttons">
+        <div class="ds-section-header">
+          <span class="ds-section-num">09</span>
+          <h2 class="ds-section-title">Botões</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Variantes</div>
+          <div class="comp-row">
+            <button class="btn btn-primary">Calcular Agora</button>
+            <button class="btn btn-secondary">Ver Detalhes</button>
+            <button class="btn btn-ghost">Voltar</button>
+            <button class="btn btn-danger">Reiniciar</button>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Tamanhos</div>
+          <div class="comp-row" style="align-items:center;">
+            <button class="btn btn-primary btn-xs">XS</button>
+            <button class="btn btn-primary btn-sm">Small</button>
+            <button class="btn btn-primary">Default</button>
+            <button class="btn btn-primary btn-lg">Large</button>
+            <button class="btn btn-primary btn-xl">Extra Large</button>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Com ícone & Icon Button</div>
+          <div class="comp-row">
+            <button class="btn btn-primary">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Iniciar Cálculo
+            </button>
+            <button class="btn btn-secondary">
+              Exportar PDF
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 8.5L6 11.5L10 8.5M6 1.5v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+            <button class="btn btn-icon" aria-label="Configurações">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 2v1M8 13v1M2 8H1M15 8h-1M3.5 3.5l.7.7M11.8 11.8l.7.7M3.5 12.5l.7-.7M11.8 4.2l.7-.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+            <button class="btn btn-icon btn-primary" style="width:40px;height:40px;border-radius:var(--radius-md);" aria-label="Adicionar">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Estados</div>
+          <div class="comp-row">
+            <button class="btn btn-primary">Normal</button>
+            <button class="btn btn-primary" style="transform:translate(-2px,-2px);box-shadow:var(--shadow-xl);">Hovered</button>
+            <button class="btn btn-primary" style="transform:translate(2px,2px);box-shadow:var(--shadow-xs);">Pressed</button>
+            <button class="btn btn-primary" style="outline:2px solid var(--kd-green);outline-offset:3px;">Focused</button>
+            <button class="btn btn-primary" disabled>Disabled</button>
+            <button class="btn btn-primary" style="gap:10px;">
+              <span class="spinner" style="width:14px;height:14px;border-width:1.5px;"></span>
+              Calculando…
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORMS -->
+      <section class="ds-section" id="forms">
+        <div class="ds-section-header">
+          <span class="ds-section-num">10</span>
+          <h2 class="ds-section-title">Formulários</h2>
+        </div>
+
+        <div class="grid-2 mt-6">
+          <div>
+            <div class="ds-sub-title">Input Text</div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div>
+                <label class="kd-label">Peso atual <span class="kd-label-hint">obrigatório</span></label>
+                <input class="kd-input" type="number" placeholder="75" />
+                <span class="kd-helper">Em quilogramas (kg)</span>
+              </div>
+              <div>
+                <label class="kd-label">Estado de foco</label>
+                <input class="kd-input" type="text" value="Digitando..." style="border-color:var(--kd-green);box-shadow:0 0 0 3px var(--kd-green-dim);" />
+              </div>
+              <div>
+                <label class="kd-label">Erro de validação</label>
+                <input class="kd-input error" type="text" value="valor inválido" />
+                <span class="kd-helper error">Insira um valor entre 30 e 300 kg</span>
+              </div>
+              <div>
+                <label class="kd-label">Validado com sucesso</label>
+                <input class="kd-input success" type="text" value="85" />
+                <span class="kd-helper success">Valor aceito</span>
+              </div>
+              <div>
+                <label class="kd-label">Desabilitado</label>
+                <input class="kd-input" type="text" value="—" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="ds-sub-title">Select & Outros</div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div>
+                <label class="kd-label">Objetivo</label>
+                <select class="kd-input kd-select">
+                  <option>Perder peso</option>
+                  <option>Manter peso</option>
+                  <option>Ganhar massa</option>
+                </select>
+              </div>
+              <div>
+                <label class="kd-label">Input com addon</label>
+                <div class="kd-input-group">
+                  <span class="kd-input-addon">kg</span>
+                  <input class="kd-input" type="number" placeholder="85" />
+                </div>
+              </div>
+              <div>
+                <label class="kd-label">Input com addon direito</label>
+                <div class="kd-input-group">
+                  <input class="kd-input" type="number" placeholder="175" />
+                  <span class="kd-input-addon">cm</span>
+                </div>
+              </div>
+              <div>
+                <label class="kd-label">Textarea</label>
+                <textarea class="kd-input kd-textarea" placeholder="Observações adicionais sobre restrições alimentares…"></textarea>
+              </div>
+              <div>
+                <div class="kd-search-wrap">
+                  <svg class="kd-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M9.5 9.5L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <input class="kd-input kd-search" type="search" placeholder="Buscar alimento…" />
+                  <div class="kd-search-clear" aria-label="Limpar">✕</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTROLS -->
+      <section class="ds-section" id="controls">
+        <div class="ds-section-header">
+          <span class="ds-section-num">11</span>
+          <h2 class="ds-section-title">Controles</h2>
+        </div>
+
+        <div class="grid-2 mt-6">
+          <div>
+            <div class="ds-sub-title">Switch / Toggle</div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <label class="kd-switch-wrap">
+                <div class="kd-switch">
+                  <input type="checkbox" checked>
+                  <div class="kd-switch-track"><div class="kd-switch-thumb"></div></div>
+                </div>
+                <span class="kd-switch-label">Modo corte calórico</span>
+              </label>
+              <label class="kd-switch-wrap">
+                <div class="kd-switch">
+                  <input type="checkbox">
+                  <div class="kd-switch-track"><div class="kd-switch-thumb"></div></div>
+                </div>
+                <span class="kd-switch-label">Incluir cardio semanal</span>
+              </label>
+              <label class="kd-switch-wrap">
+                <div class="kd-switch">
+                  <input type="checkbox" checked>
+                  <div class="kd-switch-track"><div class="kd-switch-thumb"></div></div>
+                </div>
+                <span class="kd-switch-label">Mostrar projeções</span>
+              </label>
+            </div>
+
+            <div class="ds-sub-title" style="margin-top:24px;">Slider</div>
+            <div class="kd-slider-wrap">
+              <input type="range" class="kd-slider" min="1200" max="4000" value="2400" id="calSlider">
+              <div class="kd-slider-labels"><span>1200 kcal</span><span>4000 kcal</span></div>
+            </div>
+            <div style="font-family:var(--font-mono);font-size:13px;color:var(--text-primary);margin-top:8px;">Alvo: <span id="calVal" style="color:var(--kd-green);">2400</span> kcal/dia</div>
+          </div>
+
+          <div>
+            <div class="ds-sub-title">Checkbox</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <label class="kd-check-wrap">
+                <div class="kd-check"><input type="checkbox" checked><div class="kd-check-box"></div></div>
+                <span class="kd-check-label">Atividade física regular</span>
+              </label>
+              <label class="kd-check-wrap">
+                <div class="kd-check"><input type="checkbox"><div class="kd-check-box"></div></div>
+                <span class="kd-check-label">Restrição alimentar</span>
+              </label>
+              <label class="kd-check-wrap">
+                <div class="kd-check"><input type="checkbox" checked><div class="kd-check-box"></div></div>
+                <span class="kd-check-label">Aceito os termos</span>
+              </label>
+            </div>
+
+            <div class="ds-sub-title" style="margin-top:24px;">Radio</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <label class="kd-check-wrap kd-radio">
+                <div class="kd-check"><input type="radio" name="goal" checked><div class="kd-check-box"></div></div>
+                <span class="kd-check-label">Perda de peso (déficit)</span>
+              </label>
+              <label class="kd-check-wrap kd-radio">
+                <div class="kd-check"><input type="radio" name="goal"><div class="kd-check-box"></div></div>
+                <span class="kd-check-label">Manutenção (TDEE)</span>
+              </label>
+              <label class="kd-check-wrap kd-radio">
+                <div class="kd-check"><input type="radio" name="goal"><div class="kd-check-box"></div></div>
+                <span class="kd-check-label">Ganho muscular (superávit)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BADGES & CHIPS -->
+      <section class="ds-section" id="badges">
+        <div class="ds-section-header">
+          <span class="ds-section-num">12</span>
+          <h2 class="ds-section-title">Badges & Chips</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Badges</div>
+          <div class="comp-row">
+            <span class="badge badge-default">Padrão</span>
+            <span class="badge badge-green">Positivo</span>
+            <span class="badge badge-accent">Destaque</span>
+            <span class="badge badge-error">Atenção</span>
+            <span class="badge badge-warn">Aviso</span>
+            <span class="badge badge-default badge-mono">v1.0.0</span>
+            <span class="badge badge-green badge-mono">+12%</span>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">Chips de Filtro / Seleção</div>
+          <div class="comp-row">
+            <button class="chip active">Todos</button>
+            <button class="chip">Proteína</button>
+            <button class="chip">Carboidratos</button>
+            <button class="chip">Gorduras</button>
+            <button class="chip">Fibras</button>
+            <button class="chip">Micronutrientes</button>
+          </div>
+        </div>
+
+        <div class="ds-sub">
+          <div class="ds-sub-title">States Pill</div>
+          <div class="comp-row">
+            <span class="state-pill success"><span class="dot"></span>Cálculo concluído</span>
+            <span class="state-pill loading"><span class="dot"></span>Processando…</span>
+            <span class="state-pill error"><span class="dot"></span>Erro de entrada</span>
+            <span class="state-pill warning"><span class="dot"></span>Atenção necessária</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS -->
+      <section class="ds-section" id="tabs">
+        <div class="ds-section-header">
+          <span class="ds-section-num">13</span>
+          <h2 class="ds-section-title">Tabs</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Underline Tabs</div>
+          <div class="kd-tabs">
+            <button class="kd-tab active">Resumo</button>
+            <button class="kd-tab">Macros</button>
+            <button class="kd-tab">Projeção</button>
+            <button class="kd-tab">Histórico</button>
+            <button class="kd-tab">Exportar</button>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Pill Tabs</div>
+          <div style="width:fit-content;">
+            <div class="kd-tabs-pill">
+              <button class="kd-tab-pill active">Diário</button>
+              <button class="kd-tab-pill">Semanal</button>
+              <button class="kd-tab-pill">Mensal</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Progress Steps (Form)</div>
+          <div class="steps-row" style="max-width:520px;">
+            <div class="step-item">
+              <div class="step-dot done">✓</div>
+              <span class="step-text done">Perfil</span>
+            </div>
+            <div class="step-connector done"></div>
+            <div class="step-item">
+              <div class="step-dot done">✓</div>
+              <span class="step-text done">Corpo</span>
+            </div>
+            <div class="step-connector done"></div>
+            <div class="step-item">
+              <div class="step-dot current">3</div>
+              <span class="step-text current">Atividade</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item">
+              <div class="step-dot">4</div>
+              <span class="step-text">Objetivo</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item">
+              <div class="step-dot">5</div>
+              <span class="step-text">Resultado</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARDS -->
+      <section class="ds-section" id="cards">
+        <div class="ds-section-header">
+          <span class="ds-section-num">14</span>
+          <h2 class="ds-section-title">Cards</h2>
+        </div>
+
+        <div class="grid-2 mt-6">
+          <div>
+            <div class="comp-label">Card Padrão</div>
+            <div class="kd-card">
+              <div class="kd-card-header">
+                <div>
+                  <div class="kd-card-title">Distribuição de macros</div>
+                  <div class="kd-card-subtitle">Baseado no seu TDEE</div>
+                </div>
+                <span class="badge badge-green">Atualizado</span>
+              </div>
+              <p style="font-size:13px;color:var(--text-tertiary);">Proteína 30% · Carboidrato 45% · Gordura 25%</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="comp-label">Card Brutalista</div>
+            <div class="kd-card kd-card-brutal" style="cursor:pointer;">
+              <div class="kd-card-header">
+                <div>
+                  <div class="kd-card-title">TDEE Calculado</div>
+                  <div class="kd-card-subtitle">Total Daily Energy Expenditure</div>
+                </div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:32px;font-weight:500;letter-spacing:-0.03em;color:var(--text-primary);">2.847<span style="font-size:14px;color:var(--text-tertiary);margin-left:4px;">kcal</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="comp-label">Card Accent</div>
+            <div class="kd-card kd-card-accent" style="cursor:pointer;">
+              <div class="kd-card-header">
+                <div>
+                  <div class="kd-card-title">Meta Diária</div>
+                  <div class="kd-card-subtitle">Para perda de peso</div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H7M13 3v6" stroke="var(--kd-green)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:28px;font-weight:500;letter-spacing:-0.03em;color:var(--kd-green-muted);">2.347<span style="font-size:13px;color:var(--text-tertiary);margin-left:4px;">kcal</span></div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;">Déficit de 500 kcal/dia</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="comp-label">Card Invertido</div>
+            <div class="kd-card kd-card-invert">
+              <div class="kd-card-header">
+                <div>
+                  <div class="kd-card-title" style="color:var(--text-invert);">Projeção 30 dias</div>
+                  <div class="kd-card-subtitle" style="color:rgba(250,250,248,0.5);">Com déficit atual</div>
+                </div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:28px;font-weight:500;letter-spacing:-0.03em;color:var(--kd-green);">−2.4 kg</div>
+              <div style="font-size:11px;color:rgba(250,250,248,0.4);margin-top:6px;">Baseado em 7.700 kcal/kg</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Section Shell</div>
+          <div class="section-shell">
+            <div class="section-shell-header">
+              <span class="section-shell-title">Dashboard Nutricional</span>
+              <div class="kd-tabs-pill" style="transform:scale(0.88);transform-origin:right center;">
+                <button class="kd-tab-pill active">Hoje</button>
+                <button class="kd-tab-pill">Semana</button>
+                <button class="kd-tab-pill">Mês</button>
+              </div>
+            </div>
+            <div class="section-shell-body" style="color:var(--text-tertiary);font-size:13px;">
+              Conteúdo do dashboard aqui — métricas, gráficos, tabelas.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEEDBACK -->
+      <section class="ds-section" id="feedback">
+        <div class="ds-section-header">
+          <span class="ds-section-num">15</span>
+          <h2 class="ds-section-title">Feedback & Estados</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Toasts</div>
+          <div style="display:flex;flex-direction:column;gap:10px;max-width:380px;">
+            <div class="toast toast-success">
+              <span class="toast-icon" style="color:var(--kd-green);">✓</span>
+              <div class="toast-content">
+                <div class="toast-title">Cálculo concluído</div>
+                <div class="toast-body">Seu TDEE e macros foram calculados com sucesso.</div>
+              </div>
+            </div>
+            <div class="toast toast-error">
+              <span class="toast-icon" style="color:#E53E3E;">✗</span>
+              <div class="toast-content">
+                <div class="toast-title">Erro de entrada</div>
+                <div class="toast-body">Peso inválido. Insira um valor entre 30 e 300 kg.</div>
+              </div>
+            </div>
+            <div class="toast toast-warn">
+              <span class="toast-icon" style="color:#E6A820;">⚠</span>
+              <div class="toast-content">
+                <div class="toast-title">Déficit agressivo</div>
+                <div class="toast-body">Déficit acima de 1.000 kcal pode ser contraproducente.</div>
+              </div>
+            </div>
+            <div class="toast toast-info">
+              <span class="toast-icon" style="color:var(--text-tertiary);">ℹ</span>
+              <div class="toast-content">
+                <div class="toast-title">Fórmula Mifflin-St Jeor</div>
+                <div class="toast-body">Utilizada para maior precisão em adultos com sobrepeso.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Skeleton / Loading</div>
+          <div class="kd-card" style="max-width:360px;">
+            <div class="skeleton skeleton-line skeleton-short" style="margin-bottom:16px;"></div>
+            <div class="skeleton skeleton-line skeleton-full"></div>
+            <div class="skeleton skeleton-line skeleton-mid"></div>
+            <div class="skeleton skeleton-line skeleton-full"></div>
+            <div class="skeleton skeleton-line skeleton-short" style="height:32px;margin-top:16px;"></div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Empty State</div>
+          <div class="empty-state" style="max-width:420px;">
+            <div class="empty-icon">🥗</div>
+            <div class="empty-title">Nenhum dado ainda</div>
+            <p class="empty-body">Complete as 14 perguntas do formulário para ver seu painel nutricional completo.</p>
+            <button class="btn btn-primary btn-sm">Iniciar Cálculo</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- OVERLAYS -->
+      <section class="ds-section" id="overlays">
+        <div class="ds-section-header">
+          <span class="ds-section-num">16</span>
+          <h2 class="ds-section-title">Overlays & Modais</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Modal</div>
+          <button class="btn btn-secondary" id="openModal">Abrir Modal →</button>
+        </div>
+
+        <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <div class="modal">
+            <div class="modal-header">
+              <div>
+                <div class="modal-title" id="modalTitle">Confirmar reinício</div>
+              </div>
+              <button class="modal-close" id="closeModal" aria-label="Fechar modal">✕</button>
+            </div>
+            <div class="modal-body">
+              Tem certeza que deseja reiniciar o cálculo? Todas as respostas serão apagadas e você precisará responder as 14 perguntas novamente.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-ghost btn-sm" id="closeModal2">Cancelar</button>
+              <button class="btn btn-danger btn-sm">Reiniciar tudo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA TABLE -->
+      <section class="ds-section" id="data">
+        <div class="ds-section-header">
+          <span class="ds-section-num">17</span>
+          <h2 class="ds-section-title">Tabelas</h2>
+        </div>
+
+        <div class="mt-6">
+          <div class="kd-table-wrap">
+            <table class="kd-table">
+              <thead>
+                <tr>
+                  <th>Macro</th>
+                  <th>Meta diária</th>
+                  <th>Consumido</th>
+                  <th>Restante</th>
+                  <th>% Meta</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span style="font-weight:600;color:var(--text-primary);">Proteína</span></td>
+                  <td class="mono-cell">176g</td>
+                  <td class="mono-cell">142g</td>
+                  <td class="mono-cell" style="color:var(--kd-green-muted);">34g</td>
+                  <td><div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span class="mono-cell">81%</span><span class="badge badge-green">Ok</span></div></td>
+                </tr>
+                <tr>
+                  <td><span style="font-weight:600;color:var(--text-primary);">Carboidratos</span></td>
+                  <td class="mono-cell">264g</td>
+                  <td class="mono-cell">310g</td>
+                  <td class="mono-cell" style="color:#E53E3E;">−46g</td>
+                  <td><div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span class="mono-cell">117%</span><span class="badge badge-warn">Alto</span></div></td>
+                </tr>
+                <tr>
+                  <td><span style="font-weight:600;color:var(--text-primary);">Gorduras</span></td>
+                  <td class="mono-cell">78g</td>
+                  <td class="mono-cell">61g</td>
+                  <td class="mono-cell" style="color:var(--kd-green-muted);">17g</td>
+                  <td><div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span class="mono-cell">78%</span><span class="badge badge-green">Ok</span></div></td>
+                </tr>
+                <tr>
+                  <td><span style="font-weight:600;color:var(--text-primary);">Calorias</span></td>
+                  <td class="mono-cell">2.347 kcal</td>
+                  <td class="mono-cell">2.598 kcal</td>
+                  <td class="mono-cell" style="color:#E53E3E;">−251 kcal</td>
+                  <td><div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span class="mono-cell">111%</span><span class="badge badge-error">Excedido</span></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- METRICS -->
+      <section class="ds-section" id="metrics">
+        <div class="ds-section-header">
+          <span class="ds-section-num">18</span>
+          <h2 class="ds-section-title">Cards de Métricas</h2>
+        </div>
+        <p class="ds-section-desc">Padrão específico para exibição de dados numéricos de saúde — TDEE, macros, IMC, projeções.</p>
+
+        <div class="dash-grid mt-6">
+          <div class="metric-card">
+            <div class="metric-card-accent-bar"></div>
+            <div class="metric-label">TDEE</div>
+            <div class="metric-value">2.847<span class="metric-unit">kcal</span></div>
+            <div class="metric-delta">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8V2M2 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              +124 vs semana passada
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-accent-bar"></div>
+            <div class="metric-label">Meta Calórica</div>
+            <div class="metric-value">2.347<span class="metric-unit">kcal</span></div>
+            <div class="metric-delta">
+              Déficit de 500 kcal/dia
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-accent-bar" style="background:var(--text-tertiary);"></div>
+            <div class="metric-label">IMC</div>
+            <div class="metric-value">24.8</div>
+            <div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;">Peso normal</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-accent-bar"></div>
+            <div class="metric-label">Proteína</div>
+            <div class="metric-value">176<span class="metric-unit">g</span></div>
+            <div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;">30% das calorias</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-accent-bar" style="background:var(--text-primary);opacity:0.7;"></div>
+            <div class="metric-label">Carboidratos</div>
+            <div class="metric-value">264<span class="metric-unit">g</span></div>
+            <div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;">45% das calorias</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-accent-bar" style="background:var(--text-tertiary);"></div>
+            <div class="metric-label">Gorduras</div>
+            <div class="metric-value">78<span class="metric-unit">g</span></div>
+            <div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;">25% das calorias</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHARTS -->
+      <section class="ds-section" id="charts">
+        <div class="ds-section-header">
+          <span class="ds-section-num">19</span>
+          <h2 class="ds-section-title">Gráficos & Visualizações</h2>
+        </div>
+
+        <div class="dash-grid-2 mt-6">
+          <div>
+            <div class="comp-label">Bar Chart — Ingestão Semanal</div>
+            <div class="chart-shell">
+              <div class="chart-header">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;">Calorias / Semana</div>
+                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary);margin-top:2px;">Ø 2.341 kcal</div>
+                </div>
+                <div class="kd-tabs-pill" style="transform:scale(0.82);transform-origin:right top;">
+                  <button class="kd-tab-pill active">7d</button>
+                  <button class="kd-tab-pill">30d</button>
+                </div>
+              </div>
+              <div class="chart-area">
+                <div class="chart-bars">
+                  <div class="chart-bar-col">
+                    <div class="chart-bar" style="height:72%;"></div>
+                    <span class="chart-bar-x">Seg</span>
+                  </div>
+                  <div class="chart-bar-col">
+                    <div class="chart-bar" style="height:88%;"></div>
+                    <span class="chart-bar-x">Ter</span>
+                  </div>
+                  <div class="chart-bar-col">
+                    <div class="chart-bar active" style="height:95%;"></div>
+                    <span class="chart-bar-x">Qua</span>
+                  </div>
+                  <div class="chart-bar-col">
+                    <div class="chart-bar" style="height:64%;"></div>
+                    <span class="chart-bar-x">Qui</span>
+                  </div>
+                  <div class="chart-bar-col">
+                    <div class="chart-bar" style="height:80%;"></div>
+                    <span class="chart-bar-x">Sex</span>
+                  </div>
+                  <div class="chart-bar-col">
+                    <div class="chart-bar" style="height:110%;"></div>
+                    <span class="chart-bar-x">Sab</span>
+                  </div>
+                  <div class="chart-bar-col">
+                    <div class="chart-bar" style="height:58%;"></div>
+                    <span class="chart-bar-x">Dom</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="comp-label">Line Chart — Projeção de Peso</div>
+            <div class="chart-shell">
+              <div class="chart-header">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;">Projeção 30 dias</div>
+                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary);margin-top:2px;">−2.4 kg estimado</div>
+                </div>
+                <span class="badge badge-green">−500 kcal/dia</span>
+              </div>
+              <div class="chart-area">
+                <svg class="chart-line-svg" viewBox="0 0 320 140" preserveAspectRatio="none">
+                  <!-- Grid lines -->
+                  <line x1="0" y1="30" x2="320" y2="30" stroke="var(--border-subtle)" stroke-width="1"/>
+                  <line x1="0" y1="70" x2="320" y2="70" stroke="var(--border-subtle)" stroke-width="1"/>
+                  <line x1="0" y1="110" x2="320" y2="110" stroke="var(--border-subtle)" stroke-width="1"/>
+                  <!-- Area fill -->
+                  <defs>
+                    <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#2DCC6F" stop-opacity="0.15"/>
+                      <stop offset="100%" stop-color="#2DCC6F" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0 30 C40 30, 60 40, 80 50 C100 60, 120 62, 160 72 C200 82, 240 88, 280 96 C300 100, 310 104, 320 108 L320 140 L0 140 Z" fill="url(#lineGrad)"/>
+                  <!-- Line -->
+                  <path d="M0 30 C40 30, 60 40, 80 50 C100 60, 120 62, 160 72 C200 82, 240 88, 280 96 C300 100, 310 104, 320 108" fill="none" stroke="var(--kd-green)" stroke-width="2" stroke-linecap="round"/>
+                  <!-- Current point -->
+                  <circle cx="0" cy="30" r="4" fill="var(--kd-green)" stroke="var(--bg-surface)" stroke-width="2"/>
+                  <!-- Target point -->
+                  <circle cx="320" cy="108" r="4" fill="var(--kd-green)" stroke="var(--bg-surface)" stroke-width="2"/>
+                  <!-- Labels -->
+                  <text x="4" y="26" font-family="DM Mono" font-size="9" fill="var(--text-tertiary)">85 kg</text>
+                  <text x="270" y="104" font-family="DM Mono" font-size="9" fill="var(--kd-green)">82.6 kg</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NUTRITION -->
+      <section class="ds-section" id="nutrition">
+        <div class="ds-section-header">
+          <span class="ds-section-num">20</span>
+          <h2 class="ds-section-title">Componentes Nutricionais</h2>
+        </div>
+
+        <div class="dash-grid-2 mt-6">
+          <div>
+            <div class="comp-label">Macro Distribution Ring</div>
+            <div class="kd-card">
+              <div class="calorie-ring-wrap">
+                <div class="calorie-ring">
+                  <svg width="120" height="120" viewBox="0 0 120 120">
+                    <!-- Background ring -->
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="var(--border-subtle)" stroke-width="10"/>
+                    <!-- Proteína (30%) -->
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="var(--kd-green)" stroke-width="10"
+                      stroke-dasharray="90 212" stroke-dashoffset="0" stroke-linecap="round"/>
+                    <!-- Carbs (45%) -->
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="var(--text-primary)" stroke-width="10" opacity="0.7"
+                      stroke-dasharray="135 167" stroke-dashoffset="-90" stroke-linecap="round"/>
+                    <!-- Fat (25%) -->
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="var(--text-tertiary)" stroke-width="10"
+                      stroke-dasharray="75 227" stroke-dashoffset="-225" stroke-linecap="round"/>
+                  </svg>
+                  <div class="calorie-ring-center">
+                    <div class="calorie-ring-val">2347</div>
+                    <div class="calorie-ring-label">kcal</div>
+                  </div>
+                </div>
+                <div class="macro-legend">
+                  <div class="macro-legend-item">
+                    <div class="macro-dot" style="background:var(--kd-green);"></div>
+                    Proteína 30%
+                  </div>
+                  <div class="macro-legend-item">
+                    <div class="macro-dot" style="background:var(--text-primary);opacity:0.7;"></div>
+                    Carbs 45%
+                  </div>
+                  <div class="macro-legend-item">
+                    <div class="macro-dot" style="background:var(--text-tertiary);"></div>
+                    Gordura 25%
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="comp-label">Macro Bars</div>
+            <div class="kd-card">
+              <div class="macro-ring-wrap">
+                <div class="macro-bar-row">
+                  <span class="macro-bar-label">Proteína</span>
+                  <div class="macro-bar-track">
+                    <div class="macro-bar-fill protein" style="width:81%;"></div>
+                  </div>
+                  <span class="macro-bar-val">142 / 176g</span>
+                </div>
+                <div class="macro-bar-row">
+                  <span class="macro-bar-label">Carboidratos</span>
+                  <div class="macro-bar-track">
+                    <div class="macro-bar-fill carbs" style="width:100%;"></div>
+                  </div>
+                  <span class="macro-bar-val">264 / 264g</span>
+                </div>
+                <div class="macro-bar-row">
+                  <span class="macro-bar-label">Gorduras</span>
+                  <div class="macro-bar-track">
+                    <div class="macro-bar-fill fat" style="width:78%;"></div>
+                  </div>
+                  <span class="macro-bar-val">61 / 78g</span>
+                </div>
+                <div class="macro-bar-row">
+                  <span class="macro-bar-label">Fibras</span>
+                  <div class="macro-bar-track">
+                    <div class="macro-bar-fill" style="width:60%;background:var(--border-default);"></div>
+                  </div>
+                  <span class="macro-bar-val">15 / 25g</span>
+                </div>
+              </div>
+              <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border-subtle);">
+                <div style="display:flex;justify-content:space-between;">
+                  <span style="font-size:12px;color:var(--text-tertiary);">Total consumido</span>
+                  <span style="font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--text-primary);">2.598 kcal</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:4px;">
+                  <span style="font-size:12px;color:var(--text-tertiary);">Meta diária</span>
+                  <span style="font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--kd-green-muted);">2.347 kcal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="comp-label">Projeção Comparativa</div>
+            <div class="kd-card">
+              <div class="kd-card-header">
+                <div class="kd-card-title">Cenários de Projeção</div>
+                <span class="badge badge-default badge-mono">30 dias</span>
+              </div>
+              <div class="projection-row">
+                <span class="projection-label">Déficit agressivo (−1000 kcal)</span>
+                <span class="projection-val positive">−4.0 kg</span>
+              </div>
+              <div class="projection-row">
+                <span class="projection-label">Déficit moderado (−500 kcal)</span>
+                <span class="projection-val positive">−2.4 kg</span>
+              </div>
+              <div class="projection-row">
+                <span class="projection-label">Manutenção (TDEE)</span>
+                <span class="projection-val">0 kg</span>
+              </div>
+              <div class="projection-row">
+                <span class="projection-label">Superávit leve (+300 kcal)</span>
+                <span class="projection-val negative">+1.2 kg</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="comp-label">Fórmula TDEE</div>
+            <div class="formula-block">
+              <div style="margin-bottom:12px;font-size:9px;letter-spacing:0.12em;opacity:0.5;text-transform:uppercase;">Mifflin-St Jeor + Fator Atividade</div>
+              <div><span class="formula-accent">BMR</span> = (10 × <span class="formula-accent">peso</span>) + (6.25 × <span class="formula-accent">altura</span>)</div>
+              <div style="padding-left:24px;">− (5 × <span class="formula-accent">idade</span>) + <span class="formula-accent">sexo</span></div>
+              <div style="margin-top:10px;"><span class="formula-accent">TDEE</span> = BMR × <span class="formula-accent">fatorAtividade</span></div>
+              <div style="margin-top:10px;"><span class="formula-accent">META</span> = TDEE + <span class="formula-accent">ajusteMeta</span></div>
+              <div style="margin-top:12px;font-size:10px;opacity:0.4;letter-spacing:0.04em;">// 2.847 × 0.825 (déficit 500 kcal) = 2.347 kcal</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PATTERNS -->
+      <section class="ds-section" id="patterns">
+        <div class="ds-section-header">
+          <span class="ds-section-num">21</span>
+          <h2 class="ds-section-title">Padrões de UI — Produto</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Question Card (Form)</div>
+          <div class="q-card" style="max-width:560px;">
+            <div class="q-step">
+              Pergunta 3 de 14
+              <div class="q-step-bar"><div class="q-step-fill" style="width:21%;"></div></div>
+              <span style="font-size:9px;color:var(--text-ghost);">21%</span>
+            </div>
+            <div class="q-question">Qual é o seu nível de atividade física atual?</div>
+            <div class="option-grid">
+              <div class="option-card">
+                <div class="option-icon">🪑</div>
+                <div>
+                  <div class="option-label">Sedentário</div>
+                  <div class="option-sub">Pouco ou nenhum exercício</div>
+                </div>
+              </div>
+              <div class="option-card selected">
+                <div class="option-icon">🚶</div>
+                <div>
+                  <div class="option-label">Levemente ativo</div>
+                  <div class="option-sub">Exercício 1–3x por semana</div>
+                </div>
+              </div>
+              <div class="option-card">
+                <div class="option-icon">🏃</div>
+                <div>
+                  <div class="option-label">Moderadamente ativo</div>
+                  <div class="option-sub">Exercício 3–5x por semana</div>
+                </div>
+              </div>
+              <div class="option-card">
+                <div class="option-icon">🏋️</div>
+                <div>
+                  <div class="option-label">Muito ativo</div>
+                  <div class="option-sub">Exercício intenso 6–7x/sem</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;">
+              <button class="btn btn-ghost btn-sm">← Anterior</button>
+              <button class="btn btn-primary btn-sm">Próxima →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOTION -->
+      <section class="ds-section" id="motion">
+        <div class="ds-section-header">
+          <span class="ds-section-num">22</span>
+          <h2 class="ds-section-title">Motion</h2>
+        </div>
+        <p class="ds-section-desc">Animação como linguagem de hierarquia, não espetáculo. Entradas com stagger, hovers secos, microinterações precisas.</p>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Princípios de Motion</div>
+          <div class="kd-card">
+            <div class="token-row">
+              <span class="token-name">Entradas de seção</span>
+              <span class="token-value">slideInUp 480ms ease-out · stagger 60ms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Hover de botão</span>
+              <span class="token-value">translate(-1px,-1px) + shadow · 120ms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Press de botão</span>
+              <span class="token-value">translate(2px,2px) + shadow collapse · 120ms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Toggle / Switch</span>
+              <span class="token-value">spring cubic-bezier(0.34,1.56,0.64,1) · 200ms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Modal entrada</span>
+              <span class="token-value">translateY(12px) + opacity · 200ms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Card hover brutalista</span>
+              <span class="token-value">translate(-2px,-2px) + shadow xl · 200ms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Focus ring</span>
+              <span class="token-value">outline 2px green + offset · 120ms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Skeleton shimmer</span>
+              <span class="token-value">gradient translate · 1.4s ease-in-out loop</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Demo de Motion (hover nos boxes)</div>
+          <div class="motion-demo">
+            <div class="motion-box" title="Hover me">🎯</div>
+            <div class="motion-box" title="Hover me">📊</div>
+            <div class="motion-box" title="Hover me">⚡</div>
+            <div class="motion-box" title="Hover me">🔬</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="font-size:12px;color:var(--text-secondary);font-weight:500;">Interaja com os boxes →</div>
+              <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-ghost);">translate(-2px,-2px) · scale(1.04)<br>shadow-lg on hover · spring on active</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span class="spinner"></span>
+              <span style="font-size:12px;color:var(--text-tertiary);">spinner 0.7s linear</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODES -->
+      <section class="ds-section" id="modes">
+        <div class="ds-section-header">
+          <span class="ds-section-num">23</span>
+          <h2 class="ds-section-title">Light & Dark Mode</h2>
+        </div>
+        <p class="ds-section-desc">Alternância via <code>html.dark</code>. Todos os tokens são redefinidos. Zero exceções hardcoded.</p>
+
+        <div class="grid-2 mt-6">
+          <div>
+            <div class="comp-label">Light Mode</div>
+            <div style="background:#FAFAF8;border:1.5px solid #D4D4CC;border-radius:var(--radius-lg);padding:20px;">
+              <div style="background:#FFFFFF;border:1.5px solid #0A0A0A;border-radius:8px;padding:16px;box-shadow:4px 4px 0px #0A0A0A;margin-bottom:12px;">
+                <div style="font-size:12px;font-weight:600;color:#0A0A0A;letter-spacing:-0.01em;">Card brutalista</div>
+                <div style="font-family:'DM Mono',monospace;font-size:22px;color:#0A0A0A;margin-top:4px;">2.847 kcal</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <div style="background:#2DCC6F;color:#0A0A0A;font-size:12px;font-weight:700;padding:8px 16px;border-radius:6px;box-shadow:3px 3px 0px #0A0A0A;">CTA Primário</div>
+                <div style="background:#FFFFFF;color:#0A0A0A;font-size:12px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid #0A0A0A;box-shadow:3px 3px 0px #0A0A0A;">Secundário</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="comp-label">Dark Mode</div>
+            <div style="background:#080808;border:1.5px solid #2C2C28;border-radius:var(--radius-lg);padding:20px;">
+              <div style="background:#111110;border:1.5px solid rgba(240,240,236,0.12);border-radius:8px;padding:16px;box-shadow:4px 4px 0px rgba(240,240,236,0.08);margin-bottom:12px;">
+                <div style="font-size:12px;font-weight:600;color:#F0F0EC;letter-spacing:-0.01em;">Card brutalista</div>
+                <div style="font-family:'DM Mono',monospace;font-size:22px;color:#F0F0EC;margin-top:4px;">2.847 kcal</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <div style="background:#2DCC6F;color:#0A0A0A;font-size:12px;font-weight:700;padding:8px 16px;border-radius:6px;box-shadow:3px 3px 0px rgba(45,204,111,0.4);">CTA Primário</div>
+                <div style="background:transparent;color:#F0F0EC;font-size:12px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid rgba(240,240,236,0.2);box-shadow:3px 3px 0px rgba(240,240,236,0.08);">Secundário</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Regras do Dark Mode</div>
+          <div class="do-dont-grid">
+            <div class="do-box">
+              <div class="do-label">✓ Faça</div>
+              <p class="do-dont-text">Use <code>#080808</code> como base. Preto abissal, sólido, imersivo. Superfícies sobem em passos de 10-13% de lightness.</p>
+            </div>
+            <div class="dont-box">
+              <div class="dont-label">✗ Evite</div>
+              <p class="do-dont-text">Nunca use cinzas médios preguiçosos como <code>#333</code>, <code>#444</code> como base. Dilui a identidade abissal do dark mode.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCESSIBILITY -->
+      <section class="ds-section" id="accessibility">
+        <div class="ds-section-header">
+          <span class="ds-section-num">24</span>
+          <h2 class="ds-section-title">Acessibilidade</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Contraste & WCAG 2.1 AA</div>
+          <div class="kd-table-wrap">
+            <table class="kd-table">
+              <thead>
+                <tr>
+                  <th>Combinação</th>
+                  <th>Ratio</th>
+                  <th>AA Normal</th>
+                  <th>AA Large</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span style="color:#0A0A0A;background:#FAFAF8;padding:2px 6px;border-radius:3px;font-size:12px;font-weight:600;">Texto / Base</span></td>
+                  <td class="mono-cell">17.5:1</td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                </tr>
+                <tr>
+                  <td><span style="color:#2DCC6F;background:#0A0A0A;padding:2px 6px;border-radius:3px;font-size:12px;font-weight:700;">CTA / Invert</span></td>
+                  <td class="mono-cell">7.2:1</td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                </tr>
+                <tr>
+                  <td><span style="color:#0A0A0A;background:#2DCC6F;padding:2px 6px;border-radius:3px;font-size:12px;font-weight:700;">Texto / Green</span></td>
+                  <td class="mono-cell">8.9:1</td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                </tr>
+                <tr>
+                  <td><span style="color:#3A3A36;background:#FAFAF8;padding:2px 6px;border-radius:3px;font-size:12px;">Secundário / Base</span></td>
+                  <td class="mono-cell">11.2:1</td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                </tr>
+                <tr>
+                  <td><span style="color:#787870;background:#FAFAF8;padding:2px 6px;border-radius:3px;font-size:12px;">Terciário / Base</span></td>
+                  <td class="mono-cell">4.8:1</td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                  <td><span class="badge badge-green">✓ Pass</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Focus Management</div>
+          <div class="comp-row">
+            <button class="btn btn-primary" style="outline:2px solid var(--kd-green);outline-offset:3px;">Focus Primário</button>
+            <button class="btn btn-secondary" style="outline:2px solid var(--kd-green);outline-offset:3px;">Focus Secundário</button>
+            <input class="kd-input" style="border-color:var(--kd-green);box-shadow:0 0 0 3px var(--kd-green-dim);width:180px;" value="Input focado" />
+          </div>
+          <div class="kd-card mt-4" style="max-width:480px;">
+            <div class="token-row">
+              <span class="token-name">focus-visible outline</span>
+              <span class="token-value">2px solid #2DCC6F · offset 2–3px</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">input focus</span>
+              <span class="token-value">border green + shadow 0 0 0 3px dim</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">prefers-reduced-motion</span>
+              <span class="token-value">0.01ms duration · no transforms</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">prefers-contrast: high</span>
+              <span class="token-value">borders reforçadas para #0A0A0A</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">aria labels</span>
+              <span class="token-value">todos os controles iconográficos rotulados</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESPONSIVE -->
+      <section class="ds-section" id="responsive">
+        <div class="ds-section-header">
+          <span class="ds-section-num">25</span>
+          <h2 class="ds-section-title">Responsividade</h2>
+        </div>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Breakpoints</div>
+          <div class="kd-card">
+            <div class="token-row">
+              <span class="token-name">Mobile</span>
+              <span class="token-value">< 520px</span>
+              <span style="font-size:11px;color:var(--text-ghost);">1 coluna · padding 20px · sidebar oculta</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Tablet small</span>
+              <span class="token-value">520px – 768px</span>
+              <span style="font-size:11px;color:var(--text-ghost);">2 colunas · grid-2 ativo</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Tablet</span>
+              <span class="token-value">768px – 1024px</span>
+              <span style="font-size:11px;color:var(--text-ghost);">layout completo · sidebar colapsável</span>
+            </div>
+            <div class="token-row">
+              <span class="token-name">Desktop</span>
+              <span class="token-value">> 1024px</span>
+              <span style="font-size:11px;color:var(--text-ghost);">12 colunas · max-width 1280px</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-4">
+          <div class="ds-sub-title">Regras de Responsividade</div>
+          <div class="do-dont-grid">
+            <div class="do-box">
+              <div class="do-label">✓ Faça</div>
+              <p class="do-dont-text">Use <code>clamp()</code> para escala tipográfica fluida. Gutter responsivo via <code>clamp(20px, 4vw, 64px)</code>. Mobile-first em todos os grids.</p>
+            </div>
+            <div class="dont-box">
+              <div class="dont-label">✗ Evite</div>
+              <p class="do-dont-text">Nunca esconda conteúdo crítico em mobile. Nunca use <code>overflow: hidden</code> sem considerar scroll lateral.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PREVIEW PATTERNS -->
+      <section class="ds-section" id="preview">
+        <div class="ds-section-header">
+          <span class="ds-section-num">26</span>
+          <h2 class="ds-section-title">Padrões de Seção</h2>
+        </div>
+        <p class="ds-section-desc">Linguagem de componente para Hero, Form, Summary e Dashboard — como referência, não como entrega final.</p>
+
+        <div class="ds-sub mt-6">
+          <div class="ds-sub-title">Hero — Padrão de Linguagem</div>
+          <div class="hero-preview">
+            <div class="hero-preview-inner">
+              <div class="hero-preview-tag">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="var(--kd-green)"/></svg>
+                Calculadora Nutricional Premium
+              </div>
+              <h1 class="hero-preview-h1">Descubra o que<br>seu corpo <em>precisa.</em></h1>
+              <p class="hero-preview-sub">14 perguntas. Cálculo científico de TDEE, macros e projeções personalizadas. Em menos de 3 minutos.</p>
+              <div class="hero-preview-cta">
+                <button class="btn btn-primary btn-lg">Iniciar Cálculo →</button>
+                <button class="btn btn-ghost btn-lg">Como funciona</button>
+              </div>
+              <div class="hero-preview-stat-row">
+                <div class="hero-preview-stat">
+                  <span class="hero-preview-stat-val">14</span>
+                  <span class="hero-preview-stat-label">perguntas</span>
+                </div>
+                <div class="hero-preview-stat">
+                  <span class="hero-preview-stat-val">3 min</span>
+                  <span class="hero-preview-stat-label">para completar</span>
+                </div>
+                <div class="hero-preview-stat">
+                  <span class="hero-preview-stat-val">TDEE</span>
+                  <span class="hero-preview-stat-label">+ macros + projeção</span>
+                </div>
+                <div class="hero-preview-stat">
+                  <span class="hero-preview-stat-val">M-StJ</span>
+                  <span class="hero-preview-stat-label">equação validada</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-8">
+          <div class="ds-sub-title">Summary — Padrão de Linguagem</div>
+          <div class="summary-grid">
+            <div class="kd-card kd-card-invert" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;gap:8px;">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--kd-green);margin-bottom:4px;">TDEE</div>
+              <div style="font-family:var(--font-mono);font-size:48px;font-weight:500;letter-spacing:-0.04em;color:var(--kd-green);line-height:1;">2847</div>
+              <div style="font-size:13px;color:rgba(250,250,248,0.5);">kcal por dia</div>
+              <div style="font-size:11px;color:rgba(250,250,248,0.3);margin-top:8px;font-family:var(--font-mono);">Mifflin-St Jeor · Nível 2</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div class="metric-card">
+                <div class="metric-card-accent-bar"></div>
+                <div class="metric-label">Meta diária</div>
+                <div class="metric-value" style="font-size:28px;">2.347<span class="metric-unit">kcal</span></div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Déficit de 500 kcal</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card-accent-bar" style="background:var(--text-tertiary);"></div>
+                <div class="metric-label">Proteína diária</div>
+                <div class="metric-value" style="font-size:28px;">176<span class="metric-unit">g</span></div>
+                <div style="font-size:11px;color:var(--text-tertiary);">2.07g por kg de peso</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card-accent-bar"></div>
+                <div class="metric-label">Projeção 30 dias</div>
+                <div class="metric-value" style="font-size:28px;color:var(--kd-green-muted);">−2.4<span class="metric-unit" style="font-size:14px;">kg</span></div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Estimativa baseada em déficit</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-sub mt-8">
+          <div class="ds-sub-title">Dashboard — Padrão de Linguagem</div>
+          <div class="section-shell">
+            <div class="section-shell-header">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span class="section-shell-title">Dashboard Nutricional</span>
+                <span class="state-pill success" style="font-size:10px;padding:3px 10px;"><span class="dot"></span>Ativo</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="kd-tabs-pill" style="transform:scale(0.82);transform-origin:right center;">
+                  <button class="kd-tab-pill active">Hoje</button>
+                  <button class="kd-tab-pill">Semana</button>
+                </div>
+                <button class="btn btn-icon btn-sm" aria-label="Exportar" style="width:32px;height:32px;font-size:12px;">↓</button>
+              </div>
+            </div>
+            <div class="section-shell-body">
+              <div class="dash-grid" style="margin-bottom:20px;">
+                <div class="metric-card" style="box-shadow:var(--shadow-sm);">
+                  <div class="metric-card-accent-bar"></div>
+                  <div class="metric-label">Calorias</div>
+                  <div class="metric-value" style="font-size:24px;">2.598<span class="metric-unit" style="font-size:11px;">kcal</span></div>
+                  <div class="metric-delta negative">
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M4 2v4M2 4l2 2 2-2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                    +251 acima da meta
+                  </div>
+                </div>
+                <div class="metric-card" style="box-shadow:var(--shadow-sm);">
+                  <div class="metric-card-accent-bar"></div>
+                  <div class="metric-label">Proteína</div>
+                  <div class="metric-value" style="font-size:24px;">142<span class="metric-unit" style="font-size:11px;">g</span></div>
+                  <div class="metric-delta">81% da meta diária</div>
+                </div>
+                <div class="metric-card" style="box-shadow:var(--shadow-sm);">
+                  <div class="metric-card-accent-bar" style="background:var(--text-tertiary);"></div>
+                  <div class="metric-label">Água</div>
+                  <div class="metric-value" style="font-size:24px;">1.8<span class="metric-unit" style="font-size:11px;">L</span></div>
+                  <div class="metric-delta">Meta: 2.5L</div>
+                </div>
+              </div>
+              <div class="macro-ring-wrap">
+                <div class="macro-bar-row">
+                  <span class="macro-bar-label">Proteína</span>
+                  <div class="macro-bar-track"><div class="macro-bar-fill protein" style="width:81%;transition:width 1s var(--ease-out);"></div></div>
+                  <span class="macro-bar-val">142 / 176g</span>
+                </div>
+                <div class="macro-bar-row">
+                  <span class="macro-bar-label">Carboidratos</span>
+                  <div class="macro-bar-track"><div class="macro-bar-fill carbs" style="width:100%;transition:width 1s var(--ease-out) 100ms;"></div></div>
+                  <span class="macro-bar-val">264 / 264g</span>
+                </div>
+                <div class="macro-bar-row">
+                  <span class="macro-bar-label">Gorduras</span>
+                  <div class="macro-bar-track"><div class="macro-bar-fill fat" style="width:78%;transition:width 1s var(--ease-out) 200ms;"></div></div>
+                  <span class="macro-bar-val">61 / 78g</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="ds-section" style="margin-bottom:0;">
+        <div class="kd-card kd-card-invert" style="text-align:center;padding:48px 40px;">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--kd-green);margin-bottom:20px;">KhromaDiet Design System v1.0</div>
+          <div class="ts-display" style="color:var(--text-invert);font-size:clamp(24px,4vw,44px);margin-bottom:16px;">Fundação resolvida.<br>Produto pronto para nascer.</div>
+          <p style="font-size:14px;color:rgba(250,250,248,0.5);max-width:480px;margin:0 auto;line-height:1.75;">Este sistema governa Hero, Form, Summary e Dashboard com clareza suficiente para implementação real. Cada token, componente e padrão é uma decisão, não um placeholder.</p>
+          <div style="margin-top:28px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+            <span class="badge badge-green badge-mono">v1.0.0</span>
+            <span class="badge badge-default badge-mono" style="border-color:rgba(240,240,236,0.1);background:rgba(240,240,236,0.06);color:rgba(240,240,236,0.5);">Neo-Brutalismo Clean</span>
+            <span class="badge badge-default badge-mono" style="border-color:rgba(240,240,236,0.1);background:rgba(240,240,236,0.06);color:rgba(240,240,236,0.5);">Health-Tech Premium</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  // ── Theme Toggle ──────────────────────────────────────────
+  const html = document.documentElement;
+  const toggleBtn = document.getElementById('themeToggle');
+
+  // Persist theme
+  const savedTheme = localStorage.getItem('kd-theme');
+  if (savedTheme === 'dark') html.classList.add('dark');
+
+  toggleBtn.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    localStorage.setItem('kd-theme', html.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  // ── Modal ─────────────────────────────────────────────────
+  const backdrop = document.getElementById('modalBackdrop');
+  const openBtn = document.getElementById('openModal');
+  const closeBtn = document.getElementById('closeModal');
+  const closeBtn2 = document.getElementById('closeModal2');
+
+  function openModal() {
+    backdrop.classList.add('open');
+    backdrop.querySelector('.modal-close').focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    openBtn.focus();
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  closeBtn2.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal(); });
+
+  // ── Slider ────────────────────────────────────────────────
+  const slider = document.getElementById('calSlider');
+  const calVal = document.getElementById('calVal');
+  if (slider && calVal) {
+    slider.addEventListener('input', () => {
+      calVal.textContent = parseInt(slider.value).toLocaleString('pt-BR');
+    });
+  }
+
+  // ── Tabs interactive ─────────────────────────────────────
+  document.querySelectorAll('.kd-tabs').forEach(tabGroup => {
+    tabGroup.querySelectorAll('.kd-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabGroup.querySelectorAll('.kd-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  });
+
+  document.querySelectorAll('.kd-tabs-pill').forEach(tabGroup => {
+    tabGroup.querySelectorAll('.kd-tab-pill').forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabGroup.querySelectorAll('.kd-tab-pill').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  });
+
+  // ── Chips interactive ─────────────────────────────────────
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const group = chip.closest('.comp-row');
+      if (group) {
+        group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      }
+      chip.classList.add('active');
+    });
+  });
+
+  // ── Option Cards interactive ───────────────────────────────
+  document.querySelectorAll('.option-grid').forEach(grid => {
+    grid.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        grid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+  });
+
+  // ── Sidebar TOC active tracking ───────────────────────────
+  const sections = document.querySelectorAll('.ds-section[id]');
+  const tocLinks = document.querySelectorAll('.ds-toc-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(section => observer.observe(section));
+
+  // ── Animate sections on scroll ────────────────────────────
+  const entryObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'slideInUp 480ms cubic-bezier(0.16,1,0.3,1) both';
+        entryObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06 });
+
+  document.querySelectorAll('.ds-section').forEach((el, i) => {
+    el.style.opacity = '0';
+    setTimeout(() => { entryObserver.observe(el); }, 100);
+  });
+
+  // chart bars hover state fix
+  document.querySelectorAll('.chart-bar').forEach(bar => {
+    bar.addEventListener('mouseenter', () => {
+      if (!bar.classList.contains('active')) {
+        bar.style.background = 'var(--kd-green-dim)';
+      }
+    });
+    bar.addEventListener('mouseleave', () => {
+      if (!bar.classList.contains('active')) {
+        bar.style.background = '';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

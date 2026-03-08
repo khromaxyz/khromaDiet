@@ -1,5 +1,0 @@
-2026/03/06-14:46:18.615 3c68 Creating DB C:\Users\Pichau\Documents\khromaDiet - Copia\artifacts\.edge-headless\Default\EdgeCoupons/coupons_data.db since it was missing.
-2026/03/06-14:46:18.635 3c68 Reusing MANIFEST C:\Users\Pichau\Documents\khromaDiet - Copia\artifacts\.edge-headless\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2026/03/06-14:46:19.704 3dc8 Level-0 table #5: started
-2026/03/06-14:46:19.708 3dc8 Level-0 table #5: 681597 bytes OK
-2026/03/06-14:46:19.711 3dc8 Delete type=0 #3

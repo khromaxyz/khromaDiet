@@ -1,4 +1,4 @@
-﻿import type { SharedProfileMeta } from './profiles/types';
+import type { SharedProfileMeta } from './profiles/types';
 import type { FormData, ViewMode } from './types';
 
 interface SharePayloadV1Compat {
