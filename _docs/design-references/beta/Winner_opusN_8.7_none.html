@@ -199,6 +199,15 @@
     --focus-ring:      0 0 0 3px rgba(16, 185, 129, 0.35);
     --selection-bg:    var(--kd-green-100);
     --selection-text:  var(--kd-green-900);
+    --ambient-grid-line: rgba(10, 10, 10, 0.058);
+    --ambient-grid-line-soft: rgba(10, 10, 10, 0.032);
+    --ambient-haze-soft: rgba(16, 185, 129, 0.075);
+    --ambient-haze-strong: rgba(16, 185, 129, 0.13);
+    --accent-tint-bg: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+    --accent-tint-border: rgba(5, 150, 105, 0.22);
+    --accent-gradient-start: #111111;
+    --accent-gradient-mid: #059669;
+    --accent-gradient-end: #34D399;
 
     color-scheme: light;
   }
@@ -243,6 +252,15 @@
     --focus-ring:      0 0 0 3px rgba(52, 211, 153, 0.3);
     --selection-bg:    var(--kd-green-900);
     --selection-text:  var(--kd-green-100);
+    --ambient-grid-line: rgba(255, 255, 255, 0.052);
+    --ambient-grid-line-soft: rgba(255, 255, 255, 0.026);
+    --ambient-haze-soft: rgba(16, 185, 129, 0.13);
+    --ambient-haze-strong: rgba(16, 185, 129, 0.22);
+    --accent-tint-bg: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 15, 15, 1) 100%);
+    --accent-tint-border: rgba(52, 211, 153, 0.24);
+    --accent-gradient-start: #F5F5F5;
+    --accent-gradient-mid: #6EE7B7;
+    --accent-gradient-end: #10B981;
 
     color-scheme: dark;
   }
@@ -516,6 +534,425 @@
     color: var(--text-tertiary);
     margin-bottom: var(--space-4);
     display: block;
+  }
+
+  /* -- AMBIENT SYSTEM -- */
+  .kd-ambient-shell {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .kd-ambient-shell > *:not(.kd-ambient-grid):not(.kd-ambient-haze) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .kd-ambient-grid,
+  .kd-ambient-haze {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .kd-ambient-grid {
+    background-image:
+      linear-gradient(var(--ambient-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--ambient-grid-line-soft) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.75;
+  }
+
+  .kd-ambient-haze--hero {
+    inset: auto -18% -22% auto;
+    width: min(60vw, 760px);
+    height: min(60vw, 760px);
+    background:
+      radial-gradient(circle at 50% 50%, var(--ambient-haze-strong) 0%, transparent 36%),
+      radial-gradient(circle at 30% 30%, var(--ambient-haze-soft) 0%, transparent 65%);
+    opacity: 0.9;
+  }
+
+  .kd-gradient-accent-text {
+    background: linear-gradient(135deg, var(--accent-gradient-start) 14%, var(--accent-gradient-mid) 62%, var(--accent-gradient-end) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .kd-hero {
+    max-width: none;
+    min-height: calc(100vh - var(--nav-height));
+    display: flex;
+    align-items: center;
+    padding: var(--space-24) var(--space-12) var(--space-20);
+    border-bottom: var(--border-medium) solid var(--border-strong);
+  }
+
+  .kd-hero__inner {
+    width: min(100%, 1100px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.72fr);
+    gap: var(--space-16);
+    align-items: end;
+  }
+
+  .kd-hero__content {
+    max-width: 760px;
+  }
+
+  .kd-hero__title {
+    font-family: var(--font-editorial);
+    font-size: clamp(4.75rem, 11vw, 8.2rem);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.048em;
+    line-height: 0.9;
+    color: var(--text-primary);
+    margin-bottom: var(--space-6);
+  }
+
+  .kd-hero__lead {
+    font-size: var(--text-xl);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 38ch;
+    margin-bottom: var(--space-8);
+  }
+
+  .kd-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  .kd-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .kd-hero__rail {
+    display: grid;
+    gap: var(--space-4);
+    align-self: stretch;
+  }
+
+  .kd-hero-note {
+    min-height: 100%;
+  }
+
+  .kd-hero-note__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-ultra);
+    text-transform: uppercase;
+    color: var(--text-accent);
+    margin-bottom: var(--space-3);
+  }
+
+  .kd-hero-note__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .kd-hero-note__copy {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .kd-hero__stats {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    padding-top: var(--space-10);
+    border-top: var(--border-thin) solid var(--border-primary);
+  }
+
+  .kd-hero-stat {
+    padding-right: var(--space-4);
+  }
+
+  .kd-hero-stat__value {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+    line-height: var(--leading-none);
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-hero-stat__label {
+    font-size: var(--text-md);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-hero-stat__meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .kd-ticker {
+    position: relative;
+    overflow: hidden;
+    border-top: var(--border-medium) solid var(--border-strong);
+    border-bottom: var(--border-medium) solid var(--border-strong);
+    background: var(--bg-primary);
+    padding: 10px 0;
+  }
+
+  .kd-ticker__track {
+    display: flex;
+    gap: var(--space-6);
+    width: max-content;
+    padding-left: var(--space-6);
+    animation: kdTickerLoop 28s linear infinite;
+  }
+
+  .kd-ticker__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  .kd-ticker__item::after {
+    content: '·';
+    color: var(--text-accent);
+  }
+
+  .kd-ticker__item:last-child::after {
+    content: '·';
+  }
+
+  .kd-heatmap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .kd-heatmap__intro {
+    max-width: 42ch;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .kd-heatmap__grid {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .kd-heatmap__cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    border: 1px solid var(--ambient-grid-line-soft);
+    background: rgba(16, 185, 129, 0.08);
+    transition: transform var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .kd-heatmap__cell:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(16, 185, 129, 0.12);
+  }
+
+  .kd-heatmap__cell--0 { background: rgba(16, 185, 129, 0.08); }
+  .kd-heatmap__cell--1 { background: rgba(16, 185, 129, 0.22); }
+  .kd-heatmap__cell--2 { background: rgba(16, 185, 129, 0.44); }
+  .kd-heatmap__cell--3 { background: rgba(16, 185, 129, 0.82); }
+
+  .kd-heatmap__legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .kd-heatmap__legend-scale {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .kd-heatmap__legend-chip {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+  }
+
+  .kd-heatmap__summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    padding-top: var(--space-5);
+    border-top: var(--border-thin) solid var(--border-primary);
+  }
+
+  .kd-heatmap__summary-item {
+    text-align: center;
+  }
+
+  .kd-heatmap__summary-value {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+    line-height: var(--leading-none);
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-heatmap__summary-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .kd-contrast-section {
+    --manifesto-bg: var(--kd-black-pure);
+    --manifesto-text: #F5F5F5;
+    --manifesto-muted: rgba(245, 245, 245, 0.68);
+    --manifesto-border: rgba(255, 255, 255, 0.1);
+    --manifesto-card: rgba(255, 255, 255, 0.02);
+    --manifesto-grid: rgba(255, 255, 255, 0.05);
+    --manifesto-grid-soft: rgba(255, 255, 255, 0.03);
+    --manifesto-haze-a: rgba(16, 185, 129, 0.08);
+    --manifesto-haze-b: rgba(16, 185, 129, 0.05);
+    --manifesto-gradient-start: #F5F5F5;
+    --manifesto-gradient-mid: #6EE7B7;
+    --manifesto-gradient-end: #10B981;
+    max-width: none;
+    padding: var(--space-24) var(--space-12);
+    background: var(--manifesto-bg);
+    border-bottom: none;
+  }
+
+  [data-theme="dark"] .kd-contrast-section {
+    --manifesto-bg: #F7F7F4;
+    --manifesto-text: #0A0A0A;
+    --manifesto-muted: #52525B;
+    --manifesto-border: rgba(10, 10, 10, 0.1);
+    --manifesto-card: rgba(255, 255, 255, 0.72);
+    --manifesto-grid: rgba(10, 10, 10, 0.06);
+    --manifesto-grid-soft: rgba(10, 10, 10, 0.032);
+    --manifesto-haze-a: rgba(16, 185, 129, 0.06);
+    --manifesto-haze-b: rgba(16, 185, 129, 0.035);
+    --manifesto-gradient-start: #0A0A0A;
+    --manifesto-gradient-mid: #059669;
+    --manifesto-gradient-end: #10B981;
+  }
+
+  .kd-contrast-section .kd-ambient-grid {
+    background-image:
+      linear-gradient(var(--manifesto-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--manifesto-grid-soft) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 1;
+  }
+
+  .kd-ambient-haze--manifesto {
+    background:
+      radial-gradient(circle at 18% 50%, var(--manifesto-haze-a) 0%, transparent 44%),
+      radial-gradient(circle at 82% 18%, var(--manifesto-haze-b) 0%, transparent 34%);
+  }
+
+  .kd-manifesto {
+    width: min(100%, 1100px);
+    margin: 0 auto;
+  }
+
+  .kd-manifesto__title {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 7vw, 5.85rem);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tighter);
+    line-height: 0.92;
+    color: var(--manifesto-text);
+    max-width: 11ch;
+    margin-bottom: var(--space-10);
+  }
+
+  .kd-contrast-section .kd-gradient-accent-text {
+    background: linear-gradient(135deg, var(--manifesto-gradient-start) 8%, var(--manifesto-gradient-mid) 62%, var(--manifesto-gradient-end) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .kd-manifesto__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.9fr);
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  .kd-manifesto__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 52ch;
+  }
+
+  .kd-manifesto__copy p {
+    font-size: var(--text-md);
+    line-height: 1.7;
+    color: var(--manifesto-muted);
+  }
+
+  .kd-manifesto__stack {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .kd-manifesto-card {
+    padding: var(--space-6);
+    border: var(--border-thin) solid var(--manifesto-border);
+    border-radius: var(--radius-xl);
+    background: var(--manifesto-card);
+  }
+
+  .kd-manifesto-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--manifesto-text);
+    margin-bottom: var(--space-2);
+  }
+
+  .kd-manifesto-card__body {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--manifesto-muted);
   }
 
   /* ── TOKEN GRID ── */
@@ -1825,6 +2262,16 @@
     transform: translate(-1px, -1px);
     border-color: var(--border-strong);
     box-shadow: var(--shadow-lg);
+  }
+
+  .kd-card--accent-soft {
+    background: var(--accent-tint-bg);
+    border-color: var(--accent-tint-border);
+  }
+
+  .kd-card--accent-soft:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-md);
   }
 
   .kd-card__header {
@@ -3800,11 +4247,11 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     .ds-sidebar {
-      transform: translateX(-100%);
+      display: none;
     }
 
     .ds-sidebar.open {
-      transform: translateX(0);
+      display: block;
     }
 
     .ds-main {
@@ -3842,6 +4289,26 @@
       border-right: none;
       border-bottom: var(--border-thin) solid var(--border-primary);
     }
+
+    .kd-hero {
+      padding: var(--space-16) var(--space-6) var(--space-12);
+      min-height: auto;
+    }
+
+    .kd-hero__inner,
+    .kd-manifesto__layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+
+    .kd-hero__rail {
+      order: 2;
+    }
+
+    .kd-hero__stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
   }
 
   @media (max-width: 640px) {
@@ -3876,6 +4343,29 @@
 
     .kd-color-grid--signals {
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+
+    .kd-hero__title,
+    .kd-manifesto__title {
+      max-width: none;
+    }
+
+    .kd-hero__lead {
+      font-size: var(--text-lg);
+    }
+
+    .kd-hero__stats,
+    .kd-heatmap__summary {
+      grid-template-columns: 1fr;
+    }
+
+    .kd-heatmap__grid {
+      gap: 4px;
+    }
+
+    .kd-heatmap__legend {
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .kd-contrast-panel {
@@ -3941,6 +4431,7 @@
     .kd-analytics-panel,
     .kd-entity-state,
     .kd-skeleton,
+    .kd-heatmap__cell,
     .kd-form-progress__fill,
     .kd-analytics-progress__fill {
       transition: none;
@@ -3963,12 +4454,18 @@
     .kd-contrast-panel:hover,
     .kd-choice-card:hover,
     .kd-analytics-panel:hover,
-    .kd-entity-state:hover {
+    .kd-entity-state:hover,
+    .kd-heatmap__cell:hover {
       transform: none;
     }
 
     .kd-skeleton {
       animation: none;
+    }
+
+    .kd-ticker__track {
+      animation: none;
+      transform: none;
     }
   }
 
@@ -4008,6 +4505,11 @@
   @keyframes slideIn {
     from { opacity: 0; transform: translateX(-16px); }
     to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes kdTickerLoop {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 
   .animate-stagger > * {
@@ -4119,6 +4621,7 @@
     <a href="#charts" class="ds-sidebar__link">Visualizações</a>
     <a href="#projections" class="ds-sidebar__link">Projeções</a>
     <a href="#accessibility" class="ds-sidebar__link">Acessibilidade</a>
+    <a href="#manifesto" class="ds-sidebar__link">Manifesto</a>
   </div>
 </aside>
 
@@ -4128,24 +4631,93 @@
 <main class="ds-main">
 
   <!-- ── HERO / MANIFESTO ── -->
-  <section class="ds-section" id="hero" style="padding-top:var(--space-20);padding-bottom:var(--space-20);border-bottom:var(--border-medium) solid var(--border-strong);">
-    <div style="max-width:800px;">
-      <span class="ds-section__number">Sistema de Design</span>
-      <h1 style="font-family:var(--font-editorial);font-size:var(--text-6xl);font-style:italic;font-weight:400;letter-spacing:-0.035em;line-height:0.92;color:var(--text-primary);margin-bottom:var(--space-8);max-width:640px;">
-        Khroma<span style="color:var(--text-accent)">Diet</span>
-      </h1>
-      <p style="font-size:var(--text-xl);color:var(--text-secondary);line-height:var(--leading-relaxed);max-width:640px;margin-bottom:var(--space-8);">
-        Referência canônica de linguagem visual. Neo-Brutalismo Clean aplicado a health-tech com precisão clínica, sofisticação silenciosa e energia saudável.
-      </p>
-      <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;">
-        <span class="kd-badge kd-badge--brutal">NEO-BRUTALISM</span>
-        <span class="kd-badge kd-badge--brutal">CLEAN</span>
-        <span class="kd-badge kd-badge--brutal">PREMIUM</span>
-        <span class="kd-badge kd-badge--brutal">HEALTH-TECH</span>
-        <span class="kd-badge kd-badge--accent">v1.0</span>
+  <section class="ds-section kd-hero kd-ambient-shell" id="hero">
+    <div class="kd-ambient-grid"></div>
+    <div class="kd-ambient-haze kd-ambient-haze--hero"></div>
+    <div class="kd-hero__inner">
+      <div class="kd-hero__content">
+        <span class="ds-section__number">Sistema de Design</span>
+        <h1 class="kd-hero__title">
+          Khroma<span class="kd-gradient-accent-text">Diet</span>
+        </h1>
+        <p class="kd-hero__lead">
+          Referência canônica de linguagem visual. Neo-Brutalismo Clean aplicado a health-tech com precisão clínica, sofisticação silenciosa e energia saudável.
+        </p>
+        <div class="kd-hero__actions">
+          <a class="kd-btn kd-btn--primary kd-btn--lg" href="#principles">Explorar o sistema</a>
+          <a class="kd-btn kd-btn--outline kd-btn--lg" href="#colors">Ver tokens</a>
+        </div>
+        <div class="kd-hero__badges">
+          <span class="kd-badge kd-badge--brutal">NEO-BRUTALISM</span>
+          <span class="kd-badge kd-badge--brutal">CLEAN</span>
+          <span class="kd-badge kd-badge--brutal">PREMIUM</span>
+          <span class="kd-badge kd-badge--brutal">HEALTH-TECH</span>
+          <span class="kd-badge kd-badge--accent">v1.0</span>
+        </div>
+      </div>
+
+      <div class="kd-hero__rail">
+        <div class="kd-card kd-card--accent-soft kd-hero-note">
+          <div class="kd-card__body">
+            <div class="kd-hero-note__label">Acento com disciplina</div>
+            <div class="kd-hero-note__title">Verde só entra quando precisa orientar foco.</div>
+            <p class="kd-hero-note__copy">Abertura, CTA, progresso e energia visual. O sistema continua branco, preto e profundamente legível.</p>
+          </div>
+        </div>
+        <div class="kd-card kd-hero-note">
+          <div class="kd-card__body">
+            <div class="kd-hero-note__label">Light + Dark nativo</div>
+            <div class="kd-hero-note__title">Mesma maturidade estrutural, atmosferas diferentes.</div>
+            <p class="kd-hero-note__copy">No claro, silêncio e arquitetura. No escuro, profundidade e presença verde contida. A gramática permanece a mesma.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="kd-hero__stats">
+        <div class="kd-hero-stat">
+          <div class="kd-hero-stat__value">14</div>
+          <div class="kd-hero-stat__label">Etapas de formulário</div>
+          <div class="kd-hero-stat__meta">Form system</div>
+        </div>
+        <div class="kd-hero-stat">
+          <div class="kd-hero-stat__value">60+</div>
+          <div class="kd-hero-stat__label">Componentes documentados</div>
+          <div class="kd-hero-stat__meta">Component library</div>
+        </div>
+        <div class="kd-hero-stat">
+          <div class="kd-hero-stat__value">2</div>
+          <div class="kd-hero-stat__label">Modos nativos</div>
+          <div class="kd-hero-stat__meta">Light & Dark</div>
+        </div>
+        <div class="kd-hero-stat">
+          <div class="kd-hero-stat__value">1</div>
+          <div class="kd-hero-stat__label">Artefato visual oficial</div>
+          <div class="kd-hero-stat__meta">Single source of truth</div>
+        </div>
       </div>
     </div>
   </section>
+
+  <div class="kd-ticker" aria-label="Manifesto em movimento">
+    <div class="kd-ticker__track">
+      <span class="kd-ticker__item">Neo-Brutalismo Clean</span>
+      <span class="kd-ticker__item">Presença tipográfica forte</span>
+      <span class="kd-ticker__item">Contraste com convicção</span>
+      <span class="kd-ticker__item">Motion com intenção</span>
+      <span class="kd-ticker__item">Produto real</span>
+      <span class="kd-ticker__item">Nutrição premium</span>
+      <span class="kd-ticker__item">Light & Dark nativo</span>
+      <span class="kd-ticker__item">Acessibilidade desde a origem</span>
+      <span class="kd-ticker__item">Neo-Brutalismo Clean</span>
+      <span class="kd-ticker__item">Presença tipográfica forte</span>
+      <span class="kd-ticker__item">Contraste com convicção</span>
+      <span class="kd-ticker__item">Motion com intenção</span>
+      <span class="kd-ticker__item">Produto real</span>
+      <span class="kd-ticker__item">Nutrição premium</span>
+      <span class="kd-ticker__item">Light & Dark nativo</span>
+      <span class="kd-ticker__item">Acessibilidade desde a origem</span>
+    </div>
+  </div>
 
   <!-- ══════════════════════════════════════════════
        01 — PRINCÍPIOS
@@ -6213,6 +6785,74 @@
         </div>
       </div>
 
+      <div class="kd-analytics-panel kd-card--accent-soft">
+        <div class="kd-analytics-panel__header">
+          <span class="kd-analytics-panel__title">Consistência mensal · 30 dias</span>
+          <span class="kd-badge kd-badge--accent">Aderência</span>
+        </div>
+        <div class="kd-analytics-panel__body">
+          <div class="kd-heatmap">
+            <p class="kd-heatmap__intro">Mapa de presença alimentar e regularidade de registro. A intensidade cresce com a constância, sem precisar competir com a leitura analítica principal.</p>
+            <div class="kd-heatmap__grid" aria-label="Grade de consistência mensal">
+              <div class="kd-heatmap__cell kd-heatmap__cell--0" title="Dia 1"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--1" title="Dia 2"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 3"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 4"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 5"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 6"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--1" title="Dia 7"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 8"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 9"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 10"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 11"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 12"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--1" title="Dia 13"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 14"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 15"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 16"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--0" title="Dia 17"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--1" title="Dia 18"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 19"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 20"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 21"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 22"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 23"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 24"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--1" title="Dia 25"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 26"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 27"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 28"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--2" title="Dia 29"></div>
+              <div class="kd-heatmap__cell kd-heatmap__cell--3" title="Dia 30"></div>
+            </div>
+            <div class="kd-heatmap__legend">
+              <span>Menos</span>
+              <div class="kd-heatmap__legend-scale" aria-hidden="true">
+                <span class="kd-heatmap__legend-chip kd-heatmap__cell--0"></span>
+                <span class="kd-heatmap__legend-chip kd-heatmap__cell--1"></span>
+                <span class="kd-heatmap__legend-chip kd-heatmap__cell--2"></span>
+                <span class="kd-heatmap__legend-chip kd-heatmap__cell--3"></span>
+              </div>
+              <span>Mais</span>
+            </div>
+            <div class="kd-heatmap__summary">
+              <div class="kd-heatmap__summary-item">
+                <div class="kd-heatmap__summary-value">23</div>
+                <div class="kd-heatmap__summary-label">Dias ativos</div>
+              </div>
+              <div class="kd-heatmap__summary-item">
+                <div class="kd-heatmap__summary-value">77%</div>
+                <div class="kd-heatmap__summary-label">Consistência</div>
+              </div>
+              <div class="kd-heatmap__summary-item">
+                <div class="kd-heatmap__summary-value">18</div>
+                <div class="kd-heatmap__summary-label">Dias seguidos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="kd-analytics-panel">
         <div class="kd-analytics-panel__header">
           <span class="kd-analytics-panel__title">Registro · Hoje</span>
@@ -6621,6 +7261,38 @@
             <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> ARIA labels em controles interativos</div>
             <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> Reduz motion via <code class="font-mono" style="font-size:var(--text-xs);background:var(--surface-3);padding:1px 4px;border-radius:3px;">prefers-reduced-motion</code></div>
             <div style="display:flex;gap:var(--space-2);"><span style="color:var(--text-accent);font-weight:600;">→</span> Navegação por teclado preservada em tabs, forms, modais e feedbacks transitórios</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section kd-contrast-section kd-ambient-shell" id="manifesto">
+    <div class="kd-ambient-grid"></div>
+    <div class="kd-ambient-haze kd-ambient-haze--manifesto"></div>
+    <div class="kd-manifesto">
+      <span class="ds-section__number">25 — Manifesto</span>
+      <h2 class="kd-manifesto__title">
+        Cada pixel tem <span class="kd-gradient-accent-text">razão de ser.</span>
+      </h2>
+      <div class="kd-manifesto__layout">
+        <div class="kd-manifesto__copy">
+          <p>KhromaDiet não é mais um produto de nutrição. É a experiência que organiza dados, escolhas e progresso com precisão clínica, calma visual e convicção estrutural.</p>
+          <p>Este design system não existe para impressionar isoladamente. Ele existe para fazer o produto parecer maduro, confiável e pronto para implementação real em qualquer tela, em qualquer tema.</p>
+          <p>Neo-Brutalismo Clean aqui não é estilo performático. É disciplina: estrutura antes do ornamento, contraste antes do efeito, clareza antes do excesso.</p>
+        </div>
+        <div class="kd-manifesto__stack">
+          <div class="kd-manifesto-card">
+            <div class="kd-manifesto-card__title">Nunca ornamentar</div>
+            <div class="kd-manifesto-card__body">Grid, fade, haze e movimento só entram quando reforçam hierarquia, foco e leitura. Atmosfera sem função não faz parte do sistema.</div>
+          </div>
+          <div class="kd-manifesto-card">
+            <div class="kd-manifesto-card__title">Sempre orientar</div>
+            <div class="kd-manifesto-card__body">O verde é energia tecnológica, não tinta espalhada. Ele conduz ação, progresso e confiança, sem roubar a estrutura do preto e do branco.</div>
+          </div>
+          <div class="kd-manifesto-card">
+            <div class="kd-manifesto-card__title">Produto antes do showcase</div>
+            <div class="kd-manifesto-card__body">Cada superfície deste arquivo precisa sobreviver ao React, ao dark mode, ao estado vazio e ao uso diário. Beleza só vale quando se mantém útil.</div>
           </div>
         </div>
       </div>
