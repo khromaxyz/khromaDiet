@@ -6,6 +6,7 @@ import type { ScreenId } from '@/app/types';
 import { DesignSystemPreview } from '@/components/design-system/DesignSystemPreview';
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { ScreenNavPill } from '@/components/layout/ScreenNavPill';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Toaster } from '@/components/ui/primitives/sonner';
 import { DashboardScreen } from '@/features/dashboard';
 import {
@@ -35,6 +36,7 @@ import {
 } from '@/lib/profiles/storage';
 import type { SharedProfileMeta, UserProfile } from '@/lib/profiles/types';
 import { parseShareState, serializeShareState } from '@/lib/shareState';
+import { useTheme } from '@/lib/theme';
 import type { FormData } from '@/lib/types';
 import { deepClone } from '@/lib/utils';
 import { useDietForgeStore } from '@/store/useDietForgeStore';
@@ -460,6 +462,14 @@ const ApplicationFlow = () => {
         </div>
       ) : null}
 
+      <div className="app-theme-toggle-dock" data-hidden={currentScreen === 'dashboard' ? 'true' : 'false'}>
+        <div className="app-theme-brand-chip" aria-hidden>
+          <span className="app-theme-brand-chip__dot" />
+          KhromaDiet
+        </div>
+        <ThemeToggle />
+      </div>
+
       <ScreenNavPill
         currentScreen={currentScreen}
         currentStep={currentStep}
@@ -516,6 +526,7 @@ const ApplicationFlow = () => {
               <DashboardScreen
                 onNavigate={navigate}
                 profileTrigger={profileTrigger}
+                themeToggle={<ThemeToggle compact />}
                 {...(activeProfileMeta ? { activeProfileMeta } : {})}
               />
             </ScreenContainer>
@@ -543,6 +554,7 @@ const ApplicationFlow = () => {
 };
 
 function AppFlow() {
+  const { theme } = useTheme();
   const isDesignSystemPreview =
     typeof window !== 'undefined' &&
     new URLSearchParams(window.location.search).get('preview') === 'design-system';
@@ -551,7 +563,7 @@ function AppFlow() {
     return (
       <>
         <DesignSystemPreview />
-        <Toaster />
+        <Toaster theme={theme} />
       </>
     );
   }
@@ -559,7 +571,7 @@ function AppFlow() {
   return (
     <>
       <ApplicationFlow />
-      <Toaster />
+      <Toaster theme={theme} />
     </>
   );
 }

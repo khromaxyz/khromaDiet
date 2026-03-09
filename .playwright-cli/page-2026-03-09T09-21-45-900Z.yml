@@ -1,0 +1,93 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: KhromaDiet
+    - button "Ativar modo claro" [active] [ref=e196] [cursor=pointer]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - img [ref=e15]
+  - navigation "Progresso do formulario" [ref=e90]:
+    - generic "Pergunta 1 de 14" [ref=e91] [cursor=pointer]
+    - generic "Pergunta 2 de 14" [ref=e92] [cursor=pointer]
+    - generic "Pergunta 3 de 14" [ref=e93] [cursor=pointer]
+    - generic "Pergunta 4 de 14" [ref=e94] [cursor=pointer]
+    - generic "Pergunta 5 de 14" [ref=e95] [cursor=pointer]
+    - generic "Pergunta 6 de 14" [ref=e96] [cursor=pointer]
+    - generic "Pergunta 7 de 14" [ref=e97] [cursor=pointer]
+    - generic "Pergunta 8 de 14" [ref=e98] [cursor=pointer]
+    - generic "Pergunta 9 de 14" [ref=e99] [cursor=pointer]
+    - generic "Pergunta 10 de 14" [ref=e100] [cursor=pointer]
+    - generic "Pergunta 11 de 14" [ref=e101] [cursor=pointer]
+    - generic "Pergunta 12 de 14" [ref=e102] [cursor=pointer]
+    - generic "Pergunta 13 de 14" [ref=e103] [cursor=pointer]
+    - generic "Pergunta 14 de 14" [ref=e104] [cursor=pointer]
+  - generic [ref=e106]:
+    - generic [ref=e108]:
+      - generic [ref=e109]:
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - img [ref=e112]
+            - generic [ref=e114]: KHROMADIET
+          - generic "Pergunta 01 de 14" [ref=e115]:
+            - generic [ref=e116]: Pergunta
+            - generic [ref=e117]: "01"
+            - generic [ref=e118]: /
+            - generic [ref=e119]: "14"
+        - generic [ref=e120]:
+          - generic [ref=e121]:
+            - text: Precisão
+            - strong [ref=e122]: 53%
+          - button "Histórico" [ref=e123] [cursor=pointer]:
+            - img [ref=e124]
+          - button "Abrir painel de perfis" [ref=e127] [cursor=pointer]:
+            - img [ref=e129]
+      - progressbar [ref=e133]
+    - generic [ref=e144]:
+      - generic [ref=e145]: 01 / 14 - Objetivo
+      - heading "Qual é o seu objetivo principal?" [level=2] [ref=e146]
+      - paragraph [ref=e147]: Esse objetivo define o déficit/superávit aplicado no plano.
+      - generic [ref=e148]:
+        - button "Hard Cut Déficit agressivo para reduzir gordura rapidamente. -25%" [ref=e149] [cursor=pointer]:
+          - generic [ref=e150]:
+            - generic [ref=e152]: 🔥
+            - generic [ref=e153]: Hard Cut
+            - generic [ref=e154]: Déficit agressivo para reduzir gordura rapidamente.
+            - generic [ref=e155]: "-25%"
+        - button "Mini Cut Déficit moderado com melhor preservação de massa magra. -15%" [pressed] [ref=e156] [cursor=pointer]:
+          - generic [ref=e157]:
+            - img [ref=e159]
+            - generic [ref=e161]: ✂️
+            - generic [ref=e162]: Mini Cut
+            - generic [ref=e163]: Déficit moderado com melhor preservação de massa magra.
+            - generic [ref=e164]: "-15%"
+        - button "Recomposição Ajuste leve para reduzir gordura e preservar desempenho. -8%" [ref=e165] [cursor=pointer]:
+          - generic [ref=e166]:
+            - generic [ref=e168]: ⚖️
+            - generic [ref=e169]: Recomposição
+            - generic [ref=e170]: Ajuste leve para reduzir gordura e preservar desempenho.
+            - generic [ref=e171]: "-8%"
+        - button "Manutenção Estratégia neutra para estabilizar peso e composição. 0%" [ref=e172] [cursor=pointer]:
+          - generic [ref=e173]:
+            - generic [ref=e175]: 🎯
+            - generic [ref=e176]: Manutenção
+            - generic [ref=e177]: Estratégia neutra para estabilizar peso e composição.
+            - generic [ref=e178]: 0%
+        - button "Lean Bulk Superávit controlado para ganho gradual de massa. +10%" [ref=e179] [cursor=pointer]:
+          - generic [ref=e180]:
+            - generic [ref=e182]: 💪
+            - generic [ref=e183]: Lean Bulk
+            - generic [ref=e184]: Superávit controlado para ganho gradual de massa.
+            - generic [ref=e185]: +10%
+        - button "Dirty Bulk Superávit agressivo focado em ganho de peso rápido. +18%" [ref=e186] [cursor=pointer]:
+          - generic [ref=e187]:
+            - generic [ref=e189]: 🏆
+            - generic [ref=e190]: Dirty Bulk
+            - generic [ref=e191]: Superávit agressivo focado em ganho de peso rápido.
+            - generic [ref=e192]: +18%
+      - generic [ref=e193]:
+        - button "Voltar" [ref=e194] [cursor=pointer]:
+          - img
+          - text: Voltar
+        - button "Próximo" [ref=e195] [cursor=pointer]:
+          - text: Próximo
+          - img
+  - region "Notifications alt+T"

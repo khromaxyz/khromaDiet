@@ -1,0 +1,31 @@
+ INFO  Accepting connections at http://127.0.0.1:4173
+ HTTP  09/03/2026 06:18:15 127.0.0.1 GET /
+ HTTP  09/03/2026 06:18:15 127.0.0.1 Returned 200 in 12 ms
+ HTTP  09/03/2026 06:18:15 127.0.0.1 GET /assets/index-2TdSLrj0.js
+ HTTP  09/03/2026 06:18:15 127.0.0.1 GET /assets/index-DGXb9EZO.css
+ HTTP  09/03/2026 06:18:15 127.0.0.1 Returned 200 in 3 ms
+ HTTP  09/03/2026 06:18:15 127.0.0.1 Returned 200 in 8 ms
+ HTTP  09/03/2026 06:20:53 127.0.0.1 GET /
+ HTTP  09/03/2026 06:20:53 127.0.0.1 Returned 200 in 2 ms
+ HTTP  09/03/2026 06:20:53 127.0.0.1 GET /assets/index-DGXb9EZO.css
+ HTTP  09/03/2026 06:20:53 127.0.0.1 GET /assets/index-2TdSLrj0.js
+ HTTP  09/03/2026 06:20:53 127.0.0.1 Returned 200 in 3 ms
+ HTTP  09/03/2026 06:20:53 127.0.0.1 Returned 200 in 2 ms
+ HTTP  09/03/2026 06:20:54 127.0.0.1 GET /favicon.svg
+ HTTP  09/03/2026 06:20:54 127.0.0.1 Returned 200 in 3 ms
+ HTTP  09/03/2026 06:22:25 127.0.0.1 GET /
+ HTTP  09/03/2026 06:22:25 127.0.0.1 Returned 200 in 7 ms
+ HTTP  09/03/2026 06:22:25 127.0.0.1 GET /assets/index-2TdSLrj0.js
+ HTTP  09/03/2026 06:22:25 127.0.0.1 GET /assets/index-DGXb9EZO.css
+ HTTP  09/03/2026 06:22:25 127.0.0.1 Returned 200 in 6 ms
+ HTTP  09/03/2026 06:22:25 127.0.0.1 Returned 200 in 6 ms
+ HTTP  09/03/2026 06:22:25 127.0.0.1 GET /favicon.svg
+ HTTP  09/03/2026 06:22:25 127.0.0.1 Returned 200 in 1 ms
+ HTTP  09/03/2026 06:23:17 127.0.0.1 GET /
+ HTTP  09/03/2026 06:23:17 127.0.0.1 Returned 200 in 4 ms
+ HTTP  09/03/2026 06:23:17 127.0.0.1 GET /assets/index-DGXb9EZO.css
+ HTTP  09/03/2026 06:23:17 127.0.0.1 GET /assets/index-2TdSLrj0.js
+ HTTP  09/03/2026 06:23:17 127.0.0.1 Returned 200 in 26 ms
+ HTTP  09/03/2026 06:23:17 127.0.0.1 Returned 200 in 5 ms
+ HTTP  09/03/2026 06:23:18 127.0.0.1 GET /favicon.svg
+ HTTP  09/03/2026 06:23:18 127.0.0.1 Returned 200 in 1 ms

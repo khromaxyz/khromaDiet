@@ -21,9 +21,9 @@ export interface ChartContainerProps {
 }
 
 const TONE_CLASS_MAP: Record<NonNullable<ChartLegendItem['tone']>, string> = {
-  emerald: 'border-transparent bg-[var(--emerald-400)]',
-  gold: 'border-transparent bg-[var(--gold-400)]',
-  blue: 'border-transparent bg-[var(--blue-400)]',
+  emerald: 'border-transparent bg-[var(--protein-color)]',
+  gold: 'border-transparent bg-[var(--fat-color)]',
+  blue: 'border-transparent bg-[var(--carb-color)]',
   muted: 'border-[var(--text-muted)] bg-transparent',
 };
 
@@ -39,19 +39,19 @@ export const ChartContainer = ({
   return (
     <DataCard glow={glow} className={cn('overflow-hidden p-0', className)}>
       {title || subtitle || (legend?.length ?? 0) > 0 ? (
-        <div className="px-[var(--space-6)] pt-[var(--space-6)]">
+        <div className="border-b border-[var(--border-primary)] px-[var(--space-6)] py-[var(--space-5)]">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
               {title ? (
-                <div className="text-[15px] font-semibold text-[var(--text-primary)]">{title}</div>
+                <div className="font-display text-[var(--text-sm)] font-bold tracking-[var(--tracking-tight)] text-[var(--text-primary)]">{title}</div>
               ) : null}
               {subtitle ? (
-                <div className="mt-0.5 text-xs text-[var(--text-muted)]">{subtitle}</div>
+                <div className="mt-1 text-[var(--text-xs)] uppercase tracking-[var(--tracking-wider)] text-[var(--text-tertiary)]">{subtitle}</div>
               ) : null}
             </div>
 
             {legend?.length ? (
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3">
                 {legend.map((item) => {
                   const tone = item.tone ?? 'muted';
                   const style = item.style ?? 'solid';
@@ -59,7 +59,7 @@ export const ChartContainer = ({
                   return (
                     <div
                       key={`${item.label}-${tone}-${style}`}
-                      className="flex items-center gap-1.5 text-[11px] text-[var(--text-tertiary)]"
+                      className="flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--surface-2)] px-3 py-1 text-[10px] uppercase tracking-[var(--tracking-wide)] text-[var(--text-secondary)]"
                     >
                       <span
                         className={cn(

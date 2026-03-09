@@ -1124,7 +1124,7 @@ describe('Dashboard presentation mode', () => {
     expect(within(finalSection).getByText(/em breve/i)).toBeInTheDocument();
     expect(within(finalSection).getByTestId('final-export-pdf')).toBeInTheDocument();
     expect(within(finalSection).getByTestId('final-share-plan')).toBeInTheDocument();
-    expect(within(finalSection).getByTestId('final-footer')).toHaveTextContent(/dietforge/i);
+    expect(within(finalSection).getByTestId('final-footer')).toHaveTextContent(/khromadiet/i);
   });
 
   it('handles final section export and share actions', async () => {

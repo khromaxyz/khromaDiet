@@ -1484,3 +1484,235 @@
     justify-content: center;
   }
 }
+
+/* ===== Winner System: final form overrides ===== */
+#screen-form {
+  background:
+    radial-gradient(circle at top right, var(--ambient-haze-strong) 0%, transparent 32%),
+    radial-gradient(circle at left 80%, var(--ambient-haze-soft) 0%, transparent 24%),
+    linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 56%, var(--bg-secondary) 100%);
+}
+
+#screen-form::before,
+#screen-form::after {
+  display: none;
+}
+
+#screen-form .form-header-surface,
+#screen-form .form-step-shell,
+#screen-form .target-info-card,
+#screen-form .form-slider-field,
+#screen-form .height-dual-field {
+  border-width: 2px;
+  border-color: var(--border-primary);
+  background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-md);
+}
+
+#screen-form .form-header-surface {
+  border-radius: calc(var(--radius-2xl) + 2px);
+  background:
+    radial-gradient(circle at top right, var(--ambient-haze-soft) 0%, transparent 36%),
+    linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+}
+
+#screen-form .form-step-shell {
+  border-radius: calc(var(--radius-2xl) + 2px);
+  box-shadow: var(--shadow-brutal), var(--shadow-lg);
+}
+
+#screen-form .form-logo {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  letter-spacing: var(--tracking-tight);
+}
+
+#screen-form .form-logo-bolt {
+  color: var(--text-accent);
+  filter: none;
+}
+
+#screen-form .form-step-badge,
+#screen-form .optional-badge,
+#screen-form .number-input-unit-badge,
+#screen-form .form-history-btn,
+#screen-form .goal-card-badge {
+  border: 1px solid var(--border-primary);
+  background: var(--surface-1);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-xs);
+}
+
+#screen-form .form-step-badge {
+  padding-inline: var(--space-4);
+}
+
+#screen-form .form-step-badge-current,
+#screen-form .form-step-badge-sep {
+  color: var(--text-accent);
+}
+
+#screen-form .form-history-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-form .form-header-progress-track {
+  border-color: var(--border-primary);
+  background: var(--surface-3);
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.08);
+}
+
+#screen-form .question-number {
+  color: var(--text-secondary);
+}
+
+#screen-form .question-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.125rem, 4.8vw, 3.25rem);
+  font-weight: var(--weight-bold);
+  line-height: 0.98;
+  letter-spacing: var(--tracking-tighter);
+  color: var(--text-primary);
+}
+
+#screen-form .question-description {
+  max-width: 58ch;
+  color: var(--text-secondary);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+}
+
+#screen-form .form-intro-card {
+  border-width: 2px;
+  border-color: var(--accent-tint-border);
+  background: linear-gradient(180deg, var(--bg-accent-soft) 0%, var(--surface-1) 100%);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-md);
+}
+
+#screen-form .target-info-icon,
+#screen-form .target-info-highlight,
+#screen-form .form-slider-tick.is-active,
+#screen-form .form-precision-badge strong {
+  color: var(--text-accent);
+}
+
+#screen-form .goal-card.form-option-card {
+  min-height: 100%;
+  border: 2px solid var(--border-primary);
+  background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-form .goal-card.form-option-card:hover,
+#screen-form .goal-card.form-option-card.selected {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-brutal), var(--shadow-md);
+}
+
+#screen-form .goal-card.form-option-card.selected {
+  background:
+    radial-gradient(circle at top right, var(--ambient-haze-soft) 0%, transparent 30%),
+    linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+}
+
+#screen-form .goal-card-icon.form-option-card-icon {
+  border-color: var(--border-primary);
+  background: var(--surface-3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+#screen-form .goal-card-check {
+  border-color: var(--border-strong);
+  background: var(--surface-1);
+}
+
+#screen-form .goal-card-check-selected {
+  border-color: var(--border-accent);
+  background: var(--bg-accent);
+  box-shadow: var(--shadow-xs);
+}
+
+#screen-form .goal-card-check svg {
+  color: var(--text-on-accent);
+}
+
+#screen-form .goal-card-title {
+  font-size: clamp(1.0625rem, 2vw, 1.3125rem);
+}
+
+#screen-form .number-input-label,
+#screen-form .form-slider-label,
+#screen-form .height-dual-unit {
+  color: var(--text-secondary);
+}
+
+#screen-form .number-input-value-display,
+#screen-form .height-dual-input {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+}
+
+#screen-form .number-input-stepper-btn:hover,
+#screen-form button.number-input-unit-badge:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+
+#screen-form .form-precision-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.25rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  background: var(--surface-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-xs);
+}
+
+#screen-form .form-nav-button {
+  min-height: 3.375rem;
+  border-width: 2px;
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-form .form-nav-button-back {
+  border-color: var(--border-strong);
+  background: var(--surface-1);
+  color: var(--text-primary);
+}
+
+#screen-form .form-nav-button-next {
+  border-color: var(--border-accent);
+  background: var(--bg-accent);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-brutal-green), var(--shadow-md);
+}
+
+#screen-form .training-scroll-hint,
+#screen-form .number-input-context,
+#screen-form .steps-input-hint,
+#screen-form .form-slider-caption {
+  color: var(--text-tertiary);
+}
+
+html[data-theme='dark'] #screen-form .form-header-surface,
+html[data-theme='dark'] #screen-form .form-step-shell,
+html[data-theme='dark'] #screen-form .target-info-card,
+html[data-theme='dark'] #screen-form .form-slider-field,
+html[data-theme='dark'] #screen-form .height-dual-field {
+  background:
+    radial-gradient(circle at top right, rgba(16, 185, 129, 0.08) 0%, transparent 34%),
+    linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+}
+
+html[data-theme='dark'] #screen-form .form-step-shell {
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-lg);
+}

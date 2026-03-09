@@ -12,13 +12,13 @@ export type SectionShellLevel =
   | 'overlay';
 
 const LEVEL_MAP: Record<SectionShellLevel, string> = {
-  abyss: 'var(--bg-abyss)',
-  deepest: 'var(--bg-deepest)',
-  deep: 'var(--bg-deep)',
-  base: 'var(--bg-base)',
-  elevated: 'var(--bg-elevated)',
-  surface: 'var(--bg-surface)',
-  overlay: 'var(--bg-overlay)',
+  abyss: 'var(--bg-primary)',
+  deepest: 'var(--bg-secondary)',
+  deep: 'var(--bg-secondary)',
+  base: 'var(--bg-primary)',
+  elevated: 'var(--surface-2)',
+  surface: 'var(--surface-1)',
+  overlay: 'var(--accent-tint-bg)',
 };
 
 type ShellStyle = CSSProperties & {
@@ -42,7 +42,9 @@ export const SectionShell = ({
     '--df-shell-bg': LEVEL_MAP[level],
     backgroundColor: LEVEL_MAP[level],
     backgroundImage:
-      'radial-gradient(120% 160% at 50% 0%, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0) 50%), linear-gradient(180deg, rgba(255,255,255,0.014) 0%, rgba(255,255,255,0) 24%)',
+      level === 'overlay'
+        ? 'var(--accent-tint-bg)'
+        : 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%)',
     ...style,
   } as ShellStyle;
 
@@ -51,13 +53,13 @@ export const SectionShell = ({
       className={cn(
         'relative overflow-hidden py-[var(--space-20)]',
         showDivider &&
-          'border-t border-t-[var(--border-subtle)] before:pointer-events-none before:absolute before:inset-x-0 before:top-[-1px] before:h-px before:bg-[linear-gradient(90deg,transparent,var(--emerald-500),transparent)] before:opacity-20 after:pointer-events-none after:absolute after:left-1/2 after:top-[-10px] after:h-5 after:w-[200px] after:-translate-x-1/2 after:bg-[radial-gradient(ellipse,rgba(16,185,129,0.15),transparent)] after:blur-[4px]',
+          'border-t border-t-[var(--border-primary)] before:pointer-events-none before:absolute before:inset-x-0 before:top-[-1px] before:h-px before:bg-[linear-gradient(90deg,transparent,var(--bg-accent),transparent)] before:opacity-30',
         className,
       )}
       style={shellStyle}
       {...props}
     >
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 sm:gap-12 sm:px-8 xl:px-12">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-10 px-6 sm:gap-12 sm:px-8 xl:px-12">
         {children}
       </div>
     </section>

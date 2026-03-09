@@ -19,6 +19,7 @@ import { WhatIfSlide } from './presentation/WhatIfSlide';
 interface DashboardScreenProps {
   onNavigate: (screen: ScreenId) => void;
   profileTrigger?: ReactNode;
+  themeToggle?: ReactNode;
   activeProfileMeta?: (SharedProfileMeta & { createdAt?: string }) | undefined;
 }
 
@@ -100,7 +101,12 @@ const usePrefersReducedMotion = (): boolean => {
   return prefersReduced;
 };
 
-export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta }: DashboardScreenProps) => {
+export const DashboardScreen = ({
+  onNavigate,
+  profileTrigger,
+  themeToggle,
+  activeProfileMeta,
+}: DashboardScreenProps) => {
   const formData = useDietForgeStore((state) => state.formData);
   const isExamplePreview = useDietForgeStore((state) => state.isExamplePreview);
   const results = useDietForgeStore((state) => state.results);
@@ -387,8 +393,8 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
     >
       <div id="topbar">
         <div className="logo">
-          <span className="logo-accent">Diet</span>
-          <span className="logo-main">Forge</span>
+          <span className="logo-accent">Khroma</span>
+          <span className="logo-main">Diet</span>
         </div>
         <p className="topbar-section-pill" aria-live="polite">
           <span className="topbar-section-index">{activeSectionMeta.index}</span>
@@ -399,6 +405,7 @@ export const DashboardScreen = ({ onNavigate, profileTrigger, activeProfileMeta 
         </p>
         <div className="topbar-right">
           <span className="topbar-mode">{isExamplePreview ? 'Modo Exemplo' : 'Plano Ativo'}</span>
+          {themeToggle}
           <button type="button" className={`topbar-btn${isExamplePreview ? ' is-danger' : ''}`} onClick={handleRestart}>
             <RotateCcw size={14} />
             {isExamplePreview ? 'Sair do exemplo' : 'Recalcular'}

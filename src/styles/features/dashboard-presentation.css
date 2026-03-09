@@ -579,6 +579,150 @@
 
 /* Pipeline Node â€” Shared */
 
+/* ===== Winner System: dashboard shell + nav overrides ===== */
+#screen-dashboard[data-dashboard-presentation] {
+  background:
+    radial-gradient(circle at top right, var(--ambient-haze-strong) 0%, transparent 24%),
+    radial-gradient(circle at left 82%, var(--ambient-haze-soft) 0%, transparent 28%),
+    linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 54%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-slide::before {
+  background-image:
+    linear-gradient(var(--ambient-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ambient-grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.4;
+}
+
+#screen-dashboard[data-dashboard-presentation] #topbar {
+  border-bottom: 2px solid var(--border-primary);
+  background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+#screen-dashboard[data-dashboard-presentation] .logo {
+  gap: 0.25rem;
+  padding-left: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: var(--tracking-tight);
+  text-transform: none;
+}
+
+#screen-dashboard[data-dashboard-presentation] .logo::before {
+  position: static;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 999px;
+  transform: none;
+  background: var(--bg-accent);
+  box-shadow: none;
+}
+
+#screen-dashboard[data-dashboard-presentation] .logo-accent {
+  color: var(--text-accent);
+}
+
+#screen-dashboard[data-dashboard-presentation] .logo-main {
+  color: var(--text-primary);
+}
+
+#screen-dashboard[data-dashboard-presentation] .topbar-section-pill,
+#screen-dashboard[data-dashboard-presentation] .topbar-mode,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn,
+#screen-dashboard[data-dashboard-presentation] .df-profile-trigger {
+  border-width: 2px;
+  border-color: var(--border-primary);
+  background: var(--surface-1);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-xs);
+}
+
+#screen-dashboard[data-dashboard-presentation] .topbar-section-label,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger {
+  color: var(--text-accent);
+}
+
+#screen-dashboard[data-dashboard-presentation] .topbar-btn:hover,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn:focus-visible,
+#screen-dashboard[data-dashboard-presentation] .topbar-mode:hover,
+#screen-dashboard[data-dashboard-presentation] .topbar-mode:focus-visible,
+#screen-dashboard[data-dashboard-presentation] .df-profile-trigger:hover,
+#screen-dashboard[data-dashboard-presentation] .df-profile-trigger:focus-visible {
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger:hover,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger:focus-visible {
+  border-color: var(--border-accent);
+  background: var(--bg-accent-soft);
+  color: var(--text-accent);
+}
+
+#screen-dashboard[data-dashboard-presentation] #sidenav {
+  right: 1.5rem;
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-dot-label {
+  color: var(--text-secondary);
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-pip {
+  width: 0.625rem;
+  height: 0.625rem;
+  border: 1px solid var(--border-primary);
+  background: var(--surface-3);
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-dot.active .nav-pip {
+  width: 0.625rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  border-color: var(--border-accent);
+  background: var(--bg-accent);
+  box-shadow: none;
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-dot.active .nav-dot-label {
+  color: var(--text-accent);
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-pip::after {
+  left: calc(100% + 0.625rem);
+  width: 2px;
+  height: 1.75rem;
+  background: var(--bg-accent);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-mobile-progress {
+  border-width: 2px;
+  border-color: var(--border-primary);
+  border-radius: var(--radius-full);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-mobile-dot {
+  border: 1px solid var(--border-primary);
+  background: var(--surface-3);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-mobile-dot.is-active {
+  border-color: var(--border-accent);
+  background: var(--bg-accent);
+  box-shadow: none;
+}
+
+html[data-theme='dark'] #screen-dashboard[data-dashboard-presentation] #topbar {
+  background: rgba(15, 15, 15, 0.88);
+}
+
 /* Pipeline Node Variants */
 
 /* Node Header */
@@ -1046,4 +1190,108 @@
   height: auto !important;
   max-height: none !important;
   overflow: visible !important;
+}
+
+/* ===== Winner System: terminal overrides kept at file end ===== */
+#screen-dashboard[data-dashboard-presentation] {
+  background:
+    radial-gradient(circle at top right, var(--ambient-haze-strong) 0%, transparent 24%),
+    radial-gradient(circle at left 82%, var(--ambient-haze-soft) 0%, transparent 28%),
+    linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 54%, var(--bg-secondary) 100%) !important;
+  color: var(--text-primary);
+}
+
+#screen-dashboard[data-dashboard-presentation] #topbar {
+  border-bottom: 2px solid var(--border-primary);
+  background: var(--surface-1) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+#screen-dashboard[data-dashboard-presentation] .logo,
+#screen-dashboard[data-dashboard-presentation] .topbar-section-pill,
+#screen-dashboard[data-dashboard-presentation] .topbar-mode,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn,
+#screen-dashboard[data-dashboard-presentation] .df-profile-trigger {
+  background: var(--surface-1);
+}
+
+#screen-dashboard[data-dashboard-presentation] .topbar-section-pill,
+#screen-dashboard[data-dashboard-presentation] .topbar-mode,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn,
+#screen-dashboard[data-dashboard-presentation] .df-profile-trigger {
+  border-width: 2px;
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-xs);
+}
+
+#screen-dashboard[data-dashboard-presentation] .topbar-btn:hover,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn:focus-visible,
+#screen-dashboard[data-dashboard-presentation] .topbar-mode:hover,
+#screen-dashboard[data-dashboard-presentation] .topbar-mode:focus-visible,
+#screen-dashboard[data-dashboard-presentation] .df-profile-trigger:hover,
+#screen-dashboard[data-dashboard-presentation] .df-profile-trigger:focus-visible {
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger:hover,
+#screen-dashboard[data-dashboard-presentation] .topbar-btn.is-danger:focus-visible {
+  border-color: var(--border-accent);
+  color: var(--text-accent);
+  background: var(--bg-accent-soft);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-slide,
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='welcome'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='tdee'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='goal'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='macros'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='projection'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='meals'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='supplements'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='whatif'],
+#screen-dashboard[data-dashboard-presentation] .dfp-slide[data-section-id='final'] {
+  background: transparent !important;
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-slide::before {
+  background-image:
+    linear-gradient(var(--ambient-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ambient-grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.4;
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-dot-label {
+  color: var(--text-secondary);
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-pip {
+  border: 1px solid var(--border-primary);
+  background: var(--surface-3);
+}
+
+#screen-dashboard[data-dashboard-presentation] .nav-dot.active .nav-pip {
+  border-color: var(--border-accent);
+  background: var(--bg-accent);
+  box-shadow: none;
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-mobile-progress {
+  background: var(--surface-1);
+  border: 2px solid var(--border-primary);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-mobile-dot {
+  border: 1px solid var(--border-primary);
+  background: var(--surface-3);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dfp-mobile-dot.is-active {
+  border-color: var(--border-accent);
+  background: var(--bg-accent);
+  box-shadow: none;
 }

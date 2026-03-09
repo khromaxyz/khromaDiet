@@ -20,9 +20,9 @@ export const DashboardFooter = ({
   methodLabel,
   profileName,
   classificationLabel,
-  versionLabel = 'DietForge dashboard v9',
+  versionLabel = 'KhromaDiet dashboard v9',
   disclaimer = 'Uso educacional. Consulte nutricionista para acompanhamento clinico.',
-  brandLabel = 'DietForge',
+  brandLabel = 'KhromaDiet',
   className,
   ...props
 }: DashboardFooterProps) => {

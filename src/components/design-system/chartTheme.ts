@@ -12,7 +12,7 @@ export const NIVO_THEME: PartialTheme = {
   text: {
     ...baseTextStyle,
     fontSize: 12,
-    fill: 'var(--text-tertiary)',
+    fill: 'var(--text-secondary)',
   },
   axis: {
     domain: {
@@ -25,7 +25,7 @@ export const NIVO_THEME: PartialTheme = {
       text: {
         ...baseTextStyle,
         fontSize: 12,
-        fill: 'var(--text-tertiary)',
+        fill: 'var(--text-secondary)',
       },
     },
     ticks: {
@@ -37,7 +37,7 @@ export const NIVO_THEME: PartialTheme = {
         ...baseTextStyle,
         fontFamily: 'var(--font-mono)',
         fontSize: 11,
-        fill: 'var(--text-ghost)',
+        fill: 'var(--text-tertiary)',
       },
     },
   },
@@ -51,16 +51,16 @@ export const NIVO_THEME: PartialTheme = {
     text: {
       ...baseTextStyle,
       fontSize: 12,
-      fill: 'var(--text-tertiary)',
+      fill: 'var(--text-secondary)',
     },
   },
   tooltip: {
     container: {
-      background: 'var(--bg-overlay)',
+      background: 'var(--surface-1)',
       color: 'var(--text-primary)',
-      border: '1px solid var(--border-default)',
-      borderRadius: 'var(--radius-lg)',
-      boxShadow: 'var(--shadow-lg)',
+      border: '2px solid var(--border-strong)',
+      borderRadius: 'var(--radius-md)',
+      boxShadow: 'var(--shadow-md)',
       fontSize: '13px',
       padding: '10px 14px',
     },
@@ -83,7 +83,7 @@ export const NIVO_THEME: PartialTheme = {
   },
   crosshair: {
     line: {
-      stroke: 'var(--emerald-500)',
+      stroke: 'var(--bg-accent)',
       strokeOpacity: 0.4,
       strokeWidth: 1,
     },

@@ -1,0 +1,65 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: KhromaDiet
+    - button "Ativar modo escuro" [ref=e6] [cursor=pointer]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - img [ref=e15]
+  - navigation "Navegacao de telas" [ref=e17]:
+    - button "Inicio" [ref=e18] [cursor=pointer]
+    - button "Formulario" [ref=e19] [cursor=pointer]
+    - button "Perfil" [ref=e20] [cursor=pointer]
+    - button "Resumo" [ref=e21] [cursor=pointer]
+    - button "Dashboard" [ref=e22] [cursor=pointer]
+  - generic [ref=e27]:
+    - generic [ref=e28]:
+      - generic [ref=e31]: Ciencia + Precisao + Resultado
+      - heading "Sua dieta engenheirada." [level=1] [ref=e32]:
+        - generic [ref=e33]: Sua dieta
+        - generic [ref=e34]: engenheirada.
+      - paragraph [ref=e35]: Calculo real de TDEE com cardio deduplicado, modificadores e projecao semanal. Em poucos minutos, voce sai com um protocolo funcional.
+      - generic [ref=e36]:
+        - button "Calcular minha dieta" [ref=e37] [cursor=pointer]:
+          - text: Calcular minha dieta
+          - img
+        - button "Ver exemplo" [ref=e38] [cursor=pointer]
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]: KD
+          - generic [ref=e45]:
+            - generic [ref=e46]: KhromaDiet
+            - generic [ref=e47]: Software nutricional com precisao operacional
+        - generic [ref=e48]:
+          - generic [ref=e49]: Live
+          - generic [ref=e51]: Winner system
+      - generic [ref=e52]:
+        - generic [ref=e54]:
+          - generic [ref=e56]:
+            - generic [ref=e57]: 2,4
+            - generic [ref=e58]: "%"
+          - generic [ref=e59]: Precisao
+        - generic [ref=e61]:
+          - generic [ref=e63]:
+            - generic [ref=e64]: "299"
+            - generic [ref=e65]: +
+          - generic [ref=e66]: Protocolos
+        - generic [ref=e68]:
+          - generic [ref=e71]: "0"
+          - generic [ref=e72]: Variaveis
+        - generic [ref=e74]:
+          - generic [ref=e76]:
+            - generic [ref=e77]: "0"
+            - generic [ref=e78]: min
+          - generic [ref=e79]: Plano em
+      - list "Sinais do motor KhromaDiet" [ref=e80]:
+        - listitem [ref=e81]:
+          - generic [ref=e82]: TDEE real
+          - generic [ref=e83]: BMR + NEAT + treino + TEF
+        - listitem [ref=e84]:
+          - generic [ref=e85]: Cardio deduplicado
+          - generic [ref=e86]: Passos e cardio sem dupla contagem
+        - listitem [ref=e87]:
+          - generic [ref=e88]: Projecao semanal
+          - generic [ref=e89]: Saida operacional pronta para execucao
+  - region "Notifications alt+T"

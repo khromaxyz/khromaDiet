@@ -73,7 +73,7 @@ export const HeroStats = () => {
         ))}
       </div>
 
-      <div className="hero-screen__signal-strip" role="list" aria-label="Sinais do motor DietForge">
+      <div className="hero-screen__signal-strip" role="list" aria-label="Sinais do motor KhromaDiet">
         {heroCopy.panel.signals.map((signal) => (
           <div
             key={signal.id}

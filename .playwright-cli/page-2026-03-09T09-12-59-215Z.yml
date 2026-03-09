@@ -1,0 +1,8 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - heading "Esta página não está funcionando" [level=1] [ref=e7]
+    - paragraph [ref=e8]:
+      - text: Nenhum dado foi enviado por
+      - strong [ref=e9]: 127.0.0.1
+    - generic [ref=e10]: ERR_EMPTY_RESPONSE
+  - button "Recarregar" [ref=e13] [cursor=pointer]

@@ -1,119 +1,121 @@
 # Frontend Conventions
 
-## Objetivo
+## Regra principal
 
-Estas convencoes foram adotadas ao fim da Fase 1 para manter a base previsivel enquanto o redesign visual ainda nao comecou.
+O manifesto e a autoridade conceitual. O winner implementado e a autoridade operacional.
 
-## Onde cada tipo de codigo mora
+Isso significa:
 
-### `src/app/`
+- nao reinterpretar livremente o sistema visual
+- nao criar uma segunda linguagem paralela no produto
+- nao usar o HTML vencedor como prototipo descartavel; ele ja foi traduzido para a base React oficial
 
-Use para:
+## Branding e naming
 
-- orquestracao do fluxo entre telas
-- ordem de telas
-- tipos de navegacao
-- integracoes cross-feature que pertencem ao shell da aplicacao
+- o branding visivel do produto deve ser `KhromaDiet`
+- nomes internos legados como `useDietForgeStore` podem permanecer se nao houver ganho estrutural claro em renomea-los agora
+- novos componentes, docs e copy visivel nao devem reintroduzir `DietForge`
 
-Nao use para:
+## Tema
 
-- componentes especificos de feature
-- calculos de dominio
-- copy local de tela
+- o app opera com `light` e `dark`
+- o estado visual deve sempre respeitar `html[data-theme]`
+- novos componentes nao devem inferir cor por contexto local se isso puder ser resolvido por token global
+- verde e reservado para CTA, foco, estados de energia visual e sinais de prioridade
 
-### `src/features/<feature>/`
+## Cores
 
-Use para tudo que pertence claramente a um fluxo ou dominio de interface:
+Use apenas tokens de `src/styles/foundations/tokens.css`.
 
-- `components/`
-- `config/`
-- `content/`
-- `storage/`
-- `index.ts`
+Regras praticas:
 
-Regra pratica: se a mudanca faz sentido so para uma feature, ela deve nascer dentro da feature.
+- base clara: branco e neutros claros
+- base escura: preto abissal e neutros escuros
+- acento: verde KhromaDiet
+- quando diferenciar dados, prefira hierarquia, opacidade, padrao, borda, rotulo e espessura antes de recorrer a novas cores
 
-### `src/components/`
+Nao criar:
 
-Use apenas para compartilhados reais:
+- azul de produto novo
+- dourado de produto novo
+- violeta de produto novo
+- gradientes ornamentais sem funcao semantica
 
-- `design-system/`
-- `layout/`
-- `ui/primitives/`
+## Tipografia
 
-Nao reintroduzir telas de produto em `src/components/`.
+Familias oficiais:
 
-### `src/lib/`
+- editorial: `Instrument Serif`
+- display: `Space Grotesk`
+- body: `Inter`
+- mono: `JetBrains Mono`
 
-Use para codigo puro:
+Regras:
 
-- engine
-- persistencia de perfis
-- utilitarios puros
-- types de dominio
-- labels compartilhados
+- titulos estruturais usam display
+- momentos editoriais ou de destaque usam editorial com moderacao
+- texto corrido usa body
+- labels tecnicas, contadores e metadados usam mono
 
-`lib/` nao deve depender de React, tela, CSS ou hierarquia de feature.
+## Primitives obrigatorios
 
-### `src/store/`
+Ao construir ou refatorar UI, prefira primeiro:
 
-`useDietForgeStore.ts` continua sendo a API publica do estado global.
+- `Button`
+- `Badge`
+- `Input`
+- `Progress`
+- `Slider`
+- `SectionShell`
+- `SectionHeader`
+- `DataCard`
+- `StatBlock`
+- `ChartContainer`
 
-Helpers puros, tipos internos e estado inicial podem morar em arquivos auxiliares dentro de `src/store/`, mas sem espalhar novas APIs publicas desnecessarias.
+Se um caso nao couber nesses primitives, adapte o primitive ou crie um novo compartilhado. Nao replique visualmente o mesmo bloco em CSS local.
 
-## Politica de imports
+## CSS
 
-- Use `@/` para qualquer import cruzando features ou camadas.
-- Use relativo curto apenas dentro da mesma feature.
-- Evite imports atravessando dois ou tres niveis de pastas quando `@/` deixa o caminho mais claro.
-- Nao criar novos imports apontando para caminhos legados de tela.
+- `src/main.tsx` importa apenas `src/styles/index.css`
+- tokens ficam em `styles/foundations/`
+- regras de composicao ficam em `styles/features/`
+- CSS local pode ajustar layout e estados, mas nao deve criar nova fundacao visual
 
-## Politica de CSS
+Antes de adicionar CSS local, pergunte:
 
-- `src/main.tsx` importa apenas `src/styles/index.css`.
-- `styles/foundations/` contem tokens, Tailwind layer base e reset estrutural.
-- `styles/utilities/` contem apenas padroes realmente compartilhados e usados.
-- `styles/features/` contem regras por fluxo/tela.
-- Nao recriar um CSS monolitico.
-- Quando uma regra pertence claramente a uma feature, ela deve morar no arquivo da feature.
+1. existe token para isso?
+2. existe primitive para isso?
+3. isso e um padrao compartilhado ou apenas um ajuste de layout?
 
-## Conteudo, config e storage locais
+## Fluxo de implementacao
 
-- Copy local de tela fica na propria feature.
-- Config visual ou semantica de uma feature fica na propria feature.
-- Persistencia especifica de uma feature fica na propria feature.
+Para novas refatoracoes visuais:
 
-Exemplos atuais:
+1. conferir manifesto e winner
+2. localizar primitive ou shell existente
+3. aplicar tokens oficiais
+4. ajustar a feature
+5. validar em light e dark
+6. rodar lint, testes e build
+7. atualizar docs se a mudanca alterar convenção ou arquitetura
 
-- `features/hero/content/heroCopy.ts`
-- `features/form/content/formCopy.ts`
-- `features/form/storage/draftStorage.ts`
-- `features/profile/config/profileOptions.ts`
-- `features/summary/content/summaryCopy.ts`
+## Acessibilidade
 
-## Regra de fase
+- manter focus visivel com `--focus-ring`
+- respeitar `prefers-reduced-motion`
+- preservar contraste e legibilidade em light e dark
+- evitar usar verde como unico portador de significado
 
-Enquanto a Fase 2 nao comecar oficialmente:
+## Validacao minima por entrega
 
-- nao redefinir tokens visuais
-- nao trocar linguagem visual
-- nao fazer polish de interface
-- nao iniciar redesign de Hero, Form, Summary ou Dashboard
+- `npm run lint`
+- `npx vitest run`
+- `npm run build`
 
-Mudancas permitidas nesta base:
+Quando a mudanca for visualmente relevante, revisar manualmente:
 
-- clareza arquitetural
-- reducao de acoplamento
-- organizacao por feature
-- limpeza de naming
-- segmentacao estrutural de CSS
-- documentacao e validacao
-
-## Checklist minimo para mudancas estruturais
-
-- manter comportamento do fluxo intacto
-- manter testes verdes
-- rodar `npm run lint`
-- rodar `npx vitest run`
-- rodar `npm run build`
-- atualizar docs se a arquitetura mudar
+- hero
+- um step denso do formulario
+- profile create
+- summary
+- dashboard em pelo menos uma secao intermediaria e no final

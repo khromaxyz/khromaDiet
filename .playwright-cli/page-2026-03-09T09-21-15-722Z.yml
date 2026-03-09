@@ -1,0 +1,46 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: KhromaDiet
+    - button "Ativar modo escuro" [ref=e6] [cursor=pointer]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - img [ref=e15]
+  - navigation "Progresso do formulario" [ref=e90]:
+    - generic "Pergunta 1 de 14" [ref=e91] [cursor=pointer]
+    - generic "Pergunta 2 de 14" [ref=e92] [cursor=pointer]
+    - generic "Pergunta 3 de 14" [ref=e93] [cursor=pointer]
+    - generic "Pergunta 4 de 14" [ref=e94] [cursor=pointer]
+    - generic "Pergunta 5 de 14" [ref=e95] [cursor=pointer]
+    - generic "Pergunta 6 de 14" [ref=e96] [cursor=pointer]
+    - generic "Pergunta 7 de 14" [ref=e97] [cursor=pointer]
+    - generic "Pergunta 8 de 14" [ref=e98] [cursor=pointer]
+    - generic "Pergunta 9 de 14" [ref=e99] [cursor=pointer]
+    - generic "Pergunta 10 de 14" [ref=e100] [cursor=pointer]
+    - generic "Pergunta 11 de 14" [ref=e101] [cursor=pointer]
+    - generic "Pergunta 12 de 14" [ref=e102] [cursor=pointer]
+    - generic "Pergunta 13 de 14" [ref=e103] [cursor=pointer]
+    - generic "Pergunta 14 de 14" [ref=e104] [cursor=pointer]
+  - generic [ref=e106]:
+    - generic [ref=e108]:
+      - generic [ref=e109]:
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - img [ref=e112]
+            - generic [ref=e114]: KHROMADIET
+          - generic "Pergunta 01 de 14" [ref=e115]:
+            - generic [ref=e116]: Pergunta
+            - generic [ref=e117]: "01"
+            - generic [ref=e118]: /
+            - generic [ref=e119]: "14"
+        - generic [ref=e120]:
+          - generic [ref=e121]:
+            - text: Precisão
+            - strong [ref=e122]: 53%
+          - button "Histórico" [ref=e123] [cursor=pointer]:
+            - img [ref=e124]
+          - button "Abrir painel de perfis" [ref=e127] [cursor=pointer]:
+            - img [ref=e129]
+      - progressbar [ref=e133]
+    - status [ref=e137]:
+      - paragraph [ref=e139]: Responda com honestidade. Cada detalhe melhora sua precisão.
+  - region "Notifications alt+T"

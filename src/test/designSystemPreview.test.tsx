@@ -27,8 +27,8 @@ describe('design system preview', () => {
     render(<DesignSystemPreview />);
 
     expect(screen.getByTestId('design-system-preview')).toBeInTheDocument();
-    expect(screen.getByText('Obsidian + Emerald')).toBeInTheDocument();
-    expect(screen.getByText('Header variants')).toBeInTheDocument();
+    expect(screen.getByText('KhromaDiet visual foundation')).toBeInTheDocument();
+    expect(screen.getByText('Header hierarchy')).toBeInTheDocument();
     expect(screen.getByTestId('nivo-line')).toBeInTheDocument();
   });
 

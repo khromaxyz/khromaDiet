@@ -2,33 +2,34 @@
 
 ## Contexto
 
-KhromaDiet e um frontend React 18 + TypeScript + Vite para calculo nutricional orientado por fluxo. A jornada principal validada hoje e:
+KhromaDiet e um frontend React 18 + TypeScript + Vite para calculo nutricional orientado por fluxo.
+
+O estado atual da base ja incorpora a Fase 2 do redesign:
+
+- o manifesto em `.agent/skills/promptforge/references/project/manifest.md` continua sendo a autoridade principal
+- o arquivo `_docs/design-references/beta/Winner_opusN_8.7_none.html` passou a ser a referencia visual operacional
+- a implementacao React agora trata esse winner como materializacao oficial do manifesto
+
+O fluxo principal preservado continua:
 
 `Hero -> Formulario em 14 steps -> Criacao de perfil -> Summary -> Dashboard`
 
-Esta documentacao descreve a base apos o fechamento da Fase 0 e da Fase 1. A consolidacao foi estrutural: organizacao por feature, separacao de responsabilidades, limpeza de imports e segmentacao de CSS. O redesign visual do manifesto ainda nao comecou.
-
-## Estrutura consolidada
+## Estrutura atual
 
 ```text
 .
-|- .agent/
-|  \- skills/promptforge/
 |- _docs/
 |  |- architecture.md
-|  |- branding.md
+|  |- design-system-foundation.md
+|  |- design-tokens.md
 |  |- frontend-conventions.md
 |  \- to-do.md
-|- public/
-|  \- favicon.svg
 |- src/
 |  |- app/
-|  |  |- AppFlow.tsx
-|  |  |- screens.ts
-|  |  \- types.ts
 |  |- components/
 |  |  |- design-system/
 |  |  |- layout/
+|  |  |- providers/
 |  |  \- ui/primitives/
 |  |- features/
 |  |  |- dashboard/
@@ -43,179 +44,136 @@ Esta documentacao descreve a base apos o fechamento da Fase 0 e da Fase 1. A con
 |  |  |- profiles/
 |  |  |- types/
 |  |  |- shareState.ts
+|  |  |- theme.ts
 |  |  \- utils.ts
 |  |- store/
-|  |  |- formState.ts
-|  |  |- types.ts
-|  |  \- useDietForgeStore.ts
 |  |- styles/
 |  |  |- foundations/
 |  |  |- features/
 |  |  |- utilities/
 |  |  \- index.css
 |  \- test/
-|- README.md
-|- package.json
+|- index.html
 |- tailwind.config.ts
-|- vite.config.ts
-\- vitest.config.ts
+\- package.json
 ```
 
-## Limites entre camadas
+## Camadas e responsabilidades
 
 ### `src/app/`
 
-Camada de orquestracao do produto.
+Camada de orquestracao.
 
-- `AppFlow.tsx` compoe as telas, controla navegacao de alto nivel, integra draft resume, perfis e preview do design system por query param.
-- `screens.ts` registra ordem e metadados das telas.
-- `types.ts` define `ScreenId` e contratos de navegacao.
-
-`app/` pode importar features, store e componentes compartilhados. Features nao devem depender de `AppFlow.tsx`.
-
-### `src/features/`
-
-Camada principal de dominio de interface. Cada feature pode concentrar:
-
-- `components/`
-- `config/`
-- `content/`
-- `storage/`
-- `index.ts` estreito para exportar entradas publicas
-
-Estado atual:
-
-- `features/hero/`: hero screen e copy local.
-- `features/form/`: wizard, fields, steps, config, example data, copy e draft storage.
-- `features/profile/`: criacao de perfil, drawer, trigger, avatar grid e config visual do perfil.
-- `features/summary/`: summary screen, metricas e copy local.
-- `features/dashboard/`: dashboard shell, footer, receipt card, chart e presentation slides.
+- `AppFlow.tsx` compoe telas, navega fluxo, integra draft, perfis, preview do design system e agora conecta o tema visual global.
+- `screens.ts` e `types.ts` continuam definindo a ordem e os contratos de navegacao.
 
 ### `src/components/`
 
-Reservado apenas para compartilhados reais.
+Camada de compartilhados reais.
 
-- `design-system/`: shells, cards, charts container, preview e blocos reutilizaveis.
-- `layout/`: wrappers e navegacao compartilhada.
-- `ui/primitives/`: primitives basicos.
+- `components/design-system/`: fundacao visual oficial do produto.
+- `components/layout/`: wrappers e controles de layout compartilhados, incluindo o toggle de tema.
+- `components/providers/ThemeProvider.tsx`: provider React dedicado ao tema.
+- `components/ui/primitives/`: primitives de interface usados por features e pelo design system.
 
-Nao ha mais telas de produto em `src/components/`.
+### `src/features/`
+
+Camada de produto por dominio de interface.
+
+- `hero/`: hero real do produto, ja traduzida para a nova linguagem base.
+- `form/`: wizard, header, steps, shell, draft storage e copy.
+- `profile/`: criacao de perfil, drawer, settings e avatares.
+- `summary/`: ponte entre calculo e dashboard.
+- `dashboard/`: shell, topbar, apresentacao em 9 secoes, receipt e footer.
 
 ### `src/lib/`
 
-Reservado para logica pura e contratos transversais.
+Codigo puro e contratos transversais.
 
-- `engine/`: pipeline nutricional e calculos.
-- `profiles/`: persistencia e resumo de perfis salvos.
-- `types/`: contratos centrais de dominio.
-- `constants/`: labels compartilhados que nao pertencem a uma feature visual.
-- `shareState.ts`: serializacao/hidratacao de estado compartilhado.
-- `utils.ts`: utilitarios puros compartilhados.
-
-O rascunho do formulario saiu de `lib/profiles` e passou a morar em `features/form/storage/draftStorage.ts`.
+- `engine/`: calculos nutricionais.
+- `profiles/`: persistencia e resumo de perfis.
+- `shareState.ts`: serializacao e hidratacao de compartilhamento.
+- `theme.ts`: contrato puro de tema, contexto, storage key, resolucao inicial e hook de consumo.
 
 ### `src/store/`
 
-Mantem um unico store Zustand nesta fase.
+Um unico store Zustand continua sendo a API publica do estado de produto.
 
-- `useDietForgeStore.ts`: API publica da aplicacao.
-- `formState.ts`: helpers puros e estado inicial do formulario.
-- `types.ts`: contratos internos do store.
+- `useDietForgeStore.ts` permanece como fachada do estado global.
+- nomes internos legados ligados a `DietForge` foram preservados quando nao causam ambiguidade arquitetural.
 
-Nesta consolidacao o store nao foi quebrado em multiplos stores; apenas foram extraidas responsabilidades auxiliares.
+## Sistema visual implementado
 
-### `src/styles/`
+### Fonte de verdade
 
-Agora existe uma entrada unica:
+- manifesto: direcao conceitual e criterios obrigatorios
+- winner HTML: referencia visual concreta
+- React real: implementacao oficial sustentavel
 
-- `styles/index.css`
+### Fundacao
 
-Essa entrada importa:
+- `index.html` inicializa o tema antes do boot do React e carrega as familias tipograficas oficiais
+- `src/styles/foundations/tokens.css` concentra tokens finais de cor, tipografia, espacamento, raio, sombra, motion e aliases de compatibilidade
+- `src/styles/foundations/base.css` aplica reset, ambiente, focus, selection, scrollbars e infraestrutura global
+- `src/styles/foundations/index.css` conecta tokens ao layer base e aos aliases consumidos por Tailwind e primitives
 
-- `styles/foundations/tokens.css`
-- `styles/foundations/index.css`
-- `styles/foundations/base.css`
-- `styles/utilities/shared.css`
-- `styles/features/hero.css`
-- `styles/features/form.css`
-- `styles/features/profile.css`
-- `styles/features/summary.css`
-- `styles/features/dashboard-shell.css`
-- `styles/features/dashboard-presentation.css`
-- `styles/features/dashboard-final.css`
+### Tema
 
-`screens.css` foi removido. O objetivo foi reduzir o CSS monolitico sem redesenhar a interface.
+- temas suportados: `light | dark`
+- persistencia: `localStorage['khromadiet-theme']`
+- resolucao inicial: `preferencia salva -> sistema -> light`
+- controle visivel: toggle compartilhado no shell da aplicacao e no topbar do dashboard
 
-## Decisoes estruturais desta fase
+### Componentizacao
 
-### Orquestracao de fluxo
+O design system oficial se apoia principalmente em:
 
-- `src/App.tsx` virou um wrapper fino.
-- `src/app/AppFlow.tsx` passou a ser o ponto central do fluxo.
-- `ScreenId` saiu de `lib/types/app.ts` e foi movido para `src/app/types.ts`.
+- `SectionShell`
+- `SectionHeader`
+- `DataCard`
+- `StatBlock`
+- `ChartContainer`
+- `Button`
+- `Badge`
+- `Input`
+- `Slider`
+- `Progress`
 
-### Reorganizacao por feature
+Esses componentes agora carregam a linguagem do winner: superfícies limpas, bordas fortes, sombra medida, tipografia consistente e uso restrito do verde como acento.
 
-- Hero, form, profile, summary e dashboard agora vivem em `src/features/`.
-- `HeightDualInput` e `NumberField` foram reclassificados como fields do formulario.
-- `ProjectionTrendChart` foi movido para a feature de dashboard.
-- `DesignSystemPreview` foi movido para `components/design-system/`.
+## Politica atual de CSS
 
-### Conteudo e storage locais
+- `src/styles/index.css` continua sendo a unica entrada global
+- `foundations/` define sistema e tokens
+- `features/*.css` aplica composicao e ajustes locais sem recriar paletas ou tokens paralelos
+- `utilities/shared.css` permanece apenas para casos realmente compartilhados
 
-- `heroCopy`, `formCopy` e `summaryCopy` sairam de `lib/constants/copy.ts`.
-- `DraftPayload`, `loadDraft`, `saveDraft`, `clearDraft` e `DRAFT_STORAGE_KEY` passaram para `features/form/storage/draftStorage.ts`.
-- `AVATAR_STYLES` e `GOAL_TONE_BY_OBJECTIVE` passaram para config do feature `profile`.
+Nao reintroduzir:
 
-### Higiene de base
-
-- `README.md` deixou de ser template Vite.
-- `public/` foi reduzido ao asset atual `favicon.svg`.
-- A base ficou com lint limpo.
+- glassmorphism solto
+- glow neon como linguagem principal
+- overrides locais de azul, violeta ou dourado como sistema paralelo
 
 ## Fluxo de dados
 
-1. `AppFlow.tsx` coordena a tela ativa e conecta os eventos de navegacao.
-2. `useDietForgeStore.ts` centraliza os dados do wizard, resultados e simulacoes.
-3. `lib/engine/*` recebe dados puros do formulario e produz `CalculationResults`.
-4. `features/profile` persiste snapshots do estado via `lib/profiles/storage.ts`.
-5. `features/form/storage/draftStorage.ts` guarda e recupera o draft do wizard.
-6. `features/dashboard` consome resultados consolidados e renderiza as 9 secoes.
+1. `App.tsx` monta `ThemeProvider`.
+2. `AppFlow.tsx` coordena tela ativa, drafts, perfis, preview e navegação.
+3. `useDietForgeStore.ts` concentra formulario, resultados, simulacoes e transicoes de fluxo.
+4. `lib/engine/*` produz `CalculationResults` a partir de dados puros.
+5. `features/profile` persiste snapshots do estado.
+6. `features/dashboard` consome resultados e renderiza as 9 secoes dentro do sistema visual oficial.
 
-## Politica de imports
+## Documentos de manutencao
 
-- `@/` e obrigatorio para imports cruzando features ou camadas.
-- Import relativo curto e aceitavel apenas dentro da mesma feature.
-- Nao criar novos imports apontando para caminhos legados de tela.
-- `lib/` nao deve importar UI.
-- `components/` nao deve concentrar codigo de fluxo de produto.
+- `_docs/design-system-foundation.md`: principios operacionais do sistema visual
+- `_docs/design-tokens.md`: tokens finais e convenções de uso
+- `_docs/frontend-conventions.md`: regras praticas para evoluir a base
+- `_docs/to-do.md`: backlog vivo apos a Fase 2
 
-## Politica de CSS
-
-- `styles/index.css` e a unica entrada importada por `src/main.tsx`.
-- `foundations/` guarda tokens, Tailwind layer base e reset estrutural.
-- `utilities/shared.css` guarda apenas padroes realmente reutilizados.
-- `features/*.css` guarda regras por fluxo/tela sem redefinir o manifesto visual.
-- Nesta fase nao houve troca de tokens visuais nem redesign.
-
-## Validacao executada nesta consolidacao
+## Validacao executada nesta fase
 
 - `npm run lint`
 - `npx vitest run`
 - `npm run build`
 
-Cenarios cobertos e preservados:
-
-- fluxo completo `hero -> form -> profile_create -> summary -> dashboard`
-- navegacao para tras no wizard
-- exemplo do dashboard
-- salvar, carregar, renomear, compartilhar e excluir perfil
-- retomar e descartar draft
-- preview do design system via query param
-
-## Limites para a proxima fase
-
-- O manifesto em `.agent/skills/promptforge/references/project/manifest.md` continua sendo a referencia oficial para o redesign.
-- A Fase 2 pode redefinir tokens e primitivos.
-- A Fase 3 em diante pode iniciar o workflow `PromptForge -> HTML de referencia -> conversao para React`.
-- O warning de chunk grande do build permanece documentado para a Fase 7.
+O fluxo funcional, os calculos, a navegacao e a persistencia foram mantidos.

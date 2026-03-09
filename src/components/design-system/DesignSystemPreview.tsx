@@ -110,13 +110,13 @@ export const DesignSystemPreview = () => {
       <SectionShell level="abyss">
         <SectionHeader
           eyebrow="00 — React Preview"
-          title="Obsidian + Emerald"
-          subtitle="A React reconstitution of the showcase language: obsidian depth, mono numerals, controlled emerald signals, and cards with real materiality."
+          title="KhromaDiet visual foundation"
+          subtitle="Canonical React preview of the approved winner: clean neo-brutal shells, editorial hierarchy, sparse layout, and green used only as signal."
           action={
             <div className="flex flex-wrap items-center gap-3">
-              <Badge>Live parity</Badge>
+              <Badge>Official system</Badge>
               <Button variant="outline">
-                Inspect system
+                Inspect foundation
                 <ArrowUpRight className="h-4 w-4" />
               </Button>
             </div>
@@ -129,7 +129,7 @@ export const DesignSystemPreview = () => {
               Atmosphere
             </div>
             <div className="mt-4 text-[28px] font-semibold leading-[1.1] tracking-[-1px] text-[var(--text-primary)]">
-              Emerald is a signal, not a blanket color.
+              White, abyss black, and green form the entire visual voltage.
             </div>
           </DataCard>
 
@@ -138,16 +138,16 @@ export const DesignSystemPreview = () => {
               Rhythm
             </div>
             <div className="mt-4 text-[28px] font-semibold leading-[1.1] tracking-[-1px] text-[var(--text-primary)]">
-              Sections breathe. Cards hold weight. Numbers dominate.
+              Density stays controlled. Surfaces feel engineered, not decorative.
             </div>
           </DataCard>
 
-          <DataCard glow="gold">
+          <DataCard glow="emerald">
             <div className="font-mono text-[11px] uppercase tracking-[2px] text-[var(--text-muted)]">
               Scope
             </div>
             <div className="mt-4 text-[28px] font-semibold leading-[1.1] tracking-[-1px] text-[var(--text-primary)]">
-              Components now inherit the same language as the source HTML.
+              This preview is the maintenance reference for the implemented winner.
             </div>
           </DataCard>
         </div>
@@ -156,8 +156,8 @@ export const DesignSystemPreview = () => {
       <SectionShell level="deep" showDivider>
         <SectionHeader
           eyebrow="03 — Section Headers"
-          title="Header variants"
-          subtitle="The React components now mirror the hierarchy shown in the showcase: structural default, bold pill, editorial line, and numbered composition."
+          title="Header hierarchy"
+          subtitle="Structural, pill, editorial, and numbered compositions now follow the approved winner instead of the previous obsidian-neon language."
         />
 
         <div className="grid gap-6 xl:grid-cols-2">
@@ -236,7 +236,7 @@ export const DesignSystemPreview = () => {
         <SectionHeader
           eyebrow="04 — Data Cards"
           title="Material card system"
-          subtitle="The cards now use the showcase stack directly: layered gradients, inner top sheen, structured hover, and color-specific glow variants."
+          subtitle="Cards now use the winner stack directly: clean surfaces, strong borders, measured shadows, and accent only where it changes hierarchy."
         />
 
         <div className={subsectionLabelClassName}>Standard, hoverable, and glow variants</div>
@@ -310,8 +310,8 @@ export const DesignSystemPreview = () => {
       <SectionShell level="elevated" showDivider>
         <SectionHeader
           eyebrow="05 — Macro Composition"
-          title="A data card can hold multiple surfaced signals"
-          subtitle="The macro summary uses one parent card with three internal stat blocks, mirroring the assembled dashboard feel from the showcase."
+          title="A single shell can hold multiple signals"
+          subtitle="The macro summary uses one parent card with internal stat blocks, mirroring the assembled product language that now ships in the app."
         />
 
         <DataCard glow="emerald" hoverable>
@@ -444,7 +444,7 @@ export const DesignSystemPreview = () => {
         <SectionHeader
           eyebrow="06 — Charts & Graphs"
           title="Atmospheric visualization"
-          subtitle="The chart container now uses the same material system as the cards, while the Nivo theme inherits the updated obsidian, mono, and emerald tokens."
+          subtitle="The chart container now uses the same material system as the cards, while the Nivo theme inherits the final KhromaDiet tokens."
         />
 
         <ChartContainer

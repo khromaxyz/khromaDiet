@@ -4,29 +4,29 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
-    --background: var(--bg-abyss);
+    --background: var(--bg-primary);
     --foreground: var(--text-primary);
-    --card: var(--bg-card);
+    --card: var(--surface-1);
     --card-foreground: var(--text-primary);
     --popover: var(--bg-overlay);
     --popover-foreground: var(--text-primary);
-    --primary: var(--emerald-500);
-    --primary-foreground: #ffffff;
-    --secondary: var(--gold-500);
-    --secondary-foreground: #1a1a1a;
-    --muted: var(--bg-elevated);
+    --primary: var(--bg-accent);
+    --primary-foreground: var(--text-on-accent);
+    --secondary: var(--surface-2);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--surface-2);
     --muted-foreground: var(--text-secondary);
+    --accent: var(--surface-3);
     --accent-foreground: var(--text-primary);
-    --destructive: var(--red-500);
-    --destructive-foreground: #ffffff;
-    --input: var(--border-default);
-    --ring: var(--emerald-500);
+    --destructive: var(--error-color);
+    --destructive-foreground: var(--text-inverse);
+    --input: var(--border-primary);
+    --ring: var(--bg-accent);
     --radius: var(--radius-md);
-    --chart-1: var(--emerald-500);
-    --chart-2: var(--gold-500);
-    --chart-3: var(--blue-500);
+    --chart-1: var(--protein-color);
+    --chart-2: var(--carb-color);
+    --chart-3: var(--fat-color);
     --chart-4: var(--text-secondary);
-    --chart-5: var(--text-muted);
+    --chart-5: var(--text-tertiary);
   }
 }

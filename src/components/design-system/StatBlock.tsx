@@ -21,15 +21,15 @@ const COLOR_STYLE_MAP: Record<StatColor, CSSProperties> = {
     color: 'var(--text-primary)',
   },
   emerald: {
-    color: 'var(--emerald-400)',
+    color: 'var(--text-accent)',
     textShadow: 'var(--text-glow-emerald-stat)',
   },
   gold: {
-    color: 'var(--gold-400)',
+    color: 'var(--fat-color)',
     textShadow: 'var(--text-glow-gold-stat)',
   },
   blue: {
-    color: 'var(--blue-400)',
+    color: 'var(--carb-color)',
     textShadow: 'var(--text-glow-blue-stat)',
   },
 };
@@ -68,8 +68,8 @@ export const StatBlock = ({
   return (
     <div
       className={cn(
-        'relative flex h-full flex-col rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[linear-gradient(165deg,var(--bg-surface)_0%,var(--bg-elevated)_100%)] px-[var(--space-6)] py-[var(--space-5)] shadow-[var(--shadow-card)] transition-[transform,box-shadow,border-color] hover:-translate-y-[3px] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-inner-highlight),var(--shadow-lg)]',
-        'before:pointer-events-none before:absolute before:left-3 before:right-3 before:top-0 before:h-px before:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)]',
+        'relative flex h-full flex-col rounded-[var(--radius-lg)] border border-[var(--border-primary)] bg-[var(--surface-1)] px-[var(--space-6)] py-[var(--space-5)] shadow-[var(--shadow-card)] transition-[transform,box-shadow,border-color] hover:-translate-x-px hover:-translate-y-px hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-card-hover)]',
+        'before:pointer-events-none before:absolute before:left-3 before:right-3 before:top-0 before:h-px before:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent)]',
         centered ? 'items-center text-center' : 'items-start text-left',
         className,
       )}
@@ -90,7 +90,7 @@ export const StatBlock = ({
         >
           <div className="flex items-end gap-1">
             <span
-              className={cn('font-mono font-bold tabular-nums leading-none', SIZE_CLASS_MAP[size])}
+              className={cn('font-display font-bold tabular-nums leading-none', SIZE_CLASS_MAP[size])}
               style={COLOR_STYLE_MAP[color]}
             >
               {value}
@@ -118,9 +118,7 @@ export const StatBlock = ({
           ) : null}
         </div>
 
-        <div className="font-mono text-[10px] font-semibold uppercase tracking-[2.5px] text-[var(--text-muted)]">
-          {label}
-        </div>
+        <div className="font-mono text-[10px] font-semibold uppercase tracking-[2.5px] text-[var(--text-muted)]">{label}</div>
 
         {sublabel ? <div className="text-xs text-[var(--text-ghost)]">{sublabel}</div> : null}
       </div>

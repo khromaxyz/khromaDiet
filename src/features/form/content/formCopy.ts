@@ -1,3 +1,3 @@
 export const formCopy = {
-  logo: 'DIETFORGE',
+  logo: 'KHROMADIET',
 };

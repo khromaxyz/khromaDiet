@@ -28,11 +28,11 @@ export const heroCopy = {
   subtitle:
     'Calculo real de TDEE com cardio deduplicado, modificadores e projecao semanal. Em poucos minutos, voce sai com um protocolo funcional.',
   panel: {
-    chip: 'DF',
-    brand: 'DietForge',
-    brandSub: 'Engine de protocolo nutricional',
+    chip: 'KD',
+    brand: 'KhromaDiet',
+    brandSub: 'Software nutricional com precisao operacional',
     liveBadge: 'Live',
-    contextTag: 'Preview do motor',
+    contextTag: 'Winner system',
     signals: [
       {
         id: 'tdee',
@@ -44,7 +44,7 @@ export const heroCopy = {
         id: 'dedupe',
         label: 'Cardio deduplicado',
         value: 'Passos e cardio sem dupla contagem',
-        tone: 'blue',
+        tone: 'neutral',
       },
       {
         id: 'projection',

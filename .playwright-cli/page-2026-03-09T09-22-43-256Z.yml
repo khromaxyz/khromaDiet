@@ -1,0 +1,73 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: KhromaDiet
+    - button "Ativar modo escuro" [ref=e6] [cursor=pointer]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - img [ref=e15]
+  - navigation "Navegacao de telas" [ref=e17]:
+    - button "Inicio" [ref=e18] [cursor=pointer]
+    - button "Formulario" [ref=e19] [cursor=pointer]
+    - button "Perfil" [ref=e20] [cursor=pointer]
+    - button "Resumo" [active] [ref=e21] [cursor=pointer]
+    - button "Dashboard" [ref=e22] [cursor=pointer]
+  - generic [ref=e93]:
+    - generic [ref=e95]:
+      - generic [ref=e98]: Analise concluida - Engine KhromaDiet
+      - heading "Seu plano funcional foi calculado." [level=2] [ref=e99]
+      - paragraph [ref=e100]: Esses numeros ja refletem o motor real e as suas respostas.
+    - generic [ref=e101]:
+      - generic [ref=e105]:
+        - generic [ref=e107]:
+          - generic [ref=e108]: "3.298"
+          - generic [ref=e109]: kcal/dia
+        - generic [ref=e110]: TDEE Final
+      - generic [ref=e114]:
+        - generic [ref=e116]:
+          - generic [ref=e117]: "9.655"
+          - generic [ref=e118]: kcal/dia
+        - generic [ref=e119]: Meta Calorica
+      - generic [ref=e123]:
+        - generic [ref=e125]:
+          - generic [ref=e126]: "-674"
+          - generic [ref=e127]: kcal/dia
+        - generic [ref=e128]: Deficit Diario
+      - generic [ref=e132]:
+        - generic [ref=e134]:
+          - generic [ref=e135]: "7.436"
+          - generic [ref=e136]: kcal
+        - generic [ref=e137]: BMR
+      - generic [ref=e141]:
+        - generic [ref=e144]: N/A
+        - generic [ref=e145]: LBM
+      - generic [ref=e149]:
+        - generic [ref=e151]:
+          - generic [ref=e152]: "758"
+          - generic [ref=e153]: kcal
+        - generic [ref=e154]: TEF
+      - generic [ref=e156]:
+        - generic [ref=e157]: Macros
+        - generic [ref=e158]:
+          - generic [ref=e160]:
+            - generic [ref=e162]:
+              - generic [ref=e163]: "656"
+              - generic [ref=e164]: g
+            - generic [ref=e165]: Proteina
+          - generic [ref=e167]:
+            - generic [ref=e169]:
+              - generic [ref=e170]: "221"
+              - generic [ref=e171]: g
+            - generic [ref=e172]: Carboidrato
+          - generic [ref=e174]:
+            - generic [ref=e176]:
+              - generic [ref=e177]: "06"
+              - generic [ref=e178]: g
+            - generic [ref=e179]: Gordura
+    - generic [ref=e180]:
+      - button "Ver análise completa" [ref=e181] [cursor=pointer]:
+        - text: Ver análise completa
+        - img
+      - button "Rever dados" [ref=e182] [cursor=pointer]:
+        - img
+        - text: Rever dados
+  - region "Notifications alt+T"

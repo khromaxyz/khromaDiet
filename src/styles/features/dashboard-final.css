@@ -171,3 +171,82 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== Winner System: final dashboard receipt + footer ===== */
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-section::before {
+  background:
+    radial-gradient(58% 58% at 50% 0%, var(--ambient-haze-soft) 0%, transparent 72%),
+    radial-gradient(42% 42% at 88% 18%, var(--ambient-haze-soft) 0%, transparent 76%);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt,
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-cta-card,
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer {
+  border-width: 2px;
+  border-color: var(--border-primary);
+  background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+  box-shadow: var(--shadow-brutal), var(--shadow-md);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt::after {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 16%),
+    repeating-linear-gradient(
+      180deg,
+      rgba(10, 10, 10, 0.04) 0,
+      rgba(10, 10, 10, 0.04) 1px,
+      transparent 1px,
+      transparent 32px
+    );
+  opacity: 0.32;
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt__metric {
+  min-height: 132px;
+  border-width: 2px;
+  background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-3) 100%);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-sm);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt__footer {
+  border-width: 2px;
+  border-color: var(--border-primary);
+  background: var(--surface-1);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-brutal-sm), var(--shadow-xs);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-cta-card--primary {
+  background:
+    radial-gradient(circle at top right, var(--ambient-haze-strong) 0%, transparent 28%),
+    linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-primary-button {
+  border: 2px solid var(--border-accent);
+  background: var(--bg-accent);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-brutal-green), var(--shadow-md);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-soon-badge {
+  border-color: var(--border-primary);
+}
+
+#screen-dashboard[data-dashboard-presentation] .dashboard-final-footer__brand {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tight);
+  text-transform: none;
+}
+
+html[data-theme='dark'] #screen-dashboard[data-dashboard-presentation] .dashboard-final-receipt::after {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 16%),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 32px
+    );
+}

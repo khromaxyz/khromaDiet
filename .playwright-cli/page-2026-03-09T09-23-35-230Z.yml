@@ -1,0 +1,89 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: KhromaDiet
+    - button "Ativar modo escuro" [ref=e6] [cursor=pointer]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - img [ref=e15]
+  - navigation "Navegacao de telas" [ref=e17]:
+    - button "Inicio" [ref=e18] [cursor=pointer]
+    - button "Formulario" [ref=e19] [cursor=pointer]
+    - button "Perfil" [active] [ref=e20] [cursor=pointer]
+    - button "Resumo" [ref=e21] [cursor=pointer]
+    - button "Dashboard" [ref=e22] [cursor=pointer]
+  - generic [ref=e93]:
+    - generic [ref=e95]:
+      - generic [ref=e98]: Quase lá
+      - heading "Seu plano está pronto." [level=2] [ref=e99]
+      - paragraph [ref=e100]: Dê um nome ao perfil, escolha um avatar e continue para o resumo completo.
+    - generic [ref=e101]:
+      - generic [ref=e103]:
+        - generic [ref=e104]: Personalize seu perfil
+        - group "Escolha o avatar do perfil" [ref=e106]:
+          - button "Avatar Guerreiro" [pressed] [ref=e107] [cursor=pointer]:
+            - img "Guerreiro" [ref=e108]
+          - button "Avatar Atleta" [ref=e117] [cursor=pointer]:
+            - img "Atleta" [ref=e118]
+          - button "Avatar Cientista" [ref=e127] [cursor=pointer]:
+            - img "Cientista" [ref=e128]
+          - button "Avatar Explorador" [ref=e139] [cursor=pointer]:
+            - img "Explorador" [ref=e140]
+          - button "Avatar Ninja" [ref=e150] [cursor=pointer]:
+            - img "Ninja" [ref=e151]
+          - button "Avatar Astronauta" [ref=e160] [cursor=pointer]:
+            - img "Astronauta" [ref=e161]
+          - button "Avatar Arquiteto" [ref=e171] [cursor=pointer]:
+            - img "Arquiteto" [ref=e172]
+          - button "Avatar Musico" [ref=e182] [cursor=pointer]:
+            - img "Musico" [ref=e183]
+          - button "Avatar Montanhista" [ref=e194] [cursor=pointer]:
+            - img "Montanhista" [ref=e195]
+          - button "Avatar Nadador" [ref=e205] [cursor=pointer]:
+            - img "Nadador" [ref=e206]
+          - button "Avatar Ciclista" [ref=e216] [cursor=pointer]:
+            - img "Ciclista" [ref=e217]
+          - button "Avatar Lutador" [ref=e228] [cursor=pointer]:
+            - img "Lutador" [ref=e229]
+        - generic [ref=e238]:
+          - generic [ref=e239]:
+            - generic [ref=e240]: Nome do perfil
+            - generic [ref=e241]: 18/24
+          - textbox "Nome do perfil" [ref=e242]:
+            - /placeholder: Como quer ser chamado?
+            - text: Mini Cut · Plano 1
+        - generic [ref=e243]:
+          - button "Voltar ao formulário" [ref=e244] [cursor=pointer]:
+            - img
+            - text: Voltar ao formulário
+          - button "Salvar e ver meu plano" [ref=e245] [cursor=pointer]:
+            - img
+            - text: Salvar e ver meu plano
+            - img
+      - generic [ref=e247]:
+        - generic [ref=e248]:
+          - img "Guerreiro" [ref=e249]
+          - generic [ref=e258]:
+            - generic [ref=e259]: Mini Cut · Plano 1
+            - generic [ref=e260]: Mini Cut · 80kg · 177cm
+        - generic [ref=e261]:
+          - generic [ref=e263]:
+            - generic [ref=e265]:
+              - generic [ref=e266]: "2.803"
+              - generic [ref=e267]: kcal
+            - generic [ref=e268]: Meta
+          - generic [ref=e270]:
+            - generic [ref=e272]:
+              - generic [ref=e273]: "53"
+              - generic [ref=e274]: "%"
+            - generic [ref=e275]: Precisão
+          - generic [ref=e277]:
+            - generic [ref=e279]:
+              - generic [ref=e280]: N/A
+              - generic [ref=e281]: sem
+            - generic [ref=e282]: Horizonte
+        - generic [ref=e283]:
+          - generic [ref=e284]: P184
+          - generic [ref=e285]: C362
+          - generic [ref=e286]: G69
+          - generic [ref=e287]: MIFFLIN
+  - region "Notifications alt+T"
