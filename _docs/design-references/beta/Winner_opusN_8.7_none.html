@@ -564,14 +564,43 @@
     opacity: 0.75;
   }
 
+  .kd-ambient-haze {
+    transform: translate3d(0, 0, 0);
+  }
+
   .kd-ambient-haze--hero {
-    inset: auto -18% -22% auto;
-    width: min(60vw, 760px);
-    height: min(60vw, 760px);
+    inset: -18% -16% -24% 18%;
     background:
-      radial-gradient(circle at 50% 50%, var(--ambient-haze-strong) 0%, transparent 36%),
-      radial-gradient(circle at 30% 30%, var(--ambient-haze-soft) 0%, transparent 65%);
-    opacity: 0.9;
+      radial-gradient(ellipse 58% 56% at 78% 68%, rgba(16, 185, 129, 0.16) 0%, rgba(16, 185, 129, 0.1) 16%, rgba(16, 185, 129, 0.045) 34%, transparent 68%),
+      radial-gradient(ellipse 36% 42% at 92% 28%, rgba(16, 185, 129, 0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 28% 30% at 64% 30%, rgba(16, 185, 129, 0.055) 0%, transparent 62%);
+    opacity: 0.72;
+    filter: blur(30px);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.15) 18%, rgba(0, 0, 0, 0.82) 42%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.15) 18%, rgba(0, 0, 0, 0.82) 42%, #000 100%);
+  }
+
+  .kd-inline-mark {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: 1px solid var(--border-primary);
+    background: var(--surface-2);
+    color: var(--text-accent);
+  }
+
+  .kd-inline-mark svg {
+    width: 10px;
+    height: 10px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .kd-gradient-accent-text {
@@ -646,6 +675,9 @@
   }
 
   .kd-hero-note__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     font-weight: 700;
@@ -713,24 +745,27 @@
     border-top: var(--border-medium) solid var(--border-strong);
     border-bottom: var(--border-medium) solid var(--border-strong);
     background: var(--bg-primary);
-    padding: 10px 0;
+    min-height: 72px;
   }
 
   .kd-ticker__track {
     display: flex;
-    gap: var(--space-6);
+    align-items: center;
+    gap: var(--space-8);
     width: max-content;
-    padding-left: var(--space-6);
+    min-height: 72px;
+    padding-left: var(--space-10);
     animation: kdTickerLoop 28s linear infinite;
   }
 
   .kd-ticker__item {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-4);
+    min-height: 72px;
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: 600;
+    font-size: var(--text-md);
+    font-weight: 700;
     letter-spacing: var(--tracking-wider);
     text-transform: uppercase;
     color: var(--text-secondary);
@@ -738,12 +773,18 @@
   }
 
   .kd-ticker__item::after {
-    content: '·';
-    color: var(--text-accent);
+    content: '';
+    width: 9px;
+    height: 9px;
+    margin-left: var(--space-3);
+    border: 1px solid var(--border-accent);
+    border-radius: 2px;
+    transform: rotate(45deg);
+    opacity: 0.78;
   }
 
   .kd-ticker__item:last-child::after {
-    content: '·';
+    content: '';
   }
 
   .kd-heatmap {
@@ -883,8 +924,10 @@
 
   .kd-ambient-haze--manifesto {
     background:
-      radial-gradient(circle at 18% 50%, var(--manifesto-haze-a) 0%, transparent 44%),
-      radial-gradient(circle at 82% 18%, var(--manifesto-haze-b) 0%, transparent 34%);
+      radial-gradient(ellipse 54% 48% at 18% 52%, rgba(16, 185, 129, 0.06) 0%, rgba(16, 185, 129, 0.04) 18%, transparent 64%),
+      radial-gradient(ellipse 32% 30% at 84% 18%, rgba(16, 185, 129, 0.034) 0%, transparent 54%),
+      radial-gradient(ellipse 26% 24% at 72% 76%, rgba(16, 185, 129, 0.026) 0%, transparent 60%);
+    filter: blur(20px);
   }
 
   .kd-manifesto {
@@ -939,6 +982,13 @@
     border: var(--border-thin) solid var(--manifesto-border);
     border-radius: var(--radius-xl);
     background: var(--manifesto-card);
+  }
+
+  .kd-manifesto-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
   }
 
   .kd-manifesto-card__title {
@@ -4659,14 +4709,33 @@
       <div class="kd-hero__rail">
         <div class="kd-card kd-card--accent-soft kd-hero-note">
           <div class="kd-card__body">
-            <div class="kd-hero-note__label">Acento com disciplina</div>
+            <div class="kd-hero-note__label">
+              <span class="kd-inline-mark" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <circle cx="8" cy="8" r="2.25"></circle>
+                  <path d="M8 1.75v2"></path>
+                  <path d="M8 12.25v2"></path>
+                  <path d="M1.75 8h2"></path>
+                  <path d="M12.25 8h2"></path>
+                </svg>
+              </span>
+              <span>Acento com disciplina</span>
+            </div>
             <div class="kd-hero-note__title">Verde só entra quando precisa orientar foco.</div>
             <p class="kd-hero-note__copy">Abertura, CTA, progresso e energia visual. O sistema continua branco, preto e profundamente legível.</p>
           </div>
         </div>
         <div class="kd-card kd-hero-note">
           <div class="kd-card__body">
-            <div class="kd-hero-note__label">Light + Dark nativo</div>
+            <div class="kd-hero-note__label">
+              <span class="kd-inline-mark" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <path d="M8 2.25a5.75 5.75 0 1 0 0 11.5V2.25Z"></path>
+                  <path d="M8 2.25a5.75 5.75 0 0 1 0 11.5"></path>
+                </svg>
+              </span>
+              <span>Light + Dark nativo</span>
+            </div>
             <div class="kd-hero-note__title">Mesma maturidade estrutural, atmosferas diferentes.</div>
             <p class="kd-hero-note__copy">No claro, silêncio e arquitetura. No escuro, profundidade e presença verde contida. A gramática permanece a mesma.</p>
           </div>
@@ -7283,15 +7352,40 @@
         </div>
         <div class="kd-manifesto__stack">
           <div class="kd-manifesto-card">
-            <div class="kd-manifesto-card__title">Nunca ornamentar</div>
+            <div class="kd-manifesto-card__header">
+              <span class="kd-inline-mark" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <path d="M3 3h10v10H3z"></path>
+                  <path d="M5.5 5.5l5 5"></path>
+                </svg>
+              </span>
+              <div class="kd-manifesto-card__title">Nunca ornamentar</div>
+            </div>
             <div class="kd-manifesto-card__body">Grid, fade, haze e movimento só entram quando reforçam hierarquia, foco e leitura. Atmosfera sem função não faz parte do sistema.</div>
           </div>
           <div class="kd-manifesto-card">
-            <div class="kd-manifesto-card__title">Sempre orientar</div>
+            <div class="kd-manifesto-card__header">
+              <span class="kd-inline-mark" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <path d="M3 8h8"></path>
+                  <path d="M8 3l5 5-5 5"></path>
+                </svg>
+              </span>
+              <div class="kd-manifesto-card__title">Sempre orientar</div>
+            </div>
             <div class="kd-manifesto-card__body">O verde é energia tecnológica, não tinta espalhada. Ele conduz ação, progresso e confiança, sem roubar a estrutura do preto e do branco.</div>
           </div>
           <div class="kd-manifesto-card">
-            <div class="kd-manifesto-card__title">Produto antes do showcase</div>
+            <div class="kd-manifesto-card__header">
+              <span class="kd-inline-mark" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <path d="M3 4.5h10"></path>
+                  <path d="M3 8h10"></path>
+                  <path d="M3 11.5h6"></path>
+                </svg>
+              </span>
+              <div class="kd-manifesto-card__title">Produto antes do showcase</div>
+            </div>
             <div class="kd-manifesto-card__body">Cada superfície deste arquivo precisa sobreviver ao React, ao dark mode, ao estado vazio e ao uso diário. Beleza só vale quando se mantém útil.</div>
           </div>
         </div>
